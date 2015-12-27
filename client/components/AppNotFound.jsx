@@ -1,4 +1,3 @@
-//TODO: change its style
 AppNotFound = React.createClass({
   render() {
     return (
@@ -6,3 +5,4 @@ AppNotFound = React.createClass({
     );
   }
 });
+//TODO: change its style
