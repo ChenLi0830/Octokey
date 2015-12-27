@@ -1,4 +1,4 @@
-AppLoading = React.createClass({
+/*AppLoading = React.createClass({
   render(){
     return (
       <div>
@@ -6,15 +6,12 @@ AppLoading = React.createClass({
       </div>
     )
   }
-});
-/*AppLoading = React.createClass({
-  render() {
-    return <div>
-      <h2>App is loading.</h2>
-    </div>
-    //return <img src="/img/logo-zenid.svg" className="loading-app" />
-  }
 });*/
+AppLoading = React.createClass({
+  render() {
+    return <img src="/img/jar-loading.gif" className="loading-app" />
+  }
+});
 //Todo change logo-zenid.svg
 
 

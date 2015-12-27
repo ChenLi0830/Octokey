@@ -11,6 +11,6 @@ AccountsUIWrapper = React.createClass({
   },
   render() {
     // Just render a placeholder container that will be filled in
-    return <div ref="LoginContainer" />;
+    return <div ref="LoginContainer" style={{marginTop: 1 + 'em'}} />;
   }
 });
