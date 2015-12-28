@@ -16,7 +16,7 @@ const routes = (
   <Route path="/" component={App}>
     <IndexRoute component={AppLoading}/>
     <Route path="/list" component={AppHome}/>
-    <Route path="/catalog" component={AppNotFound}/>
+    <Route path="/catalog" component={Catalog}/>
     <Route path="*" component={AppNotFound}/>
   </Route>
 );
