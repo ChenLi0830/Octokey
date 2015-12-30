@@ -1,12 +1,11 @@
 const {
-  Panel,
-  ListGroup,
-  ListGroupItem,
-  Image
+  Table,
+  Panel
   } = ReactBootstrap;
 
+
 CatalogAppsBox = React.createClass({
-  mixins:[ReactMeteorData],
+  mixins: [ReactMeteorData],
 
   getMeteorData(){
     return {
@@ -14,29 +13,21 @@ CatalogAppsBox = React.createClass({
     }
   },
 
-  renderFormalApps(){
-    //console.log("one of the logos",this.data.logos);
-    return this.data.apps.map(function(app){
-      console.log(app);
-      let logoURL = "cfs/files/zenApps/"+app._id;
-      return <ListGroupItem header={app.appName}>
-        <Image src={logoURL} rounded />
-        {app.loginLink}
-      </ListGroupItem>
-    });
-  },
-
   render(){
     const title = (
-      <h3>Panel title</h3>
+      <h3>网站列表</h3>
     );
+
+    const publicApps = (this.data.apps.map(function (app) {
+        let logoURL = "cfs/files/zenApps/" + app._id;
+        return <CatelogSingleAppBox key={app._id} logoURL={logoURL} appName={app.appName} loginLink={app.loginLink}
+                                    showConfig={false}/>
+      })
+    );
+
     return <div>
-        <Panel header={title} bsStyle="primary">
-        <ListGroup>
-          {this.renderFormalApps()}
-          <ListGroupItem>Item 2</ListGroupItem>
-          <ListGroupItem>...</ListGroupItem>
-        </ListGroup>
+      <Panel header={title} bsStyle="primary">
+        {publicApps}
       </Panel>
 
     </div>

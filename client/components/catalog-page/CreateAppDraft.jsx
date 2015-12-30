@@ -8,6 +8,11 @@ const {Button,
   } = ReactBootstrap;
 
 CreateAppDraft = React.createClass({
+  propTypes: {
+    private: React.PropTypes.bool.isRequired
+  },
+
+
   getInitialState() {//for modal
     return {
       showModal: false,
@@ -25,6 +30,13 @@ CreateAppDraft = React.createClass({
 
 
   render(){
+    let privateAppContent = this.props.private ? (
+      <div>
+        <Input type="text" label="Username" ref="username"/>
+        <Input type="password" label="Password" ref="password"/>
+      </div>
+    ) : null;
+
     return <div>
       Can't find the app?
       <br/>
@@ -37,7 +49,7 @@ CreateAppDraft = React.createClass({
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.props.private ? this.handlePrivateSubmit :this.handlePublicSubmit}>
             <Input type="text" label="Website Name" ref="appName" placeholder="Example: Google"/>
             <Input type="text" label="Login Link" ref="loginLink" placeholder="Example: https://www.google.com"/>
 
@@ -53,6 +65,8 @@ CreateAppDraft = React.createClass({
               </Col>
             </Row>
 
+            {privateAppContent}
+
             <ButtonInput type="submit" value="Submit"/>
           </form>
         </Modal.Body>
@@ -63,7 +77,7 @@ CreateAppDraft = React.createClass({
     </div>
   },
 
-  handleSubmit(event){
+  handlePublicSubmit(event){
     event.preventDefault();
     let app = new FS.File(this.state.preview);
     app.loginLink = this.refs.loginLink.refs.input.value;
@@ -77,6 +91,11 @@ CreateAppDraft = React.createClass({
         //console.log("imagesURL:",imagesURL);
       }
     });
+  },
+
+  handlePrivateSubmit(event){
+    event.preventDefault();
+    console.log("A private app is submited. It should be added to the private app collection.")
   },
 
   handleLogoUpload(){
