@@ -3,6 +3,7 @@
 //});
 
 //Meteor.subscribe("tasks");
+Meteor.subscribe("logos");
 
 const {
   Router,

@@ -21,7 +21,6 @@ insecure                # Allow all DB writes from clients (for prototyping)
 react
 accounts-password
 accounts-ui
-izzilab:material-ui
 meteorhacks:npm
 cosmos:browserify
 
@@ -31,3 +30,7 @@ fourseven:scss
 
 
 npm-container
+reywood:bootstrap3-sass
+cfs:standard-packages
+cfs:filesystem
+cfs:gridfs

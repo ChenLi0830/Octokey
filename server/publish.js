@@ -6,3 +6,9 @@ Meteor.publish("formalApps", function () {
     ]
   });
 });
+
+
+Meteor.publish("zenApps", function () {
+  console.log("Publishing ZenID defined apps");
+  return ZenApps.find();
+});
