@@ -3,8 +3,6 @@
 //});
 
 //Meteor.subscribe("tasks");
-Meteor.subscribe("zenApps");
-Meteor.subscribe("userData");
 
 const {
   Router,

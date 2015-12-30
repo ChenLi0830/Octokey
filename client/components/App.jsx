@@ -3,10 +3,11 @@ App = React.createClass({
 
   getMeteorData() {
     const subHandles = [
-      Meteor.subscribe("formalApps")
+      Meteor.subscribe("userData"),
+      Meteor.subscribe("zenApps")
     ];
 
-    const subsReady = subHandles.map(function (handle) {//这里需要改成对每个Meteor.subscribe都可用
+    const subsReady = _.all(subHandles, function(handle){
       return handle.ready();
     });
 
@@ -20,9 +21,7 @@ App = React.createClass({
     }
 
     return {
-      subsReady: subsReady,
-      //lists: Lists.find({}, { sort: {createdAt: -1} }).fetch(),
-      currentUser: Meteor.user()
+      subsReady: subsReady
     };
   },
 

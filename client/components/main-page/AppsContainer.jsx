@@ -7,10 +7,8 @@ AppsContainer = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData(){
-    if (Meteor.user()){
-      console.log("user():",Meteor.user());
-      console.log("publicApps",Meteor.user().publicApps);
-      let query_chosenApps = {_id: {$in:Meteor.user().publicApps}};
+    if (Meteor.user()) {
+      let query_chosenApps = {_id: {$in: Meteor.user().publicApps}};
 
       return {
         currentUser: Meteor.user(),
@@ -22,11 +20,17 @@ AppsContainer = React.createClass({
   },
 
   render(){
-    console.log("chosenApps",this.data.chosenApps);
+    console.log("chosenApps of this user:", this.data.chosenApps);
+    let appBoxes = this.data.chosenApps.map(function (app) {
+      const logoURL = "cfs/files/zenApps/" + app._id;
+      return <AppBox key={app._id} showConfig={true} appName={app.appName} logoURL={logoURL}/>
+    }.bind(this));
+
+    console.log("chosenApps", this.data.chosenApps);
     return <div>
       <Grid>
         <Row>
-          <AppBox showConfig={true}/>
+          {appBoxes}
         </Row>
       </Grid>
     </div>
