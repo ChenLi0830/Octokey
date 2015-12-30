@@ -20,7 +20,10 @@ CatalogAppsBox = React.createClass({
 
     const publicApps = (this.data.apps.map(function (app) {
         let logoURL = "cfs/files/zenApps/" + app._id;
-        return <CatelogSingleAppBox key={app._id} logoURL={logoURL} appName={app.appName} loginLink={app.loginLink}
+        return <CatelogSingleAppBox key={app._id} logoURL={logoURL}
+                                    appName={app.appName}
+                                    loginLink={app.loginLink}
+                                    appId = {app._id}
                                     showConfig={false}/>
       })
     );

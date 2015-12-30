@@ -9,6 +9,14 @@ Meteor.publish("formalApps", function () {
 
 
 Meteor.publish("zenApps", function () {
-  console.log("Publishing ZenID defined apps");
   return ZenApps.find();
+});
+
+
+Meteor.publish("userData", function () {
+  return Meteor.users.find({_id: this.userId},{
+    fields:
+    {
+      'publicApps': 1
+    }});
 });
