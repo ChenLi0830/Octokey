@@ -10,10 +10,10 @@ const {AppBar,
 
 const {ToggleStar} = SvgIcons;
 
-const {Link} = ReactRouter;
+const {Link, History} = ReactRouter;
 
 Header = React.createClass({
-  mixins: [ReactMeteorData],
+  mixins: [ReactMeteorData, History],
 
   getMeteorData(){
     return {
@@ -21,38 +21,38 @@ Header = React.createClass({
     }
   },
 
-  handleActive(tab) {
-    //alert(`A tab with this route property ${tab.props.route} was activated.`);
+  handleClickAddNew(tab) {
+    //this.history.pushState(null, '/catalog');
+    this.context.history.pushState(null, "/catalog");
+  },
+
+  handleClickHome(tab) {
+    //this.history.pushState(null, '/catalog');
+    this.context.history.pushState(null, "/");
   },
 
   render(){
     const addNewImage = (
-      <Link to="/catalog">
-        <img className="headerSVG " src="/img/addNew.svg"/>
-      </Link>
+      <img className="headerSVG " src="/img/addNew.svg"/>
     );
 
     const logo = (
-      <Link to="/">
-        <img className="headerSVG " src="/img/logo.svg"/>
-      </Link>
-
+      <img className="headerSVG " src="/img/logo.svg"/>
     );
 
-    return <AppBar className="ZenAppBar" showMenuIconButton={false}>
+    //header + inkbar: 64+4=68px;
+    return <AppBar style={{marginTop:"-68px", boxShadow:"0 1px 16px rgba(0, 0, 0, 0.18)"}} showMenuIconButton={false}>
       <div className="container">
         <Tabs style={{maxWidth:"800px",marginLeft:"auto", marginRight:"auto"}}
               inkBarStyle={{height:"4px", width:"20%", marginLeft:"6.7%"}}>
           <Tab className="headerTab" label={<AccountsUIWrapper/>}/>
 
-          <Tab className="headerTab" label={logo}/>
+          <Tab className="headerTab" label={logo} onActive={this.handleClickHome}/>
 
-          <Tab className="headerTab" label={addNewImage} route="/home" onActive={this.handleActive}>
-          </Tab>
+          <Tab className="headerTab" label={addNewImage} route="/catalog" onActive={this.handleClickAddNew}/>
         </Tabs>
       </div>
-    </AppBar>;
-
+    </AppBar>
   }
 })
 ;

@@ -15,7 +15,7 @@ const createHistory = ReactRouter.history.createHistory;
 const routes = (
   <Route path="/" component={App}>
     <IndexRoute component={AppLoading}/>
-    <Route path="/list" component={AppHome}/>
+    <Route path="/list" component={AppsContainer}/>
     <Route path="/catalog" component={Catalog}/>
     <Route path="*" component={AppNotFound}/>
   </Route>

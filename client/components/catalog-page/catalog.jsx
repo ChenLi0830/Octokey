@@ -7,7 +7,6 @@ const {
 Catalog = React.createClass({
   render(){
     return <div>
-      <Grid>
         <Row>
           <Col xs={4} md={4}>
             <CatalogSideBar/>
@@ -16,7 +15,6 @@ Catalog = React.createClass({
             <CatalogAppsBox/>
           </Col>
         </Row>
-      </Grid>
     </div>
   }
 });

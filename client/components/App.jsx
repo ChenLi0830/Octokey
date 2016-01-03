@@ -1,7 +1,9 @@
 var {ThemeManager} = MUI.Styles;
+var {AppCanvas,Paper} = MUI;
+var {Grid,Row,Col} = ReactBootstrap;
 
 App = React.createClass({
-  mixins:[ReactMeteorData],
+  mixins: [ReactMeteorData],
 
   getMeteorData() {
     const subHandles = [
@@ -9,7 +11,7 @@ App = React.createClass({
       Meteor.subscribe("zenApps")
     ];
 
-    const subsReady = _.all(subHandles, function(handle){
+    const subsReady = _.all(subHandles, function (handle) {
       return handle.ready();
     });
 
@@ -39,13 +41,22 @@ App = React.createClass({
 
   render(){
     return (
-      <div>
-        <Header/>
-        <div id="content-container">
-          { this.data.subsReady ?
-            this.props.children :
-            <AppLoading /> }
-        </div>
+      <div id="wrapper">
+        <Header />
+        <Grid style={{padding:"0"}}>
+          <Row >
+            <Col xs={12}>
+              <div id="layout-margin">
+                <Paper zDepth={1}
+                       style={{backgroundColor:"#ffffff", boxShadow:"0 1px 6px rgba(0, 0, 0, 0.12)", padding:0, borderRadius:"5px"}}>
+                  {this.data.subsReady ?
+                    this.props.children :
+                    <AppLoading />}
+                </Paper>
+              </div>
+            </Col>
+          </Row>
+        </Grid>
       </div>
     )
   }

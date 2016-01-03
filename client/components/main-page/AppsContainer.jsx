@@ -1,3 +1,5 @@
+//Todo: add configuration FAB
+
 const {
   Grid,
   Row
@@ -19,18 +21,27 @@ AppsContainer = React.createClass({
     }
   },
 
+  getInitialState(){
+    return {
+      appsBoxWidth:1140
+    }
+  },
+
+  componentDidMount(){
+    this.setState({width:this.refs.AppsBox.offsetWidth});
+  },
+
   render(){
     if (this.data.chosenApps.length>0){
       var appBoxes = this.data.chosenApps.map(function (app) {
-        const logoURL = "cfs/files/zenApps/" + app._id;
-        return <AppBox key={app._id} showConfig={true} appName={app.appName} logoURL={logoURL}/>
+        const logoURL = getLogoUrl(app._id);
+        return <AppBox key={app._id} appName={app.appName} logoURL={logoURL} width={(this.state.appsBoxWidth)/6}/>
       }.bind(this));
     } else {
       var appBoxes = <h4> Add new apps</h4>;
     }
 
-    console.log("chosenApps", this.data.chosenApps);
-    return <div>
+    return <div ref="AppsBox">
       <Grid>
         <Row>
           {appBoxes}
