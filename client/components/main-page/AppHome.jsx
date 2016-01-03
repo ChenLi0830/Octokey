@@ -6,7 +6,7 @@ AppHome = React.createClass({
     return <div>
       <Grid>
         <Row>
-          <AppsFolder/>
+          {/*<AppsFolder/>*/}
           <AppsContainer/>
         </Row>
       </Grid>

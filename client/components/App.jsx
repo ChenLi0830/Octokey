@@ -1,3 +1,5 @@
+var {ThemeManager} = MUI.Styles;
+
 App = React.createClass({
   mixins:[ReactMeteorData],
 
@@ -22,6 +24,16 @@ App = React.createClass({
 
     return {
       subsReady: subsReady
+    };
+  },
+
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+
+  getChildContext() {
+    return {
+      muiTheme: ThemeManager.getMuiTheme(ZenRawTheme)
     };
   },
 

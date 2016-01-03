@@ -26,6 +26,10 @@ const router = (
     {routes}
   </Router>);
 
+  /*Meteor.startup(() => {
+    ReactDOM.render(<TestMUI/>, document.getElementById('app-container'));
+  });*/
+
 Meteor.startup(function () {
   ReactDOM.render(router, document.getElementById("app-container"));
 });
