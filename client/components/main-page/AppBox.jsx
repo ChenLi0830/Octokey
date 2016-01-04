@@ -1,17 +1,24 @@
 const {
   Col,
-  Thumbnail,
   } = ReactBootstrap;
 
 const {
-  Paper
+  Paper,
+  Dialog,
+  FlatButton,
+  TextField
   } = MUI;
 
 AppBox = React.createClass({
 
   getInitialState(){
     return {
-      hovered: false
+      hovered: false,
+      open: false,
+      floatingUserText:"",
+      floatingPassText:"",
+      userNameFilled:false,
+      passwordFilled:false
     }
   },
 
@@ -27,23 +34,111 @@ AppBox = React.createClass({
     })
   },
 
-  render(){
-    return <Col md={2} style={{padding:"0"}}>
+  handleOpenModal() {
+    this.setState({open: true});
+  },
+
+  handleCloseModal() {
+    this.setState({open: false});
+  },
+
+  handleUserErrorCheck(){
+    let userName =  this.refs.username.getValue();
+    if (!userName){
+      this.setState({floatingUserText:"用户名不能为空"});
+    } else {
+      this.setState({floatingUserText:""});
+    }
+  },
+
+  handlePassErrorCheck(){
+    let password =  this.refs.password.getValue();
+    if (!password){
+      this.setState({floatingPassText:"密码不能为空"});
+    } else {
+      this.setState({floatingPassText:""});
+    }
+  },
+
+  handleSubmit(){
+    /* Error check */
+    this.handleUserErrorCheck();
+    this.handlePassErrorCheck();
+
+    /* Save data & Handle login */
+    let userName =  this.refs.username.getValue();
+    let password =  this.refs.password.getValue();
+
+    if (userName && password){
+      alert("start to login.");
+      //提交储存用户信息
+      //Todo communicate with 插件,并打开新窗口,跳转到登录页面
+      //询问用户是否登录成功,如果否,删除用户登录信息,保留textFields, 如果是,关闭modal.
+    }
+  },
+
+  render() {
+    const actions = [
+      <FlatButton
+        label="取消"
+        primary={true}
+        onTouchTap={this.handleCloseModal}/>,
+      <FlatButton
+        secondary={true}
+        label="去登录"
+        onTouchTap={this.handleSubmit}/>
+    ];
+
+    const appBoxButton = (<Col md={2} style={{padding:"0"}}>
       <Paper rounded={false}
-             style={{backgroundColor:this.state.hovered?"#FAFAFA":"rgba(255, 255," +
-       " 255, 0.0)", margin:0, borderRadius:"5px", width:this.props.width, height:this.props.width}}
+             style={{
+               backgroundColor:this.state.hovered?"#FAFAFA":"rgba(255, 255, 255, 0.0)",
+               margin:0,
+               borderRadius:"5px",
+               width:this.props.width,
+               height:this.props.width,
+               cursor: "pointer"}}
              onMouseOver={this.handleMouseOver}
-             onMouseOut={this.handleMouseOut} zDepth={this.state.hovered?1:0}>
+             onMouseOut={this.handleMouseOut} zDepth={this.state.hovered?1:0}
+             onTouchTap={this.handleOpenModal}>
         <img src={this.props.logoURL} style={{width:"100px"}} className="vertical-center horizontal-center"/>
       </Paper>
-    </Col>;
-    /*return <Col xs={3} md={2}>
-     <br/>
-     <div className = "app-box" >
-     <LogoContainer logoURL={this.props.logoURL} showConfig={this.props.showConfig}/>
-     <p>{this.props.appName}</p>
-     </div>
-     </Col>*/
+    </Col>);
+
+    const credentialModal = (
+      <Dialog
+        title={"请输入你在"+"\""+this.props.appName+"\"的登录信息 (只需输入一次)"}
+        actions={actions}
+        modal={false}
+        open={this.state.open}
+        onRequestClose={this.handleCloseModal}>
+
+        {/*This is here to stop chrome's username and password autofill*/}
+        <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
+        <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
+
+        <TextField
+          ref="username"
+          style={{fontWeight:"300"}}
+          floatingLabelStyle={{fontWeight:"300"}}
+          errorText={this.state.floatingUserText}
+          onChange={this.handleUserErrorCheck}
+          floatingLabelText="用户名"/>
+        <br/>
+        <TextField
+          ref="password"
+          type="password"
+          style={{fontWeight:"300"}}
+          floatingLabelStyle={{fontWeight:"300"}}
+          errorText={this.state.floatingPassText}
+          onChange={this.handlePassErrorCheck}
+          floatingLabelText="密码" />
+      </Dialog>
+    );
+    return <div>
+      {appBoxButton}
+      {credentialModal}
+    </div>
   }
 })
 ;
