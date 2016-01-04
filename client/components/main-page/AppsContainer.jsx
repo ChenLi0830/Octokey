@@ -9,30 +9,42 @@ AppsContainer = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData(){
-    if (Meteor.user() && Meteor.user().publicApps) {
-      let query_chosenApps = {_id: {$in: Meteor.user().publicApps}};
+    if (Meteor.user()) {
+      let chosenPublicApps = UserApps.find({userId: Meteor.userId()}).fetch()[0].publicApps;
+      let chosenPublicAppIds = _.pluck(chosenPublicApps, "appId");
+
+      const query_chosenPublicApps = {
+        _id: {
+          $in: chosenPublicAppIds
+        }
+      };
 
       return {
         currentUser: Meteor.user(),
-        chosenApps: ZenApps.find(query_chosenApps).fetch()
+        chosenPublicApps: chosenPublicApps,
+        chosenApps: ZenApps.find(query_chosenPublicApps).fetch()
       }
     } else {
-      return {}
+      return {
+        currentUser: null,
+        chosenPublicApps: [],
+        chosenApps: []
+      }
     }
   },
 
   getInitialState(){
     return {
-      appsBoxWidth:1140
+      appsBoxWidth: 1140
     }
   },
 
   componentDidMount(){
-    this.setState({width:this.refs.AppsBox.offsetWidth});
+    this.setState({width: this.refs.AppsBox.offsetWidth});
   },
 
   render(){
-    if (this.data.chosenApps.length>0){
+    if (this.data.chosenApps.length > 0) {
       var appBoxes = this.data.chosenApps.map(function (app) {
         const logoURL = getLogoUrl(app._id);
         return <AppBox key={app._id} appName={app.appName} logoURL={logoURL} width={(this.state.appsBoxWidth)/6}/>

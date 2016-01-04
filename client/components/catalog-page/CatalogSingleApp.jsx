@@ -8,17 +8,20 @@ CatelogSingleAppBox = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData(){
+    const appAddedQuery = {$and:[
+      {userId:Meteor.userId()},
+      {
+        publicApps:{
+          $elemMatch:{appId:this.props.appId}
+        }
+      }
+    ]};
+
     return {
-      added: _.includes(Meteor.user().publicApps,this.props.appId),
+      added: UserApps.find(appAddedQuery).fetch().length>0,
       currentUser:Meteor.user()
     }
   },
-
-  //getInitialState(){
-  //  return {
-  //    added: false
-  //  }
-  //},
 
   render(){
     let addButton = this.data.added ? <Button bsStyle="success" className="add-button" onClick={this.handleRemove}>Added</Button> :
@@ -33,7 +36,6 @@ CatelogSingleAppBox = React.createClass({
 
   handleAdd(){
     Meteor.call("addPublicApp", this.props.appId);
-    console.log("added new app");
     //this.setState({added: true});
   },
 

@@ -83,6 +83,7 @@ CreateAppDraft = React.createClass({
     app.loginLink = this.refs.loginLink.refs.input.value;
     app.appName = this.refs.appName.refs.input.value;
 
+    //Todo: change this to use a method
     ZenApps.insert(app, function (err, fileObj) {
       if (err) {
         console.log("there was an error", err);

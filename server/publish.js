@@ -1,3 +1,4 @@
+/*
 Meteor.publish("formalApps", function () {
   return FormalApps.find({
     $or: [
@@ -6,12 +7,18 @@ Meteor.publish("formalApps", function () {
     ]
   });
 });
+*/
 
 
 Meteor.publish("zenApps", function () {
   return ZenApps.find();
 });
 
+Meteor.publish("userPublicApps",function(){
+  return UserApps.find({userId:this.userId})
+});
+
+/*
 Meteor.publish("userData", function () {
   return Meteor.users.find({_id: this.userId},{
     fields:
@@ -19,3 +26,4 @@ Meteor.publish("userData", function () {
       'publicApps': 1
     }});
 });
+*/

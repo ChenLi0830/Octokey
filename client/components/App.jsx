@@ -6,10 +6,12 @@ App = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData() {
-    const subHandles = [
-      Meteor.subscribe("userData"),
-      Meteor.subscribe("zenApps")
-    ];
+    const subHandles = Meteor.userId() ?
+      [
+        //Meteor.subscribe("userData"),
+        Meteor.subscribe("zenApps"),
+        Meteor.subscribe("userPublicApps")
+      ] : [];
 
     const subsReady = _.all(subHandles, function (handle) {
       return handle.ready();
@@ -26,7 +28,8 @@ App = React.createClass({
 
     return {
       subsReady: subsReady
-    };
+    }
+      ;
   },
 
   childContextTypes: {

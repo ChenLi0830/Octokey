@@ -12,11 +12,17 @@ const {
 
 const createHistory = ReactRouter.history.createHistory;
 
+function requireAuth(nextState, replaceState) {
+  if (!Meteor.userId())
+    replaceState({ nextPathname: nextState.location.pathname }, '/login')
+}
+
 const routes = (
   <Route path="/" component={App}>
-    <IndexRoute component={AppLoading}/>
-    <Route path="/list" component={AppsContainer}/>
-    <Route path="/catalog" component={Catalog}/>
+    <IndexRoute component={AppLoading} onEnter={requireAuth}/>
+    <Route path="/list" component={AppsContainer} onEnter={requireAuth}/>
+    <Route path="/catalog" component={Catalog} onEnter={requireAuth}/>
+    <Route path="/login" component={Login} />
     <Route path="*" component={AppNotFound}/>
   </Route>
 );
