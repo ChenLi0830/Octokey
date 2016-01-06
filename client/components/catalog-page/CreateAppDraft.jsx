@@ -79,23 +79,15 @@ CreateAppDraft = React.createClass({
 
   handlePublicSubmit(event){
     event.preventDefault();
-    let app = new FS.File(this.state.preview);
-    app.loginLink = this.refs.loginLink.refs.input.value;
-    app.appName = this.refs.appName.refs.input.value;
+    const loginLink = this.refs.loginLink.refs.input.value;
+    const appName = this.refs.appName.refs.input.value;
 
-    //Todo: change this to use a method
-    ZenApps.insert(app, function (err, fileObj) {
-      if (err) {
-        console.log("there was an error", err);
-      } else {//Logo uploaded successful
-        //let imagesURL = "/cfs/files/logos/"+fileObj._id;
-        //console.log("imagesURL:",imagesURL);
-      }
-    });
+    Meteor.call("addZenApp", appName, loginLink, this.state.preview);
   },
 
   handlePrivateSubmit(event){
     event.preventDefault();
+    //Todo: implement this function
     console.log("A private app is submited. It should be added to the private app collection.")
   },
 

@@ -71,6 +71,7 @@ AppBox = React.createClass({
 
     if (userName && password){
       alert("start to login.");
+
       //提交储存用户信息
       //Todo communicate with 插件,并打开新窗口,跳转到登录页面
       //询问用户是否登录成功,如果否,删除用户登录信息,保留textFields, 如果是,关闭modal.

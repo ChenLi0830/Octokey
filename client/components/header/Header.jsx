@@ -54,5 +54,4 @@ Header = React.createClass({
       </div>
     </AppBar>
   }
-})
-;
+});

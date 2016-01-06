@@ -15,8 +15,13 @@ Meteor.publish("zenApps", function () {
 });
 
 Meteor.publish("userPublicApps",function(){
-  return UserApps.find({userId:this.userId})
+  return UserApps.find({userId:this.userId},{
+    fields:{
+      password:0
+    }
+  })
 });
+
 
 /*
 Meteor.publish("userData", function () {

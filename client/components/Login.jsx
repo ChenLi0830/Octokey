@@ -4,12 +4,11 @@ Login = React.createClass({
 
   getMeteorData(){
     return {
-      userLoggedIn:!Meteor.userId()
+      userLoggedIn:Meteor.userId()
     }
   },
 
   handleLoggedIn(){
-    console.log(this.props);
     const { location } = this.props;
 
     if (location.state && location.state.nextPathname) {

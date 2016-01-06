@@ -10,8 +10,8 @@ AppsContainer = React.createClass({
 
   getMeteorData(){
     if (Meteor.user()) {
-      let chosenPublicApps = UserApps.find({userId: Meteor.userId()}).fetch()[0].publicApps;
-      let chosenPublicAppIds = _.pluck(chosenPublicApps, "appId");
+      let publicAppsUserData = UserApps.find({userId: Meteor.userId()}).fetch()[0].publicApps;
+      let chosenPublicAppIds = _.pluck(publicAppsUserData, "appId");
 
       const query_chosenPublicApps = {
         _id: {
@@ -21,20 +21,21 @@ AppsContainer = React.createClass({
 
       return {
         currentUser: Meteor.user(),
-        chosenPublicApps: chosenPublicApps,
-        chosenApps: ZenApps.find(query_chosenPublicApps).fetch()
+        publicAppsUserData: publicAppsUserData,
+        chosenPublicApps: ZenApps.find(query_chosenPublicApps).fetch()
       }
     } else {
       return {
         currentUser: null,
-        chosenPublicApps: [],
-        chosenApps: []
+        publicAppsUserData: [],
+        chosenPublicApps: []
       }
     }
   },
 
   getInitialState(){
     return {
+      //Todo configure the width dynamically
       appsBoxWidth: 1140
     }
   },
@@ -44,10 +45,20 @@ AppsContainer = React.createClass({
   },
 
   render(){
-    if (this.data.chosenApps.length > 0) {
-      var appBoxes = this.data.chosenApps.map(function (app) {
+    if (this.data.chosenPublicApps.length > 0) {
+      var appBoxes = this.data.chosenPublicApps.map(function (app) {
         const logoURL = getLogoUrl(app._id);
-        return <AppBox key={app._id} appName={app.appName} logoURL={logoURL} width={(this.state.appsBoxWidth)/6}/>
+        const configured = _(this.data.publicAppsUserData).filter(function (userData) {
+            return userData.appId == app._id;
+          })
+          .pluck("configured")
+          .value();
+
+        return <AppBox key={app._id}
+                       appName={app.appName}
+                       configured={configured}
+                       logoURL={logoURL}
+                       width={(this.state.appsBoxWidth)/6}/>
       }.bind(this));
     } else {
       var appBoxes = <h4> Add new apps</h4>;

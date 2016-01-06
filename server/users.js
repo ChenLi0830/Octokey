@@ -1,3 +1,4 @@
+//Todo: remove as much as possible
 Meteor.users.allow({
   insert: function(userId){
     return !!userId;

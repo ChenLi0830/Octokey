@@ -8,8 +8,10 @@ CatalogAppsBox = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData(){
+    var handle = Meteor.subscribe("zenApps");
     return {
-      apps: ZenApps.find().fetch()
+      apps: ZenApps.find().fetch(),
+      appsReady: handle.ready()
     }
   },
 
@@ -30,7 +32,7 @@ CatalogAppsBox = React.createClass({
 
     return <div>
       <Panel header={title} bsStyle="primary">
-        {publicApps}
+        {this.data.appsReady ? publicApps:<AppLoading/>}
       </Panel>
 
     </div>
