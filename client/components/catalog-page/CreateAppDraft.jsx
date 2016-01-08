@@ -46,11 +46,12 @@ CreateAppDraft = React.createClass({
       </div>
     ) : null;
 
+    let title = this.props.createPublicApp? "Create public app" : "Create new app";
     return <div>
       {button}
       <Modal show={this.state.showModal} onHide={this.close}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={this.props.createPublicApp ? this.handlePublicSubmit : this.handlePrivateSubmit}>

@@ -19,10 +19,10 @@ AppsContainer = React.createClass({
       //  }
       //};
 
-      let findUserApps = UserApps.find({userId: Meteor.userId()});
+      let findUserApps = UserApps.find({userId: Meteor.userId()}).fetch()[0];
       return {
         currentUser: Meteor.user(),
-        chosenPublicApps: findUserApps ? findUserApps.fetch()[0].publicApps : []
+        chosenPublicApps: findUserApps ? findUserApps.publicApps : []
       }
     } else {
       return {

@@ -9,10 +9,18 @@
   margin-top: 10px !important;
   margin-bottom: 10px !important;
   img {
-    width:45px;
+    width: 45px;
   }
 }
 
 .single-app-row {
   height: 100px;
+}
+
+.modal {
+  z-index: 1150 !important;
+}
+
+.modal-backdrop {
+  z-index: 1140 !important;
 }
