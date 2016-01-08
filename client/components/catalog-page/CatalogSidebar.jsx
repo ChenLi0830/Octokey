@@ -8,10 +8,13 @@ CatalogSideBar = React.createClass({
   },
 
   render(){
+    let createPublicAppButton = this.isAdmin? <CreateAppDraft createPublicApp = {this.isAdmin()}/> :null;
+
     return <div className="catalog-sidebar">
+      {createPublicAppButton}
       <SearchBox/>
       <br/>
-      <CreateAppDraft private = {!this.isAdmin()}/>
+      <CreateAppDraft createPublicApp = {false}/>
       <br/>
       <CategoryList/>
     </div>

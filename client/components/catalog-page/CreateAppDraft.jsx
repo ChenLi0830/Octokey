@@ -9,9 +9,8 @@ const {Button,
 
 CreateAppDraft = React.createClass({
   propTypes: {
-    private: React.PropTypes.bool.isRequired
+    createPublicApp: React.PropTypes.bool.isRequired
   },
-
 
   getInitialState() {//for modal
     return {
@@ -28,9 +27,19 @@ CreateAppDraft = React.createClass({
     this.setState({showModal: true});
   },
 
-
   render(){
-    let privateAppContent = this.props.private ? (
+    let button = this.props.createPublicApp ?
+      (<Button onClick={this.open}>
+          Create public app
+        </Button>) :
+      (<div>
+        <p>Can't find the app?</p>
+        <Button onClick={this.open}>
+          Create new app
+        </Button>
+      </div>);
+
+    let privateAppContent = !this.props.createPublicApp ? (
       <div>
         <Input type="text" label="Username" ref="username"/>
         <Input type="password" label="Password" ref="password"/>
@@ -38,18 +47,13 @@ CreateAppDraft = React.createClass({
     ) : null;
 
     return <div>
-      Can't find the app?
-      <br/>
-      <Button onClick={this.open}>
-        Create new app
-      </Button>
-
+      {button}
       <Modal show={this.state.showModal} onHide={this.close}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={this.props.private ? this.handlePrivateSubmit :this.handlePublicSubmit}>
+          <form onSubmit={this.props.createPublicApp ? this.handlePublicSubmit : this.handlePrivateSubmit}>
             <Input type="text" label="Website Name" ref="appName" placeholder="Example: Google"/>
             <Input type="text" label="Login Link" ref="loginLink" placeholder="Example: https://www.google.com"/>
 

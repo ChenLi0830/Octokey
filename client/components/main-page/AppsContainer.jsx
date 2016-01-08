@@ -10,24 +10,23 @@ AppsContainer = React.createClass({
 
   getMeteorData(){
     if (Meteor.user()) {
-      let publicAppsUserData = UserApps.find({userId: Meteor.userId()}).fetch()[0].publicApps;
-      let chosenPublicAppIds = _.pluck(publicAppsUserData, "appId");
+      //let publicAppsUserData = UserApps.find({userId: Meteor.userId()}).fetch()[0].publicApps;
+      //let chosenPublicAppIds = _.pluck(publicAppsUserData, "appId");
+      //
+      //const query_chosenPublicApps = {
+      //  _id: {
+      //    $in: chosenPublicAppIds
+      //  }
+      //};
 
-      const query_chosenPublicApps = {
-        _id: {
-          $in: chosenPublicAppIds
-        }
-      };
-
+      let findUserApps = UserApps.find({userId: Meteor.userId()});
       return {
         currentUser: Meteor.user(),
-        publicAppsUserData: publicAppsUserData,
-        chosenPublicApps: ZenApps.find(query_chosenPublicApps).fetch()
+        chosenPublicApps: findUserApps ? findUserApps.fetch()[0].publicApps : []
       }
     } else {
       return {
         currentUser: null,
-        publicAppsUserData: [],
         chosenPublicApps: []
       }
     }
@@ -46,18 +45,13 @@ AppsContainer = React.createClass({
 
   render(){
     if (this.data.chosenPublicApps.length > 0) {
-      var appBoxes = this.data.chosenPublicApps.map(function (app) {
-        const logoURL = getLogoUrl(app._id);
-        const configured = _(this.data.publicAppsUserData).filter(function (userData) {
-            return userData.appId == app._id;
-          })
-          .pluck("configured")
-          .value();
-
-        return <AppBox key={app._id}
-                       appName={app.appName}
-                       configured={configured}
-                       logoURL={logoURL}
+      var appBoxes = this.data.chosenPublicApps.map(function (userApp) {
+        return <AppBox key={userApp.appId}
+                       appId={userApp.appId}
+                       appName={userApp.appName}
+                       logoURL={userApp.logoURL}
+                       loginLink={userApp.loginLink}
+                       configured={userApp.configured}
                        width={(this.state.appsBoxWidth)/6}/>
       }.bind(this));
     } else {

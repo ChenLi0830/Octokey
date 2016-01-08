@@ -10,7 +10,7 @@ CatalogAppsBox = React.createClass({
   getMeteorData(){
     var handle = Meteor.subscribe("zenApps");
     return {
-      apps: ZenApps.find().fetch(),
+      zenApps: ZenApps.find().fetch(),
       appsReady: handle.ready()
     }
   },
@@ -20,19 +20,19 @@ CatalogAppsBox = React.createClass({
       <h3>网站列表</h3>
     );
 
-    const publicApps = (this.data.apps.map(function (app) {
-        let logoURL = "cfs/files/zenApps/" + app._id;
-        return <CatelogSingleAppBox key={app._id} logoURL={logoURL}
-                                    appName={app.appName}
-                                    loginLink={app.loginLink}
-                                    appId = {app._id}
-                                    showConfig={false}/>
+    const publicApps = (this.data.zenApps.map(function (app) {
+        let logoURL = getLogoUrl(app._id);
+        return <CatelogSingleApp key={app._id}
+                                 logoURL={logoURL}
+                                 appName={app.appName}
+                                 loginLink={app.loginLink}
+                                 appId={app._id}/>
       })
     );
 
     return <div>
       <Panel header={title} bsStyle="primary">
-        {this.data.appsReady ? publicApps:<AppLoading/>}
+        {this.data.appsReady ? publicApps : <AppLoading/>}
       </Panel>
 
     </div>

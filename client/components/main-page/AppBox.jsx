@@ -11,14 +11,23 @@ const {
 
 AppBox = React.createClass({
 
+  propTypes: {
+    appId: React.PropTypes.string.isRequired,
+    appName: React.PropTypes.string.isRequired,
+    configured: React.PropTypes.bool.isRequired,
+    logoURL: React.PropTypes.string.isRequired,
+    loginLink:React.PropTypes.string.isRequired,
+    width: React.PropTypes.number.isRequired
+  },
+
   getInitialState(){
     return {
       hovered: false,
       open: false,
-      floatingUserText:"",
-      floatingPassText:"",
-      userNameFilled:false,
-      passwordFilled:false
+      floatingUserText: "",
+      floatingPassText: "",
+      userNameFilled: false,
+      passwordFilled: false
     }
   },
 
@@ -42,37 +51,40 @@ AppBox = React.createClass({
     this.setState({open: false});
   },
 
-  handleUserErrorCheck(){
-    let userName =  this.refs.username.getValue();
-    if (!userName){
-      this.setState({floatingUserText:"用户名不能为空"});
+  handleInputErrorCheckUser(){
+    let userName = this.refs.username.getValue();
+    if (!userName) {
+      this.setState({floatingUserText: "用户名不能为空"});
     } else {
-      this.setState({floatingUserText:""});
+      this.setState({floatingUserText: ""});
     }
   },
 
-  handlePassErrorCheck(){
-    let password =  this.refs.password.getValue();
-    if (!password){
-      this.setState({floatingPassText:"密码不能为空"});
+  handleInputErrorCheckPass(){
+    let password = this.refs.password.getValue();
+    if (!password) {
+      this.setState({floatingPassText: "密码不能为空"});
     } else {
-      this.setState({floatingPassText:""});
+      this.setState({floatingPassText: ""});
     }
   },
 
   handleSubmit(){
     /* Error check */
-    this.handleUserErrorCheck();
-    this.handlePassErrorCheck();
+    this.handleInputErrorCheckUser();
+    this.handleInputErrorCheckPass();
 
     /* Save data & Handle login */
-    let userName =  this.refs.username.getValue();
-    let password =  this.refs.password.getValue();
+    let username = this.refs.username.getValue();
+    let password = this.refs.password.getValue();
 
-    if (userName && password){
+    if (username && password) {
+      console.log("appId",this.props.appId,"username:",username," password: ",password );
+
+      Meteor.call("addNewCredential", this.props.appId, username, password);
+      Meteor.call("appConfigured", this.props.appId);
+
       alert("start to login.");
-
-      //提交储存用户信息
       //Todo communicate with 插件,并打开新窗口,跳转到登录页面
       //询问用户是否登录成功,如果否,删除用户登录信息,保留textFields, 如果是,关闭modal.
     }
@@ -123,7 +135,7 @@ AppBox = React.createClass({
           style={{fontWeight:"300"}}
           floatingLabelStyle={{fontWeight:"300"}}
           errorText={this.state.floatingUserText}
-          onChange={this.handleUserErrorCheck}
+          onChange={this.handleInputErrorCheckUser}
           floatingLabelText="用户名"/>
         <br/>
         <TextField
@@ -132,8 +144,8 @@ AppBox = React.createClass({
           style={{fontWeight:"300"}}
           floatingLabelStyle={{fontWeight:"300"}}
           errorText={this.state.floatingPassText}
-          onChange={this.handlePassErrorCheck}
-          floatingLabelText="密码" />
+          onChange={this.handleInputErrorCheckPass}
+          floatingLabelText="密码"/>
       </Dialog>
     );
     return <div>

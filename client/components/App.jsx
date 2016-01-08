@@ -9,8 +9,9 @@ App = React.createClass({
     const subHandles = Meteor.userId() ?
       [
         //Meteor.subscribe("userData"),
-        Meteor.subscribe("zenApps"),
-        Meteor.subscribe("userPublicApps")
+        //Meteor.subscribe("zenApps"),
+        Meteor.subscribe("userApps"),
+        Meteor.subscribe("userAppCredentials")
       ] : [];
 
     const subsReady = _.all(subHandles, function (handle) {
