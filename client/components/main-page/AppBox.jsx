@@ -16,7 +16,7 @@ AppBox = React.createClass({
     appName: React.PropTypes.string.isRequired,
     configured: React.PropTypes.bool.isRequired,
     logoURL: React.PropTypes.string.isRequired,
-    loginLink:React.PropTypes.string.isRequired,
+    loginLink: React.PropTypes.string.isRequired,
     width: React.PropTypes.number.isRequired
   },
 
@@ -79,15 +79,19 @@ AppBox = React.createClass({
     let password = this.refs.password.getValue();
 
     if (username && password) {
-      console.log("appId",this.props.appId,"username:",username," password: ",password );
+      console.log("appId", this.props.appId, "username:", username, " password: ", password);
 
       Meteor.call("addNewCredential", this.props.appId, username, password);
       Meteor.call("appConfigured", this.props.appId);
 
-      alert("start to login.");
-      //Todo communicate with 插件,并打开新窗口,跳转到登录页面
+      this.handleGoToLink();
       //询问用户是否登录成功,如果否,删除用户登录信息,保留textFields, 如果是,关闭modal.
     }
+  },
+
+  handleGoToLink(){
+    alert("start to login.");
+    //Todo communicate with 插件,并打开新窗口,跳转到登录页面
   },
 
   render() {
@@ -102,6 +106,8 @@ AppBox = React.createClass({
         onTouchTap={this.handleSubmit}/>
     ];
 
+    let onTouchTapEvent = this.props.configured ? this.handleGoToLink : this.handleOpenModal;
+
     const appBoxButton = (<Col md={2} style={{padding:"0"}}>
       <Paper rounded={false}
              style={{
@@ -113,7 +119,7 @@ AppBox = React.createClass({
                cursor: "pointer"}}
              onMouseOver={this.handleMouseOver}
              onMouseOut={this.handleMouseOut} zDepth={this.state.hovered?1:0}
-             onTouchTap={this.handleOpenModal}>
+             onTouchTap={onTouchTapEvent}>
         <img src={this.props.logoURL} style={{width:"100px"}} className="vertical-center horizontal-center"/>
       </Paper>
     </Col>);
