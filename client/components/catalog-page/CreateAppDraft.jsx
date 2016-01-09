@@ -7,6 +7,9 @@ const {Button,
   Row
   } = ReactBootstrap;
 
+const {RaisedButton} = MUI;
+
+
 CreateAppDraft = React.createClass({
   propTypes: {
     createPublicApp: React.PropTypes.bool.isRequired
@@ -29,14 +32,18 @@ CreateAppDraft = React.createClass({
 
   render(){
     let button = this.props.createPublicApp ?
-      (<Button onClick={this.open}>
-          Create public app
-        </Button>) :
-      (<div>
-        <p>Can't find the app?</p>
-        <Button onClick={this.open}>
-          Create new app
-        </Button>
+      (<div style={{textAlign:"center", padding:"10px 0 20px 0"}}>
+        <RaisedButton label="创建Zen网签"
+                     primary={true}
+                     onClick={this.open}
+                     labelStyle={{color:"white"}}/>
+      </div>) :
+      (<div style={{textAlign:"center", padding:"10px 0 30px 0"}}>
+        <p>找不到需要的网站标签?</p>
+        <RaisedButton label="创建新网签"
+                       primary={true}
+                       onClick={this.open}
+                       labelStyle={{color:"white"}}/>
       </div>);
 
     let privateAppContent = !this.props.createPublicApp ? (
@@ -46,7 +53,8 @@ CreateAppDraft = React.createClass({
       </div>
     ) : null;
 
-    let title = this.props.createPublicApp? "Create public app" : "Create new app";
+    let title = this.props.createPublicApp? "创建Zen网签" : "创建新网签";
+
     return <div>
       {button}
       <Modal show={this.state.showModal} onHide={this.close}>

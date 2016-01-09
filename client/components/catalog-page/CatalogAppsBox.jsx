@@ -3,6 +3,14 @@ const {
   Panel
   } = ReactBootstrap;
 
+const {
+  Paper,
+  RaisedButton,
+  } = MUI;
+
+const {
+  NavigationExpandMoreIcon
+  } = SvgIcons;
 
 CatalogAppsBox = React.createClass({
   mixins: [ReactMeteorData],
@@ -31,9 +39,10 @@ CatalogAppsBox = React.createClass({
     );
 
     return <div>
-      <Panel header={title} bsStyle="primary">
-        {this.data.appsReady ? publicApps : <AppLoading/>}
-      </Panel>
+
+      <Paper style={{backgroundColor:"white", minHeight:"560px"}}>
+        {this.data.appsReady ? publicApps /*<AppLoading/>*/: <AppLoading/>}
+      </Paper>
 
     </div>
   }

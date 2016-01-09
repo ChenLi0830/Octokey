@@ -1,5 +1,20 @@
+const {
+  List,
+  ListItem,
+  RaisedButton,
+  Divider,
+  Paper} = MUI;
+const {
+  ActionSearch,
+  ContentInbox,
+  PlacesAllInclusive,
+  CommunicationForum,
+  ImageAudiotrack,
+  HardwareVideogameAsset} = SvgIcons;
+
 CatalogSideBar = React.createClass({
-  mixins:[ReactMeteorData],
+  mixins: [ReactMeteorData],
+
 
   getMeteorData(){
     return {
@@ -8,19 +23,19 @@ CatalogSideBar = React.createClass({
   },
 
   render(){
-    let createPublicAppButton = this.isAdmin()? <CreateAppDraft createPublicApp = {true}/> :null;
+    let createPublicAppButton = this.isAdmin() ? <CreateAppDraft createPublicApp={true}/> : null;
 
-    return <div className="catalog-sidebar">
-      {createPublicAppButton}
+    return <div>
       <SearchBox/>
-      <br/>
-      <CreateAppDraft createPublicApp = {false}/>
-      <br/>
+      <Divider />
+      {createPublicAppButton}
+      <CreateAppDraft createPublicApp={false} />
+      <Divider />
       <CategoryList/>
     </div>
   },
 
-  isAdmin(){//TODO use more scalable solution to configure this, possible solution: role system
+  isAdmin(){//TODO use more scalable solution to configure this, i.e.: role system
     return this.data.currentUser && this.data.currentUser.emails[0].address == "lulugeo.li@gmail.com"
   }
 });
