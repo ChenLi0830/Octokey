@@ -6,6 +6,7 @@ const {
 const {
   Paper,
   RaisedButton,
+  List,
   } = MUI;
 
 const {
@@ -24,9 +25,6 @@ CatalogAppsBox = React.createClass({
   },
 
   render(){
-    const title = (
-      <h3>网站列表</h3>
-    );
 
     const publicApps = (this.data.zenApps.map(function (app) {
         let logoURL = getLogoUrl(app._id);
@@ -39,10 +37,12 @@ CatalogAppsBox = React.createClass({
     );
 
     return <div>
-
-      <Paper style={{backgroundColor:"white", minHeight:"560px"}}>
-        {this.data.appsReady ? publicApps /*<AppLoading/>*/: <AppLoading/>}
+      <Paper style={{backgroundColor:"white", minHeight:"560px",boxShadow:"none", border:"#eee solid 1px"}}>
+        <List subheader="网站列表" style={{backgroundColor:"white"}}>
+          {this.data.appsReady ? publicApps /*<AppLoading/>*/ : <AppLoading/>}
+        </List>
       </Paper>
+
 
     </div>
   }
