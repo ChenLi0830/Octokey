@@ -6,15 +6,15 @@ const {
 
 Catalog = React.createClass({
   render(){
-    return <div>
+    return <Grid>
         <Row>
-          <Col md={3} style={{paddingRight:0}}>
+          <Col md={3} >
             <CatalogSideBar/>
           </Col>
-          <Col md={9} style={{paddingLeft:0}}>
+          <Col md={9} >
             <CatalogAppsBox/>
           </Col>
         </Row>
-    </div>
+    </Grid>
   }
 });

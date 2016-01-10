@@ -5,6 +5,10 @@ const {
   Row
   } = ReactBootstrap;
 
+const {
+  Paper
+  } = MUI;
+
 AppsContainer = React.createClass({
   mixins: [ReactMeteorData],
 
@@ -32,13 +36,6 @@ AppsContainer = React.createClass({
     }
   },
 
-  getInitialState(){
-    return {
-      //Todo configure the width dynamically
-      appsBoxWidth: 1140
-    }
-  },
-
   componentDidMount(){
     this.setState({width: this.refs.AppsBox.offsetWidth});
   },
@@ -52,18 +49,21 @@ AppsContainer = React.createClass({
                        logoURL={userApp.logoURL}
                        loginLink={userApp.loginLink}
                        configured={userApp.configured}
-                       width={(this.state.appsBoxWidth)/6}/>
+                       width="100%"/>
       }.bind(this));
     } else {
       var appBoxes = <h4> Add new apps</h4>;
     }
 
-    return <div ref="AppsBox">
-      <Grid>
-        <Row>
-          {appBoxes}
-        </Row>
-      </Grid>
-    </div>
+    return <Paper zDepth={1}
+                  style={{
+             backgroundColor:"#ffffff",
+             boxShadow:"0 1px 6px rgba(0, 0, 0, 0.12)",
+             padding:0,
+             borderRadius:"5px"}}>
+      <Row style={{marginLeft:0, marginRight:0}}>
+        {appBoxes}
+      </Row>
+    </Paper>
   }
 });

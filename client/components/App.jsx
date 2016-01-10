@@ -47,17 +47,12 @@ App = React.createClass({
     return (
       <div id="wrapper">
         <Header />
-        <Grid style={{padding:"0"}}>
-          <Row >
+        <Grid>
+          <Row style={{marginTop:"60px"}}>
             <Col xs={12}>
-              <div id="layout-margin">
-                <Paper zDepth={1}
-                       style={{backgroundColor:"#ffffff", boxShadow:"0 1px 6px rgba(0, 0, 0, 0.12)", padding:0, borderRadius:"5px"}}>
                   {this.data.subsReady ?
                     this.props.children :
                     <AppLoading />}
-                </Paper>
-              </div>
             </Col>
           </Row>
         </Grid>

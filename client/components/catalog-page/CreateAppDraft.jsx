@@ -41,7 +41,7 @@ CreateAppDraft = React.createClass({
       (<div style={{textAlign:"center", padding:"10px 0 30px 0"}}>
         <p>找不到需要的网站标签?</p>
         <RaisedButton label="创建新网签"
-                       primary={true}
+                       secondary={true}
                        onClick={this.open}
                        labelStyle={{color:"white"}}/>
       </div>);

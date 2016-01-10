@@ -26,12 +26,19 @@ CatalogSideBar = React.createClass({
     let createPublicAppButton = this.isAdmin() ? <CreateAppDraft createPublicApp={true}/> : null;
 
     return <div>
-      <SearchBox/>
-      <Divider />
-      {createPublicAppButton}
-      <CreateAppDraft createPublicApp={false} />
-      <Divider />
-      <CategoryList/>
+      <Paper zDepth={1}
+             style={{
+             backgroundColor:"#ffffff",
+
+             padding:0,
+             borderRadius:"5px"}}>
+        <SearchBox/>
+        <Divider />
+        {createPublicAppButton}
+        <CreateAppDraft createPublicApp={false}/>
+        <Divider />
+        <CategoryList/>
+      </Paper>
     </div>
   },
 

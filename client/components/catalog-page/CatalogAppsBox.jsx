@@ -36,14 +36,17 @@ CatalogAppsBox = React.createClass({
       })
     );
 
-    return <div>
-      <Paper style={{backgroundColor:"white", minHeight:"560px",boxShadow:"none", border:"#eee solid 1px"}}>
+    return <div className = "layout-margin">
+      <Paper zDepth={1}
+             style={{
+             backgroundColor:"#ffffff",
+
+             padding:0,
+             borderRadius:"5px"}}>
         <List subheader="网站列表" style={{backgroundColor:"white"}}>
           {this.data.appsReady ? publicApps /*<AppLoading/>*/ : <AppLoading/>}
         </List>
       </Paper>
-
-
     </div>
   }
 });
