@@ -100,6 +100,9 @@ AppBox = React.createClass({
 
   handleGoToLink(){
     alert("start to login.");
+    //window.postMessage("Message from page script", this.props.loginLink);
+    window.postMessage([Meteor.userId(), this.props.loginLink], "http://localhost:3000");
+
     //Todo communicate with 插件,并打开新窗口,跳转到登录页面
   },
 
