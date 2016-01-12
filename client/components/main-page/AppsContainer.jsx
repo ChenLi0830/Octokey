@@ -36,10 +36,6 @@ AppsContainer = React.createClass({
     }
   },
 
-  componentDidMount(){
-    this.setState({width: this.refs.AppsBox.offsetWidth});
-  },
-
   render(){
     if (this.data.chosenPublicApps.length > 0) {
       var appBoxes = this.data.chosenPublicApps.map(function (userApp) {

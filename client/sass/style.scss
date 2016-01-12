@@ -22,3 +22,20 @@
 .fullHeight{
   min-height:100vh;
 }
+
+
+/*Image vertically align center*/
+.helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+img {
+  .vertial-middle{
+    vertical-align: middle;
+    max-height: 25px;
+    max-width: 160px;
+  }
+}
+/******************************/

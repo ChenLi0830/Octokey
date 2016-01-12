@@ -8,10 +8,10 @@ Catalog = React.createClass({
   render(){
     return <Grid>
         <Row>
-          <Col md={3} >
+          <Col sm={3} >
             <CatalogSideBar/>
           </Col>
-          <Col md={9} >
+          <Col sm={9} >
             <CatalogAppsBox/>
           </Col>
         </Row>

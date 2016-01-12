@@ -40,7 +40,6 @@ CatalogAppsBox = React.createClass({
       <Paper zDepth={1}
              style={{
              backgroundColor:"#ffffff",
-
              padding:0,
              borderRadius:"5px"}}>
         <List subheader="网站列表" style={{backgroundColor:"white"}}>

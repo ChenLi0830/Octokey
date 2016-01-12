@@ -7,8 +7,15 @@ const {
 const {
   ListItem,
   Avatar,
-  Divider
+  Divider,
+  Checkbox,
+  Toggle
   } = MUI;
+
+const {
+  ToggleStar,
+  ToggleStarBorder
+  } = SvgIcons;
 
 CatelogSingleApp = React.createClass({
   propTypes: {
@@ -22,8 +29,7 @@ CatelogSingleApp = React.createClass({
 
   getInitialState(){
     return {
-      hovered: false,
-      open: false
+      hovered: false
     }
   },
 
@@ -57,33 +63,36 @@ CatelogSingleApp = React.createClass({
   },
 
   render(){
-    let addButton = this.data.added ?
-      <Button bsStyle="success" className="add-button" onClick={this.handleRemove}>Added</Button> :
-      <Button onClick={this.handleAdd} className="add-button">Add</Button>;
+    let handleToggle = this.data.added ? this.handleRemove : this.handleAdd;
+    let labelText = this.data.added ? "已添加" : "添加";
+    let toggleState = this.data.added ? true : false;
 
-    //return <Row className="single-app-row">
-    //  <Col md={3} className="vertical-center"><LogoContainer logoURL={this.props.logoURL} /></Col>
-    //  <Col md={7} className="vertical-center">{this.props.appName}</Col>
-    //  <Col md={2} className="vertical-center">{addButton}</Col>
-    //</Row>
+    let toggleButton = <Toggle
+      name="toggleName1"
+      value="toggleValue1"
+      label={labelText}
+      labelPosition="right"
+      labelStyle={{fontWeight:"lighter",color:ZenColor.blueGrey}}
+      onToggle={handleToggle}
+      defaultToggled={toggleState}/>;
 
-    let logoAvatar = <img src={this.props.logoURL} style={{width:"50px", top:"28px"}}
-                          className="vertical-center horizontal-center"/>;
+    let appItem = (<Row className="single-app-row"
+                        style={this.state.hovered?
+                        {backgroundColor:  "#f7f7f7"}
+                        :{backgroundColor:  "#ffffff"}}
+                        onMouseOver={this.handleMouseOver}
+                        onMouseOut={this.handleMouseOut}>
+      <Col xs={5} sm={3} md={3} style={{height:"100%", textAlign:"center"}}>
+        <span className="helper"></span><img className="vertial-middle " src={this.props.logoURL}
+                                             style={{width:"50px", top:"18apx"}}/>
+      </Col>
+      <Col xs={2} sm={5} md={6} className="vertical-center">{this.props.appName}</Col>
+      <Col xs={5} sm={4} md={3} className="vertical-center">{toggleButton}</Col>
+    </Row>);
 
-
-    return <ListItem
-      className="app-list"
-      style={{
-        padding:"20px 26px 20px 20px",
-        backgroundColor:this.state.hovered?"#FAFAFA":"rgba(255, 255, 255, 0.0)",
-        boxShadow:this.state.hovered? "0 1px 6px rgba(0, 0, 0, 0.12)" : "none"
-      }}
-      leftAvatar={logoAvatar}
-      rightIconButton={addButton}
-      primaryText={this.props.appName}
-      onMouseOver={this.handleMouseOver}
-      onMouseOut={this.handleMouseOut} zDepth={this.state.hovered?1:0}
-    />
+    return <div>
+      {appItem}
+    </div>
   },
 
   handleAdd(){
