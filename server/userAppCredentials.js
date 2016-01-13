@@ -45,5 +45,5 @@ Meteor.methods({
         publicApps: {"appId": appId, "username": username, "password": password}
       }
     })
-  }
+  },
 });

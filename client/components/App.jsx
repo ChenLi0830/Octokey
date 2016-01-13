@@ -11,7 +11,6 @@ App = React.createClass({
         //Meteor.subscribe("userData"),
         //Meteor.subscribe("zenApps"),
         Meteor.subscribe("userApps"),
-        Meteor.subscribe("userAppCredentials")
       ] : [];
 
     const subsReady = _.all(subHandles, function (handle) {
@@ -29,8 +28,7 @@ App = React.createClass({
 
     return {
       subsReady: subsReady
-    }
-      ;
+    };
   },
 
   childContextTypes: {

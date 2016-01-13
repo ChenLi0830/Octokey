@@ -26,12 +26,12 @@ AppsContainer = React.createClass({
       let findUserApps = UserApps.find({userId: Meteor.userId()}).fetch()[0];
       return {
         currentUser: Meteor.user(),
-        chosenPublicApps: findUserApps ? findUserApps.publicApps : []
+        chosenPublicApps: findUserApps ? findUserApps.publicApps : [],
       }
     } else {
       return {
         currentUser: null,
-        chosenPublicApps: []
+        chosenPublicApps: [],
       }
     }
   },
@@ -44,12 +44,14 @@ AppsContainer = React.createClass({
                        appName={userApp.appName}
                        logoURL={userApp.logoURL}
                        loginLink={userApp.loginLink}
-                       configured={userApp.configured}
+                       userNames={userApp.userNames}
                        width="100%"/>
       }.bind(this));
     } else {
       var appBoxes = <h4> Add new apps</h4>;
     }
+
+    //console.log("appBoxes",appBoxes.count, appBoxes);
 
     return <Paper zDepth={1}
                   style={{

@@ -14,10 +14,10 @@ AppBox = React.createClass({
   propTypes: {
     appId: React.PropTypes.string.isRequired,
     appName: React.PropTypes.string.isRequired,
-    configured: React.PropTypes.bool.isRequired,
     logoURL: React.PropTypes.string.isRequired,
     loginLink: React.PropTypes.string.isRequired,
-    width: React.PropTypes.string.isRequired
+    width: React.PropTypes.string.isRequired,
+    userNames: React.PropTypes.array.isRequired
   },
 
   getInitialState(){
@@ -28,14 +28,26 @@ AppBox = React.createClass({
       floatingPassText: "",
       userNameFilled: false,
       passwordFilled: false,
-      boxHeight:"0px"
+      boxHeight: "0px"
     }
   },
+
+/*  mixins: [ReactMeteorData],
+  getMeteorData(){//这部分移动到background script里,获取对应的app password
+    if (this.props.userNames.length>0){
+      Meteor.subscribe("appCredential", this.props.appId, this.props.userNames[0], function () {
+        //console.log("subscribe successful");
+        const credential = UserAppCredentials.find().fetch();
+        console.log("credential", credential);
+      }.bind(this));
+    }
+    return {}
+  },*/
 
   componentDidMount(){
     var boxSize = ReactDOM.findDOMNode(this.refs.appBox).offsetWidth;
     this.setState({
-      height:boxSize
+      height: boxSize
     });
     //console.log("appBox width",ReactDOM.findDOMNode(this.refs.appBox).offsetWidth);
   },
@@ -88,10 +100,10 @@ AppBox = React.createClass({
     let password = this.refs.password.getValue();
 
     if (username && password) {
-      console.log("appId", this.props.appId, "username:", username, " password: ", password);
+      //console.log("appId", this.props.appId, "username:", username, " password: ", password);
 
       Meteor.call("addNewCredential", this.props.appId, username, password);
-      Meteor.call("appConfigured", this.props.appId);
+      Meteor.call("appAddUsername", this.props.appId, username);
 
       this.handleGoToLink();
       //询问用户是否登录成功,如果否,删除用户登录信息,保留textFields, 如果是,关闭modal.
@@ -99,9 +111,14 @@ AppBox = React.createClass({
   },
 
   handleGoToLink(){
-    alert("start to login.");
+    //Assume the credential the user choose is the first one. Needs to be changed when implementing multiple credentials
     //window.postMessage("Message from page script", this.props.loginLink);
-    window.postMessage([Meteor.userId(), this.props.loginLink], "http://localhost:3000");
+    console.log("handleGoToLink triggered");
+    window.postMessage(
+      [
+        "goToLink", Meteor.userId(), this.props.appId, this.props.loginLink, this.props.userNames[0]
+      ],
+      "http://localhost:3000");
 
     //Todo communicate with 插件,并打开新窗口,跳转到登录页面
   },
@@ -118,7 +135,10 @@ AppBox = React.createClass({
         onTouchTap={this.handleSubmit}/>
     ];
 
-    let onTouchTapEvent = this.props.configured ? this.handleGoToLink : this.handleOpenModal;
+
+    //console.log("this.props.userNames",this.props.userNames);
+    //console.log("this.props.userNames.length",this.props.userNames.length);
+    let onTouchTapEvent = this.props.userNames.length>0 ? this.handleGoToLink : this.handleOpenModal;
 
     const appBoxButton = (<Col xlg={1} md={2} sm={3} xs={6} style={{padding:"0"}}>
       <Paper rounded={false}

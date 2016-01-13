@@ -34,7 +34,9 @@ Meteor.methods({
             "appName": appName,
             "logoURL": logoURL,
             "loginLink": loginLink,
-            "configured": false
+            "userNames": [],
+            "defaultUserName":"",
+            "lastLoginTime":""
           }
         }
       }
@@ -56,7 +58,7 @@ Meteor.methods({
     );
   },
 
-  appConfigured(appId){
+  appAddUsername(appId, username){
     console.log("addConfigured start");
     if (!Meteor.userId()) {
       throw new Meteor.Error("not logged in");
@@ -69,8 +71,8 @@ Meteor.methods({
         ]
       },
       {
-        $set: {
-          "publicApps.$.configured": true
+        $addToSet: {
+          "publicApps.$.userNames": username
         }
       }
     )
