@@ -28,7 +28,8 @@ AppBox = React.createClass({
       floatingPassText: "",
       userNameFilled: false,
       passwordFilled: false,
-      boxHeight: "0px"
+      boxHeight: "0px",
+      isInDevMode:null,
     }
   },
 
@@ -46,9 +47,13 @@ AppBox = React.createClass({
 
   componentDidMount(){
     var boxSize = ReactDOM.findDOMNode(this.refs.appBox).offsetWidth;
-    this.setState({
+    this.setState({//这里会trigger DOM re-render
       height: boxSize
     });
+    Meteor.call("inDevMode", function(error, inDevMode){
+      this.setState({isInDevMode : inDevMode});
+    }.bind(this));
+
     //console.log("appBox width",ReactDOM.findDOMNode(this.refs.appBox).offsetWidth);
   },
 
@@ -106,21 +111,24 @@ AppBox = React.createClass({
       Meteor.call("appAddUsername", this.props.appId, username);
 
       this.handleGoToLink();
-      //询问用户是否登录成功,如果否,删除用户登录信息,保留textFields, 如果是,关闭modal.
+      //TODO 询问用户是否登录成功,如果否,删除用户登录信息,保留textFields, 如果是,关闭modal.
     }
   },
 
   handleGoToLink(){
     //Assume the credential the user choose is the first one. Needs to be changed when implementing multiple credentials
-    //window.postMessage("Message from page script", this.props.loginLink);
-    console.log("handleGoToLink triggered");
-    window.postMessage(
+
+    //console.log("this.state.isInDevMode",this.state.isInDevMode);
+    let targetUrl = this.state.isInDevMode ? "http://localhost:3000" : "http://zenid.meteor.com";
+    //因为content script被嵌入了这个应用,所以要和content script通信,就发给自己就可以.
+    //如果要修改这个值,记得还要修改 plugin 的 manifest.json file.
+
+    console.log(targetUrl);
+    window.postMessage(//Communicate with plugin
       [
         "goToLink", Meteor.userId(), this.props.appId, this.props.loginLink, this.props.userNames[0]
       ],
-      "http://localhost:3000");
-
-    //Todo communicate with 插件,并打开新窗口,跳转到登录页面
+      targetUrl);
   },
 
   render() {
