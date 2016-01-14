@@ -28,6 +28,9 @@ CreateAppDraft = React.createClass({
 
   open() {//for modal
     this.setState({showModal: true});
+    if (!this.props.createPublicApp){
+      alert("程序猿:这个还没写完");
+    }
   },
 
   render(){
@@ -48,8 +51,8 @@ CreateAppDraft = React.createClass({
 
     let privateAppContent = !this.props.createPublicApp ? (
       <div>
-        <Input type="text" label="Username" ref="username"/>
-        <Input type="password" label="Password" ref="password"/>
+        <Input type="text" label="用户名" ref="username"/>
+        <Input type="password" label="密码" ref="password"/>
       </div>
     ) : null;
 
@@ -63,15 +66,15 @@ CreateAppDraft = React.createClass({
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={this.props.createPublicApp ? this.handlePublicSubmit : this.handlePrivateSubmit}>
-            <Input type="text" label="Website Name" ref="appName" placeholder="Example: Google"/>
-            <Input type="text" label="Login Link" ref="loginLink" placeholder="Example: https://www.google.com"/>
+            <Input type="text" label="网站名" ref="appName" placeholder="例如: Google"/>
+            <Input type="text" label="登录链接" ref="loginLink" placeholder="例如: https://www.google.com/login"/>
 
             <Input type="file"
-                   label="Website Logo"
+                   label="网站Logo"
                    ref="logoFile"
                    accept=".png, .jpg"
                    onChange={this.handleLogoUpload}
-                   help="Logo of the app (optional)"/>
+                   help=""/>
             <Row>
               <Col xs={6} md={4}>
                 <Image ref="preview" src={this.state.preview} rounded/>
@@ -80,7 +83,7 @@ CreateAppDraft = React.createClass({
 
             {privateAppContent}
 
-            <ButtonInput type="submit" value="Submit"/>
+            <ButtonInput type="submit" value="创建"/>
           </form>
         </Modal.Body>
         <Modal.Footer>
@@ -94,14 +97,19 @@ CreateAppDraft = React.createClass({
     event.preventDefault();
     const loginLink = this.refs.loginLink.refs.input.value;
     const appName = this.refs.appName.refs.input.value;
-
-    Meteor.call("addZenApp", appName, loginLink, this.state.preview);
+    //Todo 显示等待条,或者其他gif
+    Meteor.call("addZenApp", appName, loginLink, this.state.preview, function(error, result){
+      if (error){
+        throw new Meteor.Error(error);
+      }
+      this.setState({showModal: false});
+    }.bind(this));
   },
 
   handlePrivateSubmit(event){
     event.preventDefault();
     //Todo: implement this function
-    console.log("A private app is submited. It should be added to the private app collection.")
+    console.log("A private app is submitted. It should be added to the private app collection.")
   },
 
   handleLogoUpload(){

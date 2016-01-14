@@ -19,7 +19,7 @@ Meteor.publish("userApps", function () {
 });
 
 Meteor.publish("appCredential", function (userId, appId, username) {
-  //console.log(userId, appId, username);
+  //console.log("appCredential", userId, appId, username);
   //console.log("this.user", this.user);
   let result = UserAppCredentials.find(
     {

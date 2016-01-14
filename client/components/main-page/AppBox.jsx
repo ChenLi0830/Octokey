@@ -29,29 +29,29 @@ AppBox = React.createClass({
       userNameFilled: false,
       passwordFilled: false,
       boxHeight: "0px",
-      isInDevMode:null,
+      isInDevMode: null,
     }
   },
 
-/*  mixins: [ReactMeteorData],
-  getMeteorData(){//这部分移动到background script里,获取对应的app password
-    if (this.props.userNames.length>0){
-      Meteor.subscribe("appCredential", this.props.appId, this.props.userNames[0], function () {
-        //console.log("subscribe successful");
-        const credential = UserAppCredentials.find().fetch();
-        console.log("credential", credential);
-      }.bind(this));
-    }
-    return {}
-  },*/
+  /*  mixins: [ReactMeteorData],
+   getMeteorData(){//这部分移动到background script里,获取对应的app password
+   if (this.props.userNames.length>0){
+   Meteor.subscribe("appCredential", this.props.appId, this.props.userNames[0], function () {
+   //console.log("subscribe successful");
+   const credential = UserAppCredentials.find().fetch();
+   console.log("credential", credential);
+   }.bind(this));
+   }
+   return {}
+   },*/
 
   componentDidMount(){
     var boxSize = ReactDOM.findDOMNode(this.refs.appBox).offsetWidth;
     this.setState({//这里会trigger DOM re-render
       height: boxSize
     });
-    Meteor.call("inDevMode", function(error, inDevMode){
-      this.setState({isInDevMode : inDevMode});
+    Meteor.call("inDevMode", function (error, inDevMode) {
+      this.setState({isInDevMode: inDevMode});
     }.bind(this));
 
     //console.log("appBox width",ReactDOM.findDOMNode(this.refs.appBox).offsetWidth);
@@ -107,26 +107,32 @@ AppBox = React.createClass({
     if (username && password) {
       //console.log("appId", this.props.appId, "username:", username, " password: ", password);
 
-      Meteor.call("addNewCredential", this.props.appId, username, password);
+      Meteor.call("addNewCredential", this.props.appId, username, password, function (error) {
+        if (error) {
+          throw new Meteor.Error("Error adding new Credential");
+        }
+        this.handleGoToLink(username);
+      }.bind(this));
+
       Meteor.call("appAddUsername", this.props.appId, username);
 
-      this.handleGoToLink();
       //TODO 询问用户是否登录成功,如果否,删除用户登录信息,保留textFields, 如果是,关闭modal.
     }
   },
 
-  handleGoToLink(){
+  handleGoToLink(username){
     //Assume the credential the user choose is the first one. Needs to be changed when implementing multiple credentials
 
     //console.log("this.state.isInDevMode",this.state.isInDevMode);
     let targetUrl = this.state.isInDevMode ? "http://localhost:3000" : "http://zenid.meteor.com";
+    //console.log("targetUrl",targetUrl);
     //因为content script被嵌入了这个应用,所以要和content script通信,就发给自己就可以.
     //如果要修改这个值,记得还要修改 plugin 的 manifest.json file.
 
-    console.log(targetUrl);
+    let loginUsername = typeof username === "string"? username : this.props.userNames[0];
     window.postMessage(//Communicate with plugin
       [
-        "goToLink", Meteor.userId(), this.props.appId, this.props.loginLink, this.props.userNames[0]
+        "goToLink", Meteor.userId(), this.props.appId, this.props.loginLink, loginUsername
       ],
       targetUrl);
   },
@@ -146,7 +152,7 @@ AppBox = React.createClass({
 
     //console.log("this.props.userNames",this.props.userNames);
     //console.log("this.props.userNames.length",this.props.userNames.length);
-    let onTouchTapEvent = this.props.userNames.length>0 ? this.handleGoToLink : this.handleOpenModal;
+    let onTouchTapEvent = this.props.userNames.length > 0 ? this.handleGoToLink : this.handleOpenModal;
 
     const appBoxButton = (<Col xlg={1} md={2} sm={3} xs={6} style={{padding:"0"}}>
       <Paper rounded={false}
