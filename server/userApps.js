@@ -56,6 +56,16 @@ Meteor.methods({
         }
       }
     );
+
+    UserAppCredentials.update(
+      {userId: Meteor.userId()},
+      {
+        $pull:{
+          publicApps: {appId:appId}
+        }
+      }
+    )
+
   },
 
   appAddUsername(appId, username){

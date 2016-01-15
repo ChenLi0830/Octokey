@@ -1,6 +1,6 @@
 Meteor.methods({
   addNewCredential(appId, username, password){
-    console.log("addNewCredential start");
+    console.log("addNewCredential start:", "appId", appId, "username", username, "password", password);
     let userId = Meteor.userId();
     if (!userId) {
       throw new Meteor.Error("not logged in");

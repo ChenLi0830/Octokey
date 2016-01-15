@@ -19,18 +19,25 @@ Meteor.publish("userApps", function () {
 });
 
 Meteor.publish("appCredential", function (userId, appId, username) {
-  //console.log("appCredential", userId, appId, username);
+  console.log("appCredential", userId, appId, username);
   //console.log("this.user", this.user);
   let result = UserAppCredentials.find(
     {
       $and: [
         {userId: userId},
-        {"publicApps.appId": appId},
-        {"publicApps.username": username}
+        {
+          publicApps:{
+            $elemMatch:{
+              appId:appId,
+              username:username
+            }
+          }
+        }
+        //{"publicApps.appId": appId},
+        //{"publicApps.username": username}
       ]
     },
     //);
     {fields: {'publicApps.$': 1}});
-
   return result;
 });
