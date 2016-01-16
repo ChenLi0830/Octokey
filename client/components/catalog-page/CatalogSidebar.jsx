@@ -13,8 +13,11 @@ const {
   HardwareVideogameAsset} = SvgIcons;
 
 CatalogSideBar = React.createClass({
-  mixins: [ReactMeteorData],
+  propTypes:{
+    zenCategories:React.PropTypes.array.isRequired
+  },
 
+  mixins: [ReactMeteorData],
 
   getMeteorData(){
     return {
@@ -24,6 +27,7 @@ CatalogSideBar = React.createClass({
 
   render(){
     let createPublicAppButton = this.isAdmin() ? <CreateAppDraft createPublicApp={true}/> : null;
+    let createCategoryButton = this.isAdmin()? <CreateCategoryButton zenCategories={this.props.zenCategories}/>:null;
 
     return <div>
       <Paper zDepth={1}
@@ -38,6 +42,7 @@ CatalogSideBar = React.createClass({
         <CreateAppDraft createPublicApp={false}/>
         <Divider />
         <CategoryList/>
+        {createCategoryButton}
       </Paper>
     </div>
   },
