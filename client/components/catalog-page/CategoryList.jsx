@@ -12,21 +12,33 @@ const {
   MapsTerrain,
   ImageBlurOn,
   ImageAudiotrack,
+  ContentGesture
   } = SvgIcons;
 
+const nameToIcon = {
+  "all": <PlacesAllInclusive color={ZenColor.cyan}/>,
+  "hot": <SocialWhatshot color={ZenColor.cyan}/>,
+  "social": <CommunicationForum color={ZenColor.cyan}/>,
+  "game": <HardwareVideogameAsset color={ZenColor.cyan}/>,
+  "travel": <MapsTerrain color={ZenColor.cyan}/>,
+  "life": <ImageBlurOn color={ZenColor.cyan}/>,
+  "media": <ImageAudiotrack color={ZenColor.cyan}/>
+};
 
 CategoryList = React.createClass({
+  propTypes: {
+    zenCategories: React.PropTypes.array.isRequired
+  },
 
   render(){
-
+    const tempIcon = <ContentGesture color={ZenColor.cyan}/>;
+    const Items = this.props.zenCategories.map(function(category){
+      const icon = nameToIcon[category.name] ? nameToIcon[category.name] : tempIcon;
+      return <ListItem primaryText={category.displayTitleChinese} key={category._id} rightIcon={icon}/>
+    });
+    //console.log("Items ",Items);
     return <List style={{backgroundColor:"white"}} subheader="类别">
-      <ListItem primaryText="全部" rightIcon={<PlacesAllInclusive color={ZenColor.cyan}/>}/>
-      <ListItem primaryText="上升最快" rightIcon={<SocialWhatshot color={ZenColor.cyan} />}/>
-      <ListItem primaryText="社交 论坛" rightIcon={<CommunicationForum color={ZenColor.cyan} />}/>
-      <ListItem primaryText="游戏" rightIcon={<HardwareVideogameAsset color={ZenColor.cyan} />}/>
-      <ListItem primaryText="旅游" rightIcon={<MapsTerrain color={ZenColor.cyan} />}/>
-      <ListItem primaryText="生活" rightIcon={<ImageBlurOn color={ZenColor.cyan} />}/>
-      <ListItem primaryText="音乐 视频" rightIcon={<ImageAudiotrack color={ZenColor.cyan}/>}/>
+      {Items}
     </List>
   }
 });

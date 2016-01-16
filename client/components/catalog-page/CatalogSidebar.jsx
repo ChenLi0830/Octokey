@@ -41,7 +41,7 @@ CatalogSideBar = React.createClass({
         {createPublicAppButton}
         <CreateAppDraft createPublicApp={false}/>
         <Divider />
-        <CategoryList/>
+        <CategoryList zenCategories={this.props.zenCategories}/>
         {createCategoryButton}
       </Paper>
     </div>

@@ -41,7 +41,7 @@ CreateCategoryButton = React.createClass({
   },
 
   handleRemoveCategory(){
-    Meteor.call("removeCategory",this.state.deleteCategoryName, function(error){
+    Meteor.call("removeCategory", this.state.deleteCategoryName, function (error) {
       this.handleClose();
     }.bind(this))
   },
@@ -50,9 +50,13 @@ CreateCategoryButton = React.createClass({
     let name = this.refs.name.getValue();
     let displayTitleChinese = this.refs.displayTitleChinese.getValue();
     let displayTitleEnglish = this.refs.displayTitleEnglish.getValue();
-    Meteor.call("addNewCategory",name,displayTitleChinese,displayTitleEnglish, function(error){
-      this.handleClose();
-    }.bind(this));
+    if (name && displayTitleChinese && displayTitleEnglish) {
+      Meteor.call("addNewCategory", name, displayTitleChinese, displayTitleEnglish, function (error) {
+        this.handleClose();
+      }.bind(this));
+    } else {
+      alert("3个都得填好,要不不给添");
+    }
   },
 
   render(){
