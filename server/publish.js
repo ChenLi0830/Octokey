@@ -11,11 +11,19 @@
 
 
 Meteor.publish("zenApps", function () {
-  return ZenApps.find();
+  if (this.userId) {
+    return ZenApps.find();
+  }
 });
 
 Meteor.publish("userApps", function () {
   return UserApps.find({userId: this.userId})
+});
+
+Meteor.publish("zenCategories", function(){
+  if (this.userId){
+    return ZenCategories.find();
+  }
 });
 
 Meteor.publish("appCredential", function (userId, appId, username) {

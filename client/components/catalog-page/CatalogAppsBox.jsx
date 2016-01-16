@@ -14,19 +14,13 @@ const {
   } = SvgIcons;
 
 CatalogAppsBox = React.createClass({
-  mixins: [ReactMeteorData],
-
-  getMeteorData(){
-    var handle = Meteor.subscribe("zenApps");
-    return {
-      zenApps: ZenApps.find().fetch(),
-      appsReady: handle.ready()
-    }
+  propTypes:{
+    zenApps: React.PropTypes.array.isRequired,
+    chosenCategory: React.PropTypes.any.isRequired
   },
 
   render(){
-
-    const publicApps = (this.data.zenApps.map(function (app) {
+    const publicApps = (this.props.zenApps.map(function (app) {
         let logoURL = getLogoUrl(app._id);
         return <CatelogSingleApp key={app._id}
                                  logoURL={logoURL}
@@ -43,7 +37,7 @@ CatalogAppsBox = React.createClass({
              padding:0,
              borderRadius:"5px"}}>
         <List subheader="网站列表" style={{backgroundColor:"white"}}>
-          {this.data.appsReady ? publicApps /*<AppLoading/>*/ : <AppLoading/>}
+          {publicApps}
         </List>
       </Paper>
     </div>
