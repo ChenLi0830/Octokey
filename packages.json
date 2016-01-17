@@ -1,7 +1,8 @@
 {
   "externalify": "0.1.0",
+  "reflux": "0.3.0",
   "react-bootstrap": "0.28.1",
   "lodash": "3.10.1",
-  "material-ui": "0.14.0",
+  "material-ui": "0.14.2",
   "react-grid-layout": "0.10.0-beta1"
 }

@@ -26,7 +26,7 @@ CatalogSideBar = React.createClass({
   },
 
   render(){
-    let createPublicAppButton = this.isAdmin() ? <CreateAppDraft createPublicApp={true}/> : null;
+    let createPublicAppButton = this.isAdmin() ? <CreateZenAppButton zenCategories={this.props.zenCategories}/> : null;
     let createCategoryButton = this.isAdmin()? <CreateCategoryButton zenCategories={this.props.zenCategories}/>:null;
 
     return <div>
@@ -39,7 +39,7 @@ CatalogSideBar = React.createClass({
         <SearchBox/>
         <Divider />
         {createPublicAppButton}
-        <CreateAppDraft createPublicApp={false}/>
+        <CreatePrivateAppButton/>
         <Divider />
         <CategoryList zenCategories={this.props.zenCategories}/>
         {createCategoryButton}

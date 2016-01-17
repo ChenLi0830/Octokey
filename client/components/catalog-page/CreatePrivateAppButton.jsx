@@ -10,10 +10,7 @@ const {Button,
 const {RaisedButton} = MUI;
 
 
-CreateAppDraft = React.createClass({
-  propTypes: {
-    createPublicApp: React.PropTypes.bool.isRequired
-  },
+CreatePrivateAppButton = React.createClass({
 
   getInitialState() {//for modal
     return {
@@ -28,44 +25,26 @@ CreateAppDraft = React.createClass({
 
   open() {//for modal
     this.setState({showModal: true});
-    if (!this.props.createPublicApp){
-      alert("程序猿:这个还没写完");
-    }
+    alert("not finished yet :D");
   },
 
   render(){
-    let button = this.props.createPublicApp ?
-      (<div style={{textAlign:"center", padding:"10px 0 20px 0"}}>
-        <RaisedButton label="创建Zen网签"
-                     primary={true}
-                     onClick={this.open}
-                     labelStyle={{color:"white"}}/>
-      </div>) :
-      (<div style={{textAlign:"center", padding:"10px 0 30px 0"}}>
+    let button = (<div style={{textAlign:"center", padding:"10px 0 30px 0"}}>
         <p>找不到需要的网站标签?</p>
         <RaisedButton label="创建新网签"
-                       secondary={true}
-                       onClick={this.open}
-                       labelStyle={{color:"white"}}/>
+                      secondary={true}
+                      onClick={this.open}
+                      labelStyle={{color:"white"}}/>
       </div>);
-
-    let privateAppContent = !this.props.createPublicApp ? (
-      <div>
-        <Input type="text" label="用户名" ref="username"/>
-        <Input type="password" label="密码" ref="password"/>
-      </div>
-    ) : null;
-
-    let title = this.props.createPublicApp? "创建Zen网签" : "创建新网签";
 
     return <div>
       {button}
       <Modal show={this.state.showModal} onHide={this.close}>
         <Modal.Header closeButton>
-          <Modal.Title>{title}</Modal.Title>
+          <Modal.Title>"创建新网签"</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={this.props.createPublicApp ? this.handlePublicSubmit : this.handlePrivateSubmit}>
+          <form onSubmit={this.handlePrivateSubmit}>
             <Input type="text" label="网站名" ref="appName" placeholder="例如: Google"/>
             <Input type="text" label="登录链接" ref="loginLink" placeholder="例如: https://www.google.com/login"/>
 
@@ -81,7 +60,13 @@ CreateAppDraft = React.createClass({
               </Col>
             </Row>
 
-            {privateAppContent}
+            <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
+            <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
+
+            <div>
+              <Input type="text" label="用户名" ref="username"/>
+              <Input type="password" label="密码" ref="password"/>
+            </div>
 
             <ButtonInput type="submit" value="创建"/>
           </form>
@@ -93,23 +78,11 @@ CreateAppDraft = React.createClass({
     </div>
   },
 
-  handlePublicSubmit(event){
-    event.preventDefault();
-    const loginLink = this.refs.loginLink.refs.input.value;
-    const appName = this.refs.appName.refs.input.value;
-    //Todo 显示等待条,或者其他gif
-    Meteor.call("addZenApp", appName, loginLink, this.state.preview, function(error, result){
-      if (error){
-        throw new Meteor.Error(error);
-      }
-      this.setState({showModal: false});
-    }.bind(this));
-  },
-
   handlePrivateSubmit(event){
     event.preventDefault();
     //Todo: implement this function
-    console.log("A private app is submitted. It should be added to the private app collection.")
+    alert("A private app is submitted. It should be added to the private app collection.");
+    this.close();
   },
 
   handleLogoUpload(){

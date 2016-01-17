@@ -18,7 +18,7 @@ ZenApps.allow({
 });*/
 
 Meteor.methods({
-  addZenApp(appName, loginLink, logo){
+  addZenApp(appName, loginLink, logo, selectedCategoryNames){
     console.log("appName",appName);
     console.log("loginLink",loginLink);
 
@@ -33,7 +33,9 @@ Meteor.methods({
     let app = new FS.File(logo);
     app.appName = appName;
     app.loginLink = loginLink;
+    app.categoryNames = selectedCategoryNames;
 
+    //console.log("add new app", app);
     //Todo: change this to use a method
     ZenApps.insert(app, function (err, fileObj) {
       if (err) {
@@ -43,5 +45,9 @@ Meteor.methods({
         console.log("insert app successfully");
       }
     });
-  }
+  },
+
+  //removeZenApp(appId){
+  //  ZenApps.remove({_id:appId});
+  //}
 });

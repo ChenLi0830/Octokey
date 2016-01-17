@@ -2,6 +2,8 @@ var {ThemeManager} = MUI.Styles;
 var {AppCanvas,Paper} = MUI;
 var {Grid,Row,Col} = ReactBootstrap;
 
+injectTapEventPlugin();
+
 App = React.createClass({
   mixins: [ReactMeteorData],
 
