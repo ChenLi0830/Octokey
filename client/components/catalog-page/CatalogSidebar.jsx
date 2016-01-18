@@ -26,8 +26,8 @@ CatalogSideBar = React.createClass({
   },
 
   render(){
-    let createPublicAppButton = this.isAdmin() ? <CreateZenAppButton zenCategories={this.props.zenCategories}/> : null;
-    let createCategoryButton = this.isAdmin()? <CreateCategoryButton zenCategories={this.props.zenCategories}/>:null;
+    let createPublicAppButton = isAdmin(this.data.currentUser) ? <CreateZenAppButton zenCategories={this.props.zenCategories}/> : null;
+    let createCategoryButton = isAdmin(this.data.currentUser)? <CreateCategoryButton zenCategories={this.props.zenCategories}/>:null;
 
     return <div>
       <Paper zDepth={1}
@@ -47,7 +47,4 @@ CatalogSideBar = React.createClass({
     </div>
   },
 
-  isAdmin(){//TODO use more scalable solution to configure this, i.e.: role system
-    return this.data.currentUser && this.data.currentUser.emails[0].address == "lulugeo.li@gmail.com"
-  }
 });

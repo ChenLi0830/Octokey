@@ -67,6 +67,10 @@ CatalogAppsBox = React.createClass({
   },
 
   handleClick(appId, appName, loginLink, logoURL, selectedCategoryNames){
+    if (!isAdmin(Meteor.user())){
+      return
+    }
+
     this.setState({
       preview: logoURL,
       editAppId: appId
