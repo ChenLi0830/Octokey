@@ -69,11 +69,11 @@ AppBox = React.createClass({
     })
   },
 
-  handleOpenModal() {
+  handleOpenDialog() {
     this.setState({open: true});
   },
 
-  handleCloseModal() {
+  handleCloseDialog() {
     this.setState({open: false});
   },
 
@@ -142,7 +142,7 @@ AppBox = React.createClass({
       <FlatButton
         label="取消"
         primary={true}
-        onTouchTap={this.handleCloseModal}/>,
+        onTouchTap={this.handleCloseDialog}/>,
       <FlatButton
         secondary={true}
         label="去登录"
@@ -152,7 +152,7 @@ AppBox = React.createClass({
 
     //console.log("this.props.userNames",this.props.userNames);
     //console.log("this.props.userNames.length",this.props.userNames.length);
-    let onTouchTapEvent = this.props.userNames.length > 0 ? this.handleGoToLink : this.handleOpenModal;
+    let onTouchTapEvent = this.props.userNames.length > 0 ? this.handleGoToLink : this.handleOpenDialog;
 
     const appBoxButton = (<Col xlg={1} md={2} sm={3} xs={6} style={{padding:"0"}}>
       <Paper rounded={false}
@@ -177,7 +177,7 @@ AppBox = React.createClass({
         actions={actions}
         modal={false}
         open={this.state.open}
-        onRequestClose={this.handleCloseModal}>
+        onRequestClose={this.handleCloseDialog}>
 
         {/*This is here to stop chrome's username and password autofill*/}
         <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>

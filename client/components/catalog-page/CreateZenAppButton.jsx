@@ -34,7 +34,10 @@ CreateZenAppButton = React.createClass({
   },
 
   close() {//for modal
-    this.setState({showModal: false});
+    this.setState({
+      showModal: false,
+      preview: "",
+    });
   },
 
   open() {//for modal
@@ -138,11 +141,12 @@ CreateZenAppButton = React.createClass({
 
     if (loginLink && appName && this.state.preview !== "") {
       //Todo 显示等待条,或者其他gif
+      console.log("this.state.preview",this.state.preview);
       Meteor.call("addZenApp", appName, loginLink, this.state.preview, selectedCategoryNames, function (error, result) {
         if (error) {
           throw new Meteor.Error(error);
         }
-        this.setState({showModal: false});
+        this.close();
       }.bind(this));
     } else {
       alert("没填全");

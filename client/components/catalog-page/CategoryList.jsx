@@ -32,27 +32,28 @@ CategoryList = React.createClass({
   },
 
   getInitialState(){
-    return {chosenCategory:"all"}
+    return {chosenCategory: "all"}
   },
 
   handleTouchTap(categoryName){
     Actions.selectNewCategory(categoryName);
-    this.setState({chosenCategory:categoryName});
+    this.setState({chosenCategory: categoryName});
     //console.log("categoryName", categoryName);
   },
 
   render(){
     const tempIcon = <ContentGesture color={ZenColor.cyan}/>;
-    const selectedItem = {backgroundColor:ZenColor.grey2};
-    const Items = this.props.zenCategories.map(function(category){
+    const selectedItem = {backgroundColor: ZenColor.grey2};
+    const Items = this.props.zenCategories.map(function (category) {
       const icon = nameToIcon[category.name] ? nameToIcon[category.name] : tempIcon;
       return <ListItem
         primaryText={category.displayTitleChinese}
         key={category._id}
-        onTouchTap = {this.handleTouchTap.bind(this, category.name)}
-        style = {this.state.chosenCategory == category.name ? selectedItem : null}
+        onTouchTap={this.handleTouchTap.bind(this, category.name)}
+        style={this.state.chosenCategory == category.name ? selectedItem : null}
         rightIcon={icon}/>
-    },this);
+
+    }, this);
     //console.log("Items ",Items);
     return <List style={{backgroundColor:"white"}} subheader="类别">
       {Items}

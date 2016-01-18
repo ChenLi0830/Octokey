@@ -23,6 +23,8 @@ CatelogSingleApp = React.createClass({
     appName: React.PropTypes.string.isRequired,
     loginLink: React.PropTypes.string.isRequired,
     appId: React.PropTypes.string.isRequired,
+    selectedCategoryNames: React.PropTypes.array.isRequired,
+    whenClicked: React.PropTypes.func.isRequired,
   },
 
   mixins: [ReactMeteorData],
@@ -63,6 +65,8 @@ CatelogSingleApp = React.createClass({
   },
 
   render(){
+    const {logoURL,appName,loginLink,appId,selectedCategoryNames} = this.props;
+
     let handleToggle = this.data.added ? this.handleRemove : this.handleAdd;
     let labelText = this.data.added ? "已添加" : "添加";
     let toggleState = this.data.added ? true : false;
@@ -80,13 +84,14 @@ CatelogSingleApp = React.createClass({
                         style={this.state.hovered?
                         {backgroundColor:  "#f7f7f7"}
                         :{backgroundColor:  "#ffffff"}}
+                        onClick={this.props.whenClicked.bind(null, appId, appName, loginLink ,logoURL,selectedCategoryNames)}
                         onMouseOver={this.handleMouseOver}
                         onMouseOut={this.handleMouseOut}>
       <Col xs={5} sm={3} md={3} style={{height:"100%", textAlign:"center"}}>
-        <span className="helper"></span><img className="vertial-middle " src={this.props.logoURL}
+        <span className="helper"></span><img className="vertial-middle " src={logoURL}
                                              style={{width:"50px", top:"18apx"}}/>
       </Col>
-      <Col xs={2} sm={5} md={6} className="vertical-center">{this.props.appName}</Col>
+      <Col xs={2} sm={5} md={6} className="vertical-center">{appName}</Col>
       <Col xs={5} sm={4} md={3} className="vertical-center">{toggleButton}</Col>
     </Row>);
 

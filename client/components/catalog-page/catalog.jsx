@@ -54,7 +54,7 @@ Catalog = React.createClass({
           <CatalogSideBar zenCategories={this.data.zenCategories}/>
         </Col>
         <Col sm={9}>
-          <CatalogAppsBox zenApps={this.data.zenApps} chosenCategory={this.state.chosenCategory}/>
+          <CatalogAppsBox zenApps={this.data.zenApps} zenCategories={this.data.zenCategories}/>
         </Col>
       </Row>
     </Grid>);
