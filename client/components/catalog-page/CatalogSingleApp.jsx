@@ -84,14 +84,17 @@ CatelogSingleApp = React.createClass({
                         style={this.state.hovered?
                         {backgroundColor:  "#f7f7f7"}
                         :{backgroundColor:  "#ffffff"}}
-                        onClick={this.props.whenClicked.bind(null, appId, appName, loginLink ,logoURL,selectedCategoryNames)}
                         onMouseOver={this.handleMouseOver}
                         onMouseOut={this.handleMouseOut}>
-      <Col xs={5} sm={3} md={3} style={{height:"100%", textAlign:"center"}}>
+      <Col xs={5} sm={3} md={3}
+           onClick={this.props.whenClicked.bind(null, appId, appName, loginLink ,logoURL,selectedCategoryNames)}
+           style={{height:"100%", textAlign:"center"}}>
         <span className="helper"></span><img className="vertial-middle " src={logoURL}
                                              style={{width:"50px", top:"18apx"}}/>
       </Col>
-      <Col xs={2} sm={5} md={6} className="vertical-center">{appName}</Col>
+      <Col xs={2} sm={5} md={6}
+           onClick={this.props.whenClicked.bind(null, appId, appName, loginLink ,logoURL,selectedCategoryNames)}
+           className="vertical-center">{appName}</Col>
       <Col xs={5} sm={4} md={3} className="vertical-center">{toggleButton}</Col>
     </Row>);
 

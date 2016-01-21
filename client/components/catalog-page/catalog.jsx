@@ -36,7 +36,7 @@ Catalog = React.createClass({
 
     return {
       zenApps: chosenApps,
-      zenCategories: ZenCategories.find().fetch(),
+      zenCategories: ZenCategories.find({},{sort:{index:1}}).fetch(),
       subsReady: subsReady
     }
   },

@@ -129,7 +129,8 @@ AppBox = React.createClass({
     //因为content script被嵌入了这个应用,所以要和content script通信,就发给自己就可以.
     //如果要修改这个值,记得还要修改 plugin 的 manifest.json file.
 
-    let loginUsername = typeof username === "string"? username : this.props.userNames[0];
+    let loginUsername = typeof username === "string" ? username : this.props.userNames[0];
+    //Todo 让这一步的Meteor.userID()放到server里执行
     window.postMessage(//Communicate with plugin
       [
         "goToLink", Meteor.userId(), this.props.appId, this.props.loginLink, loginUsername
