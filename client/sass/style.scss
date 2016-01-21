@@ -1,6 +1,5 @@
 @import '{reywood:bootstrap3-sass}/bootstrap';
 
-
 .black {
   color: black;
 }
@@ -13,16 +12,15 @@
   transform: translateY(-50%);
 }
 
-.horizontal-center{
-  display:block;
-  margin-left:auto;
-  margin-right:auto;
+.horizontal-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.fullHeight{
-  min-height:100vh;
+.fullHeight {
+  min-height: 100vh;
 }
-
 
 /*Image vertically align center*/
 .helper {
@@ -32,10 +30,11 @@
 }
 
 img {
-  .vertial-middle{
+  .vertial-middle {
     vertical-align: middle;
     max-height: 25px;
     max-width: 160px;
   }
 }
+
 /******************************/

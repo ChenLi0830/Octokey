@@ -6,11 +6,12 @@ body {
   color: $primary-color;
 }
 
-.appboxInactive{
+.appboxInactive {
 
   //box-shadow: none !important;
 }
-.appboxActive{
+
+.appboxActive {
   //box-shadow:0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24) !important;
 }
 
@@ -20,6 +21,6 @@ body {
     position: absolute;
     right: 10px;
     top: 10px;
-    visibility:hidden;
+    visibility: hidden;
   }
 }

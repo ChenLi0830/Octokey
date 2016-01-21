@@ -1,115 +1,115 @@
 const {
-  Row,
-  Col,
-  Button
-  } = ReactBootstrap;
+    Row,
+    Col,
+    Button
+    } = ReactBootstrap;
 
 const {
-  ListItem,
-  Avatar,
-  Divider,
-  Checkbox,
-  Toggle
-  } = MUI;
+    ListItem,
+    Avatar,
+    Divider,
+    Checkbox,
+    Toggle
+    } = MUI;
 
 const {
-  ToggleStar,
-  ToggleStarBorder
-  } = SvgIcons;
+    ToggleStar,
+    ToggleStarBorder
+    } = SvgIcons;
 
 CatelogSingleApp = React.createClass({
-  propTypes: {
-    logoURL: React.PropTypes.string.isRequired,
-    appName: React.PropTypes.string.isRequired,
-    loginLink: React.PropTypes.string.isRequired,
-    appId: React.PropTypes.string.isRequired,
-    selectedCategoryNames: React.PropTypes.array.isRequired,
-    whenClicked: React.PropTypes.func.isRequired,
-  },
+    propTypes: {
+        logoURL: React.PropTypes.string.isRequired,
+        appName: React.PropTypes.string.isRequired,
+        loginLink: React.PropTypes.string.isRequired,
+        appId: React.PropTypes.string.isRequired,
+        selectedCategoryNames: React.PropTypes.array.isRequired,
+        whenClicked: React.PropTypes.func.isRequired,
+    },
 
-  mixins: [ReactMeteorData],
+    mixins: [ReactMeteorData],
 
-  getInitialState(){
-    return {
-      hovered: false
-    }
-  },
-
-  getMeteorData(){
-    const appAddedQuery = {
-      $and: [
-        {userId: Meteor.userId()},
-        {
-          publicApps: {
-            $elemMatch: {appId: this.props.appId}
-          }
+    getInitialState(){
+        return {
+            hovered: false
         }
-      ]
-    };
-    return {
-      added: UserApps.find(appAddedQuery).fetch().length > 0,
-      currentUser: Meteor.user()
-    }
-  },
+    },
 
-  handleMouseOver(){
-    this.setState({
-      hovered: true
-    })
-  },
+    getMeteorData(){
+        const appAddedQuery = {
+            $and: [
+                {userId: Meteor.userId()},
+                {
+                    publicApps: {
+                        $elemMatch: {appId: this.props.appId}
+                    }
+                }
+            ]
+        };
+        return {
+            added: UserApps.find(appAddedQuery).fetch().length > 0,
+            currentUser: Meteor.user()
+        }
+    },
 
-  handleMouseOut(){
-    this.setState({
-      hovered: false
-    })
-  },
+    handleMouseOver(){
+        this.setState({
+            hovered: true
+        })
+    },
 
-  render(){
-    const {logoURL,appName,loginLink,appId,selectedCategoryNames} = this.props;
+    handleMouseOut(){
+        this.setState({
+            hovered: false
+        })
+    },
 
-    let handleToggle = this.data.added ? this.handleRemove : this.handleAdd;
-    let labelText = this.data.added ? "已添加" : "添加";
-    let toggleState = this.data.added ? true : false;
+    render(){
+        const {logoURL,appName,loginLink,appId,selectedCategoryNames} = this.props;
 
-    let toggleButton = <Toggle
-      name="toggleName1"
-      value="toggleValue1"
-      label={labelText}
-      labelPosition="right"
-      labelStyle={{fontWeight:"lighter",color:ZenColor.blueGrey}}
-      onToggle={handleToggle}
-      defaultToggled={toggleState}/>;
+        let handleToggle = this.data.added ? this.handleRemove : this.handleAdd;
+        let labelText = this.data.added ? "已添加" : "添加";
+        let toggleState = this.data.added ? true : false;
 
-    let appItem = (<Row className="single-app-row"
-                        style={this.state.hovered?
+        let toggleButton = <Toggle
+            name="toggleName1"
+            value="toggleValue1"
+            label={labelText}
+            labelPosition="right"
+            labelStyle={{fontWeight:"lighter",color:ZenColor.blueGrey}}
+            onToggle={handleToggle}
+            defaultToggled={toggleState}/>;
+
+        let appItem = (<Row className="single-app-row"
+                            style={this.state.hovered?
                         {backgroundColor:  "#f7f7f7"}
                         :{backgroundColor:  "#ffffff"}}
-                        onMouseOver={this.handleMouseOver}
-                        onMouseOut={this.handleMouseOut}>
-      <Col xs={5} sm={3} md={3}
-           onClick={this.props.whenClicked.bind(null, appId, appName, loginLink ,logoURL,selectedCategoryNames)}
-           style={{height:"100%", textAlign:"center"}}>
-        <span className="helper"></span><img className="vertial-middle " src={logoURL}
-                                             style={{width:"50px", top:"18apx"}}/>
-      </Col>
-      <Col xs={2} sm={5} md={6}
-           onClick={this.props.whenClicked.bind(null, appId, appName, loginLink ,logoURL,selectedCategoryNames)}
-           className="vertical-center">{appName}</Col>
-      <Col xs={5} sm={4} md={3} className="vertical-center">{toggleButton}</Col>
-    </Row>);
+                            onMouseOver={this.handleMouseOver}
+                            onMouseOut={this.handleMouseOut}>
+            <Col xs={5} sm={3} md={3}
+                 onClick={this.props.whenClicked.bind(null, appId, appName, loginLink ,logoURL,selectedCategoryNames)}
+                 style={{height:"100%", textAlign:"center"}}>
+                <span className="helper"></span><img className="vertial-middle " src={logoURL}
+                                                     style={{width:"50px", top:"18apx"}}/>
+            </Col>
+            <Col xs={2} sm={5} md={6}
+                 onClick={this.props.whenClicked.bind(null, appId, appName, loginLink ,logoURL,selectedCategoryNames)}
+                 className="vertical-center">{appName}</Col>
+            <Col xs={5} sm={4} md={3} className="vertical-center">{toggleButton}</Col>
+        </Row>);
 
-    return <div>
-      {appItem}
-    </div>
-  },
+        return <div>
+            {appItem}
+        </div>
+    },
 
-  handleAdd(){
-    const {logoURL,appName,loginLink,appId} = this.props;
-    Meteor.call("addPublicApp", appId, appName, logoURL, loginLink);
-    //this.setState({added: true});
-  },
+    handleAdd(){
+        const {logoURL,appName,loginLink,appId} = this.props;
+        Meteor.call("addPublicApp", appId, appName, logoURL, loginLink);
+        //this.setState({added: true});
+    },
 
-  handleRemove(){
-    Meteor.call("removePublicApp", this.props.appId);
-  }
+    handleRemove(){
+        Meteor.call("removePublicApp", this.props.appId);
+    }
 });

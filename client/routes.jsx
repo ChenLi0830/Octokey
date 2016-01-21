@@ -5,37 +5,37 @@
 //Meteor.subscribe("tasks");
 
 const {
-  Router,
-  Route,
-  IndexRoute
-  } = ReactRouter;
+    Router,
+    Route,
+    IndexRoute
+    } = ReactRouter;
 
 const createHistory = ReactRouter.history.createHistory;
 
 function requireAuth(nextState, replaceState) {
-  if (!Meteor.userId())
-    replaceState({ nextPathname: nextState.location.pathname }, '/login')
+    if (!Meteor.userId())
+        replaceState({nextPathname: nextState.location.pathname}, '/login')
 }
 
 const routes = (
-  <Route path="/" component={App}>
-    <IndexRoute component={AppLoading} onEnter={requireAuth}/>
-    <Route path="/list" component={AppsContainer} onEnter={requireAuth}/>
-    <Route path="/catalog" component={Catalog} onEnter={requireAuth}/>
-    <Route path="/login" component={Login} />
-    <Route path="*" component={AppNotFound}/>
-  </Route>
+    <Route path="/" component={App}>
+        <IndexRoute component={AppLoading} onEnter={requireAuth}/>
+        <Route path="/list" component={AppsContainer} onEnter={requireAuth}/>
+        <Route path="/catalog" component={Catalog} onEnter={requireAuth}/>
+        <Route path="/login" component={Login}/>
+        <Route path="*" component={AppNotFound}/>
+    </Route>
 );
 
 const router = (
-  <Router history={createHistory()}>
-    {routes}
-  </Router>);
+    <Router history={createHistory()}>
+        {routes}
+    </Router>);
 
-  /*Meteor.startup(() => {
-    ReactDOM.render(<TestMUI/>, document.getElementById('app-container'));
-  });*/
+/*Meteor.startup(() => {
+ ReactDOM.render(<TestMUI/>, document.getElementById('app-container'));
+ });*/
 
 Meteor.startup(function () {
-  ReactDOM.render(router, document.getElementById("app-container"));
+    ReactDOM.render(router, document.getElementById("app-container"));
 });

@@ -2,7 +2,7 @@
 //它们被放在action-and-stores里也为了保证它们比其他components先运行
 //注意它们不能被放在lib文件夹下,因为这会导致它比client/lib先运行,导致Reflux还没被声明
 Actions = Reflux.createActions([
-  'selectNewCategory',
-  'getSelectedCategory'
+    'selectNewCategory',
+    'getSelectedCategory'
 ]);
 

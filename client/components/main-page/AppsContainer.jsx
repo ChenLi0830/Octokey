@@ -1,67 +1,67 @@
 //Todo: add configuration FAB
 
 const {
-  Grid,
-  Row
-  } = ReactBootstrap;
+    Grid,
+    Row
+    } = ReactBootstrap;
 
 const {
-  Paper
-  } = MUI;
+    Paper
+    } = MUI;
 
 AppsContainer = React.createClass({
-  mixins: [ReactMeteorData],
+    mixins: [ReactMeteorData],
 
-  getMeteorData(){
-    if (Meteor.user()) {
-      //let publicAppsUserData = UserApps.find({userId: Meteor.userId()}).fetch()[0].publicApps;
-      //let chosenPublicAppIds = _.pluck(publicAppsUserData, "appId");
-      //
-      //const query_chosenPublicApps = {
-      //  _id: {
-      //    $in: chosenPublicAppIds
-      //  }
-      //};
+    getMeteorData(){
+        if (Meteor.user()) {
+            //let publicAppsUserData = UserApps.find({userId: Meteor.userId()}).fetch()[0].publicApps;
+            //let chosenPublicAppIds = _.pluck(publicAppsUserData, "appId");
+            //
+            //const query_chosenPublicApps = {
+            //  _id: {
+            //    $in: chosenPublicAppIds
+            //  }
+            //};
 
-      let findUserApps = UserApps.find({userId: Meteor.userId()}).fetch()[0];
-      return {
-        currentUser: Meteor.user(),
-        chosenPublicApps: findUserApps ? findUserApps.publicApps : [],
-      }
-    } else {
-      return {
-        currentUser: null,
-        chosenPublicApps: [],
-      }
-    }
-  },
+            let findUserApps = UserApps.find({userId: Meteor.userId()}).fetch()[0];
+            return {
+                currentUser: Meteor.user(),
+                chosenPublicApps: findUserApps ? findUserApps.publicApps : [],
+            }
+        } else {
+            return {
+                currentUser: null,
+                chosenPublicApps: [],
+            }
+        }
+    },
 
-  render(){
-    if (this.data.chosenPublicApps.length > 0) {
-      var appBoxes = this.data.chosenPublicApps.map(function (userApp) {
-        return <AppBox key={userApp.appId}
-                       appId={userApp.appId}
-                       appName={userApp.appName}
-                       logoURL={userApp.logoURL}
-                       loginLink={userApp.loginLink}
-                       userNames={userApp.userNames}
-                       width="100%"/>
-      }.bind(this));
-    } else {
-      var appBoxes = <h4> Add new apps</h4>;
-    }
+    render(){
+        if (this.data.chosenPublicApps.length > 0) {
+            var appBoxes = this.data.chosenPublicApps.map(function (userApp) {
+                return <AppBox key={userApp.appId}
+                               appId={userApp.appId}
+                               appName={userApp.appName}
+                               logoURL={userApp.logoURL}
+                               loginLink={userApp.loginLink}
+                               userNames={userApp.userNames}
+                               width="100%"/>
+            }.bind(this));
+        } else {
+            var appBoxes = <h4> Add new apps</h4>;
+        }
 
-    //console.log("appBoxes",appBoxes.count, appBoxes);
+        //console.log("appBoxes",appBoxes.count, appBoxes);
 
-    return <Paper zDepth={1}
-                  style={{
+        return <Paper zDepth={1}
+                      style={{
              backgroundColor:"#ffffff",
              boxShadow:"0 1px 6px rgba(0, 0, 0, 0.12)",
              padding:0,
              borderRadius:"5px"}}>
-      <Row style={{marginLeft:0, marginRight:0}}>
-        {appBoxes}
-      </Row>
-    </Paper>
-  }
+            <Row style={{marginLeft:0, marginRight:0}}>
+                {appBoxes}
+            </Row>
+        </Paper>
+    }
 });
