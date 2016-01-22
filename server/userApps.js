@@ -41,6 +41,8 @@ Meteor.methods({
                 }
             }
         );
+
+        //Todo: 给对应的zenApp的subscribeCount+1
     },
 
     removePublicApp(appId){

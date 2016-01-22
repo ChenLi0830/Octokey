@@ -17,18 +17,32 @@ const {
     MapsDirectionsBike,
     PlacesPool,
     ActionShoppingBasket,
+    ActionExplore,
+    SocialSchool,
+    ActionLightbulbOutline,
+    ActionUpdate,
+    ActionAssignmentInd,
     } = SvgIcons;
 
+const iconColor = ZenColor.cyan;
+
 const nameToIcon = {
-    "all": <PlacesAllInclusive color={ZenColor.cyan}/>,
-    "hot": <SocialWhatshot color={ZenColor.cyan}/>,
-    "social": <CommunicationForum color={ZenColor.cyan}/>,
-    "game": <HardwareVideogameAsset color={ZenColor.cyan}/>,
-    "travel": <MapsTerrain color={ZenColor.cyan}/>,
-    "life": <ImageBlurOn color={ZenColor.cyan}/>,
-    "media": <ImageAudiotrack color={ZenColor.cyan}/>,
-    "sport": <PlacesPool color={ZenColor.cyan}/>,
-    "shopping": <ActionShoppingBasket color={ZenColor.cyan}/>
+    "all": <PlacesAllInclusive color={iconColor}/>,
+    "hot": <SocialWhatshot color={iconColor}/>,
+    "social": <CommunicationForum color={iconColor}/>,
+    "game": <HardwareVideogameAsset color={iconColor}/>,
+
+    "travel": <MapsTerrain color={iconColor}/>,
+    "lifestyle": <ImageBlurOn color={iconColor}/>,
+    "entertainment": <ImageAudiotrack color={iconColor}/>,
+    "sports": <PlacesPool color={iconColor}/>,
+    "shopping": <ActionShoppingBasket color={iconColor}/>,
+
+    "recommend":<ActionExplore color={iconColor}/>,
+    "education":<SocialSchool color={iconColor}/>,
+    "productivity":<ActionLightbulbOutline color={iconColor}/>,
+    "news":<ActionUpdate color={iconColor}/>,
+    "business":<ActionAssignmentInd color={iconColor}/>,
 };
 
 CategoryList = React.createClass({
