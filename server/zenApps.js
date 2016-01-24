@@ -89,10 +89,10 @@ Meteor.methods({
 
             ZenApps.remove({_id: appId}, function (err) {
                 if (err) console.log("there was an error removing zenApp when updating this app:", err);
-            });
-
-            ZenApps.insert(updatedApp, function (err) {
-                if (err) console.log("there was an error inserting zenApp when updating this app:", err);
+                //When is app is removed successfully, insert the new app
+                ZenApps.insert(updatedApp, function (err) {
+                    if (err) console.log("there was an error inserting zenApp when updating this app:", err);
+                });
             });
         }
 
