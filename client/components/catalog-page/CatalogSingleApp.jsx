@@ -25,30 +25,12 @@ CatelogSingleApp = React.createClass({
         appId: React.PropTypes.string.isRequired,
         selectedCategoryNames: React.PropTypes.array.isRequired,
         whenClicked: React.PropTypes.func.isRequired,
+        subscribed: React.PropTypes.bool.isRequired,
     },
-
-    mixins: [ReactMeteorData],
 
     getInitialState(){
         return {
             hovered: false
-        }
-    },
-
-    getMeteorData(){
-        const appAddedQuery = {
-            $and: [
-                {userId: Meteor.userId()},
-                {
-                    publicApps: {
-                        $elemMatch: {appId: this.props.appId}
-                    }
-                }
-            ]
-        };
-        return {
-            added: UserApps.find(appAddedQuery).fetch().length > 0,
-            currentUser: Meteor.user()
         }
     },
 
@@ -67,9 +49,9 @@ CatelogSingleApp = React.createClass({
     render(){
         const {logoURL,appName,loginLink,appId,selectedCategoryNames} = this.props;
 
-        let handleToggle = this.data.added ? this.handleRemove : this.handleAdd;
-        let labelText = this.data.added ? "已添加" : "添加";
-        let toggleState = this.data.added ? true : false;
+        let handleToggle = this.props.subscribed ? this.handleRemove : this.handleAdd;
+        let labelText = this.props.subscribed ? "已添加" : "添加";
+        let toggleState = this.props.subscribed ? true : false;
 
         let toggleButton = <Toggle
             name="toggleName1"
@@ -106,7 +88,6 @@ CatelogSingleApp = React.createClass({
     handleAdd(){
         const {logoURL,appName,loginLink,appId} = this.props;
         Meteor.call("addPublicApp", appId, appName, logoURL, loginLink);
-        //this.setState({added: true});
     },
 
     handleRemove(){

@@ -20,7 +20,8 @@ Catalog = React.createClass({
     getMeteorData(){
         const subsHandles = [
             Meteor.subscribe("zenApps"),
-            Meteor.subscribe("zenCategories")
+            Meteor.subscribe("zenCategories"),
+            Meteor.subscribe("userApps"),
         ];
         const subsReady = _.all(subsHandles, function (subsHandle) {
             //console.log("subsHandle", subsHandle, "is ready?", subsHandle.ready());
@@ -37,6 +38,7 @@ Catalog = React.createClass({
         return {
             zenApps: chosenApps,
             zenCategories: ZenCategories.find({}, {sort: {index: 1}}).fetch(),
+            subscribedPublicApps: UserApps.findOne({userId: Meteor.userId()}).publicApps,
             subsReady: subsReady
         }
     },
@@ -44,6 +46,7 @@ Catalog = React.createClass({
 
     render(){
         //console.log("Actions",Actions);
+        //console.log("this.data.subscribedPublicApps",this.data.subscribedPublicApps);
 
         const chosenZenApps = this.data.zenApps;
 
@@ -54,7 +57,8 @@ Catalog = React.createClass({
                     <CatalogSideBar zenCategories={this.data.zenCategories}/>
                 </Col>
                 <Col sm={9}>
-                    <CatalogAppsBox zenApps={this.data.zenApps} zenCategories={this.data.zenCategories}/>
+                    <CatalogAppsBox zenApps={this.data.zenApps} zenCategories={this.data.zenCategories}
+                                    subscribedPublicApps = {this.data.subscribedPublicApps}/>
                 </Col>
             </Row>
         </Grid>);

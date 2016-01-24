@@ -34,6 +34,12 @@ let modalAttributes = {
 };
 
 CatalogAppsBox = React.createClass({
+    propTypes: {
+        zenApps: React.PropTypes.array.isRequired,
+        zenCategories: React.PropTypes.array.isRequired,
+        subscribedPublicApps: React.PropTypes.array.isRequired,
+    },
+
     getInitialState(){
         return {
             showModal: false,
@@ -150,13 +156,17 @@ CatalogAppsBox = React.createClass({
     render(){
         const publicApps = (this.props.zenApps.map(function (app) {
                 let logoURL = getLogoUrl(app._id);
+                let subscribed = _.findIndex(this.props.subscribedPublicApps, function (subscribedApp) {
+                        return subscribedApp.appId === app._id
+                    }) > -1;
                 return <CatelogSingleApp key={app._id}
                                          logoURL={logoURL}
                                          appName={app.appName}
                                          loginLink={app.loginLink}
                                          selectedCategoryNames={app.categoryNames}
                                          whenClicked={this.handleClick}
-                                         appId={app._id}/>
+                                         appId={app._id}
+                                         subscribed={subscribed}/>
             }.bind(this))
         );
 
