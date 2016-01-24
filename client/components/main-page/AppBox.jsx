@@ -125,8 +125,8 @@ AppBox = React.createClass({
         // credentials
 
         //console.log("this.state.isInDevMode",this.state.isInDevMode);
-        let targetUrl = this.state.isInDevMode ? "http://localhost:3000" : "http://zenid.meteor.com";
-        //console.log("targetUrl",targetUrl);
+        //let targetUrl = this.state.isInDevMode ? "http://localhost:3000" : "http://zenid.meteor.com";
+        let targetUrl = this.state.isInDevMode ? "http://localhost:3000" : "http://114.215.98.118";
         //因为content script被嵌入了这个应用,所以要和content script通信,就发给自己就可以.
         //如果要修改这个值,记得还要修改 plugin 的 manifest.json file.
 
