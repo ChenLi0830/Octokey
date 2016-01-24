@@ -10,7 +10,8 @@ Meteor.methods({
         });
     },
 
-    removeCategory(name){
-        ZenCategories.remove({name: name});
+    removeCategory(categoryId){
+        ZenCategories.remove({_id: categoryId});
     }
 });
+
