@@ -69,7 +69,7 @@ Meteor.methods({
             throw new Meteor.Error("No existing App matches appId", appId);
         }
 
-        console.log("logo",logo);
+        console.log("logo", logo);
         //注意,新上传的logo对应是一个文件,而已经存在的logo对应是一个path string
         if (logo.indexOf("cfs/files/zenApps") > -1) {//Update data only
             let updatedApp = existingApp;
@@ -77,6 +77,7 @@ Meteor.methods({
             updatedApp.loginLink = loginLink;
             updatedApp.categoryNames = selectedCategoryNames;
             ZenApps.update({_id: appId}, updatedApp);
+            updateUserApps(appId);
         }
         else {//Update logo as well
             let updatedApp = new FS.File(logo);
@@ -96,7 +97,26 @@ Meteor.methods({
             });
         }
 
-        //Todo update all users' reference on this ZenApp (logo 会自动更新,其他的需要写算法更新)
+        function updateUserApps(appId) {
+            let ids = UserApps.find({"publicApps.appId": appId}).map(function(publicApp){
+                return publicApp.userId;
+            });
+            //console.log(ids);
+            UserApps.update({
+                $and:[
+                    {userId:{$in:ids}},
+                    {"publicApps.appId": appId}
+                ]
+            },
+            {
+                $set:{
+                    "publicApps.$.appName":appName,
+                    "publicApps.$.loginLink":loginLink,
+                }
+            },
+            {multi:true}
+            );
+        };
     },
 
     removeZenApp(appId){

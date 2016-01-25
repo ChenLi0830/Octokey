@@ -137,7 +137,7 @@ CatalogAppsBox = React.createClass({
         } else {
             alert("没填全");
         }
-        console.log("this.props.zenApps", this.props.zenApps);
+        //console.log("this.props.zenApps", this.props.zenApps);
     },
 
     handleRemoveApp(event){
