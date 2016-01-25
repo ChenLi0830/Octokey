@@ -42,7 +42,12 @@ Meteor.methods({
             }
         );
 
-        //Todo: 给对应的zenApp的subscribeCount+1
+        ZenApps.update(
+            {_id: appId},
+            {
+                $inc: {subscribeCount: 1}
+            }
+        );
     },
 
     removePublicApp(appId){
@@ -66,8 +71,15 @@ Meteor.methods({
                     publicApps: {appId: appId}
                 }
             }
-        )
+        );
+        //TODO 再加入修改和删除键之后,去掉这里的credential udpate. 用户unsubscribe一个应用不应该删除他的credential
 
+        ZenApps.update(
+            {_id: appId},
+            {
+                $inc: {subscribeCount: -1}
+            }
+        );
     },
 
     appAddUsername(appId, username){

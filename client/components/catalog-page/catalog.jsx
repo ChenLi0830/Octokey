@@ -30,15 +30,19 @@ Catalog = React.createClass({
 
         //const zenApps = ZenApps.find().fetch();
         const chosenApps = ZenApps.find({
-            categoryNames: {
-                $in: [this.state.chosenCategory]
-            }
-        }).fetch();
+                categoryNames: {
+                    $in: [this.state.chosenCategory]
+                }
+            },
+            {sort: {subscribeCount: -1}}
+        ).fetch();
+
+        const AppOfUser = UserApps.findOne({userId: Meteor.userId()});
 
         return {
             zenApps: chosenApps,
             zenCategories: ZenCategories.find({}, {sort: {index: 1}}).fetch(),
-            subscribedPublicApps: UserApps.findOne({userId: Meteor.userId()}).publicApps,
+            subscribedPublicApps: AppOfUser ? AppOfUser.publicApps : [],
             subsReady: subsReady
         }
     },
@@ -58,7 +62,7 @@ Catalog = React.createClass({
                 </Col>
                 <Col sm={9}>
                     <CatalogAppsBox zenApps={this.data.zenApps} zenCategories={this.data.zenCategories}
-                                    subscribedPublicApps = {this.data.subscribedPublicApps}/>
+                                    subscribedPublicApps={this.data.subscribedPublicApps}/>
                 </Col>
             </Row>
         </Grid>);
