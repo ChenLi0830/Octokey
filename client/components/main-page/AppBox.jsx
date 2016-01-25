@@ -114,7 +114,12 @@ AppBox = React.createClass({
                 this.handleGoToLink(username);
             }.bind(this));
 
-            Meteor.call("appAddUsername", this.props.appId, username);
+            Meteor.call("appAddUsername", this.props.appId, username, function(error){
+                if (error){
+                    throw new Meteor.Error("Error adding new Credential");
+                }
+                this.handleCloseDialog();
+            });
 
             //TODO 询问用户是否登录成功,如果否,删除用户登录信息,保留textFields, 如果是,关闭modal.
         }
