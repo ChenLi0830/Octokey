@@ -55,7 +55,7 @@ AppsContainer = React.createClass({
         //console.log("appBoxes",appBoxes.count, appBoxes);
 
         return <div>
-            <FloatingEditButton/>
+            <FloatingEditButton whenEditButtonClicked = {this.handleEditButtonClick}/>
             <Paper zDepth={1}
                    style={{
              backgroundColor:"#ffffff",
@@ -68,5 +68,11 @@ AppsContainer = React.createClass({
             </Paper>
         </div>
     },
+
+    handleEditButtonClick(i){
+
+
+        alert(i+"is clicked");
+    }
 
 });

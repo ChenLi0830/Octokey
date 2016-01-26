@@ -33,18 +33,6 @@ AppBox = React.createClass({
         }
     },
 
-    /*  mixins: [ReactMeteorData],
-     getMeteorData(){//这部分移动到background script里,获取对应的app password
-     if (this.props.userNames.length>0){
-     Meteor.subscribe("appCredential", this.props.appId, this.props.userNames[0], function () {
-     //console.log("subscribe successful");
-     const credential = UserAppCredentials.find().fetch();
-     console.log("credential", credential);
-     }.bind(this));
-     }
-     return {}
-     },*/
-
     componentDidMount(){
         var boxSize = ReactDOM.findDOMNode(this.refs.appBox).offsetWidth;
         this.setState({//这里会trigger DOM re-render

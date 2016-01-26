@@ -13,6 +13,10 @@ const {
 
 FloatingEditButton = React.createClass({
 
+    propTypes:{
+        whenEditButtonClicked: React.PropTypes.func.isRequired,
+    },
+
     getInitialState(){
         return {
             FABActive: false,
@@ -48,7 +52,7 @@ FloatingEditButton = React.createClass({
                     secondary={true} mini={true}
                     backgroundColor={miniIconColor[i].background}
                     iconStyle={{fill:miniIconColor[i].icon}}
-                    onTouchTap={this.handleTouchButton.bind(this,i)}>
+                    onTouchTap={this.props.whenEditButtonClicked.bind(null,i)}>
                     {iconElement}
                 </FloatingActionButton>
             </li>
