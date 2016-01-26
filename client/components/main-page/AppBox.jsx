@@ -119,7 +119,7 @@ AppBox = React.createClass({
                     throw new Meteor.Error("Error adding new Credential");
                 }
                 this.handleCloseDialog();
-            });
+            }.bind(this));
 
             //TODO 询问用户是否登录成功,如果否,删除用户登录信息,保留textFields, 如果是,关闭modal.
         }
