@@ -10,8 +10,6 @@ App = React.createClass({
     getMeteorData() {
         const subHandles = Meteor.userId() ?
             [
-                //Meteor.subscribe("userData"),
-                //Meteor.subscribe("zenApps"),
                 Meteor.subscribe("userApps"),
             ] : [];
 
@@ -38,8 +36,10 @@ App = React.createClass({
     },
 
     getChildContext() {
+        let muiTheme = ThemeManager.getMuiTheme(ZenRawTheme);
+        let zenMUITheme = customizeMUITheme(muiTheme);
         return {
-            muiTheme: ThemeManager.getMuiTheme(ZenRawTheme)
+            muiTheme:zenMUITheme
         };
     },
 
