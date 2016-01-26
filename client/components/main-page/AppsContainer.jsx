@@ -6,7 +6,8 @@ const {
     } = ReactBootstrap;
 
 const {
-    Paper
+    Paper,
+    FloatingActionButton,
     } = MUI;
 
 AppsContainer = React.createClass({
@@ -53,15 +54,19 @@ AppsContainer = React.createClass({
 
         //console.log("appBoxes",appBoxes.count, appBoxes);
 
-        return <Paper zDepth={1}
-                      style={{
+        return <div>
+            <FloatingEditButton/>
+            <Paper zDepth={1}
+                   style={{
              backgroundColor:"#ffffff",
              boxShadow:"0 1px 6px rgba(0, 0, 0, 0.12)",
              padding:0,
              borderRadius:"5px"}}>
-            <Row style={{marginLeft:0, marginRight:0}}>
-                {appBoxes}
-            </Row>
-        </Paper>
-    }
+                <Row style={{marginLeft:0, marginRight:0}}>
+                    {appBoxes}
+                </Row>
+            </Paper>
+        </div>
+    },
+
 });
