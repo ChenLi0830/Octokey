@@ -45,10 +45,10 @@ AppsContainer = React.createClass({
 
     render(){
         if (!this.data.currentUser) {
-            this.context.history.pushState(null,"/login");
+            this.context.history.pushState(null, "/login");
         }
 
-        if (this.data.chosenPublicApps.length > 0) {
+        if (/*this.data.chosenPublicApps.length > 0*/false) {
             var appBoxes = this.data.chosenPublicApps.map(function (userApp, i) {
                 return <AppBox key={userApp.appId}
                                appId={userApp.appId}
@@ -61,8 +61,8 @@ AppsContainer = React.createClass({
                 />
             }, this);
         } else {
-            var appBoxes = <h4> Add new apps</h4>;
-        }
+            var appBoxes = <AddNewApp whenClicked={this.handleNavigateToCatalog}/>;
+       }
 
         //console.log("appBoxes",appBoxes.count, appBoxes);
         let isPublicApp = publicFocusedIndex > -1;
@@ -127,11 +127,16 @@ AppsContainer = React.createClass({
     handleEditButtonClick(i){
         switch (i) {
             case 0:
-                this.context.history.pushState(null, "/catalog");
+                this.handleNavigateToCatalog();
                 break;
-            default: alert(i+" is clicked, don't know how to handle.");
+            default:
+                alert(i + " is clicked, don't know how to handle.");
         }
         //this.setState({focusedIndex:i});
+    },
+
+    handleNavigateToCatalog(){
+        this.context.history.pushState(null, "/catalog");
     },
 
     handleOpenDialogCredential() {
