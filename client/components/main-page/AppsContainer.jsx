@@ -48,7 +48,7 @@ AppsContainer = React.createClass({
             this.context.history.pushState(null, "/login");
         }
 
-        if (/*this.data.chosenPublicApps.length > 0*/false) {
+        if (this.data.chosenPublicApps.length > 0) {
             var appBoxes = this.data.chosenPublicApps.map(function (userApp, i) {
                 return <AppBox key={userApp.appId}
                                appId={userApp.appId}
