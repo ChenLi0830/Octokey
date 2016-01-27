@@ -9,23 +9,18 @@ App = React.createClass({
 
     getMeteorData() {
         const subHandles = Meteor.userId() ?
-            [
-                Meteor.subscribe("userApps"),
-            ] : [];
+            [Meteor.subscribe("userApps"),] : [];
 
         const subsReady = _.all(subHandles, function (handle) {
             return handle.ready();
         });
-
         // Get the current routes from React Router
         const routes = this.props.routes;
-
         // If we are at the root route, and the subscrioptions are ready
         if (routes.length > 1 && !routes[1].path && subsReady) {
             // Redirect to the route for the first todo list
             this.props.history.replaceState(null, `/list`);
         }
-
         return {
             subsReady: subsReady
         };
