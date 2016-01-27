@@ -41,7 +41,7 @@ App = React.createClass({
     render(){
         return (
             <div id="wrapper">
-                <Header />
+                <Header location={this.props.location}/>
                 <Grid>
                     <Row style={{marginTop:"60px"}}>
                         <Col xs={12}>

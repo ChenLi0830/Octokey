@@ -3,6 +3,5 @@
 //注意它们不能被放在lib文件夹下,因为这会导致它比client/lib先运行,导致Reflux还没被声明
 Actions = Reflux.createActions([
     'selectNewCategory',
-    'getSelectedCategory'
 ]);
 

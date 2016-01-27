@@ -9,10 +9,12 @@ const {
     Paper,
     } = MUI;
 
+const {History} = ReactRouter;
+
 let publicFocusedIndex = -1, privateFocusedIndex = -1;
 
 AppsContainer = React.createClass({
-    mixins: [ReactMeteorData],
+    mixins: [ReactMeteorData, History],
 
     getMeteorData(){
         if (Meteor.user()) {
@@ -36,14 +38,16 @@ AppsContainer = React.createClass({
     },
 
     componentWillMount(){
-        self = this;
         Meteor.call("inDevMode", function (error, inDevMode) {
             this.isInDevMode = inDevMode;
-            console.log("this.isInDevMode", this.isInDevMode);
         }.bind(this));
     },
 
     render(){
+        if (!this.data.currentUser) {
+            this.context.history.pushState(null,"/login");
+        }
+
         if (this.data.chosenPublicApps.length > 0) {
             var appBoxes = this.data.chosenPublicApps.map(function (userApp, i) {
                 return <AppBox key={userApp.appId}
@@ -121,8 +125,13 @@ AppsContainer = React.createClass({
 
 
     handleEditButtonClick(i){
+        switch (i) {
+            case 0:
+                this.context.history.pushState(null, "/catalog");
+                break;
+            default: alert(i+" is clicked, don't know how to handle.");
+        }
         //this.setState({focusedIndex:i});
-        alert(i + "is clicked");
     },
 
     handleOpenDialogCredential() {
