@@ -34,6 +34,7 @@ AppsContainer = React.createClass({
     getInitialState(){
         return {
             openDialogCredential: false,
+            userEditStatus: "default"
         }
     },
 
@@ -55,6 +56,7 @@ AppsContainer = React.createClass({
                                logoURL={userApp.logoURL}
                                width="100%"
                                whenAppTileClicked={this.handleAppTileClick}
+                               userEditStatus={this.state.userEditStatus}
                     /*appName={userApp.appName}
                     loginLink={userApp.loginLink}
                     userNames={userApp.userNames}*/
@@ -62,7 +64,7 @@ AppsContainer = React.createClass({
             }, this);
         } else {
             var appBoxes = <AddNewApp whenClicked={this.handleNavigateToCatalog}/>;
-       }
+        }
 
         //console.log("appBoxes",appBoxes.count, appBoxes);
         let isPublicApp = publicFocusedIndex > -1;
@@ -72,7 +74,7 @@ AppsContainer = React.createClass({
                 appName = this.data.chosenPublicApps[publicFocusedIndex].appName;
                 appId = this.data.chosenPublicApps[publicFocusedIndex].appId;
             } else {//private app
-                alert("it is a private app!")
+                alert("it is a private app!");
                 appName = "";
                 appId = "";
             }
@@ -88,14 +90,21 @@ AppsContainer = React.createClass({
                               appContainer={this}
             />
 
+            <FocusOverlay visibility = {this.state.userEditStatus!=="default"}/>
 
-            <FloatingEditButton whenEditButtonClicked={this.handleEditButtonClick}/>
+            <FloatingEditButton
+                whenEditButtonClicked={this.handleEditButtonClick}
+                userEditStatus={this.state.userEditStatus}
+            />
+
             <Paper zDepth={1}
                    style={{
-             backgroundColor:"#ffffff",
-             boxShadow:"0 1px 6px rgba(0, 0, 0, 0.12)",
-             padding:0,
-             borderRadius:"5px"}}>
+                   zIndex:"1400",
+                   position:"relative",
+                   backgroundColor:"#ffffff",
+                   boxShadow:"0 1px 6px rgba(0, 0, 0, 0.12)",
+                   padding:0,
+                   borderRadius:"5px"}}>
                 <Row style={{marginLeft:0, marginRight:0}}>
                     {appBoxes}
                 </Row>
@@ -125,9 +134,18 @@ AppsContainer = React.createClass({
 
 
     handleEditButtonClick(i){
-        switch (i) {
+        console.log(i);
+        if (typeof i === "object") {
+            this.setState({userEditStatus: "default"});
+        } else switch (i) {
             case 0:
                 this.handleNavigateToCatalog();
+                break;
+            case 1:
+                this.setState({userEditStatus: "remove"});
+                break;
+            case 2:
+                this.setState({userEditStatus: "config"});
                 break;
             default:
                 alert(i + " is clicked, don't know how to handle.");

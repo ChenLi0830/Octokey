@@ -13,8 +13,9 @@ const {
 
 FloatingEditButton = React.createClass({
 
-    propTypes:{
+    propTypes: {
         whenEditButtonClicked: React.PropTypes.func.isRequired,
+        userEditStatus: React.PropTypes.string.isRequired,
     },
 
     getInitialState(){
@@ -58,17 +59,42 @@ FloatingEditButton = React.createClass({
             </li>
         }.bind(this));
 
-        return <div className="fixed-floating-btn" onMouseLeave={this.handleLeaveFAB}>
-            <ul style={{}} className="list-unstyled ">
-                {buttonList}
-            </ul>
-            <FloatingActionButton
-                backgroundColor={ZenColor.cyan}
-                iconStyle={{fill:ZenColor.white}}
-                onMouseEnter={this.handleHoverFAB}>
-                <ContentCreate style={{width:"28px"}}/>
-            </FloatingActionButton>
-        </div>
+        const FAB = this.getFAB(this.props.userEditStatus, buttonList);
+
+        return FAB;
+    },
+
+    getFAB(userEditStatus, buttonList){
+        switch (userEditStatus) {
+            case "default":
+                return (
+                    <div className="fixed-floating-btn" onMouseLeave={this.handleLeaveFAB}>
+                        <ul style={{}} className="list-unstyled ">
+                            {buttonList}
+                        </ul>
+                        <FloatingActionButton
+                            backgroundColor={ZenColor.cyan}
+                            iconStyle={{fill:ZenColor.white}}
+                            onMouseEnter={this.handleHoverFAB}>
+                            <ContentCreate style={{width:"28px"}}/>
+                        </FloatingActionButton>
+                    </div>
+                );
+                break;
+            default :
+                return (
+                    <div className="fixed-floating-btn">
+                        <FloatingActionButton
+                            backgroundColor={ZenColor.pink}
+                            style={{color:ZenColor.white}}
+                            iconStyle={{fill:ZenColor.pink}}
+                            onTouchTap={this.props.whenEditButtonClicked}>
+                            取消
+                        </FloatingActionButton>
+                    </div>
+                );
+                break;
+        }
     },
 
     handleHoverFAB(){
@@ -78,9 +104,4 @@ FloatingEditButton = React.createClass({
     handleLeaveFAB(){
         this.setState({FABActive: false});
     },
-
-    handleTouchButton(i){
-        alert("button" + i + "is clicked");
-        handleLeaveFAB();
-    }
 });

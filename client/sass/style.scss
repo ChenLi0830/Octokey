@@ -5,7 +5,7 @@
 }
 
 .vertical-center {
-  position: relative;
+  position: relative !important;
   top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
@@ -13,7 +13,7 @@
 }
 
 .horizontal-center {
-  display: block;
+  display: block !important;
   margin-left: auto;
   margin-right: auto;
 }
