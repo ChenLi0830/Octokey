@@ -35,15 +35,17 @@ Meteor.methods({
         });
     },
 
-    removeCredential(appId, username, password){
-        console.log("removeCredential start");
-        if (Meteor.userId()) {
+    removeCredential(appId, username){
+        console.log("removeCredential start", "appId", appId, "username",username);
+        if (!Meteor.userId()) {
             throw new Meteor.Error("not logged in");
         }
-        UserAppCredentials.update({userId: Meteor.userId()}, {
-            $pull: {
-                publicApps: {"appId": appId, "username": username, "password": password}
+        UserAppCredentials.update({userId:Meteor.userId()}, {
+                $pull:{
+                    publicApps: {"appId": appId, "username": username}
+                }
             }
-        })
+        );
+
     },
 });

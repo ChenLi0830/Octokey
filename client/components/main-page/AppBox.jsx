@@ -86,7 +86,7 @@ AppBox = React.createClass({
                 return baseStyle;
                 break;
             case "remove" :
-                baseStyle.backgroundColor = this.state.hovered ? ZenColor.pink : "rgba(255, 255, 255, 0.0)";
+                baseStyle.backgroundColor = this.state.hovered ? ZenColor.orange : "rgba(255, 255, 255, 0.0)";
                 return baseStyle;
                 break;
             case "config" :

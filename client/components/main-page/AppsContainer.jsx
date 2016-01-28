@@ -34,7 +34,8 @@ AppsContainer = React.createClass({
     getInitialState(){
         return {
             openDialogCredential: false,
-            userEditStatus: "default"
+            userEditStatus: "default",
+            openDialogEdit:false,
         }
     },
 
@@ -57,9 +58,6 @@ AppsContainer = React.createClass({
                                width="100%"
                                whenAppTileClicked={this.handleAppTileClick}
                                userEditStatus={this.state.userEditStatus}
-                    /*appName={userApp.appName}
-                    loginLink={userApp.loginLink}
-                    userNames={userApp.userNames}*/
                 />
             }, this);
         } else {
@@ -69,7 +67,7 @@ AppsContainer = React.createClass({
         //console.log("appBoxes",appBoxes.count, appBoxes);
         let isPublicApp = publicFocusedIndex > -1;
         let appName = "", appId = "";
-        if (this.state.openDialogCredential) {//Dialog is about to open
+        if (this.state.openDialogCredential || this.state.openDialogEdit) {//Dialog is about to open
             if (isPublicApp) {
                 appName = this.data.chosenPublicApps[publicFocusedIndex].appName;
                 appId = this.data.chosenPublicApps[publicFocusedIndex].appId;
@@ -87,8 +85,16 @@ AppsContainer = React.createClass({
                               openDialogCredential={this.state.openDialogCredential}
                               whenCloseDialog={this.handleCloseDialogCredential}
                               whenSubmitCredential={this.handleGoToLink}
-                              appContainer={this}
             />
+
+            {this.state.openDialogEdit ?
+                <EditDialog appName={appName}
+                            appId={appId}
+                            isPublicApp={isPublicApp}
+                            usernames = {isPublicApp?this.data.chosenPublicApps[publicFocusedIndex].userNames:null}
+                            openDialogEdit = {this.state.openDialogEdit}
+                            whenCloseDialog={()=>{this.setState({openDialogEdit: false})}}
+                /> : null}
 
             <FocusOverlay visibility={this.state.userEditStatus!=="default"}/>
 
@@ -136,18 +142,18 @@ AppsContainer = React.createClass({
             }
         }
 
-        else if (this.state.userEditStatus === "remove"){
+        else if (this.state.userEditStatus === "remove") {
             if (isPublicApp) {
                 Meteor.call("removePublicApp", appId);
             } else {
                 alert("remove private app!")
             }
         }
-        else if (this.state.userEditStatus === "config"){
+        else if (this.state.userEditStatus === "config") {
             if (isPublicApp) {
-
+                this.setState({openDialogEdit:true});
             } else {
-
+                alert("edit private app!")
             }
         }
     },

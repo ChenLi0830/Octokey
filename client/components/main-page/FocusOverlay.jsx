@@ -9,7 +9,7 @@ FocusOverlay = React.createClass({
     },
 
     render (){
-        console.log("this.props.visibility", this.props.visibility);
+        //console.log("this.props.visibility", this.props.visibility);
         return <div style={{position:"fixed", top:0, left:0,
                             background: this.props.visibility ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0.0)",
                             zIndex: this.props.visibility ? "1300" : "0",

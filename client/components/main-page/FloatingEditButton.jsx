@@ -85,9 +85,8 @@ FloatingEditButton = React.createClass({
                 return (
                     <div className="fixed-floating-btn">
                         <FloatingActionButton
-                            backgroundColor={ZenColor.pink}
+                            backgroundColor={ZenColor.orange}
                             style={{color:ZenColor.white}}
-                            iconStyle={{fill:ZenColor.pink}}
                             onTouchTap={this.props.whenEditButtonClicked}>
                             取消
                         </FloatingActionButton>

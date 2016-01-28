@@ -99,5 +99,25 @@ Meteor.methods({
                 }
             }
         )
+    },
+
+    appRemoveUsername(appId, username){
+        console.log("appRemoveUsername start: appId", appId, "username", username);
+        if (!Meteor.userId()) {
+            throw new Meteor.Error("not logged in");
+        }
+        UserApps.update(
+            {
+                $and: [
+                    {"userId": Meteor.userId()},
+                    {"publicApps.appId": appId}
+                ]
+            },
+            {
+                $pull: {
+                    "publicApps.$.userNames": username
+                }
+            }
+        )
     }
 });
