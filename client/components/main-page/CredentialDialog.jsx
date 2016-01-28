@@ -82,15 +82,15 @@ CredentialDialog = React.createClass({
                     if (error) {
                         throw new Meteor.Error("Error adding new Credential");
                     }
-                    this.props.whenSubmitCredential(CredentialDialog);
                 }.bind(this));
 
                 Meteor.call("appAddUsername", this.props.appId, username, function (error) {
                     if (error) {
                         throw new Meteor.Error("Error adding new Credential");
                     }
-                    this.props.whenCloseDialog();
                 }.bind(this));
+                this.props.whenSubmitCredential(username, password);
+                this.props.whenCloseDialog();
             } else {
                 alert("TODO: adding credentials for the private app");
             }

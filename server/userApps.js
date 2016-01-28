@@ -25,6 +25,15 @@ Meteor.methods({
             });
         }
 
+        let credentialRecord = UserAppCredentials.findOne({userId: userId});
+
+        let usernameList = [];
+        credentialRecord.publicApps.map(function(publicApp){
+            if (publicApp.appId===appId){
+                usernameList.push(publicApp.username);
+            }
+        });
+
         UserApps.update(//前面的check都通过,then add this public app to user's record
             {userId: userId},
             {
@@ -34,7 +43,7 @@ Meteor.methods({
                         "appName": appName,
                         "logoURL": logoURL,
                         "loginLink": loginLink,
-                        "userNames": [],
+                        "userNames": usernameList,
                         "defaultUserName": "",
                         "lastLoginTime": ""
                     }
@@ -63,16 +72,6 @@ Meteor.methods({
                 }
             }
         );
-
-        UserAppCredentials.update(
-            {userId: Meteor.userId()},
-            {
-                $pull: {
-                    publicApps: {appId: appId}
-                }
-            }
-        );
-        //TODO 再加入修改和删除键之后,去掉这里的credential udpate. 用户unsubscribe一个应用不应该删除他的credential
 
         ZenApps.update(
             {_id: appId},

@@ -90,7 +90,7 @@ AppsContainer = React.createClass({
                               appContainer={this}
             />
 
-            <FocusOverlay visibility = {this.state.userEditStatus!=="default"}/>
+            <FocusOverlay visibility={this.state.userEditStatus!=="default"}/>
 
             <FloatingEditButton
                 whenEditButtonClicked={this.handleEditButtonClick}
@@ -118,17 +118,37 @@ AppsContainer = React.createClass({
         });
         privateFocusedIndex = -1;
         //TODO getPrivateFocusedIndex in the same way
+        let isPublicApp = publicFocusedIndex !== -1 && privateFocusedIndex === -1;
 
-        if (publicFocusedIndex !== -1 && privateFocusedIndex === -1) {//是public app
-            if (this.data.chosenPublicApps[publicFocusedIndex].userNames.length > 0) {
-                this.handleGoToLink(this.data.chosenPublicApps[publicFocusedIndex].userNames)
+        if (this.state.userEditStatus === "default") {
+            if (isPublicApp) {//是public app
+                if (this.data.chosenPublicApps[publicFocusedIndex].userNames.length > 0) {
+                    //Todo 加入component让用户选择登录credential
+                    let username = this.data.chosenPublicApps[publicFocusedIndex].userNames[0];
+                    this.handleGoToLink(username, "");
+                }
+                else {
+                    this.handleOpenDialogCredential(publicFocusedIndex);
+                }
             }
-            else {
-                this.handleOpenDialogCredential(publicFocusedIndex);
+            else {//
+                console.log("is private app")
             }
         }
-        else {//
-            console.log("is private app")
+
+        else if (this.state.userEditStatus === "remove"){
+            if (isPublicApp) {
+                Meteor.call("removePublicApp", appId);
+            } else {
+                alert("remove private app!")
+            }
+        }
+        else if (this.state.userEditStatus === "config"){
+            if (isPublicApp) {
+
+            } else {
+
+            }
         }
     },
 
@@ -165,17 +185,12 @@ AppsContainer = React.createClass({
         this.setState({openDialogCredential: false});
     },
 
-    handleGoToLink(userNames){
-        //Assume the credential the user choose is the first one. Todo Needs to be changed when implementing multiple
-        // credentials
-        let username = userNames[0];
-
-        //console.log("this.state.isInDevMode",this.state.isInDevMode);
+    handleGoToLink(username, password){
         let targetUrl = this.isInDevMode ? "http://localhost:3000" : "http://114.215.98.118";
         //因为content script被嵌入了这个应用,所以要和content script通信,就发给自己就可以.
         //如果要修改这个值,记得还要修改 plugin 的 manifest.json file.
 
-        //Todo 让这一步的Meteor.userID()放到server里执行
+        //console.log("username: ",username);
         let isPublicApp = publicFocusedIndex > -1;
         let appId = "", loginLink = "";
         if (isPublicApp) {
@@ -186,12 +201,10 @@ AppsContainer = React.createClass({
             appId = "";
             loginLink = "";
         }
-        console.log("publicFocusedIndex", publicFocusedIndex);
-        console.log("appId", appId, "loginLink", loginLink);
-
+        //Todo 让这一步的Meteor.userID()放到server里执行
         window.postMessage(//Communicate with plugin
             [
-                "goToLink", Meteor.userId(), appId, loginLink, username
+                "goToLink", Meteor.userId(), appId, loginLink, username, password
             ],
             targetUrl);
     },

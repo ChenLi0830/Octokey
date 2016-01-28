@@ -32,11 +32,8 @@ Meteor.publish("appCredential", function (userId, appId, username) {
                         }
                     }
                 }
-                //{"publicApps.appId": appId},
-                //{"publicApps.username": username}
             ]
         },
-        //);
         {fields: {'publicApps.$': 1}});
     return result;
 });
