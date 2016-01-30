@@ -34,7 +34,7 @@ Catalog = React.createClass({
                     $in: [this.state.chosenCategory]
                 }
             },
-            {sort: {subscribeCount: -1}}
+            {sort: {subscribeCount: -1}, reactive: false}
         ).fetch();
 
         const AppOfUser = UserApps.findOne({userId: Meteor.userId()});

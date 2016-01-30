@@ -4,21 +4,23 @@
 Meteor.methods({
 
     addPublicApp(appId, appName, logoURL, loginLink){
-        console.log("addPublicApp start");
+        //console.log("addPublicApp start");
         const userId = Meteor.userId();
 
         if (!userId) {//没登录
             throw new Meteor.Error("not signed in");
         }
-        const userExists = !!Meteor.users.find({_id: userId});
-        if (!userExists) {//用户不存在
-            throw new Meteor.Error("user doesn't exist");
-        }
 
         const userHasApps = UserApps.find({userId: userId}).count();
 
-        if (userExists && !userHasApps) {//如果用户存在,但在userHasApps里没有建立用户档案,就add new 档案
+        if (!userHasApps) {//如果用户存在,但在userHasApps里没有建立用户档案,就add new 档案
             UserApps.insert({
+                userId: userId,
+                publicApps: [],
+                privateApps: []
+            });
+
+            UserAppCredentials.insert({
                 userId: userId,
                 publicApps: [],
                 privateApps: []
@@ -60,7 +62,7 @@ Meteor.methods({
     },
 
     removePublicApp(appId){
-        console.log("removePublicApp start");
+        //console.log("removePublicApp start");
         if (!Meteor.userId()) {
             throw new Meteor.Error("not logged in");
         }
@@ -82,7 +84,7 @@ Meteor.methods({
     },
 
     appAddUsername(appId, username){
-        console.log("addConfigured start");
+        //console.log("addConfigured start");
         if (!Meteor.userId()) {
             throw new Meteor.Error("not logged in");
         }
@@ -102,7 +104,7 @@ Meteor.methods({
     },
 
     appRemoveUsername(appId, username){
-        console.log("appRemoveUsername start: appId", appId, "username", username);
+        //console.log("appRemoveUsername start);
         if (!Meteor.userId()) {
             throw new Meteor.Error("not logged in");
         }

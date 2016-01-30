@@ -70,18 +70,15 @@ EditDialog = React.createClass({
     },
 
     handleRemoveAccount(){
-        //console.log("deleting username of ", this.state.focusedUsername);
-        //const appId = this.state.appId;
-        //const focusedUsername = this.state.focusedUsername;
-        Meteor.call("removeCredential", this.props.appId, this.state.focusedUsername);
-        Meteor.call("appRemoveUsername", this.props.appId, this.state.focusedUsername, function(error){
-            if (error) throw alert("remove user account error");
-            this.setState({
-                popOverOpen: false,
-                openDialogAdd: false,
-                focusedUsername:null,
-            });
-        }.bind(this));
+        let focusedUsername = this.state.focusedUsername;
+        this.setState({
+            popOverOpen: false,
+            openDialogAdd: false,
+            focusedUsername:null,
+        }, function(){//setState完成后再remove,保证UI不出glitch
+            Meteor.call("removeCredential", this.props.appId, focusedUsername);
+            Meteor.call("appRemoveUsername", this.props.appId, focusedUsername);
+        });
     },
 
     render()
@@ -141,6 +138,4 @@ EditDialog = React.createClass({
             <Divider />
         </Dialog>
     }
-    ,
-})
-;
+});

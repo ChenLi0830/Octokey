@@ -22,7 +22,9 @@ const routes = (
         <IndexRoute component={AppLoading} onEnter={requireAuth}/>
         <Route path="/list" component={AppsContainer} onEnter={requireAuth}/>
         <Route path="/catalog" component={Catalog} onEnter={requireAuth}/>
-        <Route path="/login" component={Login}/>
+        <Route path="/signUp" component={AuthJoinPage}/>
+        <Route path="/login" component={AuthSignInPage}/>
+        <Route path="/reset" component={AuthForgotPwdPage}/>
         <Route path="*" component={AppNotFound}/>
     </Route>
 );
