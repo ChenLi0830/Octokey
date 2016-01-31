@@ -1,23 +1,24 @@
 Meteor.publish("zenApps", function () {
+    localSimulateLatency(2000);
     if (this.userId) {
         return ZenApps.find();
     }
 });
 
 Meteor.publish("userApps", function () {
+    localSimulateLatency(1000);
     return UserApps.find({userId: this.userId})
 });
 
 Meteor.publish("zenCategories", function () {
+    localSimulateLatency(500);
     if (this.userId) {
         return ZenCategories.find();
     }
 });
 
 Meteor.publish("appCredential", function (userId, appId, username) {
-    if (/localhost/.test(Meteor.absoluteUrl())) {
-        Meteor._sleepForMs(3000); //to simulate longer response sleep for 2 seconds only on localhost
-    }
+    localSimulateLatency(2000);
     console.log("appCredential", userId, appId, username);
     //console.log("this.user", this.user);
     let result = UserAppCredentials.find(

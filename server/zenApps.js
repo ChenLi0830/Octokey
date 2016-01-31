@@ -19,6 +19,7 @@ ZenApps.allow({
 
 Meteor.methods({
     addZenApp(appName, loginLink, logo, selectedCategoryNames){
+        localSimulateLatency(500);
         console.log("appName", appName);
         console.log("loginLink", loginLink);
 
@@ -49,6 +50,7 @@ Meteor.methods({
     },
 
     updateZenApp(appId, appName, loginLink, logo, selectedCategoryNames){
+        localSimulateLatency(500);
         //console.log("appName",appName);
         //console.log("loginLink",loginLink);
         console.log("update start: appId", appId, "appName", appName, "loginLink", loginLink, "selectedCategoryNames",
@@ -120,6 +122,7 @@ Meteor.methods({
     },
 
     removeZenApp(appId){
+        localSimulateLatency(500);
         ZenApps.remove({_id: appId});
     }
 });

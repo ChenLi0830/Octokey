@@ -2,8 +2,8 @@
 //publicAppConfigured (userId, appId)
 //getPublicApps (userId)
 Meteor.methods({
-
     addPublicApp(appId, appName, logoURL, loginLink){
+        localSimulateLatency(500);
         //console.log("addPublicApp start");
         const userId = Meteor.userId();
 
@@ -62,6 +62,7 @@ Meteor.methods({
     },
 
     removePublicApp(appId){
+        localSimulateLatency(500);
         //console.log("removePublicApp start");
         if (!Meteor.userId()) {
             throw new Meteor.Error("not logged in");
@@ -84,6 +85,7 @@ Meteor.methods({
     },
 
     appAddUsername(appId, username){
+        localSimulateLatency(500);
         //console.log("addConfigured start");
         if (!Meteor.userId()) {
             throw new Meteor.Error("not logged in");
@@ -104,6 +106,7 @@ Meteor.methods({
     },
 
     appRemoveUsername(appId, username){
+        localSimulateLatency(500);
         //console.log("appRemoveUsername start);
         if (!Meteor.userId()) {
             throw new Meteor.Error("not logged in");
