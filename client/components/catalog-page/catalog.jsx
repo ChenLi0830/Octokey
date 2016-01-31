@@ -30,14 +30,12 @@ Catalog = React.createClass({
 
         //const zenApps = ZenApps.find().fetch();
         const chosenApps = ZenApps.find({
-                categoryNames: {
-                    $in: [this.state.chosenCategory]
-                }
-            },
-            {sort: {subscribeCount: -1}, reactive: false}
-        ).fetch();
+            categoryNames: {
+                $in: [this.state.chosenCategory]
+            }
+        }, {sort: {subscribeCount: -1}, reactive: false}).fetch();
 
-        const AppOfUser = UserApps.findOne({userId: Meteor.userId()});
+        const AppOfUser = UserApps.findOne({userId: Meteor.userId()}, {reactive: false});
 
         return {
             zenApps: chosenApps,
