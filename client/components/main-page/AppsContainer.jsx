@@ -35,7 +35,8 @@ AppsContainer = React.createClass({
         return {
             openDialogCredential: false,
             userEditStatus: "default",
-            openDialogEdit:false,
+            openDialogEdit: false,
+            openDialogPlugin:false,
         }
     },
 
@@ -79,6 +80,9 @@ AppsContainer = React.createClass({
         }
 
         return <div>
+            <PluginInstallDialog openDialogPlugin={this.state.openDialogPlugin}
+                                 whenCloseDialog={()=>{this.setState({openDialogPlugin:false})}}/>
+
             <CredentialDialog appName={appName}
                               appId={appId}
                               isPublicApp={isPublicApp}
@@ -91,8 +95,8 @@ AppsContainer = React.createClass({
                 <EditDialog appName={appName}
                             appId={appId}
                             isPublicApp={isPublicApp}
-                            usernames = {isPublicApp?this.data.chosenPublicApps[publicFocusedIndex].userNames:null}
-                            openDialogEdit = {this.state.openDialogEdit}
+                            usernames={isPublicApp?this.data.chosenPublicApps[publicFocusedIndex].userNames:null}
+                            openDialogEdit={this.state.openDialogEdit}
                             whenCloseDialog={()=>{this.setState({openDialogEdit: false})}}
                 /> : null}
 
@@ -119,11 +123,18 @@ AppsContainer = React.createClass({
     },
 
     handleAppTileClick(appId){
+        //console.log("chrome.app.isInstalled", chrome.app.isInstalled);
+        if (!this.extensionIsInstalled()) {
+            this.setState({openDialogPlugin:true});
+            return;
+        }
+
         publicFocusedIndex = _.findIndex(this.data.chosenPublicApps, function (publicApp) {
             return publicApp.appId === appId;
         });
         privateFocusedIndex = -1;
         //TODO getPrivateFocusedIndex in the same way
+
         let isPublicApp = publicFocusedIndex !== -1 && privateFocusedIndex === -1;
 
         if (this.state.userEditStatus === "default") {
@@ -151,7 +162,7 @@ AppsContainer = React.createClass({
         }
         else if (this.state.userEditStatus === "config") {
             if (isPublicApp) {
-                this.setState({openDialogEdit:true});
+                this.setState({openDialogEdit: true});
             } else {
                 alert("edit private app!")
             }
@@ -215,4 +226,7 @@ AppsContainer = React.createClass({
             targetUrl);
     },
 
+    extensionIsInstalled(){
+        return !!document.getElementById("extension-is-installed-nehponjfbiigcobaphdahhhiemfpaeob");
+    },
 });
