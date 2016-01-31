@@ -12,13 +12,14 @@ const {ToggleStar} = SvgIcons;
 
 const {Link, History} = ReactRouter;
 
-const passengerAllowedLink = ["/login","/reset", "/signUp"];
+const passengerAllowedLink = ["/login", "/reset", "/signUp"];
 Header = React.createClass({
     propTypes: {
-      location: React.PropTypes.object.isRequired,
+        location: React.PropTypes.object.isRequired,
+        history: React.PropTypes.object.isRequired
     },
 
-    mixins: [ReactMeteorData, History],
+    mixins: [ReactMeteorData],
 
     getInitialState(){
         return {routeValue: "/login"}
@@ -26,11 +27,11 @@ Header = React.createClass({
 
     getMeteorData(){
         return {
-            currentUser: Meteor.user()
+            currentUser: Meteor.user(),
         }
     },
 
-    componentWillReceiveProps: function(nextProps) {
+    componentWillReceiveProps: function (nextProps) {
         this.setState({
             routeValue: nextProps.location.pathname
         });
@@ -38,23 +39,19 @@ Header = React.createClass({
 
     handleTabChange(value) {
         if (this.data.currentUser) {//用户已经登录
-            if (value === "/login") this.handleLogout();
+            if (value === "/login") Meteor.logout();
 
-            this.setState({routeValue: value}, function(){
-                this.context.history.pushState(null, value);
+            this.setState({routeValue: value}, function () {
+                this.props.history.pushState(null, value);
             }.bind(this));
         }
-        else if (_.indexOf(passengerAllowedLink, value)>-1) {//是任何人都可以访问的link
-            this.setState({routeValue: value}, function(){
-                this.context.history.pushState(null, value);
+        else if (_.indexOf(passengerAllowedLink, value) > -1) {//是任何人都可以访问的link
+            this.setState({routeValue: value}, function () {
+                this.props.history.pushState(null, value);
             }.bind(this));
-        } else{//无权限访问, 把tab换回之前的位置
+        } else {//无权限访问, 把tab换回之前的位置
             this.setState({routeValue: this.state.routeValue})
         }
-    },
-
-    handleLogout(){
-        Accounts.logout();
     },
 
     render(){
@@ -76,7 +73,8 @@ Header = React.createClass({
                       style={{maxWidth:"800px",marginLeft:"auto", marginRight:"auto"}}
                       inkBarStyle={{height:"4px", width:"20%", marginLeft:"6.7%",backgroundColor:ZenColor.cyan}}>
 
-                    <Tab className="headerTab" value="/login" label={<AccountTab currentUser={this.data.currentUser}/>}/>
+                    <Tab className="headerTab" value="/login"
+                         label={<AccountTab currentUser={this.data.currentUser}/>}/>
 
                     <Tab className="headerTab" value="/list" label={logo}/>
 

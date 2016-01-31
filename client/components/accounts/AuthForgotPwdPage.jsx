@@ -41,7 +41,7 @@ AuthForgotPwdPage = React.createClass({
 
     render() {
         const logo = (
-            <img style={style.logo} src="/img/logo.svg"/>
+            <Link to="/"><img style={style.logo} src="/img/logo.svg"/></Link>
         );
 
         return (<Col sm={6} smOffset={3} md={4} mdOffset={4} xs={12}>
