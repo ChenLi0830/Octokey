@@ -19,7 +19,7 @@ function requireAuth(nextState, replaceState) {
 
 const routes = (
     <Route path="/" component={App}>
-        <IndexRoute component={AppLoading} onEnter={requireAuth}/>
+        <IndexRoute component={AuthSignInPage}/>
         <Route path="/list" component={AppsContainer} onEnter={requireAuth}/>
         <Route path="/catalog" component={Catalog} onEnter={requireAuth}/>
         <Route path="/signUp" component={AuthJoinPage}/>
