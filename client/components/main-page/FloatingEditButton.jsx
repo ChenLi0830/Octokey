@@ -25,7 +25,7 @@ FloatingEditButton = React.createClass({
     },
 
     render(){
-        let miniButtonIconElements = [/*<ContentCreate/>, */<ContentAdd/>, <ContentRemove/>, <ActionSettings/>];
+        let miniButtonIconElements = [/*<ContentCreate/>, */<ContentAdd/>, <ContentRemove/>, <ContentCreate/>];
         let miniIconColor = [
             {background: ZenColor.cyan, icon: ZenColor.white},
             {background: ZenColor.orange, icon: ZenColor.white},
@@ -76,7 +76,7 @@ FloatingEditButton = React.createClass({
                             backgroundColor={ZenColor.cyan}
                             iconStyle={{fill:ZenColor.white}}
                             onMouseEnter={this.handleHoverFAB}>
-                            <ContentCreate style={{width:"28px"}}/>
+                            <ActionSettings style={{width:"28px"}}/>
                         </FloatingActionButton>
                     </div>
                 );
@@ -88,7 +88,7 @@ FloatingEditButton = React.createClass({
                             backgroundColor={ZenColor.orange}
                             style={{color:ZenColor.white}}
                             onTouchTap={this.props.whenEditButtonClicked}>
-                            取消
+                            <p>取消</p>
                         </FloatingActionButton>
                     </div>
                 );
