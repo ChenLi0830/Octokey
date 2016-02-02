@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Copyright (C) 2015 ZenID Inc.
+ *
+ * Creator: Chen Li<chen.li@noc-land.com>
+ * Creation Date: 2015-12-26
+ *
+ * Catalog page component
+ *******************************************************************************/
 const {
     Grid,
     Row,
@@ -23,7 +31,7 @@ Catalog = React.createClass({
             Meteor.subscribe("zenCategories"),
             Meteor.subscribe("userApps"),
         ];
-        const subsReady = _.all(subsHandles, function (subsHandle) {
+        const subsReady = _.every(subsHandles, function (subsHandle) {
             //console.log("subsHandle", subsHandle, "is ready?", subsHandle.ready());
             return subsHandle.ready();
         });
