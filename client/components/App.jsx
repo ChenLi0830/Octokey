@@ -2,6 +2,7 @@ var {ThemeManager} = MUI.Styles;
 var {AppCanvas,Paper} = MUI;
 var {Grid,Row,Col} = ReactBootstrap;
 
+
 injectTapEventPlugin();
 
 App = React.createClass({
@@ -11,7 +12,7 @@ App = React.createClass({
         const subHandles = Meteor.userId() ?
             [Meteor.subscribe("userApps"),] : [];
 
-        const subsReady = _.all(subHandles, function (handle) {
+        const subsReady = _.every(subHandles, function (handle) {
             return handle.ready();
         });
         return {

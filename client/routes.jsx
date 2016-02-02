@@ -3,14 +3,16 @@
 //});
 
 //Meteor.subscribe("tasks");
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 
 const {
     Router,
     Route,
-    IndexRoute
+    IndexRoute,
+    browserHistory
     } = ReactRouter;
 
-const createHistory = ReactRouter.history.createHistory;
+// const createHistory = ReactRouter.history.createHistory;
 
 function requireAuth(nextState, replaceState) {
     if (!Meteor.userId())
@@ -30,7 +32,7 @@ const routes = (
 );
 
 const router = (
-    <Router history={createHistory()}>
+    <Router history={createBrowserHistory()}>
         {routes}
     </Router>);
 

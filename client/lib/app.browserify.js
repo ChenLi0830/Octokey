@@ -1,3 +1,6 @@
+React = require("react");
+ReactDOM = require("react-dom");
+ReactRouter = require("react-router");
 ReactBootstrap = require("react-bootstrap");
 _ = require("lodash");
 MUI = require("material-ui");
@@ -10,4 +13,4 @@ ColorManipulator = require('material-ui/lib/utils/color-manipulator');
 Spacing = require('material-ui/lib/styles/spacing');
 zIndex = require('material-ui/lib/styles/zIndex');
 
-ReactGridLayout = require("react-grid-layout");
+// var ReactIntl = require('react-intl');
