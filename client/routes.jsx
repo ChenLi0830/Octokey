@@ -2,19 +2,18 @@
 //  passwordSignupFields: "USERNAME_ONLY"
 //});
 
-import createBrowserHistory from 'history/lib/createBrowserHistory';
 import languages from './locales';
 
 const {
     Router,
     Route,
     IndexRoute,
-    browserHistory
+    browserHistory,
     } = ReactRouter;
 
 // const createHistory = ReactRouter.history.createHistory;
 
-const {IntlProvider, FormattedNumber, FormattedPlural} = ReactIntl;
+const {IntlProvider} = ReactIntl;
 
 function requireAuth(nextState, replaceState) {
     if (!Meteor.userId())
@@ -34,7 +33,7 @@ const routes = (
 );
 
 const router = (
-    <Router history={createBrowserHistory()}>
+    <Router history={browserHistory}>
         {routes}
     </Router>);
 

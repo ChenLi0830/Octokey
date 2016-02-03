@@ -9,12 +9,14 @@ const {
     Paper,
     } = MUI;
 
-const {History} = ReactRouter;
-
 let publicFocusedIndex = -1, privateFocusedIndex = -1;
 
 AppsContainer = React.createClass({
-    mixins: [ReactMeteorData, History],
+    mixins: [ReactMeteorData],
+
+    contextTypes: {
+        router: React.PropTypes.object.isRequired
+    },
 
     getMeteorData(){
         if (Meteor.user()) {
@@ -167,7 +169,7 @@ AppsContainer = React.createClass({
 
 
     handleEditButtonClick(i){
-        console.log(i);
+        //console.log(i);
         if (typeof i === "object") {
             this.setState({userEditStatus: "default"});
         } else switch (i) {
@@ -187,7 +189,7 @@ AppsContainer = React.createClass({
     },
 
     handleNavigateToCatalog(){
-        this.context.history.pushState(null, "/catalog");
+        this.context.router.push("/catalog");
     },
 
     handleOpenDialogCredential() {

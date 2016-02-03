@@ -36,7 +36,7 @@ App = React.createClass({
         //Todo check userlogin status and check if the children is a restricted link, if it is, redirect to login
         return (
             <div id="wrapper">
-                <Header location={this.props.location} history={this.props.history}/>
+                <Header location={this.props.location}/>
                 <Grid>
                     <Row style={{marginTop:"60px"}}>
                         <Col xs={12}>

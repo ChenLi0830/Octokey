@@ -10,13 +10,16 @@ const {AppBar,
 
 const {ToggleStar} = SvgIcons;
 
-const {Link, History} = ReactRouter;
+const {Link} = ReactRouter;
 
 const passengerAllowedLink = ["/login", "/reset", "/signUp"];
 Header = React.createClass({
     propTypes: {
         location: React.PropTypes.object.isRequired,
-        history: React.PropTypes.object.isRequired
+    },
+
+    contextTypes: {
+        router: React.PropTypes.object.isRequired
     },
 
     mixins: [ReactMeteorData],
@@ -42,12 +45,12 @@ Header = React.createClass({
             if (value === "/login") Meteor.logout();
 
             this.setState({routeValue: value}, function () {
-                this.props.history.pushState(null, value);
+                this.context.router.push(value);
             }.bind(this));
         }
         else if (_.indexOf(passengerAllowedLink, value) > -1) {//是任何人都可以访问的link
             this.setState({routeValue: value}, function () {
-                this.props.history.pushState(null, value);
+                this.context.router.push(value);
             }.bind(this));
         } else {//无权限访问, 把tab换回之前的位置
             this.setState({routeValue: this.state.routeValue})
