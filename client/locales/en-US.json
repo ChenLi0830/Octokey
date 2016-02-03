@@ -54,7 +54,7 @@
 
     "FAB_cancel":"cancel",
 
-    "app_credentialDialogMessage":"Please fill in your login information for \"{appName}\", it is only required once",
+    "app_credentialDialogMessage":"Login information of\"{appName}\", it only needs to be filled once",
     "app_credentialDialogCancel" : "cancel",
     "app_credentialDialogLogin" : "login",
     "app_username":"Username",
@@ -65,5 +65,10 @@
     "app_editDialogTitle":"Account Management: {appName}",
     "app_editDialogAdd":"Add new account",
     "app_editDialogFinish":"Finish",
-    "app_editDialogDel":"Delete"
+    "app_editDialogDel":"Delete",
+
+    "app_newCredentialDialogTitle":"Add new account for: \"{appName}\"",
+    "app_newCredentialDialogAdd" : "Add"
+
+    
 }

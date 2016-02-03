@@ -64,6 +64,9 @@
     "app_editDialogTitle":"登录信息设置: {appName}",
     "app_editDialogAdd":"添加新账户",
     "app_editDialogFinish":"完成",
-    "app_editDialogDel":"删除"
+    "app_editDialogDel":"删除",
+
+    "app_newCredentialDialogTitle":"添加账户: \"{appName}\"",
+    "app_newCredentialDialogAdd" : "添加"
 
 }
