@@ -34,6 +34,7 @@ const style = {
     }
 };
 
+const {FormattedMessage} = ReactIntl;
 
 EditDialog = React.createClass({
     propTypes: {
@@ -49,7 +50,7 @@ EditDialog = React.createClass({
         return {
             popOverOpen: false,
             openDialogAdd: false,
-            focusedUsername:null,
+            focusedUsername: null,
         };
     },
 
@@ -74,8 +75,8 @@ EditDialog = React.createClass({
         this.setState({
             popOverOpen: false,
             openDialogAdd: false,
-            focusedUsername:null,
-        }, function(){//setState完成后再remove,保证UI不出glitch
+            focusedUsername: null,
+        }, function () {//setState完成后再remove,保证UI不出glitch
             Meteor.call("removeCredential", this.props.appId, focusedUsername);
             Meteor.call("appRemoveUsername", this.props.appId, focusedUsername);
         });
@@ -84,12 +85,12 @@ EditDialog = React.createClass({
     render()
     {
         const actions = [
-            <RaisedButton label="添加新账户"
+            <RaisedButton label={<FormattedMessage id="app_editDialogAdd"/>}
                           style={style.addNewAccountButton}
                           onTouchTap={()=>{this.setState({openDialogAdd:true})}}
                           secondary={true}/>,
             <FlatButton
-                label="完成"
+                label={<FormattedMessage id="app_editDialogFinish"/>}
                 secondary={true}
                 onTouchTap={this.props.whenCloseDialog}/>,
         ];
@@ -100,42 +101,47 @@ EditDialog = React.createClass({
                              rightIcon={<ActionInfo/>}/>
         }, this);
 
-        return <Dialog
-            title={"登录信息设置: "+"\""+this.props.appName+"\""}
-            actions={actions}
-            autoDetectWindowHeight={false}
-            autoScrollBodyContent={true}
-            open={this.props.openDialogEdit}
-            onRequestClose={this.props.whenCloseDialog}>
+        return <FormattedMessage id="app_editDialogTitle" values={{appName:this.props.appName}}>
+            {(formattedValue)=>(
+                <Dialog
+                    title={formattedValue}
+                    actions={actions}
+                    autoDetectWindowHeight={false}
+                    autoScrollBodyContent={true}
+                    open={this.props.openDialogEdit}
+                    onRequestClose={this.props.whenCloseDialog}>
 
-            {/*This is here to stop chrome's username and password autofill*/}
-            <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
-            <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
+                    {/*This is here to stop chrome's username and password autofill*/}
+                    <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
+                    <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
 
-            <List>
-                {userNameList}
-            </List>
+                    <List>
+                        {userNameList}
+                    </List>
 
-            <Popover
-                open={this.state.popOverOpen}
-                anchorEl={this.state.anchorEl}
-                anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                onRequestClose={this.handleRequestClose}>
-                <div style={{padding: 0}}>
-                    <Menu style={style.menu}>
-                        <MenuItem primaryText="删除" leftIcon={<ActionDelete/>} onTouchTap={this.handleRemoveAccount}/>
-                    </Menu>
-                </div>
-            </Popover>
+                    <Popover
+                        open={this.state.popOverOpen}
+                        anchorEl={this.state.anchorEl}
+                        anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                        targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                        onRequestClose={this.handleRequestClose}>
+                        <div style={{padding: 0}}>
+                            <Menu style={style.menu}>
+                                <MenuItem primaryText={<FormattedMessage id="app_editDialogDel"/>} leftIcon={<ActionDelete/>}
+                                          onTouchTap={this.handleRemoveAccount}/>
+                            </Menu>
+                        </div>
+                    </Popover>
 
-            <AddNewAccountDialog appName={this.props.appName}
-                                 appId={this.props.appId}
-                                 isPublicApp={this.props.isPublicApp}
-                                 openDialogAdd={this.state.openDialogAdd}
-                                 whenCloseDialog={()=>{this.setState({openDialogAdd: false})}}/>
+                    <AddNewCredentialDialog appName={this.props.appName}
+                                            appId={this.props.appId}
+                                            isPublicApp={this.props.isPublicApp}
+                                            openDialogAdd={this.state.openDialogAdd}
+                                            whenCloseDialog={()=>{this.setState({openDialogAdd: false})}}/>
 
-            <Divider />
-        </Dialog>
+                    <Divider />
+                </Dialog>
+            )}
+        </FormattedMessage>
     }
 });

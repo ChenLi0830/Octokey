@@ -4,7 +4,7 @@ const {
     TextField
     } = MUI;
 
-AddNewAccountDialog = React.createClass({
+AddNewCredentialDialog = React.createClass({
     propTypes: {
         appName: React.PropTypes.string.isRequired,
         appId: React.PropTypes.string.isRequired,

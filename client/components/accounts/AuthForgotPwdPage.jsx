@@ -12,6 +12,8 @@ const {
     Col
     } = ReactBootstrap;
 
+const {FormattedMessage} = ReactIntl;
+
 const style = {
     paper: {
         padding: "30px 30px 50px 30px",
@@ -59,18 +61,18 @@ AuthForgotPwdPage = React.createClass({
                             floatingLabelStyle={{fontWeight:"300"}}
                             errorText={this.state.floatingUserText}
                             onBlur={this.handleInputErrorCheckUser}
-                            floatingLabelText="邮箱"/>
+                            floatingLabelText={<FormattedMessage id="login_email"/>}/>
                         <br/>
                         {/*Todo 加入验证码*/}
                     </form>
 
-                    <RaisedButton label="找回密码"
+                    <RaisedButton label={<FormattedMessage id="login_resetPwd"/>}
                                   onClick={this.handleSubmit}
                                   style={style.registerButton}
                                   secondary={true}/>
                     <Snackbar
                         open={this.state.snackBarOpen}
-                        message="密码找回邮件已经发到你的邮箱,请查收"
+                        message={<FormattedMessage id="login_emailNotif"/>}
                         autoHideDuration={4000}
                         onRequestClose={this.handleRequestClose}
                     />
@@ -82,10 +84,10 @@ AuthForgotPwdPage = React.createClass({
     handleInputErrorCheckUser(){
         let email = this.refs.email.getValue();
         if (!email) {
-            this.setState({floatingUserText: "邮箱不能为空"});
+            this.setState({floatingUserText: <FormattedMessage id="login_emailEmpty"/>});
         }
         else if (!validateEmail(email)) {
-            this.setState({floatingUserText: "邮箱格式有误, 请检查"});
+            this.setState({floatingUserText: <FormattedMessage id="login_emailFormatError"/>});
         }
         else {
             this.setState({floatingUserText: ""});

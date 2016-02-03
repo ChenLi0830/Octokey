@@ -9,6 +9,7 @@ const {Button,
 
 const {RaisedButton} = MUI;
 
+const {FormattedMessage} = ReactIntl;
 
 CreatePrivateAppButton = React.createClass({
 
@@ -30,8 +31,8 @@ CreatePrivateAppButton = React.createClass({
 
     render(){
         let button = (<div style={{textAlign:"center", padding:"10px 0 30px 0"}}>
-            <p>找不到需要的网站标签?</p>
-            <RaisedButton label="创建新网签"
+            <p>{<FormattedMessage id="cata_createPrivateMessage"/>}</p>
+            <RaisedButton label={<FormattedMessage id="cata_createPrivateBtn"/>}
                           secondary={true}
                           onClick={this.open}
                           labelStyle={{color:"white"}}/>
@@ -41,15 +42,26 @@ CreatePrivateAppButton = React.createClass({
             {button}
             <Modal show={this.state.showModal} onHide={this.close}>
                 <Modal.Header closeButton>
-                    <Modal.Title>"创建新网签"</Modal.Title>
+                    <Modal.Title>{<FormattedMessage id="cata_createPrivateBtn"/>}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={this.handlePrivateSubmit}>
-                        <Input type="text" label="网站名" ref="appName" placeholder="例如: Google"/>
-                        <Input type="text" label="登录链接" ref="loginLink" placeholder="例如: https://www.google.com/login"/>
+                        <FormattedMessage id="cata_namePlaceHolder">
+                            {(formattedValue)=>(
+                                <Input type="text" label={<FormattedMessage id="cata_appName"/>} ref="appName"
+                                       placeholder={formattedValue}/>
+                            )}
+                        </FormattedMessage>
+
+                        <FormattedMessage id="cata_linkPlaceHolder">
+                            {(formattedValue)=>(
+                                <Input type="text" label={<FormattedMessage id="cata_appLoginLink"/>} ref="loginLink"
+                                       placeholder={formattedValue}/>
+                            )}
+                        </FormattedMessage>
 
                         <Input type="file"
-                               label="网站Logo"
+                               label={<FormattedMessage id="cata_appLogo"/>}
                                ref="logoFile"
                                accept=".png, .jpg"
                                onChange={this.handleLogoUpload}
@@ -64,15 +76,13 @@ CreatePrivateAppButton = React.createClass({
                         <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
 
                         <div>
-                            <Input type="text" label="用户名" ref="username"/>
-                            <Input type="password" label="密码" ref="password"/>
+                            <Input type="text" label={<FormattedMessage id="cata_username"/>} ref="username"/>
+                            <Input type="password" label={<FormattedMessage id="cata_password"/>} ref="password"/>
                         </div>
-
-                        <ButtonInput type="submit" value="创建"/>
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={this.close}>Close</Button>
+                    <Button type="submit" onClick={this.handlePrivateSubmit}><FormattedMessage id="cata_createBtn"/></Button>
                 </Modal.Footer>
             </Modal>
         </div>

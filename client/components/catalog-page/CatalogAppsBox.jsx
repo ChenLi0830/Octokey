@@ -41,6 +41,8 @@ let modalAttributes = {
     selectedCategoryNames: [],
 };
 
+const {FormattedMessage} = ReactIntl;
+
 CatalogAppsBox = React.createClass({
     propTypes: {
         zenApps: React.PropTypes.array.isRequired,
@@ -143,14 +145,14 @@ CatalogAppsBox = React.createClass({
                     this.close();
                 }.bind(this));
         } else {
-            alert("没填全");
+            alert(<FormattedMessage id="cata_createAppAlert"/>);
         }
         //console.log("this.props.zenApps", this.props.zenApps);
     },
 
     handleRemoveApp(event){
         event.preventDefault();
-        var delConfirm = confirm("你确定要删除吗?");
+        var delConfirm = confirm(<FormattedMessage id="cata_confirmDel"/>);
         if (delConfirm) {
             Meteor.call("removeZenApp", this.state.editAppId, function (error, result) {
                 if (error) {
@@ -197,24 +199,34 @@ CatalogAppsBox = React.createClass({
              backgroundColor:"#ffffff",
              padding:0,
              borderRadius:"5px"}}>
-                <List subheader="网站列表" style={{backgroundColor:"white"}}>
+                <List subheader={<FormattedMessage id="cata_listTitle"/>} style={{backgroundColor:"white"}}>
                     {publicApps}
                 </List>
             </Paper>
 
             <Modal show={this.state.showModal} onHide={this.close}>
                 <Modal.Header closeButton>
-                    <Modal.Title>"编辑Zen网签"</Modal.Title>
-                    <Button onClick={this.handleRemoveApp}>删除网签</Button>
+                    <Modal.Title><FormattedMessage id="cata_editPubApp"/></Modal.Title>
+                    <Button onClick={this.handleRemoveApp}><FormattedMessage id="cata_removePubApp"/></Button>
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={this.handlePublicSubmit}>
-                        <Input type="text" label="网站名" ref="appName" placeholder="例如: Google"
-                               defaultValue={modalAttributes.appName}/>
-                        <Input type="text" label="登录链接" ref="loginLink" placeholder="例如: https://www.google.com/login"
-                               defaultValue={modalAttributes.loginLink}/>
+                        <FormattedMessage id="cata_namePlaceHolder">
+                            {(formattedValue)=>(
+                                <Input type="text" label={<FormattedMessage id="cata_appName"/>} ref="appName"
+                                       placeholder={formattedValue}/>
+                            )}
+                        </FormattedMessage>
+
+                        <FormattedMessage id="cata_linkPlaceHolder">
+                            {(formattedValue)=>(
+                                <Input type="text" label={<FormattedMessage id="cata_appLoginLink"/>} ref="loginLink"
+                                       placeholder={formattedValue}/>
+                            )}
+                        </FormattedMessage>
+
                         <Input type="file"
-                               label="网站Logo"
+                               label={<FormattedMessage id="cata_appLogo"/>}
                                ref="logoFile"
                                accept=".png, .jpg"
                                onChange={this.handleLogoUpload}
@@ -237,7 +249,7 @@ CatalogAppsBox = React.createClass({
                             <TableHeader enableSelectAll={false} displaySelectAll={false} adjustForCheckbox={false}>
                                 <TableRow>
                                     <TableHeaderColumn style={{textAlign: 'center'}}>
-                                        选择类别
+                                        <FormattedMessage id="cata_selectCategory"/>
                                     </TableHeaderColumn>
                                 </TableRow>
                             </TableHeader>
@@ -252,7 +264,7 @@ CatalogAppsBox = React.createClass({
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={this.handleEditApp}>编辑</Button>
+                    <Button onClick={this.handleEditApp}><FormattedMessage id="cata_editPubAppBtn"/></Button>
                 </Modal.Footer>
             </Modal>
         </div>

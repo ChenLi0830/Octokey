@@ -6,6 +6,8 @@ const {
     Col,
     } = ReactBootstrap;
 
+const {FormattedMessage} = ReactIntl;
+
 AddNewApp = React.createClass({
     propTypes:{
         whenClicked:React.PropTypes.func.isRequired,
@@ -13,9 +15,9 @@ AddNewApp = React.createClass({
 
     render(){
         return <div style={{paddingTop:"100px", paddingBottom:"100px", textAlign:"center"}}>
-            <p>还没有网站?快去添加吧</p>
+            <p><FormattedMessage id="app_noAppMessage"/></p>
             <RaisedButton primary={true}
-                          label="添加新网站"
+                          label={<FormattedMessage id="app_noAppBtn"/>}
                           onTouchTap={this.props.whenClicked}>
             </RaisedButton>
         </div>

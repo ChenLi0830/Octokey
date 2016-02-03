@@ -21,6 +21,8 @@ const {
 
 var selectedCategories = [0];
 
+const {FormattedMessage} = ReactIntl;
+
 CreateZenAppButton = React.createClass({
     propTypes: {
         zenCategories: React.PropTypes.array.isRequired
@@ -47,7 +49,7 @@ CreateZenAppButton = React.createClass({
 
     render(){
         let button = (<div style={{textAlign:"center", padding:"10px 0 20px 0"}}>
-            <RaisedButton label="创建Zen网签"
+            <RaisedButton label={<FormattedMessage id="cata_createPubApp"/>}
                           primary={true}
                           onClick={this.open}
                           labelStyle={{color:"white"}}/>
@@ -61,18 +63,31 @@ CreateZenAppButton = React.createClass({
             </TableRow>
         });
 
+
         return <div>
             {button}
             <Modal show={this.state.showModal} onHide={this.close}>
                 <Modal.Header closeButton>
-                    <Modal.Title>"创建Zen网签"</Modal.Title>
+                    <Modal.Title><FormattedMessage id="cata_createPubApp"/></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={this.handlePublicSubmit}>
-                        <Input type="text" label="网站名" ref="appName" placeholder="例如: Google"/>
-                        <Input type="text" label="登录链接" ref="loginLink" placeholder="例如: https://www.google.com/login"/>
+                        <FormattedMessage id="cata_namePlaceHolder">
+                            {(formattedValue)=>(
+                                <Input type="text" label={<FormattedMessage id="cata_appName"/>} ref="appName"
+                                       placeholder={formattedValue}/>
+                            )}
+                        </FormattedMessage>
+
+                        <FormattedMessage id="cata_linkPlaceHolder">
+                            {(formattedValue)=>(
+                                <Input type="text" label={<FormattedMessage id="cata_appLoginLink"/>} ref="loginLink"
+                                       placeholder={formattedValue}/>
+                            )}
+                        </FormattedMessage>
+
                         <Input type="file"
-                               label="网站Logo"
+                               label={<FormattedMessage id="cata_appLogo"/>}
                                ref="logoFile"
                                accept=".png, .jpg"
                                onChange={this.handleLogoUpload}
@@ -95,7 +110,7 @@ CreateZenAppButton = React.createClass({
                             <TableHeader enableSelectAll={false} displaySelectAll={false} adjustForCheckbox={false}>
                                 <TableRow>
                                     <TableHeaderColumn style={{textAlign: 'center'}}>
-                                        选择类别
+                                        <FormattedMessage id="cata_selectCategory"/>
                                     </TableHeaderColumn>
                                 </TableRow>
                             </TableHeader>
@@ -110,7 +125,7 @@ CreateZenAppButton = React.createClass({
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={this.handlePublicSubmit}>创建</Button>
+                    <Button onClick={this.handlePublicSubmit}><FormattedMessage id="cata_createBtn"/></Button>
                 </Modal.Footer>
             </Modal>
         </div>
@@ -140,8 +155,7 @@ CreateZenAppButton = React.createClass({
         const appName = this.refs.appName.refs.input.value;
 
         if (loginLink && appName && this.state.preview !== "") {
-            //Todo 显示等待条,或者其他gif
-            console.log("this.state.preview", this.state.preview);
+            //console.log("this.state.preview", this.state.preview);
             Meteor.call("addZenApp", appName, loginLink, this.state.preview, selectedCategoryNames,
                 function (error, result) {
                     if (error) {
@@ -150,7 +164,7 @@ CreateZenAppButton = React.createClass({
                     this.close();
                 }.bind(this));
         } else {
-            alert("没填全");
+            alert(<FormattedMessage id="cata_createAppAlert"/>);
         }
     },
 

@@ -4,6 +4,8 @@ const {
     TextField
     } = MUI;
 
+const {FormattedMessage} = ReactIntl;
+
 CredentialDialog = React.createClass({
     propTypes: {
         appName: React.PropTypes.string.isRequired,
@@ -26,43 +28,47 @@ CredentialDialog = React.createClass({
     render(){
         const actions = [
             <FlatButton
-                label="取消"
+                label={<FormattedMessage id="app_credentialDialogCancel"/>}
                 primary={true}
                 onTouchTap={this.props.whenCloseDialog}/>,
             <FlatButton
                 secondary={true}
-                label="去登录"
+                label={<FormattedMessage id="app_credentialDialogLogin"/>}
                 onTouchTap={this.handleSubmit}/>
         ];
 
-        return <Dialog
-            title={"请输入你在"+"\""+this.props.appName+"\"的登录信息 (只需输入一次)"}
-            actions={actions}
-            modal={false}
-            open={this.props.openDialogCredential}
-            onRequestClose={this.props.whenCloseDialog}>
+        return <FormattedMessage id="app_credentialDialogMessage" values={{appName: this.props.appName}}>
+            {(formattedValue)=>(
+            <Dialog
+                title={formattedValue}
+                actions={actions}
+                modal={false}
+                open={this.props.openDialogCredential}
+                onRequestClose={this.props.whenCloseDialog}>
 
-            {/*This is here to stop chrome's username and password autofill*/}
-            <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
-            <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
+                {/*This is here to stop chrome's username and password autofill*/}
+                <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
+                <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
 
-            <TextField
-                ref="username"
-                style={{fontWeight:"300"}}
-                floatingLabelStyle={{fontWeight:"300"}}
-                errorText={this.state.floatingUserText}
-                onChange={this.handleInputErrorCheckUser}
-                floatingLabelText="用户名"/>
-            <br/>
-            <TextField
-                ref="password"
-                type="password"
-                style={{fontWeight:"300"}}
-                floatingLabelStyle={{fontWeight:"300"}}
-                errorText={this.state.floatingPassText}
-                onChange={this.handleInputErrorCheckPass}
-                floatingLabelText="密码"/>
-        </Dialog>
+                <TextField
+                    ref="username"
+                    style={{fontWeight:"300"}}
+                    floatingLabelStyle={{fontWeight:"300"}}
+                    errorText={this.state.floatingUserText}
+                    onChange={this.handleInputErrorCheckUser}
+                    floatingLabelText={<FormattedMessage id="app_username"/>}/>
+                <br/>
+                <TextField
+                    ref="password"
+                    type="password"
+                    style={{fontWeight:"300"}}
+                    floatingLabelStyle={{fontWeight:"300"}}
+                    errorText={this.state.floatingPassText}
+                    onChange={this.handleInputErrorCheckPass}
+                    floatingLabelText={<FormattedMessage id="app_password"/>}/>
+            </Dialog>
+        )}
+        </FormattedMessage>
     },
 
 
@@ -102,7 +108,7 @@ CredentialDialog = React.createClass({
     handleInputErrorCheckUser(){
         let userName = this.refs.username.getValue();
         if (!userName) {
-            this.setState({floatingUserText: "用户名不能为空"});
+            this.setState({floatingUserText: <FormattedMessage id="login_usernameEmpty"/>});
         } else {
             this.setState({floatingUserText: ""});
         }
@@ -111,7 +117,7 @@ CredentialDialog = React.createClass({
     handleInputErrorCheckPass(){
         let password = this.refs.password.getValue();
         if (!password) {
-            this.setState({floatingPassText: "密码不能为空"});
+            this.setState({floatingPassText: <FormattedMessage id="login_pwdEmpty"/>});
         } else {
             this.setState({floatingPassText: ""});
         }

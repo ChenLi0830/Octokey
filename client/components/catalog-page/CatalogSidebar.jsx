@@ -31,6 +31,7 @@ CatalogSideBar = React.createClass({
         let createCategoryButton = isAdmin(this.data.currentUser) ?
             <CreateCategoryButton zenCategories={this.props.zenCategories}/> : null;
 
+        //Todo Add search box
         return <div>
             <Paper zDepth={1}
                    style={{
@@ -38,7 +39,7 @@ CatalogSideBar = React.createClass({
 
              padding:0,
              borderRadius:"5px"}}>
-                <SearchBox/>
+                {/*<SearchBox/>*/}
                 <Divider />
                 {createPublicAppButton}
                 <CreatePrivateAppButton/>

@@ -13,4 +13,4 @@ ColorManipulator = require('material-ui/lib/utils/color-manipulator');
 Spacing = require('material-ui/lib/styles/spacing');
 zIndex = require('material-ui/lib/styles/zIndex');
 
-// var ReactIntl = require('react-intl');
+ReactIntl = require("react-intl");

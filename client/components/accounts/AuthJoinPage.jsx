@@ -11,6 +11,8 @@ const {
     Col
     } = ReactBootstrap;
 
+const {FormattedMessage} = ReactIntl;
+
 const style = {
     paper: {
         paddingTop: 30,
@@ -43,7 +45,7 @@ AuthJoinPage = React.createClass({
             <Link to="/"><img style={style.logo} src="/img/logo.svg"/></Link>
         );
 
-        return (<Col md={4} mdOffset={4} xs={12}>
+        return (<Col sm={6} smOffset={3} md={4} mdOffset={4} xs={12}>
                 <Paper style={style.paper} zDepth={1}>
                     <form >
 
@@ -58,7 +60,7 @@ AuthJoinPage = React.createClass({
                             floatingLabelStyle={{fontWeight:"300"}}
                             errorText={this.state.floatingUserText}
                             onBlur={this.handleInputErrorCheckUser}
-                            floatingLabelText="邮箱"/>
+                            floatingLabelText={<FormattedMessage id="login_email"/>}/>
                         <br/>
                         <TextField
                             ref="password"
@@ -67,14 +69,14 @@ AuthJoinPage = React.createClass({
                             floatingLabelStyle={{fontWeight:"300"}}
                             errorText={this.state.floatingPassText}
                             onBlur={this.handleInputErrorCheckPass}
-                            floatingLabelText="密码"/>
+                            floatingLabelText={<FormattedMessage id="login_password"/>}/>
                     </form>
 
-                    <RaisedButton label="注册"
+                    <RaisedButton label={<FormattedMessage id="login_signUp"/>}
                                   onClick={this.handleSubmit}
                                   style={style.registerButton}
                                   secondary={true}/>
-                    <p>已经有帐号? 直接<Link to="/login">登录</Link></p>
+                    <p><FormattedMessage id="login_haveAccount"/><Link to="/login"><FormattedMessage id="login_signIn_low"/></Link></p>
                 </Paper>
             </Col>
         );
@@ -83,10 +85,10 @@ AuthJoinPage = React.createClass({
     handleInputErrorCheckUser(){
         let email = this.refs.email.getValue();
         if (!email) {
-            this.setState({floatingUserText: "邮箱不能为空"});
+            this.setState({floatingUserText: <FormattedMessage id="login_emailEmpty"/>});
         }
         else if (!validateEmail(email)) {
-            this.setState({floatingUserText: "邮箱格式有误, 请检查"});
+            this.setState({floatingUserText: <FormattedMessage id="login_emailFormatError"/>});
         }
         else {
             this.setState({floatingUserText: ""});
@@ -101,7 +103,7 @@ AuthJoinPage = React.createClass({
     handleInputErrorCheckPass(){
         let password = this.refs.password.getValue();
         if (!password) {
-            this.setState({floatingPassText: "密码不能为空"});
+            this.setState({floatingPassText: <FormattedMessage id="login_pwdEmpty"/>});
         } else {
             this.setState({floatingPassText: ""});
         }

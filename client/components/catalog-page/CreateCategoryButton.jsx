@@ -8,6 +8,8 @@ const {
     Divider,
     } = MUI;
 
+const {FormattedMessage} = ReactIntl;
+
 CreateCategoryButton = React.createClass({
     propTypes: {
         zenCategories: React.PropTypes.array.isRequired
@@ -62,7 +64,7 @@ CreateCategoryButton = React.createClass({
                 this.handleClose();
             }.bind(this));
         } else {
-            alert("几个都得填好,要不不给添");
+            alert(<FormattedMessage id="cata_createAppAlert"/>);
         }
     },
 
@@ -72,16 +74,18 @@ CreateCategoryButton = React.createClass({
                              primaryText={"\""+category.displayTitleChinese+"\""}/>
         }.bind(this));
         //console.log(categories);
-        categories.push(<MenuItem value={"unchosen"} key={"lastItem"} primaryText={"未选择"}/>);
+        categories.push(<MenuItem value={"unchosen"} key={"lastItem"}
+                                  primaryText={<FormattedMessage id="cata_toBeSelected"/>}/>);
         //console.log(categories);
 
         const actions = [
             <FlatButton
-                label="取消"
+                label={<FormattedMessage id="cata_cancel"/>}
                 secondary={true}
                 onTouchTap={this.handleClose}/>,
             <FlatButton
-                label={this.state.deleteCategoryIndex>-1 ? "删除":"添加" }
+                label={this.state.deleteCategoryIndex>-1 ? <FormattedMessage id="cata_del"/>
+                :<FormattedMessage id="cata_add"/>}
                 primary={true}
                 keyboardFocused={true}
                 onTouchTap={this.state.deleteCategoryIndex>-1 ? this.handleRemoveCategory:this.handleAddCategory}/>,
@@ -90,30 +94,38 @@ CreateCategoryButton = React.createClass({
         let selectedDeleteCategory = this.state.deleteCategoryIndex > -1 ?
             this.props.zenCategories[this.state.deleteCategoryIndex].name : "unchosen";
         return <div style={{textAlign:"center"}}>
-            <RaisedButton primary={true} label="编辑类别" onTouchTap={this.handleOpen} labelStyle={{color:"white"}}/>
-            <Dialog
-                title="编辑类别:"
-                actions={actions}
-                modal={false}
-                open={this.state.dialogOpen}
-                onRequestClose={this.handleClose}>
-                <h4>删除:</h4>
-                <DropDownMenu maxHeight={300}
-                              value={selectedDeleteCategory}
-                              onChange={this.handleRemoveChosen}>
-                    {categories}
-                </DropDownMenu>
-                <Divider />
-                <h4>添加:</h4>
-                <br/>
-                <TextField hintText="name" disabled={this.state.deleteCategoryIndex>-1} ref="name"/>
-                <br/>
-                <TextField hintText="中文名" disabled={this.state.deleteCategoryIndex>-1} ref="displayTitleChinese"/>
-                <br/>
-                <TextField hintText="英文名" disabled={this.state.deleteCategoryIndex>-1} ref="displayTitleEnglish"/>
-                <br/>
-                <TextField hintText="位置(数字)" disabled={this.state.deleteCategoryIndex>-1} ref="index"/>
-            </Dialog>
+            <RaisedButton primary={true} label={<FormattedMessage id="cata_editCategory"/>} onTouchTap={this.handleOpen}
+                          labelStyle={{color:"white"}}/>
+            <FormattedMessage id="cata_editCategory">{(formattedValue)=>(
+                <Dialog
+                    title={formattedValue}
+                    actions={actions}
+                    modal={false}
+                    open={this.state.dialogOpen}
+                    onRequestClose={this.handleClose}>
+                    <h4><FormattedMessage id="cata_del"/></h4>
+                    <DropDownMenu maxHeight={300}
+                                  value={selectedDeleteCategory}
+                                  onChange={this.handleRemoveChosen}>
+                        {categories}
+                    </DropDownMenu>
+                    <Divider />
+                    <h4><FormattedMessage id="cata_add"/></h4>
+                    <br/>
+                    <TextField hintText={<FormattedMessage id="cata_symble"/>}
+                               disabled={this.state.deleteCategoryIndex>-1} ref="name"/>
+                    <br/>
+                    <TextField hintText={<FormattedMessage id="cata_categoryNameCHS"/>}
+                               disabled={this.state.deleteCategoryIndex>-1} ref="displayTitleChinese"/>
+                    <br/>
+                    <TextField hintText={<FormattedMessage id="cata_categoryNameEN"/>}
+                               disabled={this.state.deleteCategoryIndex>-1} ref="displayTitleEnglish"/>
+                    <br/>
+                    <TextField hintText={<FormattedMessage id="cata_categoryPosition"/>}
+                               disabled={this.state.deleteCategoryIndex>-1} ref="index"/>
+                </Dialog>
+            )}
+            </FormattedMessage>
         </div>
     }
 });

@@ -11,6 +11,8 @@ const {
     ActionSettings,
     } = SvgIcons;
 
+const {FormattedMessage} = ReactIntl;
+
 FloatingEditButton = React.createClass({
 
     propTypes: {
@@ -88,7 +90,7 @@ FloatingEditButton = React.createClass({
                             backgroundColor={ZenColor.orange}
                             style={{color:ZenColor.white}}
                             onTouchTap={this.props.whenEditButtonClicked}>
-                            <p>取消</p>
+                            <p><FormattedMessage id="FAB_cancel"/></p>
                         </FloatingActionButton>
                     </div>
                 );

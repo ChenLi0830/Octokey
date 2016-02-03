@@ -26,6 +26,8 @@ const {
 
 const iconColor = ZenColor.cyan;
 
+const {FormattedMessage} = ReactIntl;
+
 const nameToIcon = {
     "all": <PlacesAllInclusive color={iconColor}/>,
     "hot": <SocialWhatshot color={iconColor}/>,
@@ -74,7 +76,7 @@ CategoryList = React.createClass({
 
         }, this);
         //console.log("Items ",Items);
-        return <List style={{backgroundColor:"white"}} subheader="类别">
+        return <List style={{backgroundColor:"white"}} subheader={<FormattedMessage id="cata_category"/>}>
             {Items}
         </List>
     }

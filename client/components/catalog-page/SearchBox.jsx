@@ -7,11 +7,13 @@ const {
     ActionSearch
     } = SvgIcons;
 
+const {FormattedMessage} = ReactIntl;
+
 SearchBox = React.createClass({
 
     render(){
         return <List style={{backgroundColor:"white"}}>
-            <ListItem primaryText="搜索应用" leftIcon={<ActionSearch />}/>
+            <ListItem primaryText={<FormattedMessage id="cata_search"/>} leftIcon={<ActionSearch />}/>
         </List>;
         //var ITEMS = ['ruby', 'javascript', 'lua', 'go', 'julia', 'c', 'scala', 'haskell'];
         /*return <div>
