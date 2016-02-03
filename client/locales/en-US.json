@@ -54,7 +54,7 @@
 
     "FAB_cancel":"cancel",
 
-    "app_credentialDialogMessage":"Login information of\"{appName}\", it only needs to be filled once",
+    "app_credentialDialogMessage":"Fill in your login information of \"{appName}\" (it is only required once)",
     "app_credentialDialogCancel" : "cancel",
     "app_credentialDialogLogin" : "login",
     "app_username":"Username",

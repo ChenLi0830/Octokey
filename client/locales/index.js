@@ -4,4 +4,5 @@ var languages = {};
 
 languages["en-US"] = enUs;
 languages["zh-CN"] = zhCn;
-module.exports = languages;
+
+export default languages;
