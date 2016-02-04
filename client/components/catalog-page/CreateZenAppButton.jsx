@@ -21,11 +21,13 @@ const {
 
 var selectedCategories = [0];
 
-const {FormattedMessage} = ReactIntl;
-
 CreateZenAppButton = React.createClass({
     propTypes: {
         zenCategories: React.PropTypes.array.isRequired
+    },
+
+    contextTypes: {
+        intl: React.PropTypes.object.isRequired,
     },
 
     getInitialState() {//for modal
@@ -48,8 +50,9 @@ CreateZenAppButton = React.createClass({
 
 
     render(){
+        const {messages} = this.context.intl;
         let button = (<div style={{textAlign:"center", padding:"10px 0 20px 0"}}>
-            <RaisedButton label={<FormattedMessage id="cata_createPubApp"/>}
+            <RaisedButton label={messages.cata_createPubApp}
                           primary={true}
                           onClick={this.open}
                           labelStyle={{color:"white"}}/>
@@ -68,26 +71,20 @@ CreateZenAppButton = React.createClass({
             {button}
             <Modal show={this.state.showModal} onHide={this.close}>
                 <Modal.Header closeButton>
-                    <Modal.Title><FormattedMessage id="cata_createPubApp"/></Modal.Title>
+                    <Modal.Title>{messages.cata_createPubApp}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={this.handlePublicSubmit}>
-                        <FormattedMessage id="cata_namePlaceHolder">
-                            {(formattedValue)=>(
-                                <Input type="text" label={<FormattedMessage id="cata_appName"/>} ref="appName"
-                                       placeholder={formattedValue}/>
-                            )}
-                        </FormattedMessage>
+                        <Input type="text" ref="appName"
+                               label={messages.cata_appName}
+                               placeholder={messages.cata_namePlaceHolder}/>
 
-                        <FormattedMessage id="cata_linkPlaceHolder">
-                            {(formattedValue)=>(
-                                <Input type="text" label={<FormattedMessage id="cata_appLoginLink"/>} ref="loginLink"
-                                       placeholder={formattedValue}/>
-                            )}
-                        </FormattedMessage>
+                        <Input type="text" ref={(c) => this.refs.loginLink = c}
+                               label={messages.cata_appLoginLink}
+                               placeholder={messages.cata_linkPlaceHolder}/>
 
                         <Input type="file"
-                               label={<FormattedMessage id="cata_appLogo"/>}
+                               label={messages.cata_appLogo}
                                ref="logoFile"
                                accept=".png, .jpg"
                                onChange={this.handleLogoUpload}
@@ -110,7 +107,7 @@ CreateZenAppButton = React.createClass({
                             <TableHeader enableSelectAll={false} displaySelectAll={false} adjustForCheckbox={false}>
                                 <TableRow>
                                     <TableHeaderColumn style={{textAlign: 'center'}}>
-                                        <FormattedMessage id="cata_selectCategory"/>
+                                        {messages.cata_selectCategory}
                                     </TableHeaderColumn>
                                 </TableRow>
                             </TableHeader>
@@ -125,7 +122,7 @@ CreateZenAppButton = React.createClass({
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={this.handlePublicSubmit}><FormattedMessage id="cata_createBtn"/></Button>
+                    <Button onClick={this.handlePublicSubmit}>{messages.cata_createBtn}</Button>
                 </Modal.Footer>
             </Modal>
         </div>
@@ -151,8 +148,12 @@ CreateZenAppButton = React.createClass({
         }.bind(this));
 
         //console.log("selectedCategoryNames",selectedCategoryNames);
-        const loginLink = this.refs.loginLink.refs.input.value;
+        console.log("this.refs.loginLink", this.refs.loginLink);
+        console.log("this.refs.appName", this.refs.appName);
+
         const appName = this.refs.appName.refs.input.value;
+        const loginLink = this.refs.loginLink.refs.input.value;
+
 
         if (loginLink && appName && this.state.preview !== "") {
             //console.log("this.state.preview", this.state.preview);
@@ -164,7 +165,7 @@ CreateZenAppButton = React.createClass({
                     this.close();
                 }.bind(this));
         } else {
-            alert(<FormattedMessage id="cata_createAppAlert"/>);
+            alert(this.context.intl.messages.cata_createAppAlert)
         }
     },
 

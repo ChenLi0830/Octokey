@@ -15,15 +15,19 @@ const {
     NavigationMoreVert
     } = SvgIcons;
 
-const {FormattedMessage} = ReactIntl;
 AccountTab = React.createClass({
     propTypes: {
         currentUser: React.PropTypes.object,
     },
 
+    contextTypes:{
+        intl: React.PropTypes.object.isRequired,
+    },
+
     render(){
+        const {messages} = this.context.intl;
         //console.log("this.props.currentUser", this.props.currentUser);
-        let accountTab = this.props.currentUser ? <p style={style.title}><FormattedMessage id="tab_signOut"/></p>
+        let accountTab = this.props.currentUser ? <p style={style.title}>{messages.tab_signOut}</p>
             /*<IconMenu
              iconButtonElement={<p style={style.title}>{this.props.currentUser.emails[0].address}</p>}
              anchorOrigin={{horizontal: 'left', vertical: 'top'}}
@@ -31,7 +35,7 @@ AccountTab = React.createClass({
              >
              <MenuItem primaryText="登出" onTouchTap={()=>{Meteor.logout()}}/>
              </IconMenu>*/
-            : <p style={style.title}><FormattedMessage id="tab_signIn"/></p>;
+            : <p style={style.title}>{messages.tab_signIn}</p>;
         return accountTab
     }
 });

@@ -46,6 +46,10 @@ EditDialog = React.createClass({
         whenCloseDialog: React.PropTypes.func.isRequired,
     },
 
+    contextTypes:{
+        intl: React.PropTypes.object.isRequired,
+    },
+
     getInitialState(){
         return {
             popOverOpen: false,
@@ -82,15 +86,15 @@ EditDialog = React.createClass({
         });
     },
 
-    render()
-    {
+    render(){
+        const {messages} = this.context.intl;
         const actions = [
-            <RaisedButton label={<FormattedMessage id="app_editDialogAdd"/>}
+            <RaisedButton label={messages.app_editDialogAdd}
                           style={style.addNewAccountButton}
                           onTouchTap={()=>{this.setState({openDialogAdd:true})}}
                           secondary={true}/>,
             <FlatButton
-                label={<FormattedMessage id="app_editDialogFinish"/>}
+                label={messages.app_editDialogFinish}
                 secondary={true}
                 onTouchTap={this.props.whenCloseDialog}/>,
         ];
@@ -127,7 +131,7 @@ EditDialog = React.createClass({
                         onRequestClose={this.handleRequestClose}>
                         <div style={{padding: 0}}>
                             <Menu style={style.menu}>
-                                <MenuItem primaryText={<FormattedMessage id="app_editDialogDel"/>} leftIcon={<ActionDelete/>}
+                                <MenuItem primaryText={messages.app_editDialogDel} leftIcon={<ActionDelete/>}
                                           onTouchTap={this.handleRemoveAccount}/>
                             </Menu>
                         </div>

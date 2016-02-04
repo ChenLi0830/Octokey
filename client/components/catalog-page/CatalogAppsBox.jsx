@@ -41,13 +41,15 @@ let modalAttributes = {
     selectedCategoryNames: [],
 };
 
-const {FormattedMessage} = ReactIntl;
-
 CatalogAppsBox = React.createClass({
     propTypes: {
         zenApps: React.PropTypes.array.isRequired,
         zenCategories: React.PropTypes.array.isRequired,
         subscribedPublicApps: React.PropTypes.array.isRequired,
+    },
+
+    contextTypes: {
+        intl: React.PropTypes.object.isRequired,
     },
 
     getInitialState(){
@@ -75,11 +77,6 @@ CatalogAppsBox = React.createClass({
 
     open() {//for modal
         this.setState({showModal: true});
-    },
-
-    propTypes: {
-        zenApps: React.PropTypes.array.isRequired,
-        zenCategories: React.PropTypes.array.isRequired
     },
 
     handleClick(appId, appName, loginLink, logoURL, selectedCategoryNames){
@@ -145,14 +142,14 @@ CatalogAppsBox = React.createClass({
                     this.close();
                 }.bind(this));
         } else {
-            alert(<FormattedMessage id="cata_createAppAlert"/>);
+            alert(this.context.intl.messages.cata_createAppAlert);
         }
         //console.log("this.props.zenApps", this.props.zenApps);
     },
 
     handleRemoveApp(event){
         event.preventDefault();
-        var delConfirm = confirm(<FormattedMessage id="cata_confirmDel"/>);
+        var delConfirm = confirm(this.context.intl.messages.cata_confirmDel);
         if (delConfirm) {
             Meteor.call("removeZenApp", this.state.editAppId, function (error, result) {
                 if (error) {
@@ -164,6 +161,7 @@ CatalogAppsBox = React.createClass({
     },
 
     render(){
+        const {messages} = this.context.intl;
         const publicApps = (this.props.zenApps.map(function (app) {
                 let logoURL = getLogoUrl(app._id);
                 let subscribed = _.findIndex(this.props.subscribedPublicApps, function (subscribedApp) {
@@ -199,34 +197,26 @@ CatalogAppsBox = React.createClass({
              backgroundColor:"#ffffff",
              padding:0,
              borderRadius:"5px"}}>
-                <List subheader={<FormattedMessage id="cata_listTitle"/>} style={{backgroundColor:"white"}}>
+                <List subheader={messages.cata_listTitle} style={{backgroundColor:"white"}}>
                     {publicApps}
                 </List>
             </Paper>
 
             <Modal show={this.state.showModal} onHide={this.close}>
                 <Modal.Header closeButton>
-                    <Modal.Title><FormattedMessage id="cata_editPubApp"/></Modal.Title>
-                    <Button onClick={this.handleRemoveApp}><FormattedMessage id="cata_removePubApp"/></Button>
+                    <Modal.Title>{messages.cata_editPubApp}</Modal.Title>
+                    <Button onClick={this.handleRemoveApp}>{messages.cata_removePubApp}</Button>
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={this.handlePublicSubmit}>
-                        <FormattedMessage id="cata_namePlaceHolder">
-                            {(formattedValue)=>(
-                                <Input type="text" label={<FormattedMessage id="cata_appName"/>} ref="appName"
-                                       placeholder={formattedValue}/>
-                            )}
-                        </FormattedMessage>
 
-                        <FormattedMessage id="cata_linkPlaceHolder">
-                            {(formattedValue)=>(
-                                <Input type="text" label={<FormattedMessage id="cata_appLoginLink"/>} ref="loginLink"
-                                       placeholder={formattedValue}/>
-                            )}
-                        </FormattedMessage>
+                        <Input type="text" label={messages.cata_appName} ref="appName"
+                               placeholder={messages.cata_namePlaceHolder} defaultValue={modalAttributes.appName}/>
+                        <Input type="text" label={messages.cata_appLoginLink} ref="loginLink"
+                               placeholder={messages.cata_linkPlaceHolder} defaultValue={modalAttributes.loginLink}/>
 
                         <Input type="file"
-                               label={<FormattedMessage id="cata_appLogo"/>}
+                               label={messages.cata_appLogo}
                                ref="logoFile"
                                accept=".png, .jpg"
                                onChange={this.handleLogoUpload}
@@ -249,7 +239,7 @@ CatalogAppsBox = React.createClass({
                             <TableHeader enableSelectAll={false} displaySelectAll={false} adjustForCheckbox={false}>
                                 <TableRow>
                                     <TableHeaderColumn style={{textAlign: 'center'}}>
-                                        <FormattedMessage id="cata_selectCategory"/>
+                                        {messages.cata_selectCategory}
                                     </TableHeaderColumn>
                                 </TableRow>
                             </TableHeader>
@@ -264,7 +254,7 @@ CatalogAppsBox = React.createClass({
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={this.handleEditApp}><FormattedMessage id="cata_editPubAppBtn"/></Button>
+                    <Button onClick={this.handleEditApp}>{messages.cata_editPubAppBtn}</Button>
                 </Modal.Footer>
             </Modal>
         </div>

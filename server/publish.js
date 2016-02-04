@@ -19,7 +19,7 @@ Meteor.publish("zenCategories", function () {
 
 Meteor.publish("appCredential", function (userId, appId, username) {
     localSimulateLatency(2000);
-    console.log("appCredential", userId, appId, username);
+    //console.log("publish appCredential", userId, appId, username);
     //console.log("this.user", this.user);
     let result = UserAppCredentials.find(
         {

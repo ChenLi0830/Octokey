@@ -52,7 +52,7 @@ function getIntlData(){
     var locale = navigator.language.split('-');
     locale = locale[1] ? `${locale[0]}-${locale[1].toUpperCase()}` : navigator.language;
 
-    //locale = "zh-CN";
+    locale = "zh";
     //console.log("locale", locale);
 
     var strings = languages[locale] ? languages[locale] : languages['en-US'];
@@ -61,7 +61,7 @@ function getIntlData(){
     //console.log("strings", strings);
 
     return {
-        locale: "en-US",
+        locale: locale,
         messages: strings
     };
 };

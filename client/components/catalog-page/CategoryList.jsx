@@ -26,8 +26,6 @@ const {
 
 const iconColor = ZenColor.cyan;
 
-const {FormattedMessage} = ReactIntl;
-
 const nameToIcon = {
     "all": <PlacesAllInclusive color={iconColor}/>,
     "hot": <SocialWhatshot color={iconColor}/>,
@@ -50,6 +48,10 @@ const nameToIcon = {
 CategoryList = React.createClass({
     propTypes: {
         zenCategories: React.PropTypes.array.isRequired
+    },
+
+    contextTypes:{
+        intl: React.PropTypes.object.isRequired,
     },
 
     getInitialState(){
@@ -76,7 +78,7 @@ CategoryList = React.createClass({
 
         }, this);
         //console.log("Items ",Items);
-        return <List style={{backgroundColor:"white"}} subheader={<FormattedMessage id="cata_category"/>}>
+        return <List style={{backgroundColor:"white"}} subheader={this.context.intl.messages.cata_category}>
             {Items}
         </List>
     }

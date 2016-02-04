@@ -6,18 +6,20 @@ const {
     Col,
     } = ReactBootstrap;
 
-const {FormattedMessage} = ReactIntl;
-
 AddNewApp = React.createClass({
     propTypes:{
         whenClicked:React.PropTypes.func.isRequired,
     },
 
+    contextTypes:{
+        intl: React.PropTypes.object.isRequired,
+    },
+
     render(){
         return <div style={{paddingTop:"100px", paddingBottom:"100px", textAlign:"center"}}>
-            <p><FormattedMessage id="app_noAppMessage"/></p>
+            <p>{this.context.intl.messages.app_noAppMessage}</p>
             <RaisedButton primary={true}
-                          label={<FormattedMessage id="app_noAppBtn"/>}
+                          label={this.context.intl.messages.app_noAppBtn}
                           onTouchTap={this.props.whenClicked}>
             </RaisedButton>
         </div>

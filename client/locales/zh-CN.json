@@ -12,7 +12,7 @@
     "login_emailFormatError":"邮箱格式有误, 请检查",
     "login_pwdEmpty":"密码不能为空",
     "login_resetPwd":"找回密码",
-    "login_emailNotif":"密码找回邮件已经发到你的邮箱,请查收",
+    "login_emailNotif":"密码找回邮件已经发到 {email},请查收",
 
     "tab_signIn": "登录",
     "tab_signOut": "登出",
@@ -53,7 +53,7 @@
     "cata_search":"搜索应用",
     "FAB_cancel":"取消",
 
-    "app_credentialDialogMessage":"请输入你在\"{appName}\"的登录信息 (只需输入一次)",
+    "app_credentialDialogMessage":"请输入你的登录信息 (只需输入一次)",
     "app_credentialDialogCancel" : "取消",
     "app_credentialDialogLogin" : "去登录",
     "app_username":"用户名",
@@ -66,7 +66,7 @@
     "app_editDialogFinish":"完成",
     "app_editDialogDel":"删除",
 
-    "app_newCredentialDialogTitle":"添加账户: \"{appName}\"",
+    "app_newCredentialDialogTitle":"添加账户",
     "app_newCredentialDialogAdd" : "添加"
 
 }

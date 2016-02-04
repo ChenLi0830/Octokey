@@ -4,8 +4,6 @@ const {
     TextField
     } = MUI;
 
-const {FormattedMessage} = ReactIntl;
-
 AddNewCredentialDialog = React.createClass({
     propTypes: {
         appName: React.PropTypes.string.isRequired,
@@ -13,6 +11,10 @@ AddNewCredentialDialog = React.createClass({
         isPublicApp: React.PropTypes.bool.isRequired,
         openDialogAdd: React.PropTypes.bool.isRequired,
         whenCloseDialog: React.PropTypes.func.isRequired,
+    },
+
+    contextTypes: {
+        intl: React.PropTypes.object.isRequired,
     },
 
     getInitialState(){
@@ -25,54 +27,50 @@ AddNewCredentialDialog = React.createClass({
     },
 
     render(){
+        const {messages} = this.context.intl;
         const actions = [
             <FlatButton
-                label={<FormattedMessage id="app_credentialDialogCancel"/>}
+                label={messages.app_credentialDialogCancel}
                 primary={true}
                 onTouchTap={this.props.whenCloseDialog}/>,
             <FlatButton
                 secondary={true}
-                label={<FormattedMessage id="app_newCredentialDialogAdd"/>}
+                label={messages.app_newCredentialDialogAdd}
                 onTouchTap={this.handleSaveAccount}/>
         ];
 
-        return <FormattedMessage id="app_newCredentialDialogTitle" values={{appName:this.props.appName}}>
-            {(formattedValue)=>(
-                <Dialog
-                    title={formattedValue}
-                    actions={actions}
-                    contentStyle={{
-                width: '20%',
-                minWidth: '200px',}}
-                    autoDetectWindowHeight={false}
-                    autoScrollBodyContent={true}
+        return <Dialog title={this.props.appName + "-" + messages.app_newCredentialDialogTitle}
+                       actions={actions}
+                       contentStyle={{
+                            width: '20%',
+                            minWidth: '200px',}}
+                       autoDetectWindowHeight={false}
+                       autoScrollBodyContent={true}
 
-                    open={this.props.openDialogAdd}
-                    onRequestClose={this.props.whenCloseDialog}>
+                       open={this.props.openDialogAdd}
+                       onRequestClose={this.props.whenCloseDialog}>
 
-                    {/*This is here to stop chrome's username and password autofill*/}
-                    <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
-                    <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
+            {/*This is here to stop chrome's username and password autofill*/}
+            <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
+            <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
 
-                    <TextField
-                        ref="username"
-                        style={{fontWeight:"300"}}
-                        floatingLabelStyle={{fontWeight:"300"}}
-                        errorText={this.state.floatingUserText}
-                        onChange={this.handleInputErrorCheckUser}
-                        floatingLabelText={<FormattedMessage id="app_username"/>}/>
-                    <br/>
-                    <TextField
-                        ref="password"
-                        type="password"
-                        style={{fontWeight:"300"}}
-                        floatingLabelStyle={{fontWeight:"300"}}
-                        errorText={this.state.floatingPassText}
-                        onChange={this.handleInputErrorCheckPass}
-                        floatingLabelText={<FormattedMessage id="app_password"/>}/>
-                </Dialog>
-            )}
-        </FormattedMessage>
+            <TextField
+                ref="username"
+                style={{fontWeight:"300"}}
+                floatingLabelStyle={{fontWeight:"300"}}
+                errorText={this.state.floatingUserText}
+                onChange={this.handleInputErrorCheckUser}
+                floatingLabelText={messages.app_username}/>
+            <br/>
+            <TextField
+                ref="password"
+                type="password"
+                style={{fontWeight:"300"}}
+                floatingLabelStyle={{fontWeight:"300"}}
+                errorText={this.state.floatingPassText}
+                onChange={this.handleInputErrorCheckPass}
+                floatingLabelText={messages.app_password}/>
+        </Dialog>
     },
 
 
@@ -110,7 +108,7 @@ AddNewCredentialDialog = React.createClass({
     handleInputErrorCheckUser(){
         let userName = this.refs.username.getValue();
         if (!userName) {
-            this.setState({floatingUserText: <FormattedMessage id="login_usernameEmpty"/>});
+            this.setState({floatingUserText: this.context.intl.messages.login_usernameEmpty});
         } else {
             this.setState({floatingUserText: ""});
         }
@@ -119,7 +117,7 @@ AddNewCredentialDialog = React.createClass({
     handleInputErrorCheckPass(){
         let password = this.refs.password.getValue();
         if (!password) {
-            this.setState({floatingPassText: <FormattedMessage id="login_pwdEmpty"/>});
+            this.setState({floatingPassText: this.context.intl.messages.login_pwdEmpty});
         } else {
             this.setState({floatingPassText: ""});
         }

@@ -41,7 +41,12 @@ AuthForgotPwdPage = React.createClass({
         };
     },
 
+    contextTypes:{
+        intl: React.PropTypes.object.isRequired,
+    },
+
     render() {
+        const {messages} = this.context.intl;
         const logo = (
             <Link to="/"><img style={style.logo} src="/img/logo.svg"/></Link>
         );
@@ -61,18 +66,19 @@ AuthForgotPwdPage = React.createClass({
                             floatingLabelStyle={{fontWeight:"300"}}
                             errorText={this.state.floatingUserText}
                             onBlur={this.handleInputErrorCheckUser}
-                            floatingLabelText={<FormattedMessage id="login_email"/>}/>
+                            floatingLabelText={messages.login_email}/>
                         <br/>
                         {/*Todo 加入验证码*/}
                     </form>
 
-                    <RaisedButton label={<FormattedMessage id="login_resetPwd"/>}
+                    <RaisedButton label={messages.login_resetPwd}
                                   onClick={this.handleSubmit}
                                   style={style.registerButton}
                                   secondary={true}/>
                     <Snackbar
                         open={this.state.snackBarOpen}
-                        message={<FormattedMessage id="login_emailNotif"/>}
+                        message={<FormattedMessage id="login_emailNotif"
+                            values={{email:this.refs.email?this.refs.email.getValue():null}}/>}
                         autoHideDuration={4000}
                         onRequestClose={this.handleRequestClose}
                     />
@@ -84,10 +90,10 @@ AuthForgotPwdPage = React.createClass({
     handleInputErrorCheckUser(){
         let email = this.refs.email.getValue();
         if (!email) {
-            this.setState({floatingUserText: <FormattedMessage id="login_emailEmpty"/>});
+            this.setState({floatingUserText: this.context.intl.messages.login_emailEmpty});
         }
         else if (!validateEmail(email)) {
-            this.setState({floatingUserText: <FormattedMessage id="login_emailFormatError"/>});
+            this.setState({floatingUserText: this.context.intl.messages.login_emailFormatError});
         }
         else {
             this.setState({floatingUserText: ""});

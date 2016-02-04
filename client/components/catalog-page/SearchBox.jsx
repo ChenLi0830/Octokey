@@ -7,17 +7,13 @@ const {
     ActionSearch
     } = SvgIcons;
 
-const {FormattedMessage} = ReactIntl;
-
 SearchBox = React.createClass({
+
+    context:{intl:React.PropTypes.object.isRequired},
 
     render(){
         return <List style={{backgroundColor:"white"}}>
-            <ListItem primaryText={<FormattedMessage id="cata_search"/>} leftIcon={<ActionSearch />}/>
+            <ListItem primaryText={this.context.intl.messages.cata_search} leftIcon={<ActionSearch />}/>
         </List>;
-        //var ITEMS = ['ruby', 'javascript', 'lua', 'go', 'julia', 'c', 'scala', 'haskell'];
-        /*return <div>
-         <ReactSearchBar items={ITEMS} placeholder="Search new App" ItemElement= "span"/>
-         </div>*/
     }
 });

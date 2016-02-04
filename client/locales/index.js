@@ -4,5 +4,6 @@ var languages = {};
 
 languages["en-US"] = enUs;
 languages["zh-CN"] = zhCn;
+languages["zh"] = zhCn;
 
 export default languages;

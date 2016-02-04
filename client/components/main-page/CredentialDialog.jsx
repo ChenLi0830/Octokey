@@ -16,6 +16,10 @@ CredentialDialog = React.createClass({
         whenSubmitCredential: React.PropTypes.func.isRequired,
     },
 
+    contextTypes:{
+        intl: React.PropTypes.object.isRequired,
+    },
+
     getInitialState(){
         return {
             floatingUserText: "",
@@ -26,21 +30,24 @@ CredentialDialog = React.createClass({
     },
 
     render(){
+        const {messages} = this.context.intl;
         const actions = [
             <FlatButton
-                label={<FormattedMessage id="app_credentialDialogCancel"/>}
+                label={messages.app_credentialDialogCancel}
                 primary={true}
                 onTouchTap={this.props.whenCloseDialog}/>,
             <FlatButton
                 secondary={true}
-                label={<FormattedMessage id="app_credentialDialogLogin"/>}
+                label={messages.app_credentialDialogLogin}
                 onTouchTap={this.handleSubmit}/>
         ];
 
-        return <FormattedMessage id="app_credentialDialogMessage" values={{appName: this.props.appName}}>
-            {(formattedValue)=>(
-            <Dialog
-                title={formattedValue}
+        //let title;
+        //<FormattedMessage id="app_credentialDialogMessage" values={{appName: this.props.appName}}>
+        //    {function(formattedValue){title = formattedValue}}
+        //</FormattedMessage>
+        return <Dialog
+                title={this.props.appName + "-" + messages.app_credentialDialogMessage}
                 actions={actions}
                 modal={false}
                 open={this.props.openDialogCredential}
@@ -56,7 +63,7 @@ CredentialDialog = React.createClass({
                     floatingLabelStyle={{fontWeight:"300"}}
                     errorText={this.state.floatingUserText}
                     onChange={this.handleInputErrorCheckUser}
-                    floatingLabelText={<FormattedMessage id="app_username"/>}/>
+                    floatingLabelText={messages.app_username}/>
                 <br/>
                 <TextField
                     ref="password"
@@ -65,10 +72,8 @@ CredentialDialog = React.createClass({
                     floatingLabelStyle={{fontWeight:"300"}}
                     errorText={this.state.floatingPassText}
                     onChange={this.handleInputErrorCheckPass}
-                    floatingLabelText={<FormattedMessage id="app_password"/>}/>
+                    floatingLabelText={messages.app_password}/>
             </Dialog>
-        )}
-        </FormattedMessage>
     },
 
 
@@ -108,7 +113,7 @@ CredentialDialog = React.createClass({
     handleInputErrorCheckUser(){
         let userName = this.refs.username.getValue();
         if (!userName) {
-            this.setState({floatingUserText: <FormattedMessage id="login_usernameEmpty"/>});
+            this.setState({floatingUserText: this.context.intl.messages.login_usernameEmpty});
         } else {
             this.setState({floatingUserText: ""});
         }
@@ -117,7 +122,7 @@ CredentialDialog = React.createClass({
     handleInputErrorCheckPass(){
         let password = this.refs.password.getValue();
         if (!password) {
-            this.setState({floatingPassText: <FormattedMessage id="login_pwdEmpty"/>});
+            this.setState({floatingPassText: this.context.intl.messages.login_pwdEmpty});
         } else {
             this.setState({floatingPassText: ""});
         }

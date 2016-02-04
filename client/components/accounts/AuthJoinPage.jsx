@@ -11,8 +11,6 @@ const {
     Col
     } = ReactBootstrap;
 
-const {FormattedMessage} = ReactIntl;
-
 const style = {
     paper: {
         paddingTop: 30,
@@ -31,8 +29,12 @@ const style = {
     }
 };
 
-
 AuthJoinPage = React.createClass({
+    contextTypes: {
+        router: React.PropTypes.object.isRequired,
+        intl: React.PropTypes.object.isRequired,
+    },
+
     getInitialState() {
         return {
             floatingUserText: "",
@@ -41,6 +43,8 @@ AuthJoinPage = React.createClass({
     },
 
     render() {
+        const {messages} = this.context.intl;
+
         const logo = (
             <Link to="/"><img style={style.logo} src="/img/logo.svg"/></Link>
         );
@@ -60,7 +64,7 @@ AuthJoinPage = React.createClass({
                             floatingLabelStyle={{fontWeight:"300"}}
                             errorText={this.state.floatingUserText}
                             onBlur={this.handleInputErrorCheckUser}
-                            floatingLabelText={<FormattedMessage id="login_email"/>}/>
+                            floatingLabelText={messages.login_email}/>
                         <br/>
                         <TextField
                             ref="password"
@@ -69,14 +73,14 @@ AuthJoinPage = React.createClass({
                             floatingLabelStyle={{fontWeight:"300"}}
                             errorText={this.state.floatingPassText}
                             onBlur={this.handleInputErrorCheckPass}
-                            floatingLabelText={<FormattedMessage id="login_password"/>}/>
+                            floatingLabelText={messages.login_password}/>
                     </form>
 
-                    <RaisedButton label={<FormattedMessage id="login_signUp"/>}
+                    <RaisedButton label={messages.login_signUp}
                                   onClick={this.handleSubmit}
                                   style={style.registerButton}
                                   secondary={true}/>
-                    <p><FormattedMessage id="login_haveAccount"/><Link to="/login"><FormattedMessage id="login_signIn_low"/></Link></p>
+                    <p>{messages.login_haveAccount}<Link to="/login">{messages.login_signIn_low}</Link></p>
                 </Paper>
             </Col>
         );
@@ -85,10 +89,10 @@ AuthJoinPage = React.createClass({
     handleInputErrorCheckUser(){
         let email = this.refs.email.getValue();
         if (!email) {
-            this.setState({floatingUserText: <FormattedMessage id="login_emailEmpty"/>});
+            this.setState({floatingUserText: this.context.intl.messages.login_emailEmpty});
         }
         else if (!validateEmail(email)) {
-            this.setState({floatingUserText: <FormattedMessage id="login_emailFormatError"/>});
+            this.setState({floatingUserText: this.context.intl.messages.login_emailFormatError});
         }
         else {
             this.setState({floatingUserText: ""});
@@ -103,7 +107,7 @@ AuthJoinPage = React.createClass({
     handleInputErrorCheckPass(){
         let password = this.refs.password.getValue();
         if (!password) {
-            this.setState({floatingPassText: <FormattedMessage id="login_pwdEmpty"/>});
+            this.setState({floatingPassText: this.context.intl.messages.login_pwdEmpty});
         } else {
             this.setState({floatingPassText: ""});
         }
@@ -124,14 +128,13 @@ AuthJoinPage = React.createClass({
                 password: password
             }, (error) => {
                 if (error) {
-                    this.setState({floatingPassText: error.error+" "+error.reason});
-                    console.log("error: " , error);
+                    this.setState({floatingPassText: error.error + " " + error.reason});
+                    console.log("error: ", error);
                     //alert("error: " + error);
                     return;
                 }
-                this.props.history.pushState(null, '/list');
+                this.context.router.push('/list');
             });
         }
     }
-
 });
