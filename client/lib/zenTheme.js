@@ -19,7 +19,7 @@ ZenRawTheme = {
 };
 
 ZenColor = {
-    pink: "#EB008B",
+    pink: Colors.pink500,
     orange: "#F15E0C",
     cyan: "#12C5A2",
     white: "#FFFFFF",

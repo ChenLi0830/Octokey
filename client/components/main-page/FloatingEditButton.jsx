@@ -9,6 +9,7 @@ const {
     ContentAdd,
     ContentRemove,
     ActionSettings,
+    ActionLanguage,
     } = SvgIcons;
 
 FloatingEditButton = React.createClass({

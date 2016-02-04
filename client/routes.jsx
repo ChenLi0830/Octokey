@@ -2,8 +2,6 @@
 //  passwordSignupFields: "USERNAME_ONLY"
 //});
 
-import languages from './locales';
-
 const {
     Router,
     Route,
@@ -12,8 +10,6 @@ const {
     } = ReactRouter;
 
 // const createHistory = ReactRouter.history.createHistory;
-
-const {IntlProvider} = ReactIntl;
 
 function requireAuth(nextState, replaceState) {
     if (!Meteor.userId())
@@ -38,30 +34,5 @@ const router = (
     </Router>);
 
 Meteor.startup(function () {
-    const intlData = getIntlData();
-
-    ReactDOM.render(
-        //<IntlProvider locale="es" messages={esMessages}>
-        <IntlProvider {...intlData}>
-            {router}
-        </IntlProvider>, document.getElementById("app-container")
-    );
+    ReactDOM.render(<IntlWrapper router={router}/>, document.getElementById("app-container"));
 });
-
-function getIntlData(){
-    var locale = navigator.language.split('-');
-    locale = locale[1] ? `${locale[0]}-${locale[1].toUpperCase()}` : navigator.language;
-
-    locale = "zh";
-    //console.log("locale", locale);
-
-    var strings = languages[locale] ? languages[locale] : languages['en-US'];
-    strings = Object.assign(languages['en-US'], strings);
-
-    //console.log("strings", strings);
-
-    return {
-        locale: locale,
-        messages: strings
-    };
-};

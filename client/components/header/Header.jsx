@@ -5,10 +5,15 @@ const {
 
 const {AppBar,
     Tabs,
-    Tab
+    Tab,
+    IconMenu,
+    IconButton,
+    MenuItem
     } = MUI;
 
-const {ToggleStar} = SvgIcons;
+const {ToggleStar,
+    ActionLanguage
+    } = SvgIcons;
 
 const {Link} = ReactRouter;
 
@@ -25,7 +30,10 @@ Header = React.createClass({
     mixins: [ReactMeteorData],
 
     getInitialState(){
-        return {routeValue: "/login"}
+        return {
+            routeValue: "/login",
+            language: "zh",
+        }
     },
 
     getMeteorData(){
@@ -69,7 +77,21 @@ Header = React.createClass({
         //header + inkbar: 64+4=68px;
         return <AppBar
             style={{marginTop:"-68px", boxShadow:"0 1px 16px rgba(0, 0, 0, 0.18)", backgroundColor:ZenColor.white}}
-            showMenuIconButton={false}>
+            iconElementLeft={
+                  <IconMenu
+                  value={this.state.language}
+                  onChange={this.handleLanguageChange}
+                    iconButtonElement={
+                      <IconButton iconStyle={{fill:ZenColor.orange}}><ActionLanguage /></IconButton>
+                    }
+                    //targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                    //anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                  >
+                    <MenuItem primaryText="中文" value="zh"/>
+                    <MenuItem primaryText="English" value="en-US"/>
+                  </IconMenu>
+            }
+            showMenuIconButton={true}>
             <div className="container">
                 <Tabs onChange={this.handleTabChange}
                       value={this.state.routeValue}
@@ -83,7 +105,13 @@ Header = React.createClass({
 
                     <Tab className="headerTab" value="/catalog" label={addNewImage}/>
                 </Tabs>
+
             </div>
         </AppBar>
-    }
+    },
+
+    handleLanguageChange(event, value){
+        Actions.selectNewLanguage(value);
+        this.setState({language:value});
+    },
 });

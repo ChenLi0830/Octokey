@@ -113,7 +113,7 @@ AuthSignInPage = React.createClass({
     handleInputErrorCheckPass(){
         let password = this.refs.password.getValue();
         if (!password) {
-            this.setState({floatingPassText: this.context.intl.login_pwdEmpty});
+            this.setState({floatingPassText: this.context.intl.messages.login_pwdEmpty});
         } else {
             this.setState({floatingPassText: ""});
         }
@@ -128,16 +128,18 @@ AuthSignInPage = React.createClass({
         let email = this.refs.email.getValue();
         let password = this.refs.password.getValue();
 
-        Meteor.loginWithPassword(email, password, (error) => {
-            if (error) {
-                this.setState({floatingPassText: error.error + " " + error.reason});
-                console.log("error: ", error);
-                //alert("error: " + error);
-                return;
-            }
+        if (email && password && this.state.floatingUserText.length === 0 && this.state.floatingPassText.length === 0) {
+            Meteor.loginWithPassword(email, password, (error) => {
+                if (error) {
+                    this.setState({floatingPassText: error.error + " " + error.reason});
+                    console.log("error: ", error);
+                    //alert("error: " + error);
+                    return;
+                }
 
-            this.context.router.push('/list');
-        });
+                this.context.router.push('/list');
+            });
+        }
     },
 
 });
