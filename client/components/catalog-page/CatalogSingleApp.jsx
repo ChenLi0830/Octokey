@@ -28,6 +28,10 @@ CatelogSingleApp = React.createClass({
         subscribed: React.PropTypes.bool.isRequired,
     },
 
+    contextTypes:{
+        intl: React.PropTypes.object.isRequired,
+    },
+
     getInitialState(){
         return {
             hovered: false
@@ -47,10 +51,11 @@ CatelogSingleApp = React.createClass({
     },
 
     render(){
+        const {messages} = this.context.intl;
         const {logoURL,appName,loginLink,appId,selectedCategoryNames} = this.props;
 
         let handleToggle = this.props.subscribed ? this.handleRemove : this.handleAdd;
-        let labelText = this.props.subscribed ? "已添加" : "添加";
+        let labelText = this.props.subscribed ? messages.cata_added : messages.cata_add;
         let toggleState = this.props.subscribed ? true : false;
 
         let toggleButton = <Toggle

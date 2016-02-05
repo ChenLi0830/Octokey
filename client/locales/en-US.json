@@ -44,6 +44,7 @@
     "cata_cancel" : "cancel",
     "cata_del" : "Remove",
     "cata_add" : "Add",
+    "cata_added" : "Added",
     "cata_editCategory" : "Edit Categories",
 
     "cata_symble" : "Icon Symbol",

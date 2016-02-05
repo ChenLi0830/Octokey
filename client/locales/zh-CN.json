@@ -44,6 +44,7 @@
     "cata_cancel" : "取消",
     "cata_del" : "删除",
     "cata_add" : "添加",
+    "cata_added" : "已添加",
     "cata_editCategory" : "编辑类别",
 
     "cata_symble" : "icon标签，用来确定类别对应的Icon",
