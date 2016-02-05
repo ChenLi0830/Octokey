@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Copyright (C) 2015 ZenID Inc.
+ *
+ * Creator: Chen Li<chen.li@noc-land.com>
+ * Creation Date: 2015-12-31
+ *
+ * Component for a single App box, called by "AppsContainer"
+ *******************************************************************************/
 const {
     Col,
     } = ReactBootstrap;

@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Copyright (C) 2015 ZenID Inc.
+ *
+ * Creator: Chen Li<chen.li@noc-land.com>
+ * Creation Date: 2015-12-31
+ *
+ * App component is the root element to load the app. Called by "router".
+ *******************************************************************************/
 var {ThemeManager} = MUI.Styles;
 var {AppCanvas,Paper} = MUI;
 var {Grid,Row,Col} = ReactBootstrap;

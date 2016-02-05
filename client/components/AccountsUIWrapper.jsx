@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Copyright (C) 2015 ZenID Inc.
+ *
+ * Creator: Chen Li<chen.li@noc-land.com>
+ * Creation Date: 2015-12-31
+ *
+ * AccountsUIWrapper component is a temporary component for account's UI, should be removed in the future.
+ *******************************************************************************/
 AccountsUIWrapper = React.createClass({
     componentDidMount() {
         // Use Meteor Blaze to render login buttons

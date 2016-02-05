@@ -4,7 +4,7 @@
  * Creator: Chen Li<chen.li@noc-land.com>
  * Creation Date: 2015-12-26
  *
- * Catalog Apps Box component - called inside Catalog component
+ * Catalog Apps Box component - called by "Catalog"
  *******************************************************************************/
 const {
     Modal,

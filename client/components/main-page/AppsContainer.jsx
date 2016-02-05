@@ -1,4 +1,11 @@
-//Todo: add configuration FAB
+/*******************************************************************************
+ * Copyright (C) 2015 ZenID Inc.
+ *
+ * Creator: Chen Li<chen.li@noc-land.com>
+ * Creation Date: 2015-12-31
+ *
+ * AppsContainer Component contains all the app boxes of the main page, called by "routes"
+ *******************************************************************************/
 
 const {
     Grid,

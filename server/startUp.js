@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * Copyright (C) 2015 ZenID Inc.
+ *
+ * Creator: Chen Li<chen.li@noc-land.com>
+ * Creation Date: 2015-12-31
+ *
+ * startUp.js calls the startup function, it runs before everything else,
+ * and can be used to set environment variables in the app, or setup database, etc.
+ *******************************************************************************/
 Meteor.startup(function () {
     //process.env.MAIL_URL = 'smtp://yichen.li0830@gmail.com:lizhengren@smtp.gmail.com:465/';
     process.env.MAIL_URL = 'smtp://postmaster@sandbox4e97a79afccd430d8897f90ad78054be.mailgun.org:0011d852303b11544220c77d6572bc1d@smtp.mailgun.org:587';

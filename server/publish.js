@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Copyright (C) 2015 ZenID Inc.
+ *
+ * Creator: Chen Li<chen.li@noc-land.com>
+ * Creation Date: 2015-12-31
+ *
+ * publish.js controls the publish part for all collections.
+ *******************************************************************************/
 Meteor.publish("zenApps", function () {
     localSimulateLatency(2000);
     if (this.userId) {

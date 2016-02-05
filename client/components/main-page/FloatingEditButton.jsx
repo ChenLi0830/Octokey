@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Copyright (C) 2015 ZenID Inc.
+ *
+ * Creator: Chen Li<chen.li@noc-land.com>
+ * Creation Date: 2015-12-31
+ *
+ * Floating Action Button component in Apps container, called by "AppsContainer"
+ *******************************************************************************/
 const {
     FloatingActionButton,
     } = MUI;
@@ -9,7 +17,7 @@ const {
     ContentAdd,
     ContentRemove,
     ActionSettings,
-    ActionLanguage,
+    AvFiberNew,
     } = SvgIcons;
 
 FloatingEditButton = React.createClass({
@@ -30,7 +38,7 @@ FloatingEditButton = React.createClass({
     },
 
     render(){
-        let miniButtonIconElements = [/*<ContentCreate/>, */<ContentAdd/>, <ContentRemove/>, <ContentCreate/>];
+        let miniButtonIconElements = [/*<ContentCreate/>, */<ContentAdd/>, <ContentRemove/>, <ContentCreate/>, <AvFiberNew/>];
         let miniIconColor = [
             {background: ZenColor.cyan, icon: ZenColor.white},
             {background: ZenColor.orange, icon: ZenColor.white},

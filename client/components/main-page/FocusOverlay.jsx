@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * Copyright (C) 2015 ZenID Inc.
+ *
+ * Creator: Chen Li<chen.li@noc-land.com>
+ * Creation Date: 2015-12-31
+ *
+ * Shadow Overlay when user click remove/edit in Apps Container, it is used to
+ * differentiate apps-box from background, called by "AppsContainer"
+ *******************************************************************************/
 const {
     Paper,
     } = MUI;

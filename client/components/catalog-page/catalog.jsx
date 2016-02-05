@@ -4,7 +4,7 @@
  * Creator: Chen Li<chen.li@noc-land.com>
  * Creation Date: 2015-12-26
  *
- * Catalog page component
+ * Catalog page component, called by "routes", used by "App"
  *******************************************************************************/
 const {
     Grid,

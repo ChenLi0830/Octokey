@@ -1,12 +1,12 @@
-/*AppLoading = React.createClass({
- render(){
- return (
- <div>
- App is loading.
- </div>
- )
- }
- });*/
+/*******************************************************************************
+ * Copyright (C) 2015 ZenID Inc.
+ *
+ * Creator: Chen Li<chen.li@noc-land.com>
+ * Creation Date: 2015-12-31
+ *
+ * Universal AppLoading component. Called by components that require subscription
+ * from Meteor server, such as "Catalog" or "App".
+ *******************************************************************************/
 const {RefreshIndicator,Paper  } = MUI;
 
 AppLoading = React.createClass({

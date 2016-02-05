@@ -1,6 +1,11 @@
-//addPublicApp(userId, appId)
-//publicAppConfigured (userId, appId)
-//getPublicApps (userId)
+/*******************************************************************************
+ * Copyright (C) 2015 ZenID Inc.
+ *
+ * Creator: Chen Li<chen.li@noc-land.com>
+ * Creation Date: 2015-12-31
+ *
+ * userApps.js declares methods for UserApps collection.
+ *******************************************************************************/
 Meteor.methods({
     addPublicApp(appId, appName, logoURL, loginLink){
         localSimulateLatency(500);

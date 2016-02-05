@@ -1,6 +1,11 @@
-//Accounts.ui.config({
-//  passwordSignupFields: "USERNAME_ONLY"
-//});
+/*******************************************************************************
+ * Copyright (C) 2015 ZenID Inc.
+ *
+ * Creator: Chen Li<chen.li@noc-land.com>
+ * Creation Date: 2015-12-31
+ *
+ * routes uses React-router, it is the root of the client-side app
+ *******************************************************************************/
 
 const {
     Router,

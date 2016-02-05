@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * Copyright (C) 2015 ZenID Inc.
+ *
+ * Creator: Chen Li<chen.li@noc-land.com>
+ * Creation Date: 2015-12-26
+ *
+ * Dialog for Add New Account for an App, this should present when user choose to add a new app from edit catalog,
+ * called by "EditDialog"
+ *******************************************************************************/
 const {
     Dialog,
     FlatButton,

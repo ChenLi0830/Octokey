@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * Copyright (C) 2015 ZenID Inc.
+ *
+ * Creator: Chen Li<chen.li@noc-land.com>
+ * Creation Date: 2015-12-31
+ *
+ * React-Intl wrapper component. Used to wrap the App around react-intl to support
+ * multiple languages. Called by "routes".
+ *******************************************************************************/
 import languages from '../locales';
 const {IntlProvider} = ReactIntl;
 

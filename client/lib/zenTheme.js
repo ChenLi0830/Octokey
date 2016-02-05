@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Copyright (C) 2015 ZenID Inc.
+ *
+ * Creator: Chen Li<chen.li@noc-land.com>
+ * Creation Date: 2015-12-31
+ *
+ * It defines the theme object used by the app in Material UI
+ *******************************************************************************/
 ZenRawTheme = {
     spacing: Spacing,
     zIndex: zIndex,
