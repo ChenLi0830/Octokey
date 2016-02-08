@@ -31,11 +31,14 @@ AppsContainer = React.createClass({
             return {
                 currentUser: Meteor.user(),
                 chosenPublicApps: findUserApps ? findUserApps.publicApps : [],
+                hexIv: findUserApps && findUserApps.hexIv ? findUserApps.hexIv : "",
             }
         } else {
             return {
                 currentUser: null,
                 chosenPublicApps: [],
+                salt: "",
+                hexIv: "",
             }
         }
     },
@@ -45,7 +48,7 @@ AppsContainer = React.createClass({
             openDialogCredential: false,
             userEditStatus: "default",
             openDialogEdit: false,
-            openDialogPlugin:false,
+            openDialogPlugin: false,
         }
     },
 
@@ -93,7 +96,8 @@ AppsContainer = React.createClass({
                               isPublicApp={isPublicApp}
                               openDialogCredential={this.state.openDialogCredential}
                               whenCloseDialog={this.handleCloseDialogCredential}
-                              whenSubmitCredential={this.handleGoToLink}
+                              whenSubmitCredential={this.handleLogin}
+                              hexIv={this.data.hexIv}
             />
 
             {this.state.openDialogEdit ?
@@ -103,9 +107,10 @@ AppsContainer = React.createClass({
                             usernames={isPublicApp?this.data.chosenPublicApps[publicFocusedIndex].userNames:null}
                             openDialogEdit={this.state.openDialogEdit}
                             whenCloseDialog={()=>{this.setState({openDialogEdit: false})}}
+                            hexIv={this.data.hexIv}
                 /> : null}
 
-            <FocusOverlay visibility={this.state.userEditStatus!=="default"}/>
+            <FocusOverlay visibility={_.indexOf(["config", "remove"],this.state.userEditStatus)>-1}/>
 
             <FloatingEditButton
                 whenEditButtonClicked={this.handleEditButtonClick}
@@ -130,7 +135,7 @@ AppsContainer = React.createClass({
     handleAppTileClick(appId){
         //console.log("chrome.app.isInstalled", chrome.app.isInstalled);
         if (!this.extensionIsInstalled()) {
-            this.setState({openDialogPlugin:true});
+            this.setState({openDialogPlugin: true});
             return;
         }
 
@@ -147,7 +152,7 @@ AppsContainer = React.createClass({
                 if (this.data.chosenPublicApps[publicFocusedIndex].userNames.length > 0) {
                     //Todo 加入component让用户选择登录credential
                     let username = this.data.chosenPublicApps[publicFocusedIndex].userNames[0];
-                    this.handleGoToLink(username, "");
+                    this.handleLogin(username, "");
                 }
                 else {
                     this.handleOpenDialogCredential(publicFocusedIndex);
@@ -172,8 +177,15 @@ AppsContainer = React.createClass({
                 alert("edit private app!")
             }
         }
+        else if (this.state.userEditStatus === "register") {
+            if (isPublicApp) {
+                //Todo decide which identity is needed, either by user or by system.
+                this.handleRegister("cellphone", "7097490481");
+            } else {
+                alert("Register for a private app is not allowed!")
+            }
+        }
     },
-
 
     handleEditButtonClick(i){
         //console.log(i);
@@ -188,6 +200,9 @@ AppsContainer = React.createClass({
                 break;
             case 2:
                 this.setState({userEditStatus: "config"});
+                break;
+            case 3:
+                this.setState({userEditStatus: "register"});
                 break;
             default:
                 alert(i + " is clicked, don't know how to handle.");
@@ -207,7 +222,7 @@ AppsContainer = React.createClass({
         this.setState({openDialogCredential: false});
     },
 
-    handleGoToLink(username, password){
+    handleLogin(username, password){
         let targetUrl = this.isInDevMode ? "http://localhost:3000" : "http://114.215.98.118";
         //因为content script被嵌入了这个应用,所以要和content script通信,就发给自己就可以.
         //如果要修改这个值,记得还要修改 plugin 的 manifest.json file.
@@ -226,9 +241,35 @@ AppsContainer = React.createClass({
         //Todo 让这一步的Meteor.userID()放到server里执行
         window.postMessage(//Communicate with plugin
             [
-                "goToLink", Meteor.userId(), appId, loginLink, username, password
+                "logIn", Meteor.userId(), appId, loginLink, username, password, this.data.hexIv, Session.get("hexKey")
             ],
             targetUrl);
+    },
+
+    handleRegister(type, account){
+        let targetUrl = this.isInDevMode ? "http://localhost:3000" : "http://114.215.98.118";
+        //因为content script被嵌入了这个应用,所以要和content script通信,就发给自己就可以.
+        //如果要修改这个值,记得还要修改 plugin 的 manifest.json file.
+
+        //console.log("username: ",username);
+        let isPublicApp = publicFocusedIndex > -1;
+        if (!isPublicApp) {
+            alert("You can't create account for private app!");
+            return;
+        }
+
+        let appId = this.data.chosenPublicApps[publicFocusedIndex].appId;
+        //loginLink = this.data.chosenPublicApps[publicFocusedIndex].loginLink;
+        let registerLink = "https://reg.taobao.com/member/reg/fill_mobile.htm";
+        //Todo 让这一步的Meteor.userID()放到server里执行
+        window.postMessage(//Communicate with plugin
+            [
+                "register", Meteor.userId(), appId, registerLink, type, account
+            ],
+            targetUrl);
+        setTimeout(function () {
+
+        }, 2000);
     },
 
     extensionIsInstalled(){

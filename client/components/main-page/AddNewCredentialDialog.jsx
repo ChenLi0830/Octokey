@@ -20,6 +20,7 @@ AddNewCredentialDialog = React.createClass({
         isPublicApp: React.PropTypes.bool.isRequired,
         openDialogAdd: React.PropTypes.bool.isRequired,
         whenCloseDialog: React.PropTypes.func.isRequired,
+        hexIv: React.PropTypes.string.isRequired,
     },
 
     contextTypes: {
@@ -92,10 +93,15 @@ AddNewCredentialDialog = React.createClass({
         let username = this.refs.username.getValue();
         let password = this.refs.password.getValue();
 
+
+
         if (username && password) {
+            let hexKey = Session.get("hexKey");
+            if (!hexKey) throw Meteor.Error("Can't find master password key");
+            let encryptedPwd = encrypt(password, hexKey, this.props.hexIv);
 
             if (this.props.isPublicApp) {
-                Meteor.call("addNewCredential", this.props.appId, username, password, function (error) {
+                Meteor.call("addNewCredential", this.props.appId, username, encryptedPwd, function (error) {
                     if (error) {
                         throw new Meteor.Error("Error adding new Credential");
                     }

@@ -52,6 +52,7 @@ EditDialog = React.createClass({
         usernames: React.PropTypes.array.isRequired,
         openDialogEdit: React.PropTypes.bool.isRequired,
         whenCloseDialog: React.PropTypes.func.isRequired,
+        hexIv: React.PropTypes.string.isRequired,
     },
 
     contextTypes:{
@@ -149,7 +150,8 @@ EditDialog = React.createClass({
                                             appId={this.props.appId}
                                             isPublicApp={this.props.isPublicApp}
                                             openDialogAdd={this.state.openDialogAdd}
-                                            whenCloseDialog={()=>{this.setState({openDialogAdd: false})}}/>
+                                            whenCloseDialog={()=>{this.setState({openDialogAdd: false})}}
+                                            hexIv={this.props.hexIv}/>
 
                     <Divider />
                 </Dialog>

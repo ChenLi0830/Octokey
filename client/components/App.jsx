@@ -23,8 +23,11 @@ App = React.createClass({
         const subsReady = _.every(subHandles, function (handle) {
             return handle.ready();
         });
+        const currentUserId = Meteor.userId();
         return {
-            subsReady: subsReady
+            subsReady: subsReady,
+            currentUserId: currentUserId,
+            UserApps: currentUserId ? UserApps.find({userId: currentUserId}).fetch()[0] : null,
         };
     },
 
@@ -41,6 +44,13 @@ App = React.createClass({
     },
 
     render(){
+        //console.log("Session.get(hexKey)", Session.get("hexKey"));
+        if (this.data.UserApps) {
+            if (!Session.get("hexKey")) {//when user logged in with fresh session
+                Actions.initKeySaltIv(this.data.UserApps.hexSalt, this.data.UserApps.hexIv);
+            }
+        }
+
         //Todo check userlogin status and check if the children is a restricted link, if it is, redirect to login
         return (
             <div id="wrapper">

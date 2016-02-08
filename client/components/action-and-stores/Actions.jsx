@@ -14,5 +14,7 @@
 Actions = Reflux.createActions([
     'selectNewCategory',
     'selectNewLanguage',
+    'setPassword',
+    'initKeySaltIv',
 ]);
 

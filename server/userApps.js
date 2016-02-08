@@ -11,32 +11,13 @@ Meteor.methods({
         localSimulateLatency(500);
         //console.log("addPublicApp start");
         const userId = Meteor.userId();
-
-        if (!userId) {//没登录
-            throw new Meteor.Error("not signed in");
-        }
-
-        const userHasApps = UserApps.find({userId: userId}).count();
-
-        if (!userHasApps) {//如果用户存在,但在userHasApps里没有建立用户档案,就add new 档案
-            UserApps.insert({
-                userId: userId,
-                publicApps: [],
-                privateApps: []
-            });
-
-            UserAppCredentials.insert({
-                userId: userId,
-                publicApps: [],
-                privateApps: []
-            });
-        }
+        generalErrorCheck(Meteor.userId());
 
         let credentialRecord = UserAppCredentials.findOne({userId: userId});
 
         let usernameList = [];
-        credentialRecord.publicApps.map(function(publicApp){
-            if (publicApp.appId===appId){
+        credentialRecord.publicApps.map(function (publicApp) {
+            if (publicApp.appId === appId) {
                 usernameList.push(publicApp.username);
             }
         });
@@ -69,9 +50,8 @@ Meteor.methods({
     removePublicApp(appId){
         localSimulateLatency(500);
         //console.log("removePublicApp start");
-        if (!Meteor.userId()) {
-            throw new Meteor.Error("not logged in");
-        }
+        generalErrorCheck(Meteor.userId());
+
         UserApps.update(
             {userId: Meteor.userId()},
             {
@@ -92,9 +72,7 @@ Meteor.methods({
     appAddUsername(appId, username){
         localSimulateLatency(500);
         //console.log("addConfigured start");
-        if (!Meteor.userId()) {
-            throw new Meteor.Error("not logged in");
-        }
+        generalErrorCheck(Meteor.userId());
         UserApps.update(
             {
                 $and: [
@@ -113,9 +91,8 @@ Meteor.methods({
     appRemoveUsername(appId, username){
         localSimulateLatency(500);
         //console.log("appRemoveUsername start);
-        if (!Meteor.userId()) {
-            throw new Meteor.Error("not logged in");
-        }
+        generalErrorCheck(Meteor.userId());
+
         UserApps.update(
             {
                 $and: [
@@ -129,5 +106,28 @@ Meteor.methods({
                 }
             }
         )
+    },
+
+    addEncryptionInfo(hexSalt, hexIv){
+        const userId = Meteor.userId();
+        //TODO implement inserting user salt, call it in "APP", 在保存密码前用passwordKey加密,保存iv和密文, 获得密码前用password解密
+        generalErrorCheck(Meteor.userId());
+        UserApps.update({userId: userId}, {
+            $set: {
+                hexSalt: hexSalt,
+                hexIv: hexIv
+            }
+        });
     }
 });
+
+function generalErrorCheck(userId){
+    if (!userId) {//没登录
+        throw new Meteor.Error("not signed in");
+    }
+
+    let credentialRecord = UserAppCredentials.findOne({userId: userId});
+    if (credentialRecord.count===0){
+        throw new Meteor.Error("user record error");
+    }
+}

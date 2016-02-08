@@ -3,6 +3,7 @@ accounts-password@1.1.5-modules.4
 accounts-ui@1.1.6
 accounts-ui-unstyled@1.1.9-modules.4
 allow-deny@1.0.1-modules.4
+amplify@1.0.0
 autoupdate@1.2.5-modules.4
 babel-compiler@5.8.25-modules.5
 babel-runtime@0.1.5-modules.4
@@ -100,6 +101,7 @@ standard-minifiers-js@1.0.3-modules.4
 templating@1.1.6-modules.4
 templating-tools@1.0.1-modules.4
 tracker@1.0.10-modules.4
+u2622:persistent-session@0.4.4
 ui@1.0.8
 underscore@1.0.5-modules.4
 url@1.0.6-modules.4

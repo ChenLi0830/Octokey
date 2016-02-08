@@ -22,9 +22,10 @@ CredentialDialog = React.createClass({
         openDialogCredential: React.PropTypes.bool.isRequired,
         whenCloseDialog: React.PropTypes.func.isRequired,
         whenSubmitCredential: React.PropTypes.func.isRequired,
+        hexIv: React.PropTypes.string.isRequired,
     },
 
-    contextTypes:{
+    contextTypes: {
         intl: React.PropTypes.object.isRequired,
     },
 
@@ -55,33 +56,33 @@ CredentialDialog = React.createClass({
         //    {function(formattedValue){title = formattedValue}}
         //</FormattedMessage>
         return <Dialog
-                title={this.props.appName + "-" + messages.app_credentialDialogMessage}
-                actions={actions}
-                modal={false}
-                open={this.props.openDialogCredential}
-                onRequestClose={this.props.whenCloseDialog}>
+            title={this.props.appName + "-" + messages.app_credentialDialogMessage}
+            actions={actions}
+            modal={false}
+            open={this.props.openDialogCredential}
+            onRequestClose={this.props.whenCloseDialog}>
 
-                {/*This is here to stop chrome's username and password autofill*/}
-                <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
-                <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
+            {/*This is here to stop chrome's username and password autofill*/}
+            <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
+            <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
 
-                <TextField
-                    ref="username"
-                    style={{fontWeight:"300"}}
-                    floatingLabelStyle={{fontWeight:"300"}}
-                    errorText={this.state.floatingUserText}
-                    onChange={this.handleInputErrorCheckUser}
-                    floatingLabelText={messages.app_username}/>
-                <br/>
-                <TextField
-                    ref="password"
-                    type="password"
-                    style={{fontWeight:"300"}}
-                    floatingLabelStyle={{fontWeight:"300"}}
-                    errorText={this.state.floatingPassText}
-                    onChange={this.handleInputErrorCheckPass}
-                    floatingLabelText={messages.app_password}/>
-            </Dialog>
+            <TextField
+                ref="username"
+                style={{fontWeight:"300"}}
+                floatingLabelStyle={{fontWeight:"300"}}
+                errorText={this.state.floatingUserText}
+                onChange={this.handleInputErrorCheckUser}
+                floatingLabelText={messages.app_username}/>
+            <br/>
+            <TextField
+                ref="password"
+                type="password"
+                style={{fontWeight:"300"}}
+                floatingLabelStyle={{fontWeight:"300"}}
+                errorText={this.state.floatingPassText}
+                onChange={this.handleInputErrorCheckPass}
+                floatingLabelText={messages.app_password}/>
+        </Dialog>
     },
 
 
@@ -95,9 +96,11 @@ CredentialDialog = React.createClass({
         let password = this.refs.password.getValue();
 
         if (username && password) {
-
+            let hexKey = Session.get("hexKey");
+            if (!hexKey) throw Meteor.Error("Can't find master password key");
+            let encryptedPwd = encrypt(password, hexKey, this.props.hexIv);
             if (this.props.isPublicApp) {
-                Meteor.call("addNewCredential", this.props.appId, username, password, function (error) {
+                Meteor.call("addNewCredential", this.props.appId, username, encryptedPwd, function (error) {
                     if (error) {
                         throw new Meteor.Error("Error adding new Credential");
                     }

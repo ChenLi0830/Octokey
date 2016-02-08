@@ -18,6 +18,7 @@ const {
     ContentClear,
     ContentRemove,
     ActionSettings,
+    AvFiberNew,
     } = SvgIcons;
 
 
@@ -90,6 +91,7 @@ AppBox = React.createClass({
 
         switch (userEditStatus) {
             case "default" :
+            case "register" :
                 baseStyle.backgroundColor = this.state.hovered ? "#FAFAFA" : "rgba(255, 255, 255, 0.0)";
                 return baseStyle;
                 break;
@@ -112,6 +114,11 @@ AppBox = React.createClass({
         switch (userEditStatus) {
             case "default":
                 return image;
+                break;
+            case "register":
+                return this.state.hovered ?
+                    <AvFiberNew className="vertical-center horizontal-center"
+                                style={{height:"60px", width:"60px", fill:ZenColor.cyan}}/> : image;
                 break;
             case "remove":
                 return this.state.hovered ?

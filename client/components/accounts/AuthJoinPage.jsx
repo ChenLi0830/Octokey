@@ -141,6 +141,8 @@ AuthJoinPage = React.createClass({
                     //alert("error: " + error);
                     return;
                 }
+                Meteor.call("initiateUser");
+                Actions.setPassword(password);
                 this.context.router.push('/list');
             });
         }

@@ -144,10 +144,9 @@ AuthSignInPage = React.createClass({
                     //alert("error: " + error);
                     return;
                 }
-
+                Actions.setPassword(password);
                 this.context.router.push('/list');
             });
         }
     },
-
 });

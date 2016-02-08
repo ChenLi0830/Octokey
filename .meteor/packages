@@ -24,3 +24,4 @@ cfs:filesystem
 cfs:gridfs
 react-meteor-data
 fourseven:scss
+u2622:persistent-session
