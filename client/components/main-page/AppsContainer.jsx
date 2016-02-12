@@ -260,7 +260,7 @@ AppsContainer = React.createClass({
 
         let appId = this.data.chosenPublicApps[publicFocusedIndex].appId;
         //loginLink = this.data.chosenPublicApps[publicFocusedIndex].loginLink;
-        let registerLink = "https://reg.taobao.com/member/reg/fill_mobile.htm";
+        let registerLink = "//reg.taobao.com/member/reg/fill_mobile.htm";
         //Todo 让这一步的Meteor.userID()放到server里执行
         window.postMessage(//Communicate with plugin
             [
