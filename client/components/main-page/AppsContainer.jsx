@@ -49,6 +49,9 @@ AppsContainer = React.createClass({
             userEditStatus: "default",
             openDialogEdit: false,
             openDialogPlugin: false,
+            openDialogRegister: false,
+            registerProgress: 0,
+            registerMessage: "Connecting for registration"
         }
     },
 
@@ -57,7 +60,7 @@ AppsContainer = React.createClass({
     },
 
     componentWillUnmount(){
-        window.removeEventListener("message",this.handleUpdateProgress);
+        window.removeEventListener("message", this.handleUpdateProgress);
     },
 
     render(){
@@ -78,7 +81,9 @@ AppsContainer = React.createClass({
         //console.log("appBoxes",appBoxes.count, appBoxes);
         let isPublicApp = publicFocusedIndex > -1;
         let appName = "", appId = "";
-        if (this.state.openDialogCredential || this.state.openDialogEdit) {//Dialog is about to open
+        if (this.state.openDialogCredential ||
+            this.state.openDialogEdit ||
+            this.state.openDialogRegister) {//Dialog is about to open
             if (isPublicApp) {
                 appName = this.data.chosenPublicApps[publicFocusedIndex].appName;
                 appId = this.data.chosenPublicApps[publicFocusedIndex].appId;
@@ -111,6 +116,14 @@ AppsContainer = React.createClass({
                             whenCloseDialog={()=>{this.setState({openDialogEdit: false})}}
                             hexIv={this.data.hexIv}
                 /> : null}
+
+            <RegisterDialog appName={appName}
+                            appId={appId}
+                            registerProgress={this.state.registerProgress}
+                            registerMessage={this.state.registerMessage}
+                            openDialogRegister={this.state.openDialogRegister}
+                            whenCloseDialog={()=>{this.setState({openDialogRegister:false, registerProgress:0, registerMessage:"Start"})}}
+            />
 
             <FocusOverlay visibility={_.indexOf(["config", "remove"],this.state.userEditStatus)>-1}/>
 
@@ -182,6 +195,7 @@ AppsContainer = React.createClass({
         else if (this.state.userEditStatus === "register") {
             if (isPublicApp) {
                 //Todo decide which identity is needed, either by user or by system.
+                this.setState({openDialogRegister: true});
                 this.handleRegister("cellphone", "7097490481");
             } else {
                 alert("Register for a private app is not allowed!")
@@ -269,7 +283,6 @@ AppsContainer = React.createClass({
         let registerLink = "//reg.taobao.com/member/reg/fill_mobile.htm";
         //Todo 让这一步的Meteor.userID()放到server里执行
 
-
         window.postMessage(//Communicate with plugin
             {
                 type: "register",
@@ -288,20 +301,17 @@ AppsContainer = React.createClass({
     },
 
     handleUpdateProgress(event){
-        console.log("event", event);
-        //console.log("event.data", event.data);
-        var origin = event.origin || event.originalEvent.origin; // For Chrome, the origin property is in the
-                                                                 // event.originalEvent object.
-
-        console.log("origin!==document.location.origin", origin !== document.location.origin);
-        console.log("event.type===registerProgress", event.type === "registerProgress");
-        if (origin !== document.location.origin) {//make sure message comes from the web app.
+        var origin = event.origin || event.originalEvent.origin;
+        if (origin !== document.location.origin) {//make sure message comes from Octokey
             return;
         }
-        if (event.data.type === "registerProgress") {
-            console.log(event.data);
-            console.log("AppsContainer.state", AppsContainer.state);
-            console.log("this.state", this.state);
+        if (event.data.type === "registerProgress" && this.state.openDialogRegister) {
+            //console.log(event.data);
+            this.setState({
+                registerProgress: event.data.regisProgress,
+                registerMessage: event.data.regisMessage,
+            });
+            //console.log("this.state", this.state);
         }
     }
 });
