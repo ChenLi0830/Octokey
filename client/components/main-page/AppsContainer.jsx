@@ -53,9 +53,11 @@ AppsContainer = React.createClass({
     },
 
     componentWillMount(){
-        Meteor.call("inDevMode", function (error, inDevMode) {
-            this.isInDevMode = inDevMode;
-        }.bind(this));
+        window.addEventListener("message", this.handleUpdateProgress);
+    },
+
+    componentWillUnmount(){
+        window.removeEventListener("message",this.handleUpdateProgress);
     },
 
     render(){
@@ -223,9 +225,7 @@ AppsContainer = React.createClass({
     },
 
     handleLogin(username, password){
-        let targetUrl = this.isInDevMode ? "http://localhost:3000" : "http://114.215.98.118";
-        //因为content script被嵌入了这个应用,所以要和content script通信,就发给自己就可以.
-        //如果要修改这个值,记得还要修改 plugin 的 manifest.json file.
+        let targetUrl = document.location.origin;
 
         //console.log("username: ",username);
         let isPublicApp = publicFocusedIndex > -1;
@@ -239,17 +239,23 @@ AppsContainer = React.createClass({
             loginLink = "";
         }
         //Todo 让这一步的Meteor.userID()放到server里执行
+
         window.postMessage(//Communicate with plugin
-            [
-                "logIn", Meteor.userId(), appId, loginLink, username, password, this.data.hexIv, Session.get("hexKey")
-            ],
+            {
+                type: "logIn",
+                userId: Meteor.userId(),
+                appId: appId,
+                loginLink: loginLink,
+                username: username,
+                password: password,
+                hexIv: this.data.hexIv,
+                hexKey: Session.get("hexKey")
+            },
             targetUrl);
     },
 
     handleRegister(type, account){
-        let targetUrl = this.isInDevMode ? "http://localhost:3000" : "http://114.215.98.118";
-        //因为content script被嵌入了这个应用,所以要和content script通信,就发给自己就可以.
-        //如果要修改这个值,记得还要修改 plugin 的 manifest.json file.
+        let targetUrl = document.location.origin;
 
         //console.log("username: ",username);
         let isPublicApp = publicFocusedIndex > -1;
@@ -262,17 +268,41 @@ AppsContainer = React.createClass({
         //loginLink = this.data.chosenPublicApps[publicFocusedIndex].loginLink;
         let registerLink = "//reg.taobao.com/member/reg/fill_mobile.htm";
         //Todo 让这一步的Meteor.userID()放到server里执行
-        window.postMessage(//Communicate with plugin
-            [
-                "register", Meteor.userId(), appId, registerLink, type, account
-            ],
-            targetUrl);
-        setTimeout(function () {
 
-        }, 2000);
+
+        window.postMessage(//Communicate with plugin
+            {
+                type: "register",
+                userId: Meteor.userId(),
+                appId: appId,
+                registerLink: registerLink,
+                accountType: type,
+                account: account
+            },
+            targetUrl
+        );
     },
 
     extensionIsInstalled(){
         return !!document.getElementById("extension-is-installed-nehponjfbiigcobaphdahhhiemfpaeob");
     },
+
+    handleUpdateProgress(event){
+        console.log("event", event);
+        //console.log("event.data", event.data);
+        var origin = event.origin || event.originalEvent.origin; // For Chrome, the origin property is in the
+                                                                 // event.originalEvent object.
+
+        console.log("origin!==document.location.origin", origin !== document.location.origin);
+        console.log("event.type===registerProgress", event.type === "registerProgress");
+        if (origin !== document.location.origin) {//make sure message comes from the web app.
+            return;
+        }
+        if (event.data.type === "registerProgress") {
+            console.log(event.data);
+            console.log("AppsContainer.state", AppsContainer.state);
+            console.log("this.state", this.state);
+        }
+    }
 });
+
