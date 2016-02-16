@@ -30,13 +30,14 @@ CatelogSingleApp = React.createClass({
         logoURL: React.PropTypes.string.isRequired,
         appName: React.PropTypes.string.isRequired,
         loginLink: React.PropTypes.string.isRequired,
+        registerLink: React.PropTypes.string,
         appId: React.PropTypes.string.isRequired,
         selectedCategoryNames: React.PropTypes.array.isRequired,
         whenClicked: React.PropTypes.func.isRequired,
         subscribed: React.PropTypes.bool.isRequired,
     },
 
-    contextTypes:{
+    contextTypes: {
         intl: React.PropTypes.object.isRequired,
     },
 
@@ -60,7 +61,7 @@ CatelogSingleApp = React.createClass({
 
     render(){
         const {messages} = this.context.intl;
-        const {logoURL,appName,loginLink,appId,selectedCategoryNames} = this.props;
+        const {logoURL,appName,loginLink,registerLink,appId,selectedCategoryNames} = this.props;
 
         let handleToggle = this.props.subscribed ? this.handleRemove : this.handleAdd;
         let labelText = this.props.subscribed ? messages.cata_added : messages.cata_add;
@@ -82,13 +83,12 @@ CatelogSingleApp = React.createClass({
                             onMouseOver={this.handleMouseOver}
                             onMouseOut={this.handleMouseOut}>
             <Col xs={5} sm={3} md={3}
-                 onClick={this.props.whenClicked.bind(null, appId, appName, loginLink ,logoURL,selectedCategoryNames)}
+                 onClick={this.props.whenClicked.bind(null, appId, appName, loginLink, registerLink, logoURL, selectedCategoryNames)}
                  style={{height:"100%", textAlign:"center"}}>
                 <span className="helper"></span><img className="vertial-middle " src={logoURL}
                                                      style={{width:"50px", top:"18apx"}}/>
             </Col>
             <Col xs={2} sm={5} md={6}
-                 onClick={this.props.whenClicked.bind(null, appId, appName, loginLink ,logoURL,selectedCategoryNames)}
                  className="vertical-center">{appName}</Col>
             <Col xs={5} sm={4} md={3} className="vertical-center">{toggleButton}</Col>
         </Row>);
@@ -99,8 +99,8 @@ CatelogSingleApp = React.createClass({
     },
 
     handleAdd(){
-        const {logoURL,appName,loginLink,appId} = this.props;
-        Meteor.call("addPublicApp", appId, appName, logoURL, loginLink);
+        const {logoURL,appName,loginLink,registerLink,appId} = this.props;
+        Meteor.call("addPublicApp", appId, appName, logoURL, loginLink, registerLink);
     },
 
     handleRemove(){

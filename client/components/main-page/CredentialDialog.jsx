@@ -96,28 +96,11 @@ CredentialDialog = React.createClass({
         let password = this.refs.password.getValue();
 
         if (username && password) {
-            let hexKey = Session.get("hexKey");
-            if (!hexKey) throw Meteor.Error("Can't find master password key");
-            let encryptedPwd = encrypt(password, hexKey, this.props.hexIv);
-            if (this.props.isPublicApp) {
-                Meteor.call("addNewCredential", this.props.appId, username, encryptedPwd, function (error) {
-                    if (error) {
-                        throw new Meteor.Error("Error adding new Credential");
-                    }
-                }.bind(this));
-
-                Meteor.call("appAddUsername", this.props.appId, username, function (error) {
-                    if (error) {
-                        throw new Meteor.Error("Error adding new Credential");
-                    }
-                }.bind(this));
+            if (saveCredential(this.props.appId, this.props.hexIv, username, password, this.props.isPublicApp)){//If
+                // it's successful
                 this.props.whenSubmitCredential(username, password);
                 this.props.whenCloseDialog();
-            } else {
-                alert("TODO: adding credentials for the private app");
             }
-
-            //TODO 询问用户是否登录成功,如果否,删除用户登录信息,保留textFields, 如果是,关闭modal.
         }
     },
 

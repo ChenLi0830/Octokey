@@ -37,6 +37,7 @@ const {
 let modalAttributes = {
     appName: "",
     loginLink: "",
+    registerLink: "",
     logoURL: "",
     selectedCategoryNames: [],
 };
@@ -70,6 +71,7 @@ CatalogAppsBox = React.createClass({
         modalAttributes = {
             appName: "",
             loginLink: "",
+            registerLink: "",
             logoURL: "",
             selectedCategoryNames: [],
         };
@@ -79,7 +81,7 @@ CatalogAppsBox = React.createClass({
         this.setState({showModal: true});
     },
 
-    handleClick(appId, appName, loginLink, logoURL, selectedCategoryNames){
+    handleClick(appId, appName, loginLink, registerLink, logoURL, selectedCategoryNames){
         if (!isAdmin(Meteor.user())) {
             return
         }
@@ -92,6 +94,7 @@ CatalogAppsBox = React.createClass({
             appName: appName,
             loginLink: loginLink,
             logoURL: logoURL,
+            registerLink: registerLink,
             selectedCategoryNames: selectedCategoryNames,
         };
         //console.log("modalAttributes",modalAttributes);
@@ -129,11 +132,12 @@ CatalogAppsBox = React.createClass({
         //console.log("modalAttributes.selectedCategoryNames", modalAttributes.selectedCategoryNames);
         //console.log("this.state.preview", this.state.preview);
         const loginLink = this.refs.loginLink.refs.input.value;
+        const registerLink = this.refs.registerLink.refs.input.value;
         const appName = this.refs.appName.refs.input.value;
 
         if (loginLink && appName && this.state.preview !== "") {
             //Todo 显示等待条,或者其他gif
-            Meteor.call("updateZenApp", this.state.editAppId, appName, loginLink, this.state.preview,
+            Meteor.call("updateZenApp", this.state.editAppId, appName, loginLink, registerLink, this.state.preview,
                 modalAttributes.selectedCategoryNames,
                 function (error, result) {
                     if (error) {
@@ -171,6 +175,7 @@ CatalogAppsBox = React.createClass({
                                          logoURL={logoURL}
                                          appName={app.appName}
                                          loginLink={app.loginLink}
+                                         registerLink={app.registerLink}
                                          selectedCategoryNames={app.categoryNames}
                                          whenClicked={this.handleClick}
                                          appId={app._id}
@@ -214,6 +219,8 @@ CatalogAppsBox = React.createClass({
                                placeholder={messages.cata_namePlaceHolder} defaultValue={modalAttributes.appName}/>
                         <Input type="text" label={messages.cata_appLoginLink} ref="loginLink"
                                placeholder={messages.cata_linkPlaceHolder} defaultValue={modalAttributes.loginLink}/>
+                        <Input type="text" label={"注册链接"/*messages.cata_appRegisterLink*/} ref="registerLink"
+                               defaultValue={modalAttributes.registerLink}/>
 
                         <Input type="file"
                                label={messages.cata_appLogo}

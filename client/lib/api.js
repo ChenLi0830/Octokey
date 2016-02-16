@@ -8,7 +8,29 @@
  *******************************************************************************/
 var CryptoJS = require('crypto-js');
 
+saveCredential = function (appId, hexIv, username, password, isPublicApp) {
+    console.log("appId, hexIv, username, password, isPublicApp",appId, hexIv, username, password, isPublicApp);
+    let hexKey = Session.get("hexKey");
+    if (!hexKey) throw Meteor.Error("Can't find master password key");
+    let encryptedPwd = encrypt(password, hexKey, hexIv);
+    if (isPublicApp) {
+        Meteor.call("addNewCredential", appId, username, encryptedPwd, function (error) {
+            if (error) {
+                throw new Meteor.Error("Error adding new Credential");
+            }
+        }.bind(this));
 
+        Meteor.call("appAddUsername", appId, username, function (error) {
+            if (error) {
+                throw new Meteor.Error("Error adding new Credential");
+            }
+        }.bind(this));
+        return true;
+    } else {
+        alert("TODO: adding credentials for the private app");
+        return false;
+    }
+};
 
 getLogoUrl = function (appId) {
     return "cfs/files/zenApps/" + appId

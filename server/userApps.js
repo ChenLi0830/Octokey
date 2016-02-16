@@ -7,7 +7,7 @@
  * userApps.js declares methods for UserApps collection.
  *******************************************************************************/
 Meteor.methods({
-    addPublicApp(appId, appName, logoURL, loginLink){
+    addPublicApp(appId, appName, logoURL, loginLink, registerLink){
         localSimulateLatency(500);
         //console.log("addPublicApp start");
         const userId = Meteor.userId();
@@ -31,6 +31,7 @@ Meteor.methods({
                         "appName": appName,
                         "logoURL": logoURL,
                         "loginLink": loginLink,
+                        "registerLink": registerLink,
                         "userNames": usernameList,
                         "defaultUserName": "",
                         "lastLoginTime": ""
