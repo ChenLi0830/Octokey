@@ -7,14 +7,14 @@
  * publish.js controls the publish part for all collections.
  *******************************************************************************/
 Meteor.publish("zenApps", function () {
-    localSimulateLatency(2000);
+    localSimulateLatency(800);
     if (this.userId) {
         return ZenApps.find();
     }
 });
 
 Meteor.publish("userApps", function () {
-    localSimulateLatency(1000);
+    localSimulateLatency(500);
     return UserApps.find({userId: this.userId})
 });
 
@@ -26,7 +26,7 @@ Meteor.publish("zenCategories", function () {
 });
 
 Meteor.publish("appCredential", function (userId, appId, username) {
-    localSimulateLatency(2000);
+    localSimulateLatency(800);
     //console.log("publish appCredential", userId, appId, username);
     //console.log("this.user", this.user);
     let result = UserAppCredentials.find(

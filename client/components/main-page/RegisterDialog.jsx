@@ -15,14 +15,16 @@ const {
 
 const {FormattedMessage} = ReactIntl;
 
+let username;
 RegisterDialog = React.createClass({
     propTypes: {
         appName: React.PropTypes.string.isRequired,
         appId: React.PropTypes.string.isRequired,
-        registerProgress: React.PropTypes.number.isRequired,
-        registerMessage: React.PropTypes.string.isRequired,
+        registerRequest: React.PropTypes.object.isRequired,
         openDialogRegister: React.PropTypes.bool.isRequired,
+        whenLogin: React.PropTypes.func.isRequired,
         whenCloseDialog: React.PropTypes.func.isRequired,
+        registerLink: React.PropTypes.string,
         //whenSubmitCredential: React.PropTypes.func.isRequired,
         //hexIv: React.PropTypes.string.isRequired,
     },
@@ -37,34 +39,37 @@ RegisterDialog = React.createClass({
             floatingPassText: "",
             userNameFilled: false,
             passwordFilled: false,
+            openDialogCaptcha: !!this.props.registerRequest.require,
         }
+    },
+
+    componentWillMount(){
+        username = "";
     },
 
     render(){
         const {messages} = this.context.intl;
+        const {registerRequest} = this.props;
         let actions = [
             <FlatButton
-                label={this.props.registerProgress !== 100 ?"取消":"完成"/*messages.app_credentialDialogCancel*/}
+                label={registerRequest.progress !== 100 ?"取消":"完成"/*messages.app_credentialDialogCancel*/}
                 primary={true}
                 onTouchTap={this.props.whenCloseDialog}/>,
-            this.props.registerProgress === 100 ?
+            registerRequest.progress === 100 ?
                 <FlatButton
                     secondary={true}
                     label={"去登录"/*messages.app_credentialDialogLogin*/}
-                    onTouchTap={this.handleSubmit}
+                    onTouchTap={()=>{this.props.whenLogin();this.props.whenCloseDialog();}}
                 /> : null,
-            this.props.registerProgress === -100 ?
-            <FlatButton
-                linkButton={true}
-                href="https://github.com/callemall/material-ui"
-                secondary={true}
-                label={"亲自去注册"/*messages.app_credentialDialogLogin*/}
-                onTouchTap={this.handleSubmit}
-            />: null
+            registerRequest.progress === -100 ?
+                <FlatButton
+                    secondary={true}
+                    label={"亲自去注册"/*messages.app_credentialDialogLogin*/}
+                    onTouchTap={this.handleRegisterManually}
+                /> : null
         ];
-        actions = _.remove(actions,null);//remove empty button
 
-        console.log("actions", actions);
+        //console.log("registerRequest", registerRequest);
         return <Dialog
             title={this.props.appName + "-" + "自动注册"/*messages.app_registerDialogMessage*/}
             actions={actions}
@@ -72,11 +77,26 @@ RegisterDialog = React.createClass({
             open={this.props.openDialogRegister}
             onRequestClose={this.props.whenCloseDialog}>
 
-            <LinearProgress mode="determinate" value={this.props.registerProgress}/>
+            <LinearProgress mode="determinate" value={registerRequest.progress}/>
             <p>
-                {this.props.registerMessage}
+                {messages[registerRequest.message]}
             </p>
+
+            {registerRequest.require ?
+                <CaptchaDialog
+                    requiredInput={registerRequest.require}
+                    openDialogRegister={this.state.openDialogCaptcha}
+                    whenCloseDialog={()=>{this.setState({openDialogCaptcha:false})}}
+                /> : null}
         </Dialog>
+    },
+
+    handleRegisterManually(){
+        if (this.props.registerLink) {
+            window.open(this.props.registerLink, "_blank");
+        } else {
+            throw new Meteor.Error("no registerLink for this app");
+        }
     },
 
 

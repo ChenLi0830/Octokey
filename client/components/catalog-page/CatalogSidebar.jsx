@@ -22,7 +22,9 @@ const {
 
 CatalogSideBar = React.createClass({
     propTypes: {
-        zenCategories: React.PropTypes.array.isRequired
+        zenCategories: React.PropTypes.array.isRequired,
+        zenApps: React.PropTypes.array.isRequired,
+        subscribeList: React.PropTypes.array.isRequired,
     },
 
     mixins: [ReactMeteorData],
@@ -47,8 +49,10 @@ CatalogSideBar = React.createClass({
 
              padding:0,
              borderRadius:"5px"}}>
-                {/*<SearchBox/>*/}
-                <Divider />
+                <SearchBox zenApps = {this.props.zenApps}
+                           subscribeList={this.props.subscribeList}
+                />
+                {/*<Divider />*/}
                 {createPublicAppButton}
                 <CreatePrivateAppButton/>
                 <Divider />

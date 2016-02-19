@@ -17,7 +17,11 @@ const {
     } = MUI;
 
 let publicFocusedIndex = -1, privateFocusedIndex = -1;
-
+let defaultRequest = {
+    "progress": 10,
+    "message": "ext_msg_connect",
+};
+let registeredUsername = "";
 AppsContainer = React.createClass({
     mixins: [ReactMeteorData],
 
@@ -50,8 +54,7 @@ AppsContainer = React.createClass({
             openDialogEdit: false,
             openDialogPlugin: false,
             openDialogRegister: false,
-            registerProgress: 0,
-            registerMessage: "Connecting for registration"
+            registerRequest: defaultRequest,
         }
     },
 
@@ -80,13 +83,15 @@ AppsContainer = React.createClass({
 
         //console.log("appBoxes",appBoxes.count, appBoxes);
         let isPublicApp = publicFocusedIndex > -1;
-        let appName = "", appId = "";
+        let appName = "", appId = "", loginLink, registerLink;
         if (this.state.openDialogCredential ||
             this.state.openDialogEdit ||
             this.state.openDialogRegister) {//Dialog is about to open
             if (isPublicApp) {
                 appName = this.data.chosenPublicApps[publicFocusedIndex].appName;
                 appId = this.data.chosenPublicApps[publicFocusedIndex].appId;
+                loginLink = this.data.chosenPublicApps[publicFocusedIndex].loginLink;
+                registerLink = this.data.chosenPublicApps[publicFocusedIndex].registerLink;
             } else {//private app
                 alert("it is a private app!");
                 appName = "";
@@ -119,10 +124,11 @@ AppsContainer = React.createClass({
 
             <RegisterDialog appName={appName}
                             appId={appId}
-                            registerProgress={this.state.registerProgress}
-                            registerMessage={this.state.registerMessage}
+                            registerRequest={this.state.registerRequest}
                             openDialogRegister={this.state.openDialogRegister}
-                            whenCloseDialog={()=>{this.setState({openDialogRegister:false, registerProgress:0, registerMessage:"Start"})}}
+                            whenLogin={this.handleLogin.bind(this, registeredUsername, "")}
+                            whenCloseDialog={()=>{this.setState({openDialogRegister:false, registerRequest:defaultRequest})}}
+                            registerLink = {registerLink}
             />
 
             <FocusOverlay visibility={_.indexOf(["config", "remove"],this.state.userEditStatus)>-1}/>
@@ -194,9 +200,9 @@ AppsContainer = React.createClass({
         }
         else if (this.state.userEditStatus === "register") {
             if (isPublicApp) {
-                //Todo decide which identity is needed, either by user or by system.
-                this.setState({openDialogRegister: true});
-                this.handleRegister("cellphone", "7097490481");
+                //Todo get profile info from database / ask user to create profile
+                const profile = this.generateProfile();
+                this.handleRegister(profile);
             } else {
                 alert("Register for a private app is not allowed!")
             }
@@ -256,7 +262,7 @@ AppsContainer = React.createClass({
 
         window.postMessage(//Communicate with plugin
             {
-                type: "logIn",
+                event: "logIn",
                 userId: Meteor.userId(),
                 appId: appId,
                 loginLink: loginLink,
@@ -266,9 +272,11 @@ AppsContainer = React.createClass({
                 hexKey: Session.get("hexKey")
             },
             targetUrl);
+        //console.log("Meteor.userId(), appId, loginLink, username, password, this.data.hexIv,Session.get(hexKey)",
+            //Meteor.userId(), appId, loginLink, username, password, this.data.hexIv,Session.get("hexKey"));
     },
 
-    handleRegister(type, account){
+    handleRegister(profile){
         let targetUrl = document.location.origin;
 
         //console.log("username: ",username);
@@ -280,20 +288,24 @@ AppsContainer = React.createClass({
 
         let appId = this.data.chosenPublicApps[publicFocusedIndex].appId;
         //loginLink = this.data.chosenPublicApps[publicFocusedIndex].loginLink;
-        let registerLink = "//reg.taobao.com/member/reg/fill_mobile.htm";
+        let registerLink = this.data.chosenPublicApps[publicFocusedIndex].registerLink;
         //Todo 让这一步的Meteor.userID()放到server里执行
 
-        window.postMessage(//Communicate with plugin
-            {
-                type: "register",
-                userId: Meteor.userId(),
-                appId: appId,
-                registerLink: registerLink,
-                accountType: type,
-                account: account
-            },
-            targetUrl
-        );
+        if (registerLink) {//If there is a register link for this app
+            this.setState({openDialogRegister: true});
+            window.postMessage(//Communicate with plugin
+                {
+                    event: "register",
+                    userId: Meteor.userId(),
+                    appId: appId,
+                    registerLink: registerLink,
+                    profile: profile,
+                },
+                targetUrl
+            );
+        } else {
+            alert("Registration is not set up for this app.");
+        }
     },
 
     extensionIsInstalled(){
@@ -307,12 +319,31 @@ AppsContainer = React.createClass({
         }
         if (event.data.type === "registerProgress" && this.state.openDialogRegister) {
             //console.log(event.data);
-            this.setState({
-                registerProgress: event.data.regisProgress,
-                registerMessage: event.data.regisMessage,
-            });
+            this.setState({registerRequest: event.data});
             //console.log("this.state", this.state);
+            if (event.data.username && event.data.password) {//event contains username && password
+                if (event.data.userId === this.data.currentUser._id) {//Check if its still the same user
+                    registeredUsername = event.data.username;
+                    saveCredential(event.data.appId, this.data.hexIv, event.data.username, event.data.password, true)
+                }
+            }
         }
-    }
+    },
+
+    generateProfile(){//For text purpose
+        const ramdomNumber = Math.floor(Math.random() * 10000);
+        const cellNumber = "7097490481";
+        const nickName = "ChenLizhangyu" + ramdomNumber;
+        const email = "lulugeo.li+" + ramdomNumber + "@gmail.com";
+        const firstName = "Lulugeo";
+        const lastName = "Li";
+        return {
+            cellNumber: cellNumber,
+            nickName: nickName,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+        };
+    },
 });
 

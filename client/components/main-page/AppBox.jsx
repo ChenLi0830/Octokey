@@ -122,7 +122,7 @@ AppBox = React.createClass({
                 break;
             case "remove":
                 return this.state.hovered ?
-                    <ContentClear className="vertical-center horizontal-center"
+                    <ContentRemove className="vertical-center horizontal-center"
                                   style={{height:"60px", width:"60px", fill:ZenColor.white}}/> : image;
                 break;
             case "config":

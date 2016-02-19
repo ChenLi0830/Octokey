@@ -87,8 +87,12 @@ CreateZenAppButton = React.createClass({
                                label={messages.cata_appName}
                                placeholder={messages.cata_namePlaceHolder}/>
 
-                        <Input type="text" ref={(c) => this.refs.loginLink = c}
+                        <Input type="text" ref="loginLink"
                                label={messages.cata_appLoginLink}
+                               placeholder={messages.cata_linkPlaceHolder}/>
+
+                        <Input type="text" ref="registerLink"
+                               label={"注册链接(非必须)"/*messages.cata_appRegisterLink*/}
                                placeholder={messages.cata_linkPlaceHolder}/>
 
                         <Input type="file"
@@ -161,11 +165,12 @@ CreateZenAppButton = React.createClass({
 
         const appName = this.refs.appName.refs.input.value;
         const loginLink = this.refs.loginLink.refs.input.value;
+        const registerLink = this.refs.registerLink.refs.input.value;
 
 
         if (loginLink && appName && this.state.preview !== "") {
             //console.log("this.state.preview", this.state.preview);
-            Meteor.call("addZenApp", appName, loginLink, this.state.preview, selectedCategoryNames,
+            Meteor.call("addZenApp", appName, loginLink, registerLink, this.state.preview, selectedCategoryNames,
                 function (error, result) {
                     if (error) {
                         throw new Meteor.Error(error);

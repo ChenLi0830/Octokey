@@ -34,6 +34,7 @@ ZenColor = {
     blue: "#03A9F4",
     grey1: "#fafafa",
     grey2: "#f3f3f3",
+    grey3: Colors.grey500,
     blueGrey: "#607D8B",
 };
 

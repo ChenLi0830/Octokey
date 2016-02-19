@@ -26,10 +26,10 @@ ZenApps.allow({
  });*/
 
 Meteor.methods({
-    addZenApp(appName, loginLink, logo, selectedCategoryNames){
+    addZenApp(appName, loginLink, registerLink, logo, selectedCategoryNames){
         localSimulateLatency(500);
-        console.log("appName", appName);
-        console.log("loginLink", loginLink);
+        //console.log("appName", appName);
+        //console.log("loginLink", loginLink);
 
         if (!Meteor.userId()) {
             throw new Meteor.Error("not logged in");
@@ -42,6 +42,7 @@ Meteor.methods({
         let app = new FS.File(logo);
         app.appName = appName;
         app.loginLink = loginLink;
+        app.registerLink = registerLink;
         app.categoryNames = selectedCategoryNames;
         app.subscribeCount = 0;
 
@@ -57,12 +58,12 @@ Meteor.methods({
         });
     },
 
-    updateZenApp(appId, appName, loginLink, logo, selectedCategoryNames){
+    updateZenApp(appId, appName, loginLink, registerLink, logo, selectedCategoryNames){
         localSimulateLatency(500);
         //console.log("appName",appName);
         //console.log("loginLink",loginLink);
         console.log("update start: appId", appId, "appName", appName, "loginLink", loginLink, "selectedCategoryNames",
-            selectedCategoryNames);
+            selectedCategoryNames, "registerLink", registerLink);
 
         if (!Meteor.userId()) {
             throw new Meteor.Error("not logged in");
@@ -73,7 +74,7 @@ Meteor.methods({
         }
 
         let existingApp = ZenApps.findOne({_id: appId});
-        console.log("existingApp", existingApp);
+        //console.log("existingApp", existingApp);
 
         if (!existingApp) {
             throw new Meteor.Error("No existing App matches appId", appId);
@@ -85,6 +86,7 @@ Meteor.methods({
             let updatedApp = existingApp;
             updatedApp.appName = appName;
             updatedApp.loginLink = loginLink;
+            updatedApp.registerLink= registerLink;
             updatedApp.categoryNames = selectedCategoryNames;
             ZenApps.update({_id: appId}, updatedApp);
             updateUserApps(appId);
@@ -94,6 +96,7 @@ Meteor.methods({
             updatedApp._id = appId;
             updatedApp.appName = appName;
             updatedApp.loginLink = loginLink;
+            updatedApp.registerLink= registerLink;
             updatedApp.categoryNames = selectedCategoryNames;
             updatedApp.subscribeCount = existingApp.subscribeCount ? existingApp.subscribeCount : 0;
             //console.log("updatedApp", updatedApp);
@@ -108,23 +111,23 @@ Meteor.methods({
         }
 
         function updateUserApps(appId) {
-            let ids = UserApps.find({"publicApps.appId": appId}).map(function(publicApp){
+            let ids = UserApps.find({"publicApps.appId": appId}).map(function (publicApp) {
                 return publicApp.userId;
             });
             //console.log(ids);
             UserApps.update({
-                $and:[
-                    {userId:{$in:ids}},
-                    {"publicApps.appId": appId}
-                ]
-            },
-            {
-                $set:{
-                    "publicApps.$.appName":appName,
-                    "publicApps.$.loginLink":loginLink,
-                }
-            },
-            {multi:true}
+                    $and: [
+                        {userId: {$in: ids}},
+                        {"publicApps.appId": appId}
+                    ]
+                },
+                {
+                    $set: {
+                        "publicApps.$.appName": appName,
+                        "publicApps.$.loginLink": loginLink,
+                    }
+                },
+                {multi: true}
             );
         };
     },

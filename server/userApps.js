@@ -7,7 +7,7 @@
  * userApps.js declares methods for UserApps collection.
  *******************************************************************************/
 Meteor.methods({
-    addPublicApp(appId, appName, logoURL, loginLink){
+    addPublicApp(appId, appName, logoURL, loginLink, registerLink){
         localSimulateLatency(500);
         //console.log("addPublicApp start");
         const userId = Meteor.userId();
@@ -31,6 +31,7 @@ Meteor.methods({
                         "appName": appName,
                         "logoURL": logoURL,
                         "loginLink": loginLink,
+                        "registerLink": registerLink,
                         "userNames": usernameList,
                         "defaultUserName": "",
                         "lastLoginTime": ""
@@ -39,12 +40,21 @@ Meteor.methods({
             }
         );
 
-        ZenApps.update(
-            {_id: appId},
-            {
-                $inc: {subscribeCount: 1}
-            }
-        );
+        if (ZenApps.findOne({_id: appId}).subscribeCount != null) {//Update subscription count
+            ZenApps.update(
+                {_id: appId},
+                {
+                    $inc: {subscribeCount: 1}
+                }
+            )
+        } else {
+            ZenApps.update(
+                {_id: appId},
+                {
+                    $set: {subscribeCount: 1}
+                }
+            )
+        }
     },
 
     removePublicApp(appId){
@@ -121,13 +131,13 @@ Meteor.methods({
     }
 });
 
-function generalErrorCheck(userId){
+function generalErrorCheck(userId) {
     if (!userId) {//没登录
         throw new Meteor.Error("not signed in");
     }
 
     let credentialRecord = UserAppCredentials.findOne({userId: userId});
-    if (credentialRecord.count===0){
+    if (credentialRecord.count === 0) {
         throw new Meteor.Error("user record error");
     }
 }
