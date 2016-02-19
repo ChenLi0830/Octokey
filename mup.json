@@ -42,7 +42,8 @@
   "enableUploadProgressBar": true,
 
   "ssl": {
-    "pem": "./ssl.pem"
+    "certificate": "./ssl.crt", // this is a bundle of certificates
+    "key": "./ssl.key" // this is the private key of the certificate
   }
 
 }
