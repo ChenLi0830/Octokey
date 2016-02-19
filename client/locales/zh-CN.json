@@ -68,6 +68,21 @@
     "app_editDialogDel":"删除",
 
     "app_newCredentialDialogTitle":"添加账户",
-    "app_newCredentialDialogAdd" : "添加"
+    "app_newCredentialDialogAdd" : "添加",
+
+    "app_regi_DialogCancel":"取消",
+    "app_regi_DialogComplete":"完成",
+
+    "ext_msg_connect": "建立安全连接",
+    "ext_msg_password": "生成唯一安全密钥",
+    "ext_msg_credential": "发送登录信息",
+    "ext_msg_register": "提交注册请求",
+    "ext_msg_userInfo": "依据用户偏好定制网站内容",
+    "ext_msg_redirect": "等待网站完成设置",
+    "ext_msg_success": "注册成功!",
+    "ext_msg_error": "自动注册不成功, 可能原因: 1. 您的帐号已经注册过该网站 2. 注册前您已经登录该网站 3. 网站注册数据出错",
+
+    "cata_notFound": "找不到该网站"
+
 
 }

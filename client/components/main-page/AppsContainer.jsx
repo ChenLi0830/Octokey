@@ -19,7 +19,7 @@ const {
 let publicFocusedIndex = -1, privateFocusedIndex = -1;
 let defaultRequest = {
     "progress": 10,
-    "message": "建立安全连接",
+    "message": "ext_msg_connect",
 };
 let registeredUsername = "";
 AppsContainer = React.createClass({
@@ -272,8 +272,8 @@ AppsContainer = React.createClass({
                 hexKey: Session.get("hexKey")
             },
             targetUrl);
-        console.log("Meteor.userId(), appId, loginLink, username, password, this.data.hexIv,Session.get(hexKey)",
-            Meteor.userId(), appId, loginLink, username, password, this.data.hexIv,Session.get("hexKey"));
+        //console.log("Meteor.userId(), appId, loginLink, username, password, this.data.hexIv,Session.get(hexKey)",
+            //Meteor.userId(), appId, loginLink, username, password, this.data.hexIv,Session.get("hexKey"));
     },
 
     handleRegister(profile){

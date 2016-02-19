@@ -46,7 +46,7 @@ CatalogAppsBox = React.createClass({
     propTypes: {
         zenApps: React.PropTypes.array.isRequired,
         zenCategories: React.PropTypes.array.isRequired,
-        subscribedPublicApps: React.PropTypes.array.isRequired,
+        subscribeList: React.PropTypes.array.isRequired,
     },
 
     contextTypes: {
@@ -168,10 +168,8 @@ CatalogAppsBox = React.createClass({
         const {messages} = this.context.intl;
         const publicApps = (this.props.zenApps.map(function (app) {
                 let logoURL = getLogoUrl(app._id);
-                let subscribed = _.findIndex(this.props.subscribedPublicApps, function (subscribedApp) {
-                        return subscribedApp.appId === app._id
-                    }) > -1;
-                return <CatelogSingleApp key={app._id}
+                let subscribed = this.props.subscribeList[app._id];
+                return <CatalogSingleApp key={app._id}
                                          logoURL={logoURL}
                                          appName={app.appName}
                                          loginLink={app.loginLink}
@@ -179,7 +177,9 @@ CatalogAppsBox = React.createClass({
                                          selectedCategoryNames={app.categoryNames}
                                          whenClicked={this.handleClick}
                                          appId={app._id}
-                                         subscribed={subscribed}/>
+                                         subscribed={subscribed}
+                                         subsCount={app.subscribeCount}
+                />
             }.bind(this))
         );
 

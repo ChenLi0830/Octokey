@@ -25,7 +25,7 @@ const {
     ToggleStarBorder
     } = SvgIcons;
 
-CatelogSingleApp = React.createClass({
+CatalogSingleApp = React.createClass({
     propTypes: {
         logoURL: React.PropTypes.string.isRequired,
         appName: React.PropTypes.string.isRequired,
@@ -33,8 +33,18 @@ CatelogSingleApp = React.createClass({
         registerLink: React.PropTypes.string,
         appId: React.PropTypes.string.isRequired,
         selectedCategoryNames: React.PropTypes.array.isRequired,
-        whenClicked: React.PropTypes.func.isRequired,
+        whenClicked: React.PropTypes.func,
         subscribed: React.PropTypes.bool.isRequired,
+        condensed: React.PropTypes.bool,
+        subsCount:React.PropTypes.number,
+    },
+
+    getDefaultProps: function() {
+        return {
+            condensed: false,
+            whenClicked: ()=>{},
+            subsCount:0,
+        };
     },
 
     contextTypes: {
@@ -61,7 +71,7 @@ CatelogSingleApp = React.createClass({
 
     render(){
         const {messages} = this.context.intl;
-        const {logoURL,appName,loginLink,registerLink,appId,selectedCategoryNames} = this.props;
+        const {logoURL,appName,loginLink,registerLink,appId,selectedCategoryNames, condensed,subsCount} = this.props;
 
         let handleToggle = this.props.subscribed ? this.handleRemove : this.handleAdd;
         let labelText = this.props.subscribed ? messages.cata_added : messages.cata_add;
@@ -77,20 +87,19 @@ CatelogSingleApp = React.createClass({
             defaultToggled={toggleState}/>;
 
         let appItem = (<Row className="single-app-row"
-                            style={this.state.hovered?
-                        {backgroundColor:  "#f7f7f7"}
-                        :{backgroundColor:  "#ffffff"}}
+                            style={{backgroundColor : this.state.hovered? "#f7f7f7" : "#ffffff", minWidth:"340px"}}
                             onMouseOver={this.handleMouseOver}
                             onMouseOut={this.handleMouseOut}>
-            <Col xs={5} sm={3} md={3}
+            <Col xs={3} sm={3} md={condensed? 2:3}
                  onClick={this.props.whenClicked.bind(null, appId, appName, loginLink, registerLink, logoURL, selectedCategoryNames)}
                  style={{height:"100%", textAlign:"center"}}>
                 <span className="helper"></span><img className="vertial-middle " src={logoURL}
-                                                     style={{width:"50px", top:"18apx"}}/>
+                                                     style={{width:condensed ? "25px": "50px", top:"18px"}}/>
             </Col>
-            <Col xs={2} sm={5} md={6}
+            <Col xs={5} sm={4} md={condensed? 5:4}
                  className="vertical-center">{appName}</Col>
-            <Col xs={5} sm={4} md={3} className="vertical-center">{toggleButton}</Col>
+            <Col xs={4} sm={3} md={condensed? 5:3} className="vertical-center">{toggleButton}</Col>
+            <Col xs={0} sm={2} md={2} xsHidden style={{display:condensed?"none":"block",color:ZenColor.grey3}} className="vertical-center">{subsCount+"人使用"}</Col>
         </Row>);
 
         return <div>

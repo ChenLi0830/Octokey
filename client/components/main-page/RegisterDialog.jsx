@@ -69,7 +69,7 @@ RegisterDialog = React.createClass({
                 /> : null
         ];
 
-        console.log("registerRequest", registerRequest);
+        //console.log("registerRequest", registerRequest);
         return <Dialog
             title={this.props.appName + "-" + "自动注册"/*messages.app_registerDialogMessage*/}
             actions={actions}
@@ -79,7 +79,7 @@ RegisterDialog = React.createClass({
 
             <LinearProgress mode="determinate" value={registerRequest.progress}/>
             <p>
-                {registerRequest.message}
+                {messages[registerRequest.message]}
             </p>
 
             {registerRequest.require ?

@@ -9,7 +9,7 @@
 var CryptoJS = require('crypto-js');
 
 saveCredential = function (appId, hexIv, username, password, isPublicApp) {
-    console.log("appId, hexIv, username, password, isPublicApp",appId, hexIv, username, password, isPublicApp);
+    //console.log("appId, hexIv, username, password, isPublicApp",appId, hexIv, username, password, isPublicApp);
     let hexKey = Session.get("hexKey");
     if (!hexKey) throw Meteor.Error("Can't find master password key");
     let encryptedPwd = encrypt(password, hexKey, hexIv);
