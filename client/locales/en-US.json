@@ -69,7 +69,20 @@
     "app_editDialogDel":"Delete",
 
     "app_newCredentialDialogTitle":"add new account",
-    "app_newCredentialDialogAdd" : "Add"
+    "app_newCredentialDialogAdd" : "Add",
 
-    
+    "app_regi_DialogCancel":"cancel",
+    "app_regi_DialogComplete":"ok",
+
+    "ext_msg_connect": "Connecting",
+    "ext_msg_password": "Generating an unique strong password",
+    "ext_msg_credential": "Sending login information",
+    "ext_msg_register": "Submitting registration request",
+    "ext_msg_userInfo": "依据用户偏好定制网站内容(To be translated)",
+    "ext_msg_redirect": "等待网站完成设置(To be translated)",
+    "ext_msg_success": "注册成功!(To be translated)",
+    "ext_msg_error": "自动注册不成功, 可能原因: 1. 您的帐号已经注册过该网站 2. 注册前您已经登录该网站 3. 网站注册数据出错(To be translated)",
+
+    "cata_notFound": "No apps found",
+    "cata_peopleUse": " people are using it"
 }

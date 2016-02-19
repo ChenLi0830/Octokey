@@ -96,10 +96,21 @@ CatalogSingleApp = React.createClass({
                 <span className="helper"></span><img className="vertial-middle " src={logoURL}
                                                      style={{width:condensed ? "25px": "50px", top:"18px"}}/>
             </Col>
+
             <Col xs={5} sm={4} md={condensed? 5:4}
-                 className="vertical-center">{appName}</Col>
-            <Col xs={4} sm={3} md={condensed? 5:3} className="vertical-center">{toggleButton}</Col>
-            <Col xs={0} sm={2} md={2} xsHidden style={{display:condensed?"none":"block",color:ZenColor.grey3}} className="vertical-center">{subsCount+"人使用"}</Col>
+                 className="vertical-center">
+                {appName}
+            </Col>
+
+            <Col xs={4} sm={3} md={condensed? 5:3} className="vertical-center">
+                {toggleButton}
+            </Col>
+
+            <Col xs={0} sm={2} md={2} xsHidden
+                 style={{display:condensed?"none":"block",color:ZenColor.grey3}}
+                 className="vertical-center">
+                {subsCount+messages.cata_peopleUse}
+            </Col>
         </Row>);
 
         return <div>

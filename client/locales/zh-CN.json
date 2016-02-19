@@ -82,7 +82,8 @@
     "ext_msg_success": "注册成功!",
     "ext_msg_error": "自动注册不成功, 可能原因: 1. 您的帐号已经注册过该网站 2. 注册前您已经登录该网站 3. 网站注册数据出错",
 
-    "cata_notFound": "找不到该网站"
+    "cata_notFound": "找不到该网站",
+    "cata_peopleUse": "人使用"
 
 
 }
