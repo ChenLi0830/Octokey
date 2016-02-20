@@ -8,23 +8,3 @@ body {
   background-color: #f3f3f3;
   overflow-y: scroll;
 }
-
-//Header + inkbar: 64+4 = 68px;
-#wrapper {
-  padding: 68px 0 0 0;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-.appCanvas {
-  min-height: 100% !important;
-  height: auto !important;
-}
-
-//orange:#F15E0C;
-//cyan:#12C5A2;
-//purple:#EB008B;
-

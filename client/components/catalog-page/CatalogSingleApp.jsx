@@ -25,6 +25,15 @@ const {
     ToggleStarBorder
     } = SvgIcons;
 
+let styles = {
+    row: {
+        height: 100,
+        marginLeft: "auto",
+        marginRight: "auto",
+        minWidth: "340px",
+    },
+};
+
 CatalogSingleApp = React.createClass({
     propTypes: {
         logoURL: React.PropTypes.string.isRequired,
@@ -36,14 +45,15 @@ CatalogSingleApp = React.createClass({
         whenClicked: React.PropTypes.func,
         subscribed: React.PropTypes.bool.isRequired,
         condensed: React.PropTypes.bool,
-        subsCount:React.PropTypes.number,
+        subsCount: React.PropTypes.number,
     },
 
-    getDefaultProps: function() {
+    getDefaultProps: function () {
         return {
             condensed: false,
-            whenClicked: ()=>{},
-            subsCount:0,
+            whenClicked: ()=> {
+            },
+            subsCount: 0,
         };
     },
 
@@ -86,35 +96,34 @@ CatalogSingleApp = React.createClass({
             onToggle={handleToggle}
             defaultToggled={toggleState}/>;
 
-        let appItem = (<Row className="single-app-row"
-                            style={{backgroundColor : this.state.hovered? "#f7f7f7" : "#ffffff", minWidth:"340px"}}
-                            onMouseOver={this.handleMouseOver}
-                            onMouseOut={this.handleMouseOut}>
-            <Col xs={3} sm={3} md={condensed? 2:3}
-                 onClick={this.props.whenClicked.bind(null, appId, appName, loginLink, registerLink, logoURL, selectedCategoryNames)}
-                 style={{height:"100%", textAlign:"center"}}>
-                <span className="helper"></span><img className="vertial-middle " src={logoURL}
-                                                     style={{width:condensed ? "25px": "50px", top:"18px"}}/>
-            </Col>
-
-            <Col xs={5} sm={4} md={condensed? 5:4}
-                 className="vertical-center">
-                {appName}
-            </Col>
-
-            <Col xs={4} sm={3} md={condensed? 5:3} className="vertical-center">
-                {toggleButton}
-            </Col>
-
-            <Col xs={0} sm={2} md={2} xsHidden
-                 style={{display:condensed?"none":"block",color:ZenColor.grey3}}
-                 className="vertical-center">
-                {subsCount+messages.cata_peopleUse}
-            </Col>
-        </Row>);
-
         return <div>
-            {appItem}
+            <Row style={_.extend({}, styles.row,
+                                    {backgroundColor: this.state.hovered? "#f7f7f7" : "#ffffff"}
+                            )}
+                 onMouseOver={this.handleMouseOver}
+                 onMouseOut={this.handleMouseOut}>
+                <Col xs={3} sm={3} md={condensed? 2:3}
+                     onClick={this.props.whenClicked.bind(null, appId, appName, loginLink, registerLink, logoURL, selectedCategoryNames)}
+                     style={{height:"100%", textAlign:"center"}}>
+                    <span className="helper"></span><img className="vertial-middle " src={logoURL}
+                                                         style={{width:condensed ? "25px": "50px", top:"18px"}}/>
+                </Col>
+
+                <Col xs={5} sm={4} md={condensed? 5:4}
+                     className="vertical-center">
+                    {appName}
+                </Col>
+
+                <Col xs={4} sm={3} md={condensed? 5:3} className="vertical-center">
+                    {toggleButton}
+                </Col>
+
+                <Col xs={0} sm={2} md={2} xsHidden
+                     style={{display:condensed?"none":"block",color:ZenColor.grey3}}
+                     className="vertical-center">
+                    {subsCount + messages.cata_peopleUse}
+                </Col>
+            </Row>
         </div>
     },
 

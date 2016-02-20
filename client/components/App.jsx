@@ -13,6 +13,17 @@ var {Grid,Row,Col} = ReactBootstrap;
 
 injectTapEventPlugin();
 
+const styles = {
+    wrapper:{
+        padding: "68px 0 0 0",
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+    }
+}
+
 App = React.createClass({
     mixins: [ReactMeteorData],
 
@@ -53,7 +64,7 @@ App = React.createClass({
 
         //Todo check userlogin status and check if the children is a restricted link, if it is, redirect to login
         return (
-            <div id="wrapper">
+            <div style={styles.wrapper}>
                 <Header location={this.props.location}/>
                 <Grid>
                     <Row style={{marginTop:"60px"}}>

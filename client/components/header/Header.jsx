@@ -26,6 +26,18 @@ const {ToggleStar,
 const {Link} = ReactRouter;
 
 const passengerAllowedLink = ["/login", "/reset", "/signUp"];
+
+const styles = {
+    tab:{
+        paddingLeft: 30,
+        paddingRight: 30,
+        backgroundColor: ZenColor.white,
+    },
+    headerSVG:{
+        height: 64,
+    }
+};
+
 Header = React.createClass({
     propTypes: {
         location: React.PropTypes.object.isRequired,
@@ -75,11 +87,11 @@ Header = React.createClass({
 
     render(){
         const addNewImage = (
-            <img className="headerSVG " src="/img/addNew.svg"/>
+            <img style={styles.headerSVG} src="/img/addNew.svg"/>
         );
 
         const logo = (
-            <img className="headerSVG " src="/img/logo.svg"/>
+            <img style={styles.headerSVG} src="/img/logo.svg"/>
         );
 
         //header + inkbar: 64+4=68px;
@@ -106,12 +118,12 @@ Header = React.createClass({
                       style={{maxWidth:"800px",marginLeft:"auto", marginRight:"auto"}}
                       inkBarStyle={{height:"4px", width:"20%", marginLeft:"6.7%",backgroundColor:ZenColor.cyan}}>
 
-                    <Tab className="headerTab" value="/login"
+                    <Tab style={styles.tab} value="/login"
                          label={<AccountTab currentUser={this.data.currentUser}/>}/>
 
-                    <Tab className="headerTab" value="/list" label={logo}/>
+                    <Tab style={styles.tab} value="/list" label={logo}/>
 
-                    <Tab className="headerTab" value="/catalog" label={addNewImage}/>
+                    <Tab style={styles.tab} value="/catalog" label={addNewImage}/>
                 </Tabs>
 
             </div>
