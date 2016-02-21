@@ -81,7 +81,9 @@ AuthJoinPage = React.createClass({
                             floatingLabelStyle={{fontWeight:"300"}}
                             errorText={this.state.floatingPassText}
                             onBlur={this.handleInputErrorCheckPass}
-                            floatingLabelText={messages.login_password}/>
+                            floatingLabelText={messages.login_password}
+                            onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
+                        />
                     </form>
 
                     <RaisedButton label={messages.login_signUp}

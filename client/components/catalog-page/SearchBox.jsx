@@ -50,6 +50,7 @@ SearchBox = React.createClass({
                 style={{width:180}}
                 onFocus={()=>{this.setState({searchOnFocus:true})}}
                 onBlur={()=>{this.setState({searchOnFocus:false})}}
+                onKeyDown={(e)=>{e.key==='Escape' && this.setState({searchText:"",popOpen:false});}}
             />
             <Popover
                 open={this.state.popOpen}
