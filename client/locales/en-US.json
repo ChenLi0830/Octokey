@@ -84,5 +84,10 @@
     "ext_msg_error": "自动注册不成功, 可能原因: 1. 您的帐号已经注册过该网站 2. 注册前您已经登录该网站 3. 网站注册数据出错(To be translated)",
 
     "cata_notFound": "No apps found",
-    "cata_peopleUse": " people are using it"
+    "cata_peopleUse": " people are using it",
+
+    "tooltip_add":"Add new app",
+    "tooltip_delete":"Remove app",
+    "tooltip_setting":"Edit accounts",
+    "tooltip_register":"Auto-registration"
 }

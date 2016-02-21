@@ -8,6 +8,7 @@
  *******************************************************************************/
 const {
     FloatingActionButton,
+    Tooltip,
     } = MUI;
 
 const {
@@ -27,24 +28,31 @@ FloatingEditButton = React.createClass({
         userEditStatus: React.PropTypes.string.isRequired,
     },
 
-    contextTypes:{
+    contextTypes: {
         intl: React.PropTypes.object.isRequired,
     },
 
     getInitialState(){
         return {
             FABActive: false,
+            hoveredTooltip: -1,
         }
     },
 
     render(){
-        let miniButtonIconElements = [/*<ContentCreate/>, */<ContentAdd/>, <ContentRemove/>, <ContentCreate/>, <AvFiberNew/>];
+        const {messages} = this.context.intl;
+
+        let miniButtonIconElements = [/*<ContentCreate/>, */<ContentAdd/>, <ContentRemove/>, <ContentCreate/>,
+            <AvFiberNew/>];
         let miniIconColor = [
             {background: ZenColor.cyan, icon: ZenColor.white},
             {background: ZenColor.orange, icon: ZenColor.white},
             {background: ZenColor.blueGrey, icon: ZenColor.white},
             {background: ZenColor.cyan, icon: ZenColor.white}
         ];
+        const toolTips = [messages.tooltip_add, messages.tooltip_delete,
+            messages.tooltip_setting, messages.tooltip_register];
+
 
         let buttonList = miniButtonIconElements.map(function (iconElement, i) {
             let basicLiStyle = this.state.FABActive ?
@@ -66,9 +74,18 @@ FloatingEditButton = React.createClass({
                     secondary={true} mini={true}
                     backgroundColor={miniIconColor[i].background}
                     iconStyle={{fill:miniIconColor[i].icon}}
-                    onTouchTap={this.props.whenEditButtonClicked.bind(null,i)}>
-                    {iconElement}
-                </FloatingActionButton>
+                    onTouchTap={this.handleFABClick.bind(null,i)}
+                    children={iconElement}
+                    onMouseEnter={this.handleTooltipOpen.bind(this,i)}
+                    onMouseLeave={this.handleTooltipClose}
+                />
+                <Tooltip show={this.state.hoveredTooltip===i}
+                         label={toolTips[i]}
+                         style={{right: 62, top:16}}
+                         horizontalPosition="left"
+                         verticalPosition="top"
+                         touch={true}
+                />
             </li>
         }.bind(this));
 
@@ -82,7 +99,7 @@ FloatingEditButton = React.createClass({
             case "default":
                 return (
                     <div className="fixed-floating-btn" onMouseLeave={this.handleLeaveFAB}>
-                        <ul style={{}} className="list-unstyled ">
+                        <ul className="list-unstyled ">
                             {buttonList}
                         </ul>
                         <FloatingActionButton
@@ -116,4 +133,21 @@ FloatingEditButton = React.createClass({
     handleLeaveFAB(){
         this.setState({FABActive: false});
     },
+
+    handleFABClick(i){
+        clearTimeout(this.tooltipTimer);
+        this.setState({hoveredTooltip: -1});
+        this.props.whenEditButtonClicked(i);
+    },
+
+    handleTooltipOpen(i){
+        this.tooltipTimer = setTimeout(()=> {
+            this.setState({hoveredTooltip: i});
+        }, 300)
+    },
+
+    handleTooltipClose(){
+        clearTimeout(this.tooltipTimer);
+        this.setState({hoveredTooltip: -1});
+    }
 });
