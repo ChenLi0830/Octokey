@@ -16,10 +16,13 @@ const {AppBar,
     Tab,
     IconMenu,
     IconButton,
-    MenuItem
+    DropDownMenu,
+    MenuItem,
+    SvgIcon
     } = MUI;
 
-const {ToggleStar,
+const {
+    ToggleStar,
     ActionLanguage
     } = SvgIcons;
 
@@ -28,13 +31,22 @@ const {Link} = ReactRouter;
 const passengerAllowedLink = ["/login", "/reset", "/signUp"];
 
 const styles = {
-    tab:{
+    tab: {
         paddingLeft: 30,
         paddingRight: 30,
         backgroundColor: ZenColor.white,
     },
-    headerSVG:{
+    headerSVG: {
         height: 64,
+    },
+
+    languageItem: {
+        position: "absolute",
+        display: "block",
+        width: "32px",
+        height: "24px",
+        left: "14px",
+        margin: "10px",
     }
 };
 
@@ -94,23 +106,31 @@ Header = React.createClass({
             <img style={styles.headerSVG} src="/img/logo.svg"/>
         );
 
-        //header + inkbar: 64+4=68px;
         return <AppBar
             style={{marginTop:"-68px", boxShadow:"0 1px 16px rgba(0, 0, 0, 0.18)", backgroundColor:ZenColor.white}}
             iconElementLeft={
                   <IconMenu
-                  value={this.state.language}
-                  onChange={this.handleLanguageChange}
-                    iconButtonElement={
-                      <IconButton iconStyle={{fill:ZenColor.orange}}><ActionLanguage /></IconButton>
-                    }
-                    //targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                    //anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                  >
-                    <MenuItem primaryText="中文" value="zh"/>
-                    <MenuItem primaryText="English" value="en-US"/>
-                  </IconMenu>
+                     value={this.state.language}
+                     onChange={this.handleLanguageChange}
+                     anchorOrigin={{vertical:'bottom', horizontal: 'left'}}
+                     menuStyle={{backgroundColor:ZenColor.white}}
+                     iconButtonElement={
+                        <IconButton>
+                            <LanguageIcon iconName={this.state.language==="zh"&&"cn" ||
+                                                    this.state.language==="en-US"&&"us"}
+                            />
+                        </IconButton>
+                     }
+                     >
+                     <MenuItem leftIcon = {<LanguageIcon style={styles.languageItem} iconName="cn"/>}
+                               primaryText="中文" value="zh" style={{fontSize:13}}
+                     />
+                     <MenuItem leftIcon = {<LanguageIcon style={styles.languageItem} iconName="us"/>}
+                               primaryText="English" value="en-US" style={{fontSize:13}}
+                     />
+                 </IconMenu>
             }
+
             showMenuIconButton={true}>
             <div className="container">
                 <Tabs onChange={this.handleTabChange}
@@ -128,10 +148,14 @@ Header = React.createClass({
 
             </div>
         </AppBar>
+
+        //header + inkbar: 64+4=68px;
     },
 
     handleLanguageChange(event, value){
+        //console.log("language value", value);
         Actions.selectNewLanguage(value);
-        this.setState({language:value});
+        this.setState({language: value});
     },
 });
+
