@@ -8,8 +8,11 @@
  * and can be used to set environment variables in the app, or setup database, etc.
  *******************************************************************************/
 Meteor.startup(function () {
-    //process.env.MAIL_URL = 'smtp://yichen.li0830@gmail.com:lizhengren@smtp.gmail.com:465/';
-    process.env.MAIL_URL = 'smtp://postmaster@sandbox4e97a79afccd430d8897f90ad78054be.mailgun.org:0011d852303b11544220c77d6572bc1d@smtp.mailgun.org:587';
+    //1. Set up stmp
+    process.env.MAIL_URL =
+        'smtp://postmaster@sandbox4e97a79afccd430d8897f90ad78054be.mailgun.org:0011d852303b11544220c77d6572bc1d@smtp.mailgun.org:587';
+
+    setupEmail();
     //smtp://USERNAME:PASSWORD@HOST:PORT/
 
     //if (ZenCategories.find().count() === 0) {
@@ -110,5 +113,66 @@ Meteor.startup(function () {
     //        ZenCategories.insert(zenCategory);
     //    });
     //}
+
+    function setupEmail() {
+        // 2. Format the email
+        //-- Set the from address
+        Accounts.emailTemplates.from = "章鱼钥匙 <no-reply@zhangyuyaoshi.com>";
+
+        //-- Application name
+        Accounts.emailTemplates.siteName = '章鱼钥匙';
+
+        //-- Subject line of the email.
+        Accounts.emailTemplates.verifyEmail.subject = function (user) {
+            //return 'Confirm Your Email Address for Octokey';
+            return '验证 章鱼钥匙 帐号邮箱';
+        };
+
+        /***********-- Email text ************/
+        //Accounts.emailTemplates.verifyEmail.text = function(user, url) {
+        //    return 'Thank you for registering.  Please click on the following link to verify your email address:
+        // \r\n' + url; };
+
+        /*********** -- Email html ***********/
+            //const hello = Assets.getText('verifyEmail.html');
+        SSR.compileTemplate('verifyEmail', Assets.getText('verifyEmail.html'));
+
+        /*Template.verifyEmail.helpers({
+            time: function () {
+                return new Date().toString();
+            }
+        });*/
+
+        Accounts.emailTemplates.verifyEmail.html = function (user, url) {
+            const html = SSR.render("verifyEmail", {username: user, verifyUrl:url});
+            return html;
+        };
+
+        //    function(user,url){
+        //    //console.log("user",user);
+        //    return "<h1>Thanks for signing up!</h1>"
+        //        + " To <strong>activate</strong> your account, click the link below:\n\n"
+        //        + url;
+        //}
+
+
+        // 4.  set url (account-password's default url has # in it, which conflicts with react-router)
+        Accounts.urls.resetPassword = function (token) {
+            return Meteor.absoluteUrl('reset-password/' + token);
+        };
+
+        Accounts.urls.verifyEmail = function (token) {
+            return Meteor.absoluteUrl('verify-email/' + token);
+        };
+
+        Accounts.urls.enrollAccount = function (token) {
+            return Meteor.absoluteUrl('enroll-account/' + token);
+        };
+
+        // 4.  Send email when account is created
+        Accounts.config({
+            sendVerificationEmail: true
+        });
+    }
 });
 
