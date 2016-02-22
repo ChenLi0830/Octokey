@@ -48,8 +48,8 @@ SearchBox = React.createClass({
                 value={this.state.searchText}
                 onChange={this.handleSearch}
                 style={{width:180}}
-                onFocus={()=>{this.setState({searchOnFocus:true})}}
-                onBlur={()=>{this.setState({searchOnFocus:false})}}
+                onMouseEnter={()=>{this.setState({searchOnFocus:true})}}
+                onMouseLeave={()=>{this.setState({searchOnFocus:false})}}
                 onKeyDown={(e)=>{e.key==='Escape' && this.setState({searchText:"",popOpen:false});}}
             />
             <Popover
@@ -61,12 +61,10 @@ SearchBox = React.createClass({
             >
                 {this.state.searchResult}
             </Popover>
-
         </div>
     },
 
     handleSearch(event){
-
         let eventTarget = event.currentTarget;
         this.setState({searchText: event.target.value},
             function () {
