@@ -71,7 +71,6 @@ AuthJoinPage = React.createClass({
                             style={{fontWeight:"300"}}
                             floatingLabelStyle={{fontWeight:"300"}}
                             errorText={this.state.floatingUserText}
-                            onBlur={this.handleInputErrorCheckUser}
                             floatingLabelText={messages.login_email}/>
                         <br/>
                         <TextField
@@ -80,7 +79,6 @@ AuthJoinPage = React.createClass({
                             style={{fontWeight:"300"}}
                             floatingLabelStyle={{fontWeight:"300"}}
                             errorText={this.state.floatingPassText}
-                            onBlur={this.handleInputErrorCheckPass}
                             floatingLabelText={messages.login_password}
                             onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
                         />
@@ -143,9 +141,10 @@ AuthJoinPage = React.createClass({
                     //alert("error: " + error);
                     return;
                 }
-                Meteor.call("initiateUser");
-                Actions.setPassword(password);
-                this.context.router.push('/list');
+                Meteor.call("initiateUser", function(){
+                    Actions.setPassword(password);
+                    this.context.router.push('/list');
+                }.bind(this));
             });
         }
     }
