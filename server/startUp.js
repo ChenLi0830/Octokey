@@ -125,7 +125,7 @@ Meteor.startup(function () {
         //-- Subject line of the email.
         Accounts.emailTemplates.verifyEmail.subject = function (user) {
             //return 'Confirm Your Email Address for Octokey';
-            return '验证 章鱼钥匙 帐号邮箱';
+            return '验证Email地址 - 章鱼钥匙';
         };
 
         /***********-- Email text ************/

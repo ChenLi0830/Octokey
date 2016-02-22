@@ -48,6 +48,7 @@ AuthSignInPage = React.createClass({
         return {
             floatingUserText: "",
             floatingPassText: "",
+            disableBtn: false,
         };
     },
 
@@ -92,7 +93,8 @@ AuthSignInPage = React.createClass({
                     <RaisedButton label={messages.login_signIn}
                                   onClick={this.handleSubmit}
                                   style={style.registerButton}
-                                  secondary={true}/>
+                                  secondary={true}
+                                  disabled={this.state.disableBtn}/>
                     <p>{messages.login_noAccount}
                         <Link to="/signUp">{messages.login_signUp_low}</Link>
                     </p>
@@ -111,8 +113,9 @@ AuthSignInPage = React.createClass({
         }
         else {
             this.setState({floatingUserText: ""});
+            return true;
         }
-
+        return false;
         function validateEmail(email) {//检查邮箱格式
             var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(email);
@@ -125,24 +128,25 @@ AuthSignInPage = React.createClass({
             this.setState({floatingPassText: this.context.intl.messages.login_pwdEmpty});
         } else {
             this.setState({floatingPassText: ""});
+            return true;
         }
+        return false;
     },
 
     handleSubmit(){
         /* Error check */
-        this.handleInputErrorCheckUser();
-        this.handleInputErrorCheckPass();
+        const noInputError = this.handleInputErrorCheckUser() && this.handleInputErrorCheckPass();
 
         /* Save data & Handle login */
         let email = this.refs.email.getValue();
         let password = this.refs.password.getValue();
 
-        if (email && password && this.state.floatingUserText.length === 0 && this.state.floatingPassText.length === 0) {
+        if (email && password && noInputError) {
+            this.setState({disableBtn: true});
             Meteor.loginWithPassword(email, password, (error) => {
                 if (error) {
-                    this.setState({floatingPassText: error.error + " " + error.reason});
-                    console.log("error: ", error);
-                    //alert("error: " + error);
+                    this.setState({disableBtn: false, floatingPassText: error.error + " " + error.reason});
+                    //console.log("error: ", error);
                     return;
                 }
                 Actions.setPassword(password);
