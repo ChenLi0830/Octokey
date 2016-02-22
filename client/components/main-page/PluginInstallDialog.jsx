@@ -18,29 +18,33 @@ PluginInstallDialog = React.createClass({
         whenCloseDialog: React.PropTypes.func.isRequired
     },
 
+    contextTypes:{
+        intl: React.PropTypes.object.isRequired,
+    },
+
     render(){
+        const {messages} = this.context.intl;
+
         const actions = [
             <FlatButton
-                label="取消"
+                label={messages.ext_btn_cancel}
                 primary={true}
                 onTouchTap={this.props.whenCloseDialog}/>,
             <FlatButton
                 secondary={true}
-                label="安装"
+                label={messages.ext_btn_install}
                 onTouchTap={this.handleSubmit}/>
         ];
 
         return <Dialog
-            title={"请安装ZenID浏览器插件"}
+            title={messages.ext_install_title}
             actions={actions}
             modal={false}
             open={this.props.openDialogPlugin}
             onRequestClose={this.props.whenCloseDialog}>
-
-            请安装插件提高ZenID使用体验.
+            {messages.ext_install_msg}
         </Dialog>
     },
-
 
     handleSubmit(){
         //location.reload();

@@ -52,7 +52,6 @@
     "cata_categoryNameEN":"Name in English",
     "cata_categoryPosition":"Position value",
     "cata_search":"Search for an app",
-
     "FAB_cancel":"cancel",
 
     "app_credentialDialogMessage":"Fill in your login information, it is only required once",
@@ -61,7 +60,6 @@
     "app_username":"Username",
     "app_password":"Password",
     "login_usernameEmpty":"Please enter your username",
-    "login_pwdEmpty":"Please enter your password",
 
     "app_editDialogTitle":"Account Management: {appName}",
     "app_editDialogAdd":"Add new account",
@@ -78,10 +76,10 @@
     "ext_msg_password": "Generating an unique strong password",
     "ext_msg_credential": "Sending login information",
     "ext_msg_register": "Submitting registration request",
-    "ext_msg_userInfo": "依据用户偏好定制网站内容(To be translated)",
-    "ext_msg_redirect": "等待网站完成设置(To be translated)",
-    "ext_msg_success": "注册成功!(To be translated)",
-    "ext_msg_error": "自动注册不成功, 可能原因: 1. 您的帐号已经注册过该网站 2. 注册前您已经登录该网站 3. 网站注册数据出错(To be translated)",
+    "ext_msg_userInfo": "Sending user configuration",
+    "ext_msg_redirect": "Waiting for response",
+    "ext_msg_success": "Your account is registered successfully",
+    "ext_msg_error": "Account registration failed. Possible causes: 1. You've registered using this account 2. You are currently logged in this website 3. Website connection error",
 
     "cata_notFound": "No apps found",
     "cata_peopleUse": " people are using it",
@@ -89,5 +87,10 @@
     "tooltip_add":"Add new app",
     "tooltip_delete":"Remove app",
     "tooltip_setting":"Edit accounts",
-    "tooltip_register":"Auto-registration"
+    "tooltip_register":"Auto-registration",
+
+    "ext_install_title":"Octokey - Install Extension",
+    "ext_install_msg":"Please install browser extension for better performance. Currently only Chrome browser is supported.",
+    "ext_btn_install":"install",
+    "ext_btn_cancel":"cancel"
 }
