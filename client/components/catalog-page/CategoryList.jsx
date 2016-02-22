@@ -46,11 +46,11 @@ const nameToIcon = {
     "sports": <PlacesPool color={iconColor}/>,
     "shopping": <ActionShoppingBasket color={iconColor}/>,
 
-    "recommend":<ActionExplore color={iconColor}/>,
-    "education":<SocialSchool color={iconColor}/>,
-    "productivity":<ActionLightbulbOutline color={iconColor}/>,
-    "news":<ActionUpdate color={iconColor}/>,
-    "business":<ActionAssignmentInd color={iconColor}/>,
+    "recommend": <ActionExplore color={iconColor}/>,
+    "education": <SocialSchool color={iconColor}/>,
+    "productivity": <ActionLightbulbOutline color={iconColor}/>,
+    "news": <ActionUpdate color={iconColor}/>,
+    "business": <ActionAssignmentInd color={iconColor}/>,
 };
 
 CategoryList = React.createClass({
@@ -58,12 +58,15 @@ CategoryList = React.createClass({
         zenCategories: React.PropTypes.array.isRequired
     },
 
-    contextTypes:{
+    contextTypes: {
         intl: React.PropTypes.object.isRequired,
+        locale: React.PropTypes.string.isRequired,
     },
 
     getInitialState(){
-        return {chosenCategory: "all"}
+        return {
+            chosenCategory: "all",
+        }
     },
 
     handleTouchTap(categoryName){
@@ -78,17 +81,20 @@ CategoryList = React.createClass({
         const Items = this.props.zenCategories.map(function (category) {
             const icon = nameToIcon[category.name] ? nameToIcon[category.name] : tempIcon;
             return <ListItem
-                primaryText={category.displayTitleChinese}
                 key={category._id}
                 onTouchTap={this.handleTouchTap.bind(this, category.name)}
                 style={this.state.chosenCategory == category.name ? selectedItem : null}
-                rightIcon={icon}/>
+                rightIcon={icon}
+                primaryText={this.context.locale==="zh" && category.displayTitleChinese ||
+                                this.context.locale==="en-US" && category.displayTitleEnglish ||
+                                category.displayTitleEnglish//If nothing is matched, use English
+                            }
+            />
 
         }, this);
         //console.log("Items ",Items);
         return <List style={{backgroundColor:"white"}} subheader={this.context.intl.messages.cata_category}>
             {Items}
         </List>
-    }
+    },
 });
-

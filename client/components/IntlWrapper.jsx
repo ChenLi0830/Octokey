@@ -17,14 +17,24 @@ IntlWrapper = React.createClass({
         router: React.PropTypes.object.isRequired,
     },
 
+    childContextTypes: {
+        locale: React.PropTypes.string
+    },
+    getChildContext: function() {
+        return {locale: this.state.locale};
+    },
+
     getInitialState(){
+        const defaultLocale = "zh";
+        Actions.selectNewLanguage(defaultLocale);
         return {
-            locale:"zh",
+            locale: defaultLocale,
             //locale:"en-US",
         }
     },
 
     render(){
+        //console.log("render this.state.locale",this.state.locale);
         let intlData = this.getIntlData(this.state.locale);
         return <IntlProvider {...intlData}>
             {this.props.router}
@@ -40,7 +50,6 @@ IntlWrapper = React.createClass({
 
         //console.log("locale", locale);
         //console.log("strings", strings);
-
         return {
             locale: locale,
             messages: strings
@@ -48,6 +57,8 @@ IntlWrapper = React.createClass({
     },
 
     languageChange(event, locale){
-        this.setState({locale:locale});
+        //if (this.state.locale != locale) {
+            this.setState({locale: locale});
+        //};
     },
 });

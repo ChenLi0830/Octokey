@@ -10,7 +10,16 @@ LanguageStore = Reflux.createStore({
     listenables: [Actions],
 
     selectNewLanguage(language){
-        this.trigger('languageChange', language)
-    }
+        if (this.language != language) {
+            this.language = language;
+            this.trigger('languageChange', language)
+        } else {
+            console.log("language not changed");
+        }
+    },
+
+    /*getLanguage(){
+        this.trigger('languageChange', this.language);
+    },*/
 });
 
