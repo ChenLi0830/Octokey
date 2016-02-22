@@ -21,7 +21,7 @@ LanguageIcon = React.createClass({
         return (
             //Merge styles - latter object will overwrites the former ones when use "_.extend"
             <span style={_.extend({}, defaultIconStyle, this.props.style,
-                        {backgroundImage: "url(../img/"+this.props.iconName+".svg)"})
+                        {backgroundImage: "url(../img/flags/"+this.props.iconName+".svg)"})
                   }
             />
         );
