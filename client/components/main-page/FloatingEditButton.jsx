@@ -143,7 +143,7 @@ FloatingEditButton = React.createClass({
     handleTooltipOpen(i){
         this.tooltipTimer = setTimeout(()=> {
             this.setState({hoveredTooltip: i});
-        }, 300)
+        }, 100)
     },
 
     handleTooltipClose(){

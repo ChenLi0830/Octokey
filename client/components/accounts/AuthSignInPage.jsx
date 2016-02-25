@@ -74,6 +74,7 @@ AuthSignInPage = React.createClass({
                             floatingLabelStyle={{fontWeight:"300"}}
                             errorText={this.state.floatingUserText}
                             floatingLabelText={messages.login_email}
+                            onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
                         />
                         <br/>
                         <TextField

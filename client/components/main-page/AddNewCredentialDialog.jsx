@@ -70,6 +70,7 @@ AddNewCredentialDialog = React.createClass({
                 floatingLabelStyle={{fontWeight:"300"}}
                 errorText={this.state.floatingUserText}
                 onChange={this.handleInputErrorCheckUser}
+                onKeyPress={(e)=>{e.key==='Enter' && this.handleSaveAccount()}}
                 floatingLabelText={messages.app_username}/>
             <br/>
             <TextField
@@ -79,6 +80,7 @@ AddNewCredentialDialog = React.createClass({
                 floatingLabelStyle={{fontWeight:"300"}}
                 errorText={this.state.floatingPassText}
                 onChange={this.handleInputErrorCheckPass}
+                onKeyPress={(e)=>{e.key==='Enter' && this.handleSaveAccount()}}
                 floatingLabelText={messages.app_password}/>
         </Dialog>
     },

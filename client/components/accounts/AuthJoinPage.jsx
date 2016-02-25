@@ -72,7 +72,9 @@ AuthJoinPage = React.createClass({
                             style={{fontWeight:"300"}}
                             floatingLabelStyle={{fontWeight:"300"}}
                             errorText={this.state.floatingUserText}
-                            floatingLabelText={messages.login_email}/>
+                            floatingLabelText={messages.login_email}
+                            onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
+                        />
                         <br/>
                         <TextField
                             ref="password"
