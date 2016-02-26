@@ -74,7 +74,7 @@ AuthForgotPwdPage = React.createClass({
                             floatingLabelStyle={{fontWeight:"300"}}
                             errorText={this.state.floatingUserText}
                             onBlur={this.handleInputErrorCheckUser}
-                            floatingLabelText={messages.login_email}/>
+                            hintText={messages.login_email}/>
                         <br/>
                         {/*Todo 加入验证码*/}
                     </form>

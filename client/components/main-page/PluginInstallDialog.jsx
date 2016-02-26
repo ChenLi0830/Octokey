@@ -9,7 +9,6 @@
 const {
     Dialog,
     FlatButton,
-    TextField
     } = MUI;
 
 PluginInstallDialog = React.createClass({

@@ -73,7 +73,7 @@ AuthSignInPage = React.createClass({
                             style={{fontWeight:"300"}}
                             floatingLabelStyle={{fontWeight:"300"}}
                             errorText={this.state.floatingUserText}
-                            floatingLabelText={messages.login_email}
+                            hintText={messages.login_email}
                             onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
                         />
                         <br/>
@@ -83,7 +83,7 @@ AuthSignInPage = React.createClass({
                             style={{fontWeight:"300"}}
                             floatingLabelStyle={{fontWeight:"300"}}
                             errorText={this.state.floatingPassText}
-                            floatingLabelText={messages.login_password}
+                            hintText={messages.login_password}
                             onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
                         />
                         <Link style={{display:"block", marginTop:"10px"}} to="/reset">

@@ -56,7 +56,7 @@ CaptchaDialog = React.createClass({
                 ref="captcha"
                 style={{fontWeight:"300"}}
                 floatingLabelStyle={{fontWeight:"300"}}
-                floatingLabelText={"填写验证码"/*messages.app_username*/}
+                hintText={"填写验证码"/*messages.app_username*/}
             /> : null}
         </Dialog>
     },

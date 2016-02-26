@@ -71,7 +71,7 @@ AddNewCredentialDialog = React.createClass({
                 errorText={this.state.floatingUserText}
                 onChange={this.handleInputErrorCheckUser}
                 onKeyPress={(e)=>{e.key==='Enter' && this.handleSaveAccount()}}
-                floatingLabelText={messages.app_username}/>
+                hintText={messages.app_username}/>
             <br/>
             <TextField
                 ref="password"
@@ -81,7 +81,7 @@ AddNewCredentialDialog = React.createClass({
                 errorText={this.state.floatingPassText}
                 onChange={this.handleInputErrorCheckPass}
                 onKeyPress={(e)=>{e.key==='Enter' && this.handleSaveAccount()}}
-                floatingLabelText={messages.app_password}/>
+                hintText={messages.app_password}/>
         </Dialog>
     },
 
