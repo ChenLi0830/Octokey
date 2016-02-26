@@ -66,7 +66,7 @@ AppBox = React.createClass({
         var image = this.getTileImage(this.props.userEditStatus);
 
         return <div>
-            <Col xlg={1} md={2} sm={3} xs={6} style={{padding:"0"}}>
+            <Col lg={2} md={2} sm={3} xs={4} style={{padding:"0"}}>
                 <Paper rounded={false}
                        ref="appBox"
                        style={tileStyle}

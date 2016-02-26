@@ -21,6 +21,27 @@ const {
     AvFiberNew,
     } = SvgIcons;
 
+const styles = {
+    floatingBtn: {
+        paddingTop: 15,
+        marginBottom: 0,
+        zIndex: 1450,
+        position: "fixed",
+        right: 40,
+        bottom: 25,
+    },
+    floatingUl: {
+        left: 0,
+        right: 0,
+        textAlign: "center",
+        margin: 0,
+        visibility: "hidden",
+    },
+    floatingLi:{
+        marginBottom: 15,
+    }
+}
+
 FloatingEditButton = React.createClass({
 
     propTypes: {
@@ -69,7 +90,7 @@ FloatingEditButton = React.createClass({
                 visibility: "hidden"
             };
             basicLiStyle.transitionDelay = (miniButtonIconElements.length - i) * 0.05 + "s";
-            return <li style={basicLiStyle} key={i}>
+            return <li style={_.extend({},basicLiStyle,styles.floatingLi)} key={i}>
                 <FloatingActionButton
                     secondary={true} mini={true}
                     backgroundColor={miniIconColor[i].background}
@@ -98,8 +119,8 @@ FloatingEditButton = React.createClass({
         switch (userEditStatus) {
             case "default":
                 return (
-                    <div className="fixed-floating-btn" onMouseLeave={this.handleLeaveFAB}>
-                        <ul className="list-unstyled ">
+                    <div style={styles.floatingBtn} onMouseLeave={this.handleLeaveFAB}>
+                        <ul className="list-unstyled" style={styles.floatingUl}>
                             {buttonList}
                         </ul>
                         <FloatingActionButton
