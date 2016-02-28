@@ -37,7 +37,7 @@ const styles = {
         margin: 0,
         visibility: "hidden",
     },
-    floatingLi:{
+    floatingLi: {
         marginBottom: 15,
     }
 }
@@ -134,7 +134,7 @@ FloatingEditButton = React.createClass({
                 break;
             default :
                 return (
-                    <div className="fixed-floating-btn">
+                    <div style={styles.floatingBtn}>
                         <FloatingActionButton
                             backgroundColor={ZenColor.orange}
                             style={{color:ZenColor.white}}

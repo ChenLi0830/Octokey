@@ -16,12 +16,17 @@ const {
 
 // const createHistory = ReactRouter.history.createHistory;
 
-function requireAuth(nextState, replaceState) {
-    if (!Meteor.userId())
-        replaceState({nextPathname: nextState.location.pathname}, '/login')
+function requireAuth(nextState, replace) {
+    if (!Meteor.userId()){
+        replace('/login');
+    }
 }
 
-function verifyNotLogin(){}
+function verifyNotLogin(nextState, replace){
+    if (Meteor.userId()){
+        replace('/list');
+    }
+}
 
 function verifyEmail(nextState, replace) {
     replace('/list');
@@ -45,7 +50,7 @@ function verifyEmail(nextState, replace) {
 
 const routes = (
     <Route path="/" component={App}>
-        <IndexRoute component={AuthSignInPage}/>
+        <IndexRoute component={AuthSignInPage} onEnter={verifyNotLogin}/>
         <Route path="/list" component={AppsContainer} onEnter={requireAuth}/>
         <Route path="/catalog" component={Catalog} onEnter={requireAuth}/>
         <Route path="/signUp" component={AuthJoinPage} onEnter={verifyNotLogin}/>
