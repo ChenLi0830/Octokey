@@ -82,11 +82,18 @@ Header = React.createClass({
 
     handleTabChange(value) {
         if (this.data.currentUser) {//用户已经登录
-            if (value === "/login") Meteor.logout();
-
-            this.setState({routeValue: value}, function () {
-                this.context.router.push(value);
-            }.bind(this));
+            if (value === "/login") {
+                Meteor.logout(function (err) {
+                    //console.log("userId = " + Meteor.userId());
+                    this.setState({routeValue: value}, function (error) {
+                        this.context.router.push(value);
+                    }.bind(this))
+                }.bind(this))
+            } else {
+                this.setState({routeValue: value}, function () {
+                    this.context.router.push(value);
+                }.bind(this));
+            }
         }
         else if (_.indexOf(passengerAllowedLink, value) > -1) {//是任何人都可以访问的link
             this.setState({routeValue: value}, function () {
