@@ -52,7 +52,7 @@
     "cata_categoryNameEN":"英文名",
     "cata_categoryPosition":"排位值（大于0）",
     "cata_search":"搜索应用",
-    "FAB_cancel":"取消",
+    "FAB_cancel":"返回",
 
     "app_credentialDialogMessage":"请输入你的登录信息 (只需输入一次)",
     "app_credentialDialogCancel" : "取消",

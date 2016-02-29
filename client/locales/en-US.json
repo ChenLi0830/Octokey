@@ -52,7 +52,7 @@
     "cata_categoryNameEN":"Name in English",
     "cata_categoryPosition":"Position value",
     "cata_search":"Search for an app",
-    "FAB_cancel":"cancel",
+    "FAB_cancel":"back",
 
     "app_credentialDialogMessage":"Fill in your login information, it is only required once",
     "app_credentialDialogCancel" : "cancel",
