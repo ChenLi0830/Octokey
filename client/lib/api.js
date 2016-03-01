@@ -32,12 +32,18 @@ saveCredential = function (appId, hexIv, username, password, isPublicApp) {
     }
 };
 
-getLogoUrl = function (appId) {
-    return "cfs/files/zenApps/" + appId
-};
+removeCredential = function (appId, username) {
+    Meteor.call("removeCredential", appId, username, handleError);
+    Meteor.call("appRemoveUsername", appId, username, handleError);
+},
+
+    getLogoUrl = function (appId) {
+        return "cfs/files/zenApps/" + appId
+    };
 
 isAdmin = function (user) {//TODO use more scalable solution to configure this, i.e.: role system
-    return user && user.emails[0].address == "lulugeo.li@gmail.com"
+    const admins = ["lulugeo.li@gmail.com", "yekiki@gmail.com"];
+    return user && _.indexOf(admins, user.emails[0].address)>-1
 };
 
 encrypt = function (inputData, hexKey, hexIv) {
@@ -49,3 +55,8 @@ encrypt = function (inputData, hexKey, hexIv) {
     return cipherText;
 };
 
+handleError = function (error) {
+    if (error) {
+        throw new Meteor.Error(error.error);
+    }
+};

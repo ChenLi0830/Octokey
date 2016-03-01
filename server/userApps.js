@@ -132,9 +132,7 @@ Meteor.methods({
 });
 
 function generalErrorCheck(userId) {
-    if (!userId) {//没登录
-        throw new Meteor.Error("not signed in");
-    }
+    checkUserLogin();
 
     let credentialRecord = UserAppCredentials.findOne({userId: userId});
     if (credentialRecord.count === 0) {

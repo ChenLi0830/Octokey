@@ -11,9 +11,7 @@ Meteor.methods({
         localSimulateLatency(500);
         console.log("addNewCredential start:", "appId", appId, "username", username, "password", password);
         let userId = Meteor.userId();
-        if (!userId) {
-            throw new Meteor.Error("not logged in");
-        }
+        checkUserLogin();
 
         let userHasThisApp = UserApps.find({
             $and: [
@@ -47,9 +45,8 @@ Meteor.methods({
     removeCredential(appId, username){
         localSimulateLatency(500);
         console.log("removeCredential start", "appId", appId, "username",username);
-        if (!Meteor.userId()) {
-            throw new Meteor.Error("not logged in");
-        }
+        checkUserLogin();
+
         UserAppCredentials.update({userId:Meteor.userId()}, {
                 $pull:{
                     publicApps: {"appId": appId, "username": username}

@@ -31,13 +31,8 @@ Meteor.methods({
         //console.log("appName", appName);
         //console.log("loginLink", loginLink);
 
-        if (!Meteor.userId()) {
-            throw new Meteor.Error("not logged in");
-        }
-
-        if (Meteor.user().emails[0].address != "lulugeo.li@gmail.com") {
-            throw new Meteor.Error("This user is not authorized to do so");
-        }
+        checkUserLogin();
+        checkAdmin();
 
         let app = new FS.File(logo);
         app.appName = appName;
@@ -65,13 +60,8 @@ Meteor.methods({
         console.log("update start: appId", appId, "appName", appName, "loginLink", loginLink, "selectedCategoryNames",
             selectedCategoryNames, "registerLink", registerLink);
 
-        if (!Meteor.userId()) {
-            throw new Meteor.Error("not logged in");
-        }
-
-        if (Meteor.user().emails[0].address != "lulugeo.li@gmail.com") {
-            throw new Meteor.Error("This user is not authorized to do so");
-        }
+        checkUserLogin();
+        checkAdmin();
 
         let existingApp = ZenApps.findOne({_id: appId});
         //console.log("existingApp", existingApp);
@@ -134,6 +124,8 @@ Meteor.methods({
 
     removeZenApp(appId){
         localSimulateLatency(500);
+        checkUserLogin();
+        checkAdmin();
         ZenApps.remove({_id: appId});
     }
 });
