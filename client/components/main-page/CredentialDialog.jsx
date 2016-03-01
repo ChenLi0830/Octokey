@@ -14,6 +14,8 @@ const {
 
 const {FormattedMessage} = ReactIntl;
 
+let savedUsername = "";
+
 CredentialDialog = React.createClass({
     propTypes: {
         appName: React.PropTypes.string.isRequired,
@@ -31,10 +33,9 @@ CredentialDialog = React.createClass({
 
     getInitialState(){
         return {
-            floatingUserText: "",
-            floatingPassText: "",
-            userNameFilled: false,
-            passwordFilled: false,
+            floatingUserError: "",
+            floatingPassError: "",
+            openVerify: false,
         }
     },
 
@@ -44,47 +45,74 @@ CredentialDialog = React.createClass({
             <FlatButton
                 label={messages.app_credentialDialogCancel}
                 primary={true}
-                onTouchTap={this.props.whenCloseDialog}/>,
+                onTouchTap={this.handleCloseDialog}/>,
             <FlatButton
                 secondary={true}
                 label={messages.app_credentialDialogLogin}
                 onTouchTap={this.handleSubmit}/>
         ];
 
-        //let title;
-        //<FormattedMessage id="app_credentialDialogMessage" values={{appName: this.props.appName}}>
-        //    {function(formattedValue){title = formattedValue}}
-        //</FormattedMessage>
-        return <Dialog
-            title={this.props.appName + "-" + messages.app_credentialDialogMessage}
-            actions={actions}
-            modal={false}
-            open={this.props.openDialogCredential}
-            onRequestClose={this.props.whenCloseDialog}>
+        //The buttons of verify page
+        const verifyActions = [
+            <FlatButton
+                label={messages.credentialDialog.verifyBtn_fail}
+                primary={true}
+                onTouchTap={this.verifyUnsuccess}/>,
+            <FlatButton
+                secondary={true}
+                label={messages.credentialDialog.verifyBtn_success}
+                onTouchTap={this.handleCloseDialog}/>
+        ];
 
-            {/*This is here to stop chrome's username and password autofill*/}
-            <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
-            <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
+        const loginForms = (
+            <div>
+                {/*This is here to stop chrome's username and password autofill*/}
+                <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
+                <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
 
-            <TextField
-                ref="username"
-                style={{fontWeight:"300"}}
-                floatingLabelStyle={{fontWeight:"300"}}
-                errorText={this.state.floatingUserText}
-                onChange={this.handleInputErrorCheckUser}
-                onKeyPress={(e)=>{e.key==='Enter' && this.handleSubmit()}}
-                hintText={messages.app_username}/>
-            <br/>
-            <TextField
-                ref="password"
-                type="password"
-                style={{fontWeight:"300"}}
-                floatingLabelStyle={{fontWeight:"300"}}
-                errorText={this.state.floatingPassText}
-                onChange={this.handleInputErrorCheckPass}
-                onKeyPress={(e)=>{e.key==='Enter' && this.handleSubmit()}}
-                hintText={messages.app_password}/>
-        </Dialog>
+                <TextField
+                    ref="username"
+                    style={{fontWeight:"300"}}
+                    floatingLabelStyle={{fontWeight:"300"}}
+                    errorText={this.state.floatingUserError}
+                    onChange={this.handleInputErrorCheckUser}
+                    onKeyPress={(e)=>{e.key==='Enter' && this.handleSubmit()}}
+                    hintText={messages.app_username}
+                    defaultValue={savedUsername}
+                />
+                <br/>
+                <TextField
+                    ref="password"
+                    type="password"
+                    style={{fontWeight:"300"}}
+                    floatingLabelStyle={{fontWeight:"300"}}
+                    errorText={this.state.floatingPassError}
+                    onChange={this.handleInputErrorCheckPass}
+                    onKeyPress={(e)=>{e.key==='Enter' && this.handleSubmit()}}
+                    hintText={messages.app_password}/>
+            </div>
+        );
+
+        const verifyText = (<div>
+            <p>{messages.credentialDialog.verifyMessage}</p>
+        </div>);
+
+        return <div>
+            <Dialog
+                title={this.getTitle()}
+                actions={this.state.openVerify ? verifyActions:actions}
+                modal={false}
+                open={this.props.openDialogCredential}
+                onRequestClose={this.handleCloseDialog}
+                children={this.state.openVerify ? verifyText : loginForms}
+            />
+        </div>
+    },
+
+    getTitle(){
+        const verifyTitle = this.props.appName + this.context.intl.messages.credentialDialog.verifyTitle;
+        const normalTitle = this.props.appName + "-" + this.context.intl.messages.app_credentialDialogMessage;
+        return this.state.openVerify ? verifyTitle : normalTitle;
     },
 
     handleSubmit(){
@@ -97,10 +125,13 @@ CredentialDialog = React.createClass({
         let password = this.refs.password.getValue();
 
         if (username && password) {
-            if (saveCredential(this.props.appId, this.props.hexIv, username, password, this.props.isPublicApp)){//If
+            if (saveCredential(this.props.appId, this.props.hexIv, username, password, this.props.isPublicApp)) {//If
                 // it's successful
                 this.props.whenSubmitCredential(username, password);
-                this.props.whenCloseDialog();
+                savedUsername = username;
+
+                this.verifyCredential();
+                //this.props.whenCloseDialog();
             }
         }
     },
@@ -108,18 +139,39 @@ CredentialDialog = React.createClass({
     handleInputErrorCheckUser(){
         let userName = this.refs.username.getValue();
         if (!userName) {
-            this.setState({floatingUserText: this.context.intl.messages.login_usernameEmpty});
+            this.setState({floatingUserError: this.context.intl.messages.login_usernameEmpty});
         } else {
-            this.setState({floatingUserText: ""});
+            this.setState({floatingUserError: ""});
         }
     },
 
     handleInputErrorCheckPass(){
         let password = this.refs.password.getValue();
         if (!password) {
-            this.setState({floatingPassText: this.context.intl.messages.login_pwdEmpty});
+            this.setState({floatingPassError: this.context.intl.messages.login_pwdEmpty});
         } else {
-            this.setState({floatingPassText: ""});
+            this.setState({floatingPassError: ""});
         }
+    },
+
+    handleCloseDialog(){
+        //Reset initial State
+        this.setState({
+            floatingUserError: "",
+            floatingPassError: "",
+            openVerify: false,
+        });
+
+        this.props.whenCloseDialog();
+    },
+
+    verifyCredential(){
+        this.setState({openVerify: true});
+
+    },
+
+    verifyUnsuccess(){//login unsuccessful, reset username and password
+        removeCredential(this.props.appId, savedUsername);
+        this.setState({openVerify: false});
     },
 });

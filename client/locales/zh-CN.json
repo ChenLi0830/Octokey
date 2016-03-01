@@ -39,8 +39,8 @@
     "cata_editPubApp":"编辑Zen网签",
     "cata_removePubApp":"删除网签",
     "cata_editPubAppBtn":"编辑",
-    "cata_confirmDel":"你确定要删除吗?", 
-    "cata_toBeSelected" : "未选择", 
+    "cata_confirmDel":"你确定要删除吗?",
+    "cata_toBeSelected" : "未选择",
     "cata_cancel" : "取消",
     "cata_del" : "删除",
     "cata_add" : "添加",
@@ -92,5 +92,12 @@
     "ext_install_title":"章鱼钥匙：插件安装",
     "ext_install_msg":"请安装浏览器插件以确保安全（支持：360浏览器, Chrome浏览器)",
     "ext_btn_install":"安装",
-    "ext_btn_cancel":"取消"
+    "ext_btn_cancel":"取消",
+
+    "credentialDialog":{
+        "verifyBtn_fail":"不成功",
+        "verifyBtn_success":"登录成功",
+        "verifyTitle":": 登录结果确认",
+        "verifyMessage":"刚刚的登录成功了吗?"
+    }
 }

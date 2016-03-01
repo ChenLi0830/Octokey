@@ -90,8 +90,7 @@ EditDialog = React.createClass({
             openDialogAdd: false,
             focusedUsername: null,
         }, function () {//setState完成后再remove,保证UI不出glitch
-            Meteor.call("removeCredential", this.props.appId, focusedUsername);
-            Meteor.call("appRemoveUsername", this.props.appId, focusedUsername);
+            removeCredential(this.props.appId, focusedUsername);
         });
     },
 
