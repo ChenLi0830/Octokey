@@ -4,7 +4,7 @@
  * Creator: Chen Li<chen.li@noc-land.com>
  * Creation Date: 2015-2-2
  *
- * Sign-in page component, called by "routes"
+ * Sign-up page component, called by "routes"
  *******************************************************************************/
 const Link = ReactRouter.Link;
 
@@ -21,15 +21,14 @@ const {
 
 const style = {
     paper: {
-        padding: "30px 30px 50px 30px",
-        //paddingTop: 30,
-        //paddingBottom: 50,
+        paddingTop: 30,
+        paddingBottom: 50,
         textAlign: 'center',
     },
     registerButton: {
         marginTop: 25,
         marginBottom: 10,
-        width: "100%",
+        width: "70%",
     },
     logo: {
         display: "block",
@@ -38,7 +37,7 @@ const style = {
     }
 };
 
-AuthSignInPage = React.createClass({
+AuthSetPwdPage = React.createClass({
     contextTypes: {
         router: React.PropTypes.object.isRequired,
         intl: React.PropTypes.object.isRequired,
@@ -48,13 +47,13 @@ AuthSignInPage = React.createClass({
         return {
             floatingUserText: "",
             floatingPassText: "",
-            disableBtn: false,
+            disableBtn:false,
         };
     },
 
     render() {
-
         const {messages} = this.context.intl;
+
         const logo = (
             <Link to="/"><img style={style.logo} src="/img/logo.svg"/></Link>
         );
@@ -86,19 +85,14 @@ AuthSignInPage = React.createClass({
                             hintText={messages.login_password}
                             onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
                         />
-                        <Link style={{display:"block", marginTop:"10px"}} to="/reset">
-                            {messages.login_forgotpwd}
-                        </Link>
                     </form>
 
-                    <RaisedButton label={messages.login_signIn}
+                    <RaisedButton label={messages.login_signUp}
                                   onClick={this.handleSubmit}
                                   style={style.registerButton}
                                   secondary={true}
                                   disabled={this.state.disableBtn}/>
-                    <p>{messages.login_noAccount}
-                        <Link to="/join">{messages.login_signUp_low}</Link>
-                    </p>
+                    <p>{messages.login_haveAccount}<Link to="/login">{messages.login_signIn_low}</Link></p>
                 </Paper>
             </Col>
         );
@@ -142,17 +136,36 @@ AuthSignInPage = React.createClass({
         let email = this.refs.email.getValue();
         let password = this.refs.password.getValue();
 
-        if (email && password && noInputError) {
+        Meteor.call("emailIsAvailable", email, function(error, emailAvailable){
+            console.log("error",error);
+            console.log("emailAvailable",emailAvailable);
+            if (emailAvailable)
+            {
+                console.log("email is available");
+            }
+            else  {
+                console.log("email is not available");
+            }
+        });
+
+
+        /*if (email && password && noInputError) {
             this.setState({disableBtn: true});
-            Meteor.loginWithPassword(email, password, (error) => {
+            Accounts.createUser({
+                email: email,
+                password: password
+            }, (error) => {
                 if (error) {
                     this.setState({disableBtn: false, floatingPassText: error.error + " " + error.reason});
-                    //console.log("error: ", error);
+                    console.log("error: ", error);
+                    //alert("error: " + error);
                     return;
                 }
-                Actions.setPassword(password);
-                this.context.router.push('/list');
+                Meteor.call("initiateUser", function(){
+                    Actions.setPassword(password);
+                    this.context.router.push('/list');
+                }.bind(this));
             });
-        }
-    },
+        }*/
+    }
 });

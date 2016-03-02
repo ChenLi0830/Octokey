@@ -53,7 +53,7 @@ const routes = (
         <IndexRoute component={AuthSignInPage} onEnter={verifyNotLogin}/>
         <Route path="/list" component={AppsContainer} onEnter={requireAuth}/>
         <Route path="/catalog" component={Catalog} onEnter={requireAuth}/>
-        <Route path="/signUp" component={AuthJoinPage} onEnter={verifyNotLogin}/>
+        <Route path="/join" component={AuthJoinPage} onEnter={verifyNotLogin}/>
         <Route path="/login" component={AuthSignInPage} onEnter={verifyNotLogin}/>
         <Route path="/reset" component={AuthForgotPwdPage} onEnter={verifyNotLogin}/>
         <Route path="/verify-email/:token" component={AppNotFound} onEnter={verifyEmail}/>

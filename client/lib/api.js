@@ -60,3 +60,21 @@ handleError = function (error) {
         throw new Meteor.Error(error.error);
     }
 };
+
+validateEmail = function(email) {//检查邮箱格式
+    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+};
+
+isValidateCell = function(area, number){
+    switch (area){
+        case "cn":
+            return (/^\d{11}$/.test(number));
+            break;
+        case "ca":
+        case "us":
+            return (/^\d{10}$/.test(number));
+            break;
+    }
+};
+

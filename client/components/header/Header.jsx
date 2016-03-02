@@ -28,7 +28,7 @@ const {
 
 const {Link} = ReactRouter;
 
-const passengerAllowedLink = ["/login", "/reset", "/signUp"];
+const passengerAllowedLink = ["/login", "/reset", "/join"];
 
 const styles = {
     tab: {

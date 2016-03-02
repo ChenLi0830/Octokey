@@ -25,3 +25,24 @@ checkAdmin = function () {//TODO use more scalable solution to configure this, i
         throw new Meteor.Error("This can only be done by administrator");
     }
 };
+
+isValidateEmail = function(email) {//检查邮箱格式
+    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+};
+
+isValidateCell = function(area, number){
+    //Todo 修正server端的isValidateCell
+    return true;
+    //const val = number.value;
+    //console.log("val",val);
+    //switch (area){
+    //    case "cn":
+    //        return (/^\d{11}$/.test(number));
+    //        break;
+    //    case "ca":
+    //    case "us":
+    //        return (/^\d{10}$/.test(number));
+    //        break;
+    //}
+};
