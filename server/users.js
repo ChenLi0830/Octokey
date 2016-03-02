@@ -24,6 +24,22 @@ Meteor.methods({
         return (typeof Accounts.findUserByEmail(email)) === "undefined";
     },
 
+    checkCaptcha(cell, captcha){
+        localSimulateLatency(500);
+        var user = Meteor.users.findOne({'phone.number': cell});
+
+        //if check 结果不对,throw error
+        if (!user.services.phone || !user.services.phone.verify || !user.services.phone.verify.code ||
+            (user.services.phone.verify.code != captcha && !isMasterCode(captcha))) {
+            throw new Meteor.Error(403, "验证码不正确");
+        }
+
+        function isMasterCode(code) {
+            return code && Accounts._options.phoneVerificationMasterCode &&
+                code == Accounts._options.phoneVerificationMasterCode;
+        }
+    },
+
     createUserByEmail(email){
         const userId = Accounts.createUser({
             email: email,
@@ -39,14 +55,5 @@ Meteor.methods({
         });
     },
 
-    sendVerifyCode(cell){
-        //console.log("cell",cell);
-        //var userPhone = "+17097490481";
-        //// Request for sms phone verification -- please note before receiving SMS you should Follow the SMS Integration tutorial below
-        //Accounts.requestPhoneVerification(userPhone, function(){
-        //    console.log("finish sending text to "+userPhone);
-        //});
-        //Debug:  Verify the user phone isn't confirmed it.
-        console.log('Phone verification status is :', Accounts.isPhoneVerified());
-    }
+
 });

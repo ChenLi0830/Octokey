@@ -47,6 +47,13 @@ const styles = {
         height: "24px",
         left: "14px",
         margin: "10px",
+    },
+    inkBar: {
+        height: "4px",
+        top: "8px",
+        width: "20%",
+        marginLeft: "6.7%",
+        backgroundColor: ZenColor.cyan
     }
 };
 
@@ -137,13 +144,14 @@ Header = React.createClass({
                      />
                  </IconMenu>
             }
-
             showMenuIconButton={true}>
+
             <div className="container">
                 <Tabs onChange={this.handleTabChange}
                       value={this.state.routeValue}
                       style={{maxWidth:"800px",marginLeft:"auto", marginRight:"auto"}}
-                      inkBarStyle={{height:"4px", width:"20%", marginLeft:"6.7%",backgroundColor:ZenColor.cyan}}>
+                      tabItemContainerStyle={{backgroundColor:ZenColor.white}}
+                      inkBarStyle={styles.inkBar}>
 
                     <Tab style={styles.tab} value="/login"
                          label={<AccountTab currentUser={this.data.currentUser}/>}/>
