@@ -92,7 +92,7 @@ AuthSetPwdPage = React.createClass({
                                   style={style.registerButton}
                                   secondary={true}
                                   disabled={this.state.disableBtn}/>
-                    <p>{messages.login_haveAccount}<Link to="/login">{messages.login_signIn_low}</Link></p>
+                    <p>{messages.login_haveAccount}<Link to="/loginMobile">{messages.login_signIn_low}</Link></p>
                 </Paper>
             </Col>
         );

@@ -19,17 +19,19 @@ const {
     Col
     } = ReactBootstrap;
 
-const style = {
+const styles = {
     paper: {
         padding: "30px 30px 50px 30px",
         //paddingTop: 30,
         //paddingBottom: 50,
         textAlign: 'center',
+        backgroundColor: ZenColor.grey1,
     },
     registerButton: {
         marginTop: 25,
         marginBottom: 10,
-        width: "100%",
+        width: "70%",
+        maxWidth: 200,
     },
     logo: {
         display: "block",
@@ -38,7 +40,7 @@ const style = {
     }
 };
 
-AuthSignInPage = React.createClass({
+AuthSignInEmail = React.createClass({
     contextTypes: {
         router: React.PropTypes.object.isRequired,
         intl: React.PropTypes.object.isRequired,
@@ -56,11 +58,11 @@ AuthSignInPage = React.createClass({
 
         const {messages} = this.context.intl;
         const logo = (
-            <Link to="/"><img style={style.logo} src="/img/logo.svg"/></Link>
+            <Link to="/"><img style={styles.logo} src="/img/logo.svg"/></Link>
         );
 
         return (<Col sm={6} smOffset={3} md={4} mdOffset={4} xs={12}>
-                <Paper style={style.paper} zDepth={1}>
+                <Paper style={styles.paper} zDepth={1}>
                     <form >
 
                         {logo}
@@ -93,12 +95,21 @@ AuthSignInPage = React.createClass({
 
                     <RaisedButton label={messages.login_signIn}
                                   onClick={this.handleSubmit}
-                                  style={style.registerButton}
+                                  style={styles.registerButton}
                                   secondary={true}
                                   disabled={this.state.disableBtn}/>
                     <p>{messages.login_noAccount}
                         <Link to="/join">{messages.login_signUp_low}</Link>
                     </p>
+
+                    <br/>
+                    <p>or</p>
+
+                    <RaisedButton label={/*messages.login_signIn*/"使用手机号登录"}
+                                  onClick={this.handleSwitchToMobile}
+                                  style={styles.registerButton}
+                                  primary={true}>
+                    </RaisedButton>
                 </Paper>
             </Col>
         );
@@ -154,5 +165,9 @@ AuthSignInPage = React.createClass({
                 this.context.router.push('/list');
             });
         }
+    },
+
+    handleSwitchToMobile(){
+        this.context.router.push('/loginMobile');
     },
 });

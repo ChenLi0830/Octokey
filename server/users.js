@@ -34,9 +34,18 @@ Meteor.methods({
             throw new Meteor.Error(403, "验证码不正确");
         }
 
-        function isMasterCode(code) {
+        /*function isMasterCode(code) {
             return code && Accounts._options.phoneVerificationMasterCode &&
                 code == Accounts._options.phoneVerificationMasterCode;
+        }*/
+    },
+
+    cellUserAvailableCheck(cell){
+        localSimulateLatency(500);
+        var user = Meteor.users.findOne({'phone.number': cell});
+        //console.log("user",user);
+        if (user && user.phone && user.phone.verified){
+            throw new Meteor.Error("用户已经存在, 请直接登录");
         }
     },
 

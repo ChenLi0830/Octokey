@@ -28,7 +28,7 @@ const {
 
 const {Link} = ReactRouter;
 
-const passengerAllowedLink = ["/login", "/reset", "/join"];
+const passengerAllowedLink = ["/loginMobile", "/reset", "/join"];
 
 const styles = {
     tab: {
@@ -70,7 +70,7 @@ Header = React.createClass({
 
     getInitialState(){
         return {
-            routeValue: "/login",
+            routeValue: "/loginMobile",
             language: "zh",
         }
     },
@@ -88,8 +88,9 @@ Header = React.createClass({
     },
 
     handleTabChange(value) {
+        console.log("handleTabChange");
         if (this.data.currentUser) {//用户已经登录
-            if (value === "/login") {
+            if (value === "/loginMobile") {
                 Meteor.logout(function (err) {
                     //console.log("userId = " + Meteor.userId());
                     this.setState({routeValue: value}, function (error) {
@@ -153,7 +154,7 @@ Header = React.createClass({
                       tabItemContainerStyle={{backgroundColor:ZenColor.white}}
                       inkBarStyle={styles.inkBar}>
 
-                    <Tab style={styles.tab} value="/login"
+                    <Tab style={styles.tab} value="/loginMobile"
                          label={<AccountTab currentUser={this.data.currentUser}/>}/>
 
                     <Tab style={styles.tab} value="/list" label={logo}/>

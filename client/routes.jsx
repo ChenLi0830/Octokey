@@ -18,7 +18,7 @@ const {
 
 function requireAuth(nextState, replace) {
     if (!Meteor.userId()){
-        replace('/login');
+        replace('/loginMobile');
     }
 }
 
@@ -50,13 +50,14 @@ function verifyEmail(nextState, replace) {
 
 const routes = (
     <Route path="/" component={App}>
-        <IndexRoute component={AuthSignInPage} onEnter={verifyNotLogin}/>
+        <IndexRoute component={AuthSignInMobile} onEnter={verifyNotLogin}/>
         <Route path="/list" component={AppsContainer} onEnter={requireAuth}/>
         <Route path="/catalog" component={Catalog} onEnter={requireAuth}/>
         <Route path="/join" component={AuthJoinPage} onEnter={verifyNotLogin}/>
-        <Route path="/login" component={AuthSignInPage} onEnter={verifyNotLogin}/>
-        <Route path="/reset" component={AuthForgotPwdPage} onEnter={verifyNotLogin}/>
-        <Route path="/verify-email/:token" component={AppNotFound} onEnter={verifyEmail}/>
+        {<Route path="/loginEmail" component={AuthSignInEmail} onEnter={verifyNotLogin}/>}
+        <Route path="/loginMobile" component={AuthSignInMobile} onEnter={verifyNotLogin}/>
+        {/*<Route path="/reset" component={AuthForgotPwdPage} onEnter={verifyNotLogin}/>*/}
+        {/*<Route path="/verify-email/:token" component={AppNotFound} onEnter={verifyEmail}/>*/}
         <Route path="/*" component={AppNotFound}/>
     </Route>
 );

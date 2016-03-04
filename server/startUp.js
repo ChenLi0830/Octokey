@@ -71,13 +71,12 @@ Meteor.startup(function () {
         SMS.phoneTemplates = {
             from: '+16502156909',
             text: function (user, code) {
-                return '（O钥匙）你的手机验证码是: ' + code;
+                return '（O钥匙 - https://oyaoshi.com）你的手机验证码是: ' + code;
             }
         };
 
-        Accounts._options.verificationMaxRetries = 3;
-        Accounts._options.verificationRetriesWaitTime = 10 * 60 * 1000;
-        Accounts._options.verificationWaitTime = 20 * 1000;
+        Accounts._options.verificationRetriesWaitTime = 60 * 60 * 1000;
+        Accounts._options.verificationWaitTime = 50 * 1000;
         Accounts._options.verificationCodeLength = 4;
         Accounts._options.verificationMaxRetries = 6;
         Accounts._options.forbidClientAccountCreation = false;

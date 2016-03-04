@@ -21,7 +21,8 @@ checkUserLogin = function () {
 checkAdmin = function () {//TODO use more scalable solution to configure this, i.e.: role system
     const user = Meteor.user();
     const admins = ["lulugeo.li@gmail.com", "yekiki@gmail.com"];
-    if ((user && (user.emails[0].address === admins[0] || user.emails[0].address === admins[1])) === false) {
+    if ((user && user.emails && user.emails[0] &&
+        (user.emails[0].address === admins[0] || user.emails[0].address === admins[1])) === false) {
         throw new Meteor.Error("This can only be done by administrator");
     }
 };
@@ -46,3 +47,11 @@ isValidateCell = function(area, number){
     //        break;
     //}
 };
+
+//Phone verification methods
+isMasterCode = function(code) {
+    return code && Accounts._options.phoneVerificationMasterCode &&
+        code == Accounts._options.phoneVerificationMasterCode;
+};
+
+
