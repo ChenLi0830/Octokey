@@ -27,3 +27,6 @@ meteorhacks:ssr
 okland:accounts-phone
 accounts-password
 force-ssl
+kadira:debug
+meteorhacks:kadira
+meteorhacks:zones
