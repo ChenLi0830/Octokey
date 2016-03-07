@@ -92,5 +92,12 @@
     "ext_install_title":"Octokey - Install Extension",
     "ext_install_msg":"Please install browser extension for better performance. Currently only Chrome browser is supported.",
     "ext_btn_install":"install",
-    "ext_btn_cancel":"cancel"
+    "ext_btn_cancel":"cancel",
+
+    "credentialDialog":{
+        "verifyBtn_fail":"not successful",
+        "verifyBtn_success":"successful",
+        "verifyTitle":" - login status",
+        "verifyMessage":"Did you log in successfully?"
+    }
 }
