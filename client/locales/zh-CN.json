@@ -99,5 +99,32 @@
         "verifyBtn_success":"登录成功",
         "verifyTitle":": 登录结果确认",
         "verifyMessage":"刚刚的登录成功了吗?"
-    }
+    },
+
+    "signIn":{
+        "mobile-手机号":"手机号",
+        "useEmail-邮箱登陆":"使用邮箱登录",
+        "useMobile-手机登陆":"使用手机号登录",
+        "signIn-登录": "登录",
+        "signUp-注册": "注册",
+        "haveAccount-已有帐号": "已经有帐号? 直接",
+        "signIn_low-登录": "登录",
+        "noAccount-还没帐号": "还没有帐号? 快去",
+        "signUp_low-注册": "注册",
+        "email-邮箱": "邮箱",
+        "password-密码": "密码",
+        "forgotpwd-忘记密码": "忘记密码",
+        "emailEmpty-邮箱能不为空":"邮箱不能为空",
+        "mobileEmpty-手机不能为空":"手机号不能为空",
+        "mobileFormatError-手机错误":"手机号码格式不正确，请重新输入",
+        "emailFormatError-邮箱错误":"邮箱格式不正确，请重新输入",
+        "pwdEmpty-密码不能空":"密码不能为空",
+        "resetPwd-重设密码":"找回密码",
+        "requestCaptcha-获取验证码":"获取验证码",
+        "captchaRequestExceeds-短信太频繁":"短信发送过于频繁或超过限制",
+        "inputCaptcha-输入验证码":"输入验证码",
+        "emailNotif-邮件发送成功":"密码找回邮件已经发到 {email},请查收"
+    },
+
+    "resendCaptcha-重发验证码":"重发验证码({remaining} s)"
 }

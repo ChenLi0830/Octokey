@@ -21,6 +21,8 @@ const {
     Col,
     } = ReactBootstrap;
 
+const {FormattedMessage} = ReactIntl;
+
 const styles = {
     paper: {
         padding: "30px 30px 50px 30px",
@@ -28,11 +30,6 @@ const styles = {
         //paddingBottom: 50,
         textAlign: 'center',
         backgroundColor: ZenColor.grey1,
-    },
-    registerButton: {
-        marginTop: 25,
-        marginBottom: 10,
-        width: "100%",
     },
     logo: {
         display: "block",
@@ -79,7 +76,7 @@ AuthSignInMobile = React.createClass({
             floatingCaptchaText: "",
             disableBtn: false,
             area: "cn",
-            captchaBtn: "获取验证码",
+            captchaBtn: "requestCaptcha-获取验证码",
         };
     },
 
@@ -88,8 +85,7 @@ AuthSignInMobile = React.createClass({
     },
 
     render() {
-
-        const {messages} = this.context.intl;
+        messages = this.context.intl.messages.signIn;
         const logo = (
             <Link to="/"><img style={styles.logo} src="/img/logo.svg"/></Link>
         );
@@ -133,19 +129,12 @@ AuthSignInMobile = React.createClass({
                                 floatingLabelStyle={{fontWeight:"300"}}
                                 errorText={this.state.floatingCellText}
                                 inputStyle={{textAlign:"center"}}
-                                hintText={"手机号"/*messages.login_password*/}
+                                hintText={messages["mobile-手机号"]}
                                 hintStyle={{textAlign:"center", width:"100%"}}
                                 onKeyPress={(e)=>{e.key === 'Enter' && this.handleRequestCode()}}
                             />
                         </Col>
-                        {/*<TextField
-                         ref="cell"
-                         style={{fontWeight:"300"}}
-                         floatingLabelStyle={{fontWeight:"300"}}
-                         errorText={this.state.floatingUserText}
-                         hintText={"手机号"/!*messages.login_email*!/}
-                         onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
-                         />*/}
+
                         <br/>
                         <TextField
                             ref="password"
@@ -154,55 +143,56 @@ AuthSignInMobile = React.createClass({
                             floatingLabelStyle={{fontWeight:"300"}}
                             errorText={this.state.floatingPassText}
                             inputStyle={{textAlign:"center"}}
-                            hintText={messages.login_password}
+                            hintText={messages["password-密码"]}
                             hintStyle={{textAlign:"center", width:"100%"}}
                             onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
                         />
 
 
-                        {/* 短信验证
-                         <div>
+                        { //短信验证
+                            /*<div>
 
-                         <RaisedButton label={/!*messages.login_signUp*!/this.state.captchaBtn}
-                         onClick={this.handleRequestCode}
-                         style={styles.registerButton}
-                         secondary={true}
-                         disabled={this.state.captchaBtn!=="获取验证码"}
-                         />
+                                <RaisedButton label={typeof this.state.captchaBtn === "string"?
+                                                        messages[this.state.captchaBtn]:this.state.captchaBtn}
+                                              onClick={this.handleRequestCode}
+                                              style={styles.registerButton}
+                                              secondary={true}
+                                              disabled={this.state.captchaBtn!=="requestCaptcha-获取验证码"}
+                                />
 
-                         <br/>
+                                <br/>
 
-                         <TextField
-                         ref="captcha"
-                         style={{fontWeight:"300", width:90}}
-                         floatingLabelStyle={{fontWeight:"300"}}
-                         errorText={this.state.floatingCaptchaText}
-                         //inputStyle={{textAlign:"center"}}
-                         hintText={/!*messages*!/"输入验证码"}
-                         onKeyPress={(e)=>{e.key === 'Enter' && this.handleVerify()}}
-                         />
-                         <br/>
-                         <Link style={{display:"block", marginTop:"10px"}} to="/reset">
-                         {messages.login_forgotpwd}
-                         </Link>
-                         </div>*/
+                                <TextField
+                                    ref="captcha"
+                                    style={{fontWeight:"300", width:90}}
+                                    floatingLabelStyle={{fontWeight:"300"}}
+                                    errorText={this.state.floatingCaptchaText}
+                                    //inputStyle={{textAlign:"center"}}
+                                    hintText={messages["inputCaptcha-输入验证码"]}
+                                    onKeyPress={(e)=>{e.key === 'Enter' && this.handleVerify()}}
+                                />
+                                <br/>
+                                <Link style={{display:"block", marginTop:"10px"}} to="/reset">
+                                    {messages["forgotpwd-忘记密码"]}
+                                </Link>
+                            </div>*/
                         }
                     </form>
 
-                    <RaisedButton label={messages.login_signIn}
+                    <RaisedButton label={messages["signIn-登录"]}
                                   onClick={this.handleSubmit}
                                   style={styles.registerButton}
                                   secondary={true}
                                   disabled={this.state.disableBtn}/>
 
-                    <p>{messages.login_noAccount}
-                        <Link to="/join">{messages.login_signUp_low}</Link>
+                    <p>{messages["noAccount-还没帐号"]}
+                        <Link to="/join">{messages["signUp_low-注册"]}</Link>
                     </p>
 
                     <br/>
                     <p>or</p>
 
-                    <RaisedButton label={/*messages.login_signIn*/"使用邮箱登录"}
+                    <RaisedButton label={messages["useEmail-邮箱登陆"]}
                                   onClick={this.handleSwitchToMail}
                                   style={styles.registerButton}
                                   primary={true}>
@@ -215,7 +205,7 @@ AuthSignInMobile = React.createClass({
     handleInputErrorCheckUser(){
         let cell = this.refs.userPhone.getValue();
         if (!isValidateCell(this.state.area, cell)) {
-            this.setState({floatingCellText: /*this.context.intl.messages.login_emailFormatError*/"手机号码格式不正确，请重新输入"});
+            this.setState({floatingCellText: messages["mobileFormatError-手机错误"]});
         }
         else {
             this.setState({floatingCellText: ""});
@@ -227,7 +217,7 @@ AuthSignInMobile = React.createClass({
     handleInputErrorCheckPass(){
         let password = this.refs.password.getValue();
         if (!password) {
-            this.setState({floatingPassText: this.context.intl.messages.login_pwdEmpty});
+            this.setState({floatingPassText: messages["pwdEmpty-密码不能空"]});
         } else {
             this.setState({floatingPassText: ""});
             return true;
@@ -275,7 +265,7 @@ AuthSignInMobile = React.createClass({
         let userPhone = this.refs.userPhone.getValue();
         //Todo uncomment when finish testing server error check
         if (!isValidateCell(this.state.area, userPhone)) {
-            this.setState({floatingCellText: /*this.context.intl.messages.login_emailFormatError*/"手机号码格式不正确，请重新输入"});
+            this.setState({floatingCellText: messages["mobileFormatError-手机错误"]});
         }
         else {
             this.setState({floatingCellText: ""});
@@ -297,7 +287,7 @@ AuthSignInMobile = React.createClass({
             //Start to send verification code
             Accounts.requestPhoneVerification(cell, function (error) {
                 if (error) {
-                    this.setState({floatingCellText: "短信发送过于频繁或超过限制"});
+                    this.setState({floatingCellText: messages["captchaRequestExceeds-短信太频繁"]});
                     throw new Meteor.Error("error", error);
                 }
                 this.countdown(60);
@@ -307,9 +297,9 @@ AuthSignInMobile = React.createClass({
 
     countdown(remaining) {
         if (remaining === 0) {
-            this.setState({captchaBtn: "获取验证码"});
+            this.setState({captchaBtn: "requestCaptcha-获取验证码"});
         } else {
-            this.setState({captchaBtn: "重发验证码(" + remaining + "s)"});
+            this.setState({captchaBtn: <FormattedMessage id="resendCaptcha-重发验证码" values={{remaining:remaining}}/>});
             this.countDownTimer = setTimeout(function () {
                 this.countdown(remaining - 1)
             }.bind(this), 1000);

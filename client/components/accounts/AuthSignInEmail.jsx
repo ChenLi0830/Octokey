@@ -55,8 +55,7 @@ AuthSignInEmail = React.createClass({
     },
 
     render() {
-
-        const {messages} = this.context.intl;
+        const messages = this.context.intl.messages.signIn;
         const logo = (
             <Link to="/"><img style={styles.logo} src="/img/logo.svg"/></Link>
         );
@@ -75,7 +74,7 @@ AuthSignInEmail = React.createClass({
                             style={{fontWeight:"300"}}
                             floatingLabelStyle={{fontWeight:"300"}}
                             errorText={this.state.floatingUserText}
-                            hintText={messages.login_email}
+                            hintText={messages["email-邮箱"]}
                             onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
                         />
                         <br/>
@@ -85,27 +84,27 @@ AuthSignInEmail = React.createClass({
                             style={{fontWeight:"300"}}
                             floatingLabelStyle={{fontWeight:"300"}}
                             errorText={this.state.floatingPassText}
-                            hintText={messages.login_password}
+                            hintText={messages["password-密码"]}
                             onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
                         />
                         <Link style={{display:"block", marginTop:"10px"}} to="/reset">
-                            {messages.login_forgotpwd}
+                            {messages["forgotpwd-忘记密码"]}
                         </Link>
                     </form>
 
-                    <RaisedButton label={messages.login_signIn}
+                    <RaisedButton label={messages["signIn-登录"]}
                                   onClick={this.handleSubmit}
                                   style={styles.registerButton}
                                   secondary={true}
                                   disabled={this.state.disableBtn}/>
-                    <p>{messages.login_noAccount}
-                        <Link to="/join">{messages.login_signUp_low}</Link>
+                    <p>{messages["noAccount-还没帐号"]}
+                        <Link to="/join">{messages["signUp_low-注册"]}</Link>
                     </p>
 
                     <br/>
                     <p>or</p>
 
-                    <RaisedButton label={/*messages.login_signIn*/"使用手机号登录"}
+                    <RaisedButton label={messages["useMobile-手机登陆"]}
                                   onClick={this.handleSwitchToMobile}
                                   style={styles.registerButton}
                                   primary={true}>
@@ -118,10 +117,10 @@ AuthSignInEmail = React.createClass({
     handleInputErrorCheckUser(){
         let email = this.refs.email.getValue();
         if (!email) {
-            this.setState({floatingUserText: this.context.intl.messages.login_emailEmpty});
+            this.setState({floatingUserText: messages["emailEmpty-邮箱能不为空"]});
         }
         else if (!validateEmail(email)) {
-            this.setState({floatingUserText: this.context.intl.messages.login_emailFormatError});
+            this.setState({floatingUserText: messages["emailFormatError-邮箱错误"]});
         }
         else {
             this.setState({floatingUserText: ""});
@@ -137,7 +136,7 @@ AuthSignInEmail = React.createClass({
     handleInputErrorCheckPass(){
         let password = this.refs.password.getValue();
         if (!password) {
-            this.setState({floatingPassText: this.context.intl.messages.login_pwdEmpty});
+            this.setState({floatingPassText: messages["pwdEmpty-密码不能空"]});
         } else {
             this.setState({floatingPassText: ""});
             return true;
