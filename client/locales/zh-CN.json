@@ -126,5 +126,32 @@
         "emailNotif-邮件发送成功":"密码找回邮件已经发到 {email},请查收"
     },
 
-    "resendCaptcha-重发验证码":"重发验证码({remaining} s)"
+    "resendCaptcha-重发验证码":"重发验证码({remaining} s)",
+
+    "join":{
+        "mobile-输入你的手机号":"输入你的手机号",
+        "ok-确认":"确认",
+        "inputCaptcha-输入验证码":"输入验证码",
+        "setMasterPWD-设置核心密码":"设置核心密码",
+        "pwdFormatError-密码格式有误":"核心密码不符合要求，请重新设置",
+        "pwdNotMatch-两次密码不一致":"两次密码输入不一致, 请重新输入",
+        "masterPWD-核心密码":"核心密码",
+        "inputPWDAgain-再次输入":"再次输入密码",
+        "pwdRequirement-密码要求":"密码要求",
+        "pwdLength-密码长度":"6-20位",
+        "pwdFormat-密码格式":"大写字母,小写字母,数字至少包含2种",
+        "stepUsername-设置用户名":"设置用户名",
+        "stepAccountInfo-填写帐号信息":"填写帐号信息",
+        "stepSuccessful-注册成功":"注册成功",
+        "signUpSuccess-注册成功":"恭喜你注册成功",
+        "plzWait-正在登录请稍候":"正在登录, 请稍候...",
+        "mobileFormatError-手机错误":"手机号码格式不正确，请重新输入",
+        "userExists-用户已经存在":"用户已经存在, 请直接登录",
+        "captchaRequestExceeds-短信太频繁":"短信发送过于频繁或超过限制",
+        "captchaNotCorrect-校验码不正确":"校验码不正确，请重新输入",
+        "unknownError-两次输入的密码有误":"两次输入的核心密码不符合要求,请重新输入",
+        "msg-唯一要记的密码":"你唯一需要记的密码",
+        "msg-核心密码无法取回":"为保证你的安全，此密码采取不可逆加密方式，一旦设定无法取回，请务必牢记",
+        "requestCaptcha-获取验证码":"获取验证码"
+    }
 }

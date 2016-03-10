@@ -120,11 +120,38 @@
         "emailFormatError-邮箱错误":"Please check your email address",
         "pwdEmpty-密码不能空":"Please enter your password",
         "resetPwd-重设密码":"Reset password",
-        "requestCaptcha-获取验证码":"Get OTF",
-        "captchaRequestExceeds-短信太频繁":"OTF Request Too Frequently",
-        "inputCaptcha-输入验证码":"Input OTF",
+        "requestCaptcha-获取验证码":"Get OTP",
+        "captchaRequestExceeds-短信太频繁":"Too many OTP request at one time",
+        "inputCaptcha-输入验证码":"Input OTP",
         "emailNotif-邮件发送成功":"An e-mail has been sent to {email} with further instructions"
     },
 
-    "resendCaptcha-重发验证码":"Resend OTF({remaining} s)"
+    "resendCaptcha-重发验证码":"Resend OTP({remaining} s)",
+
+    "join":{
+        "mobile-输入你的手机号":"Mobile Number",
+        "ok-确认":"ok",
+        "inputCaptcha-输入验证码":"Input OTP",
+        "setMasterPWD-设置核心密码":"Set Master Password",
+        "pwdFormatError-密码格式有误":"Please check your master password",
+        "pwdNotMatch-两次密码不一致":"Passwords don't match, please check",
+        "masterPWD-核心密码":"Master Password",
+        "inputPWDAgain-再次输入":"Master password again",
+        "pwdRequirement-密码要求":"Password requirement",
+        "pwdLength-密码长度":"At least six characters",
+        "pwdFormat-密码格式":"Contain a combination of at least two of the following characters: uppercase letters, lowercase letters, numbers",
+        "stepUsername-设置用户名":"Create User",
+        "stepAccountInfo-填写帐号信息":"Account Info",
+        "stepSuccessful-注册成功":"Success",
+        "signUpSuccess-注册成功":"Thanks for register at Octokey",
+        "plzWait-正在登录请稍候":"Loading...",
+        "mobileFormatError-手机错误":"Please check your mobile number",
+        "userExists-用户已经存在":"User already exists, please log in instead",
+        "captchaRequestExceeds-短信太频繁":"Too many OTP request at one time",
+        "captchaNotCorrect-校验码不正确":"OTP Incorrect",
+        "unknownError-两次输入的密码有误":"Please check your passwords",
+        "msg-唯一要记的密码":"The only password you need to remember",
+        "msg-核心密码无法取回":"Please make sure you remember the master password",
+        "requestCaptcha-获取验证码":"Get OTP"
+    }
 }

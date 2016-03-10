@@ -24,7 +24,13 @@ const {
     CircularProgress,
     } = MUI;
 
-const {ActionAccountCircle, NotificationEnhancedEncryption, ActionVerifiedUser} = SvgIcons;
+const {
+    ActionAccountCircle,
+    NotificationEnhancedEncryption,
+    ActionVerifiedUser
+    } = SvgIcons;
+
+const {FormattedMessage} = ReactIntl;
 
 const {
     Col,
@@ -98,7 +104,7 @@ AuthJoinPage = React.createClass({
         return {
             floatingCellText: "",
             floatingCaptchaText: "",
-            captchaBtn: "获取验证码",
+            captchaBtn: "requestCaptcha-获取验证码",
             area: "cn",
             step: 1,
             finalCaptcha: "",
@@ -120,7 +126,7 @@ AuthJoinPage = React.createClass({
     },
 
     render() {
-        const {messages} = this.context.intl;
+        messages = this.context.intl.messages.join;
 
         return (<div>
 
@@ -128,7 +134,7 @@ AuthJoinPage = React.createClass({
                     <Paper style={styles.paper} zDepth={0}>
                         <div>
                             <Tabs value={this.state.step}>
-                                <Tab label="设置用户名"
+                                <Tab label={messages["stepUsername-设置用户名"]}
                                      icon={<ActionAccountCircle className="horizontal-center"/>}
                                      value={1}
                                      style={styles.tabItem}
@@ -137,14 +143,14 @@ AuthJoinPage = React.createClass({
                                     <Col sm={8} smOffset={2} md={6} mdOffset={3} xs={12} style={styles.contentCol}>
                                         <div>
                                             <h2 style={styles.primaryText}>
-                                                输入你的手机号{/*messages.login_haveAccount*/}
+                                                {messages["mobile-输入你的手机号"]}
                                             </h2>
                                         </div>
                                         <br/>
                                         <div>
                                             <h6 style={styles.secondaryText}>
-                                                {messages.login_haveAccount}<Link
-                                                to="/loginMobile">{messages.login_signIn_low}</Link>
+                                                {messages["haveAccount-已有帐号"]}<Link
+                                                to="/loginMobile">{messages["signIn_low-登录"]}</Link>
                                             </h6>
                                         </div>
                                         <form>
@@ -189,11 +195,12 @@ AuthJoinPage = React.createClass({
                                             {/*Todo add captcha*/}
                                         </form>
 
-                                        <RaisedButton label={/*messages.login_signUp*/this.state.captchaBtn}
+                                        <RaisedButton label={typeof this.state.captchaBtn === "string"?
+                                                        messages[this.state.captchaBtn]:this.state.captchaBtn}
                                                       onClick={this.handleRequestCode}
                                                       style={styles.registerButton}
                                                       secondary={true}
-                                                      disabled={this.state.captchaBtn!=="获取验证码"}
+                                                      disabled={this.state.captchaBtn!=="requestCaptcha-获取验证码"}
                                         />
 
                                         <br/>
@@ -208,11 +215,11 @@ AuthJoinPage = React.createClass({
                                                         floatingLabelStyle={{fontWeight:"300"}}
                                                         errorText={this.state.floatingCaptchaText}
                                                         //inputStyle={{textAlign:"center"}}
-                                                        hintText={/*messages*/"输入验证码"}
+                                                        hintText={messages["inputCaptcha-输入验证码"]}
                                                         onKeyPress={(e)=>{e.key === 'Enter' && this.handleVerify()}}
                                                     />
                                                     <br/>
-                                                    <RaisedButton label={/*messages.login_signUp*/"确认"}
+                                                    <RaisedButton label={messages["ok-确认"]}
                                                                   onClick={this.handleVerify}
                                                                   style={styles.registerButton}
                                                                   secondary={true}
@@ -223,7 +230,7 @@ AuthJoinPage = React.createClass({
                                     </Col>
                                 </Tab>
 
-                                <Tab label="填写帐号信息"
+                                <Tab label={messages["stepAccountInfo-填写帐号信息"]}
                                      icon={<NotificationEnhancedEncryption className="horizontal-center"/>}
                                      value={2}
                                      style={styles.tabItem}
@@ -232,17 +239,15 @@ AuthJoinPage = React.createClass({
                                     <Col sm={8} smOffset={2} md={6} mdOffset={3} xs={12} style={styles.contentCol}>
                                         <div>
                                             <h2 style={styles.primaryText}>
-                                                设置核心密码{/*messages.login_haveAccount*/}
+                                                {messages["setMasterPWD-设置核心密码"]}
                                             </h2>
                                         </div>
                                         <div>
                                             <h4 style={_.extend({},styles.secondaryText,{marginTop:30})}>
-                                                {/*messages.login_haveAccount*/
-                                                    "你唯一需要记的密码"}
+                                                {messages["msg-唯一要记的密码"]}
                                             </h4>
                                             <h6 style={styles.secondaryText}>
-                                                {/*messages.login_haveAccount*/
-                                                    "为保证你的安全，此密码采取不可逆加密方式，一旦设定无法取回，请务必牢记"}
+                                                {messages["msg-核心密码无法取回"]}
                                             </h6>
                                         </div>
                                         <br/>
@@ -255,7 +260,7 @@ AuthJoinPage = React.createClass({
                                                 <Input type="password"
                                                        ref="password"
                                                        bsStyle={this.state.pwdVerified?"success":null}
-                                                       label={/*message*/"核心密码"}
+                                                       label={messages["masterPWD-核心密码"]}
                                                        className="pwdInputStyle"
                                                        hasFeedback={true}
                                                        onFocus={e => this.setState({ target: e.target, showPopOver: true})}
@@ -263,7 +268,7 @@ AuthJoinPage = React.createClass({
                                                             if (this.state.pwdVerified) {
                                                                 this.setState({showPopOver: false, errorText: "" /*message*/})
                                                             } else {
-                                                                this.setState({showPopOver: false, errorText: "核心密码不符合要求，请重新设置" /*message*/})
+                                                                this.setState({showPopOver: false, errorText: messages["pwdFormatError-密码格式有误"]})
                                                             }
                                                        }}
                                                        onChange={this.handleInputPassword}
@@ -280,20 +285,19 @@ AuthJoinPage = React.createClass({
                                                 <Input type="password"
                                                        ref="password2"
                                                        bsStyle={this.state.twoPwdSame?"success":null}
-                                                       label="再次输入"
+                                                       label={messages["inputPWDAgain-再次输入"]}
                                                        hasFeedback={true}
                                                        onFocus={e => this.setState({ target: e.target, showPopOver2: true})}
                                                        onBlur={() => {
                                                             if (this.state.twoPwdSame) {
                                                                 this.setState({showPopOver2: false, errorText2: "" /*message*/})
                                                             } else {
-                                                                this.setState({showPopOver2: false, errorText2: "两次密码输入不一致, 请重新输入" /*message*/})
+                                                                this.setState({showPopOver2: false, errorText2: messages["pwdNotMatch-两次密码不一致"]})
                                                             }
                                                        }}
                                                        onChange={this.handleInputPassword2}
                                                        onKeyPress={(e)=>{e.key === 'Enter' && this.handleRegister()}}
                                                 />
-
 
                                                 {//Error text
                                                     this.state.errorText2 ?
@@ -309,11 +313,11 @@ AuthJoinPage = React.createClass({
                                                     container={this}
                                                     containerPadding={20}
                                                 >
-                                                    <Popover title={/*message*/"密码要求"} id="password check"
+                                                    <Popover title={messages["pwdRequirement-密码要求"]} id="password check"
                                                              style={{marginLeft:25}}>
-                                                        6-20位
+                                                        {messages["pwdLength-密码长度"]}
                                                         <br />
-                                                        大写字母,小写字母,数字至少包含2种
+                                                        {messages["pwdFormat-密码格式"]}
                                                     </Popover>
                                                 </Overlay>
 
@@ -326,11 +330,11 @@ AuthJoinPage = React.createClass({
                                                 >
                                                     <Popover id="password check"
                                                              style={{marginLeft:25}}>
-                                                        请再次输入登录密码
+                                                        {messages["inputPWDAgain-再次输入"]}
                                                     </Popover>
                                                 </Overlay>
 
-                                                <RaisedButton label={/*messages.login_signUp*/"确 定"}
+                                                <RaisedButton label={messages["ok-确认"]}
                                                               onClick={this.handleRegister}
                                                               style={styles.registerButton}
                                                               secondary={true}
@@ -346,7 +350,7 @@ AuthJoinPage = React.createClass({
                                     </Col>
                                 </Tab>
 
-                                <Tab label="注册成功"
+                                <Tab label={messages["stepSuccessful-注册成功"]}
                                      icon={<ActionVerifiedUser className="horizontal-center"/>}
                                      value={3}
                                      style={styles.tabItem}
@@ -355,23 +359,18 @@ AuthJoinPage = React.createClass({
                                     <Col sm={8} smOffset={2} md={6} mdOffset={3} xs={12} style={styles.contentCol}>
                                         <div>
                                             <h2 style={styles.primaryText}>
-                                                恭喜你注册成功{/*messages.login_haveAccount*/}
+                                                {messages["signUpSuccess-注册成功"]}
                                             </h2>
                                             <br/>
                                             <h5>
-                                                正在登录, 请稍候...
+                                                {messages["plzWait-正在登录请稍候"]}
                                             </h5>
-
                                             <CircularProgress size={1}/>
                                         </div>
                                     </Col>
                                 </Tab>
                             </Tabs>
-
-
                         </div>
-
-
                     </Paper>
                 </Col>
             </div>
@@ -382,7 +381,7 @@ AuthJoinPage = React.createClass({
         let userPhone = this.refs.userPhone.getValue();
         //Todo uncomment when finish testing server error check
         if (!isValidateCell(this.state.area, userPhone)) {
-            this.setState({floatingCellText: /*this.context.intl.messages.login_emailFormatError*/"手机号码格式不正确，请重新输入"});
+            this.setState({floatingCellText: messages["mobileFormatError-手机错误"]});
         }
         else {
             this.setState({floatingCellText: ""});
@@ -404,13 +403,13 @@ AuthJoinPage = React.createClass({
 
             Meteor.call("cellUserAvailableCheck", cell, function (error) {//检查用户是否存在
                 if (error) {
-                    this.setState({floatingCellText: "用户已经存在, 请直接登录"});
+                    this.setState({floatingCellText: messages["userExists-用户已经存在"]});
                     throw new Meteor.Error("error", error);
                 } else {
                     //Start to send verification code
                     Accounts.requestPhoneVerification(cell, function (error) {
                         if (error) {
-                            this.setState({floatingCellText: "短信发送过于频繁或超过限制"});
+                            this.setState({floatingCellText: messages["captchaRequestExceeds-短信太频繁"]});
                             throw new Meteor.Error("error", error);
                         }
                         this.countdown(60);
@@ -473,9 +472,9 @@ AuthJoinPage = React.createClass({
 
     countdown(remaining) {
         if (remaining === 0) {
-            this.setState({captchaBtn: "获取验证码"});
+            this.setState({captchaBtn: "requestCaptcha-获取验证码"});
         } else {
-            this.setState({captchaBtn: "重发验证码(" + remaining + "s)"});
+            this.setState({captchaBtn: <FormattedMessage id="resendCaptcha-重发验证码" values={{remaining:remaining}}/>});
             this.countDownTimer = setTimeout(function () {
                 this.countdown(remaining - 1)
             }.bind(this), 1000);
@@ -491,7 +490,7 @@ AuthJoinPage = React.createClass({
         const captcha = this.refs.captcha.getValue();
         Meteor.call("checkCaptcha", cell, captcha, function (error) {
             if (error) {
-                this.setState({floatingCaptchaText: "校验码不正确，请重新输入", verifyBtnDisable: false});
+                this.setState({floatingCaptchaText: messages["captchaNotCorrect-校验码不正确"], verifyBtnDisable: false});
                 //throw new Meteor.Error("error", error);
             } else {
                 //clearTimeout(this.countDownTimer);
@@ -555,7 +554,7 @@ AuthJoinPage = React.createClass({
         }
         else {
             if (this.state.errorText==="" && this.state.errorText2===""){
-                this.setState({errorText: "输入的核心密码不符合要求,请重新输入"/*messages*/})
+                this.setState({errorText: messages["unknownError-两次输入的密码有误"]})
             }
         }
     }
