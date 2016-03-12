@@ -17,7 +17,7 @@ const {
     } = MUI;
 
 
-CreateCategoryButton = React.createClass({
+var CreateCategoryButton = React.createClass({
     propTypes: {
         zenCategories: React.PropTypes.array.isRequired
     },
@@ -139,3 +139,5 @@ CreateCategoryButton = React.createClass({
         </div>
     }
 });
+
+module.exports = CreateCategoryButton;

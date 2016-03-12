@@ -37,7 +37,7 @@ const style = {
     }
 };
 
-AuthSetPwdPage = React.createClass({
+var AuthSetPwdPage = React.createClass({
     contextTypes: {
         router: React.PropTypes.object.isRequired,
         intl: React.PropTypes.object.isRequired,
@@ -169,3 +169,5 @@ AuthSetPwdPage = React.createClass({
         }*/
     }
 });
+
+module.exports = AuthSetPwdPage;

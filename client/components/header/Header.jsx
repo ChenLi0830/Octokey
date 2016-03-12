@@ -6,6 +6,9 @@
  *
  * Header component, called by "App" component
  *******************************************************************************/
+var LanguageIcon = require('../header/LanguageIcon.jsx');
+var AccountTab = require('../accounts/AccountTab.jsx');
+
 const {
     Navbar,
     Nav
@@ -28,7 +31,7 @@ const {
 
 const {Link} = ReactRouter;
 
-const passengerAllowedLink = ["/loginMobile", "/reset", "/join"];
+const guestAllowedLink = ["/loginMobile", "/reset", "/join"];
 
 const styles = {
     tab: {
@@ -53,11 +56,15 @@ const styles = {
         top: "8px",
         width: "20%",
         marginLeft: "6.7%",
-        backgroundColor: ZenColor.cyan
-    }
+        backgroundColor: ZenColor.cyan,
+
+        ':hover': {
+            backgroundColor: 'red'
+        },
+    },
 };
 
-Header = React.createClass({
+var Header = React.createClass({
     propTypes: {
         location: React.PropTypes.object.isRequired,
     },
@@ -88,7 +95,7 @@ Header = React.createClass({
     },
 
     handleTabChange(value) {
-        console.log("handleTabChange");
+        //console.log("handleTabChange");
         if (this.data.currentUser) {//用户已经登录
             if (value === "/loginMobile") {
                 Meteor.logout(function (err) {
@@ -103,7 +110,7 @@ Header = React.createClass({
                 }.bind(this));
             }
         }
-        else if (_.indexOf(passengerAllowedLink, value) > -1) {//是任何人都可以访问的link
+        else if (_.indexOf(guestAllowedLink, value) > -1) {//是任何人都可以访问的link
             this.setState({routeValue: value}, function () {
                 this.context.router.push(value);
             }.bind(this));
@@ -175,3 +182,4 @@ Header = React.createClass({
     },
 });
 
+module.exports = Radium(Header);

@@ -6,13 +6,17 @@
  *
  * Catalog page component, called by "routes", used by "App"
  *******************************************************************************/
+var CatalogSideBar = require('./CatalogSidebar.jsx');
+var CatalogAppsBox = require('./CatalogAppsBox.jsx');
+var AppLoading = require('../AppLoading.jsx');
+
 const {
     Grid,
     Row,
     Col
     } = ReactBootstrap;
 
-Catalog = React.createClass({
+var Catalog = React.createClass({
     mixins: [
         ReactMeteorData,
         Reflux.listenTo(CategoryStore, 'categoryChange')
@@ -97,3 +101,5 @@ Catalog = React.createClass({
         });
     }
 });
+
+module.exports = Catalog;

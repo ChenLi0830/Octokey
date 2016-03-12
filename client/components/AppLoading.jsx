@@ -9,7 +9,7 @@
  *******************************************************************************/
 const {RefreshIndicator,Paper  } = MUI;
 
-AppLoading = React.createClass({
+var AppLoading = React.createClass({
     render() {
         return <div>
             <Paper zDepth={1}
@@ -26,4 +26,4 @@ AppLoading = React.createClass({
 });
 //Todo change logo-zenid.svg
 
-
+module.exports = AppLoading;

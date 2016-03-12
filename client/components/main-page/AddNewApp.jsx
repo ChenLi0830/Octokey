@@ -15,7 +15,7 @@ const {
     Col,
     } = ReactBootstrap;
 
-AddNewApp = React.createClass({
+var AddNewApp = React.createClass({
     propTypes:{
         whenClicked:React.PropTypes.func.isRequired,
     },
@@ -34,3 +34,5 @@ AddNewApp = React.createClass({
         </div>
     }
 });
+
+module.exports = AddNewApp;

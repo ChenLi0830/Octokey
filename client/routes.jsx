@@ -6,6 +6,14 @@
  *
  * routes uses React-router, it is the root of the client-side app
  *******************************************************************************/
+var App = require('./components/App.jsx');
+var AppsContainer = require('./components/main-page/AppsContainer.jsx');
+var Catalog = require('./components/catalog-page/Catalog.jsx');
+var AuthJoinPage = require('./components/accounts/AuthJoinPage.jsx');
+var AuthSignInEmail = require('./components/accounts/AuthSignInEmail.jsx');
+var AuthSignInMobile = require('./components/accounts/AuthSignInMobile.jsx');
+var PageNotFound = require('./components/PageNotFound.jsx');
+var IntlWrapper = require('./components/IntlWrapper.jsx');
 
 const {
     Router,
@@ -58,7 +66,7 @@ const routes = (
         <Route path="/loginMobile" component={AuthSignInMobile} onEnter={verifyNotLogin}/>
         {/*<Route path="/reset" component={AuthForgotPwdPage} onEnter={verifyNotLogin}/>*/}
         {/*<Route path="/verify-email/:token" component={AppNotFound} onEnter={verifyEmail}/>*/}
-        <Route path="/*" component={AppNotFound}/>
+        <Route path="/*" component={PageNotFound}/>
     </Route>
 );
 

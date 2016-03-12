@@ -8,7 +8,7 @@ const defaultIconStyle = {
     height: 24,
 };
 
-LanguageIcon = React.createClass({
+var LanguageIcon = React.createClass({
 
     //mixins: [PureRenderMixin],
 
@@ -28,3 +28,5 @@ LanguageIcon = React.createClass({
     }
 
 });
+
+module.exports = LanguageIcon;

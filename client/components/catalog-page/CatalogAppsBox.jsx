@@ -6,6 +6,8 @@
  *
  * Catalog Apps Box component - called by "Catalog"
  *******************************************************************************/
+var CatalogSingleApp = require('./CatalogSingleApp.jsx');
+
 const {
     Modal,
     Input,
@@ -42,7 +44,7 @@ let modalAttributes = {
     selectedCategoryNames: [],
 };
 
-CatalogAppsBox = React.createClass({
+var CatalogAppsBox = React.createClass({
     propTypes: {
         zenApps: React.PropTypes.array.isRequired,
         zenCategories: React.PropTypes.array.isRequired,
@@ -267,3 +269,5 @@ CatalogAppsBox = React.createClass({
         </div>
     }
 });
+
+module.exports = CatalogAppsBox;

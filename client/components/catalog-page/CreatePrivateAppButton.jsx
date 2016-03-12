@@ -18,7 +18,7 @@ const {Button,
 const {RaisedButton} = MUI;
 
 
-CreatePrivateAppButton = React.createClass({
+var CreatePrivateAppButton = React.createClass({
 
     contextTypes: {
         intl: React.PropTypes.object.isRequired,
@@ -112,3 +112,5 @@ CreatePrivateAppButton = React.createClass({
         reader.readAsDataURL(logoFile);
     }
 });
+
+module.exports = CreatePrivateAppButton;

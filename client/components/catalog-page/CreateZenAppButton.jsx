@@ -29,7 +29,7 @@ const {
 
 var selectedCategories = [0];
 
-CreateZenAppButton = React.createClass({
+var CreateZenAppButton = React.createClass({
     propTypes: {
         zenCategories: React.PropTypes.array.isRequired
     },
@@ -195,3 +195,5 @@ CreateZenAppButton = React.createClass({
         reader.readAsDataURL(logoFile);
     }
 });
+
+module.exports = CreateZenAppButton;

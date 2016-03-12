@@ -23,7 +23,7 @@ const {
     NavigationMoreVert
     } = SvgIcons;
 
-AccountTab = React.createClass({
+var AccountTab = React.createClass({
     propTypes: {
         currentUser: React.PropTypes.object,
     },
@@ -47,3 +47,5 @@ AccountTab = React.createClass({
         return accountTab
     }
 });
+
+module.exports = AccountTab;

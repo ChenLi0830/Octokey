@@ -16,7 +16,7 @@ const {FormattedMessage} = ReactIntl;
 
 let savedUsername = "";
 
-CredentialDialog = React.createClass({
+var CredentialDialog = React.createClass({
     propTypes: {
         appName: React.PropTypes.string.isRequired,
         appId: React.PropTypes.string.isRequired,
@@ -175,3 +175,5 @@ CredentialDialog = React.createClass({
         this.setState({openVerify: false});
     },
 });
+
+module.exports = CredentialDialog;

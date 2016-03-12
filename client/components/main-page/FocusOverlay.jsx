@@ -12,7 +12,7 @@ const {
     } = MUI;
 
 
-FocusOverlay = React.createClass({
+var FocusOverlay = React.createClass({
     propTypes: {
         visibility: React.PropTypes.bool.isRequired
     },
@@ -28,3 +28,6 @@ FocusOverlay = React.createClass({
         </div>
     }
 });
+
+
+module.exports = FocusOverlay;

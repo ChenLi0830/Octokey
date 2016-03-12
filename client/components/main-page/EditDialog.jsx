@@ -6,6 +6,8 @@
  *
  * Dialog component for user to edit an app's credential, called by "AppsContainer"
  *******************************************************************************/
+var AddNewCredentialDialog = require('./AddNewCredentialDialog.jsx');
+
 const {
     Dialog,
     FlatButton,
@@ -44,7 +46,7 @@ const style = {
 
 const {FormattedMessage} = ReactIntl;
 
-EditDialog = React.createClass({
+var EditDialog = React.createClass({
     propTypes: {
         appName: React.PropTypes.string.isRequired,
         appId: React.PropTypes.string.isRequired,
@@ -158,3 +160,5 @@ EditDialog = React.createClass({
         </FormattedMessage>
     }
 });
+
+module.exports = EditDialog;

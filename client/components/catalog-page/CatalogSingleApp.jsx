@@ -34,7 +34,7 @@ let styles = {
     },
 };
 
-CatalogSingleApp = React.createClass({
+var CatalogSingleApp = React.createClass({
     propTypes: {
         logoURL: React.PropTypes.string.isRequired,
         appName: React.PropTypes.string.isRequired,
@@ -136,3 +136,5 @@ CatalogSingleApp = React.createClass({
         Meteor.call("removePublicApp", this.props.appId);
     }
 });
+
+module.exports = CatalogSingleApp;

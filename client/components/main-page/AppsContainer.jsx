@@ -6,6 +6,14 @@
  *
  * AppsContainer Component contains all the app boxes of the main page, called by "routes"
  *******************************************************************************/
+var AppBox = require('./AppBox.jsx');
+var AddNewApp = require('./AddNewApp.jsx');
+var PluginInstallDialog = require('./PluginInstallDialog.jsx');
+var CredentialDialog = require('./CredentialDialog.jsx');
+var EditDialog = require('./EditDialog.jsx');
+var RegisterDialog = require('./RegisterDialog.jsx');
+var FocusOverlay = require('./FocusOverlay.jsx');
+var FloatingEditButton = require('./FloatingEditButton.jsx');
 
 const {
     Grid,
@@ -22,7 +30,8 @@ let defaultRequest = {
     "message": "ext_msg_connect",
 };
 let registeredUsername = "";
-AppsContainer = React.createClass({
+
+var AppsContainer = React.createClass({
     mixins: [ReactMeteorData],
 
     contextTypes: {
@@ -347,3 +356,4 @@ AppsContainer = React.createClass({
     },
 });
 
+module.exports = AppsContainer;

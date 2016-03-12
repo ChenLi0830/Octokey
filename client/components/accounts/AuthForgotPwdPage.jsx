@@ -41,7 +41,7 @@ const style = {
     }
 };
 
-AuthForgotPwdPage = React.createClass({
+var AuthForgotPwdPage = React.createClass({
     getInitialState() {
         return {
             floatingUserText: "",
@@ -138,3 +138,5 @@ AuthForgotPwdPage = React.createClass({
         });
     },
 });
+
+module.exports = AuthForgotPwdPage;

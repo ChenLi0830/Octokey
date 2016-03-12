@@ -6,7 +6,7 @@
  *
  * Universal Page Not Found component. Called by "routes"
  *******************************************************************************/
-AppNotFound = React.createClass({
+var PageNotFound = React.createClass({
     render() {
         return (
             <div >Page not found</div>
@@ -14,3 +14,5 @@ AppNotFound = React.createClass({
     }
 });
 //TODO: change its style
+
+module.exports = PageNotFound;

@@ -14,7 +14,7 @@ const {
 
 const {FormattedMessage} = ReactIntl;
 
-CaptchaDialog = React.createClass({
+var CaptchaDialog = React.createClass({
     propTypes: {
         requiredInput: React.PropTypes.string.isRequired,
         openDialogRegister: React.PropTypes.bool.isRequired,
@@ -66,3 +66,5 @@ CaptchaDialog = React.createClass({
         console.log("this.refs.captcha.getValue()",this.refs.captcha.getValue());
     },
 });
+
+module.exports = CaptchaDialog;

@@ -40,7 +40,7 @@ const styles = {
     }
 };
 
-AuthSignInEmail = React.createClass({
+var AuthSignInEmail = React.createClass({
     contextTypes: {
         router: React.PropTypes.object.isRequired,
         intl: React.PropTypes.object.isRequired,
@@ -87,9 +87,9 @@ AuthSignInEmail = React.createClass({
                             hintText={messages["password-密码"]}
                             onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
                         />
-                        <Link style={{display:"block", marginTop:"10px"}} to="/reset">
+                        {/*<Link style={{display:"block", marginTop:"10px"}} to="/reset">
                             {messages["forgotpwd-忘记密码"]}
-                        </Link>
+                        </Link>*/}
                     </form>
 
                     <RaisedButton label={messages["signIn-登录"]}
@@ -170,3 +170,5 @@ AuthSignInEmail = React.createClass({
         this.context.router.push('/loginMobile');
     },
 });
+
+module.exports = AuthSignInEmail;

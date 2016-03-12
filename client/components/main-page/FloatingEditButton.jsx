@@ -42,7 +42,7 @@ const styles = {
     }
 }
 
-FloatingEditButton = React.createClass({
+var FloatingEditButton = React.createClass({
 
     propTypes: {
         whenEditButtonClicked: React.PropTypes.func.isRequired,
@@ -172,3 +172,5 @@ FloatingEditButton = React.createClass({
         this.setState({hoveredTooltip: -1});
     }
 });
+
+module.exports = FloatingEditButton;

@@ -10,7 +10,7 @@
 import languages from '../locales';
 const {IntlProvider} = ReactIntl;
 
-IntlWrapper = React.createClass({
+var IntlWrapper = React.createClass({
     mixins: [Reflux.listenTo(LanguageStore, 'languageChange')],
 
     propTypes: {
@@ -62,3 +62,5 @@ IntlWrapper = React.createClass({
         //};
     },
 });
+
+module.exports = IntlWrapper;

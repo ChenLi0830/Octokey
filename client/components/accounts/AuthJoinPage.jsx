@@ -6,6 +6,8 @@
  *
  * Sign-up page component, called by "routes"
  *******************************************************************************/
+var LanguageIcon = require('../header/LanguageIcon.jsx');
+
 const Link = ReactRouter.Link;
 
 const {
@@ -94,7 +96,7 @@ const styles = {
     errorText: {color: "#F44336", fontSize: 13, fontWeight: 100},
 };
 
-AuthJoinPage = React.createClass({
+var AuthJoinPage = React.createClass({
     contextTypes: {
         router: React.PropTypes.object.isRequired,
         intl: React.PropTypes.object.isRequired,
@@ -559,3 +561,5 @@ AuthJoinPage = React.createClass({
         }
     }
 });
+
+module.exports = AuthJoinPage;

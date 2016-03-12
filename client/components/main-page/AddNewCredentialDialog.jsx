@@ -13,7 +13,7 @@ const {
     TextField
     } = MUI;
 
-AddNewCredentialDialog = React.createClass({
+var AddNewCredentialDialog = React.createClass({
     propTypes: {
         appName: React.PropTypes.string.isRequired,
         appId: React.PropTypes.string.isRequired,
@@ -140,3 +140,5 @@ AddNewCredentialDialog = React.createClass({
         }
     },
 });
+
+module.exports = AddNewCredentialDialog;

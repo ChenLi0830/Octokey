@@ -11,7 +11,7 @@ const {
     FlatButton,
     } = MUI;
 
-PluginInstallDialog = React.createClass({
+var PluginInstallDialog = React.createClass({
     propTypes: {
         openDialogPlugin: React.PropTypes.bool.isRequired,
         whenCloseDialog: React.PropTypes.func.isRequired
@@ -56,3 +56,5 @@ PluginInstallDialog = React.createClass({
         this.props.whenCloseDialog();
     },
 });
+
+module.exports = PluginInstallDialog;

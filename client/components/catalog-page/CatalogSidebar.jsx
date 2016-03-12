@@ -6,6 +6,12 @@
  *
  * Catalog Side Bar component - called by "Catalog"
  *******************************************************************************/
+var CreateZenAppButton = require('./CreateZenAppButton.jsx');
+var CreateCategoryButton = require('./CreateCategoryButton.jsx');
+var SearchBox = require('./SearchBox.jsx');
+var CreatePrivateAppButton = require('./CreatePrivateAppButton.jsx');
+var CategoryList = require('./CategoryList.jsx');
+
 const {
     List,
     ListItem,
@@ -20,7 +26,7 @@ const {
     ImageAudiotrack,
     HardwareVideogameAsset} = SvgIcons;
 
-CatalogSideBar = React.createClass({
+var CatalogSideBar = React.createClass({
     propTypes: {
         zenCategories: React.PropTypes.array.isRequired,
         zenApps: React.PropTypes.array.isRequired,
@@ -63,3 +69,5 @@ CatalogSideBar = React.createClass({
     },
 
 });
+
+module.exports = CatalogSideBar;

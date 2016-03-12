@@ -6,6 +6,7 @@
  *
  * Search box component, called by "CatalogSideBar"
  *******************************************************************************/
+var CatalogSingleApp = require('./CatalogSingleApp.jsx');
 const {
     TextField,
     MenuItem,
@@ -16,7 +17,7 @@ const {
     ActionSearch
     } = SvgIcons;
 
-SearchBox = React.createClass({
+var SearchBox = React.createClass({
 
     contextTypes: {
         intl: React.PropTypes.object.isRequired
@@ -108,3 +109,5 @@ SearchBox = React.createClass({
             }.bind(this));
     }
 });
+
+module.exports = SearchBox;

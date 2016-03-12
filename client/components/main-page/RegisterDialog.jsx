@@ -6,6 +6,8 @@
  *
  * Dialog component for app-registration progress bar, called by "AppsContainer"
  *******************************************************************************/
+var CaptchaDialog = require('./CaptchaDialog.jsx');
+
 const {
     Dialog,
     FlatButton,
@@ -16,7 +18,8 @@ const {
 const {FormattedMessage} = ReactIntl;
 
 let username;
-RegisterDialog = React.createClass({
+
+var RegisterDialog = React.createClass({
     propTypes: {
         appName: React.PropTypes.string.isRequired,
         appId: React.PropTypes.string.isRequired,
@@ -153,3 +156,5 @@ RegisterDialog = React.createClass({
      }
      },*/
 });
+
+module.exports = RegisterDialog;

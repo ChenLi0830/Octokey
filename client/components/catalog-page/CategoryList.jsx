@@ -53,7 +53,7 @@ const nameToIcon = {
     "business": <ActionAssignmentInd color={iconColor}/>,
 };
 
-CategoryList = React.createClass({
+var CategoryList = React.createClass({
     propTypes: {
         zenCategories: React.PropTypes.array.isRequired
     },
@@ -98,3 +98,5 @@ CategoryList = React.createClass({
         </List>
     },
 });
+
+module.exports = CategoryList;

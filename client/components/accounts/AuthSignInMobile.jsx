@@ -6,6 +6,8 @@
  *
  * Sign-in page component, called by "routes"
  *******************************************************************************/
+var LanguageIcon = require('../header/LanguageIcon.jsx');
+
 const Link = ReactRouter.Link;
 
 const {
@@ -63,7 +65,7 @@ const styles = {
     },
 };
 
-AuthSignInMobile = React.createClass({
+var AuthSignInMobile = React.createClass({
     contextTypes: {
         router: React.PropTypes.object.isRequired,
         intl: React.PropTypes.object.isRequired,
@@ -310,3 +312,5 @@ AuthSignInMobile = React.createClass({
         this.context.router.push('/loginEmail');
     },
 });
+
+module.exports = AuthSignInMobile;

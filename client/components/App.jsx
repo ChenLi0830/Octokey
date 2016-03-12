@@ -6,10 +6,12 @@
  *
  * App component is the root element to load the app. Called by "router".
  *******************************************************************************/
+var AppLoading = require('./AppLoading.jsx');
+
 var {ThemeManager} = MUI.Styles;
 var {AppCanvas,Paper} = MUI;
 var {Grid,Row,Col} = ReactBootstrap;
-
+var Header = require('./header/Header.jsx');
 
 injectTapEventPlugin();
 
@@ -24,7 +26,7 @@ const styles = {
     }
 }
 
-App = React.createClass({
+var App = React.createClass({
     mixins: [ReactMeteorData],
 
     getMeteorData() {
@@ -79,3 +81,5 @@ App = React.createClass({
         )
     }
 });
+
+module.exports = App;
