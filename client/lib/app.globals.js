@@ -23,6 +23,7 @@ Spacing = require('material-ui/lib/styles/spacing');
 zIndex = require('material-ui/lib/styles/zIndex');
 
 ReactIntl = require("react-intl");
+Radium = require('radium');
 
 /*   Set up intl-polyfill for different apps, see details (Search for issue#150 in React-Intl to see details)  */
 if (global.Intl) {
