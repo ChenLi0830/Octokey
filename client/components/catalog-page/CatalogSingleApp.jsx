@@ -111,7 +111,7 @@ var CatalogSingleApp = React.createClass({
 
                 <Col xs={5} sm={4} md={condensed? 5:4}
                      className="vertical-center">
-                    {appName}
+                    <p>{appName}</p>
                 </Col>
 
                 <Col xs={4} sm={3} md={condensed? 5:3} className="vertical-center">
@@ -121,7 +121,8 @@ var CatalogSingleApp = React.createClass({
                 <Col xs={0} sm={2} md={2} xsHidden
                      style={{display:condensed?"none":"block",color:ZenColor.grey3}}
                      className="vertical-center">
-                    {subsCount + messages.cata_peopleUse}
+                    <p>{subsCount + messages.cata_peopleUse}</p>
+
                 </Col>
             </Row>
         </div>
@@ -137,4 +138,4 @@ var CatalogSingleApp = React.createClass({
     }
 });
 
-module.exports = CatalogSingleApp;
+module.exports = Radium(CatalogSingleApp);

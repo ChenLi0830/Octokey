@@ -27,10 +27,10 @@ const {
     Table,
     TableHeader,
     TableHeaderColumn,
-    TableBody
+    TableBody,
     } = MUI;
 
-const MUITable = MUI.Table;
+import Subheader from 'material-ui/lib/Subheader';
 
 const {
     NavigationExpandMoreIcon
@@ -204,7 +204,8 @@ var CatalogAppsBox = React.createClass({
              backgroundColor:"#ffffff",
              padding:0,
              borderRadius:"5px"}}>
-                <List subheader={messages.cata_listTitle} style={{backgroundColor:"white"}}>
+                <List style={{backgroundColor:"white"}}>
+                    <Subheader>{messages.cata_listTitle}</Subheader>
                     {publicApps}
                 </List>
             </Paper>

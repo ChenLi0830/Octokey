@@ -10,6 +10,10 @@
     //T9n.setLanguage("zh_cn");
 
 Meteor.startup(function () {
+    //Simulating production environment to boost react spped
+    /*process.env.NODE_ENV = JSON.stringify('production');
+    console.log("process.env",process.env);*/
+
     //1. Set up stmp
     process.env.MAIL_URL =
         'smtp://postmaster@sandbox4e97a79afccd430d8897f90ad78054be.mailgun.org:0011d852303b11544220c77d6572bc1d@smtp.mailgun.org:587';

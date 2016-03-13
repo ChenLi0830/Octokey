@@ -12,6 +12,8 @@ const {
     Colors,
     RaisedButton,
     } = MUI;
+import Subheader from 'material-ui/lib/Subheader';
+
 
 const {
     PlacesAllInclusive,
@@ -93,7 +95,8 @@ var CategoryList = React.createClass({
 
         }, this);
         //console.log("Items ",Items);
-        return <List style={{backgroundColor:"white"}} subheader={this.context.intl.messages.cata_category}>
+        return <List style={{backgroundColor:"white"}}>
+            <Subheader>{this.context.intl.messages.cata_category}</Subheader>
             {Items}
         </List>
     },

@@ -15,6 +15,12 @@ var AuthSignInMobile = require('./components/accounts/AuthSignInMobile.jsx');
 var PageNotFound = require('./components/PageNotFound.jsx');
 var IntlWrapper = require('./components/IntlWrapper.jsx');
 
+//Todo use the following line instead of /public/css/antd-index.css when Meteor fix the problem of importing css
+// from npm
+// packages.
+//import 'antd/lib/index.css'; // only need to import once in entry module
+
+
 const {
     Router,
     Route,

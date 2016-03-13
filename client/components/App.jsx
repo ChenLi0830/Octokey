@@ -7,17 +7,20 @@
  * App component is the root element to load the app. Called by "router".
  *******************************************************************************/
 var AppLoading = require('./AppLoading.jsx');
+var Header = require('./header/Header.jsx');
+import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
 
-var {ThemeManager} = MUI.Styles;
+//import 'antd/lib/index.css';
+
 var {AppCanvas,Paper} = MUI;
 var {Grid,Row,Col} = ReactBootstrap;
-var Header = require('./header/Header.jsx');
 
 injectTapEventPlugin();
 
 const styles = {
     wrapper:{
-        padding: "68px 0 0 0",
+        //padding: "0 0 0 0",
+        padding: "64px 0 0 0",
         position: "absolute",
         top: 0,
         bottom: 0,
@@ -49,7 +52,7 @@ var App = React.createClass({
     },
 
     getChildContext() {
-        let muiTheme = ThemeManager.getMuiTheme(ZenRawTheme);
+        let muiTheme = getMuiTheme(ZenRawTheme);
         let zenMUITheme = customizeMUITheme(muiTheme);
         return {
             muiTheme: zenMUITheme

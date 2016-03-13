@@ -131,27 +131,27 @@ var Header = React.createClass({
         return <AppBar
             style={{marginTop:"-68px", boxShadow:"0 1px 16px rgba(0, 0, 0, 0.18)", backgroundColor:ZenColor.white}}
             iconElementLeft={
-                  <IconMenu
-                     value={this.state.language}
-                     onChange={this.handleLanguageChange}
-                     anchorOrigin={{vertical:'bottom', horizontal: 'left'}}
-                     menuStyle={{backgroundColor:ZenColor.white}}
-                     iconButtonElement={
-                        <IconButton>
-                            <LanguageIcon iconName={this.state.language==="zh"&&"cn" ||
-                                                    this.state.language==="en-US"&&"us"}
-                            />
-                        </IconButton>
-                     }
-                     >
-                     <MenuItem leftIcon = {<LanguageIcon style={styles.languageItem} iconName="cn"/>}
-                               primaryText="中文" value="zh" style={{fontSize:13}}
-                     />
-                     <MenuItem leftIcon = {<LanguageIcon style={styles.languageItem} iconName="us"/>}
-                               primaryText="English" value="en-US" style={{fontSize:13}}
-                     />
-                 </IconMenu>
-            }
+                             <IconMenu
+                                 value={this.state.language}
+                                 onChange={this.handleLanguageChange}
+                                 anchorOrigin={{vertical:'bottom', horizontal: 'left'}}
+                                 menuStyle={{backgroundColor:ZenColor.white}}
+                                 iconButtonElement={
+                                     <IconButton>
+                                     <LanguageIcon iconName={this.state.language==="zh"&&"cn" ||
+                                     this.state.language==="en-US"&&"us"}
+                                     />
+                                     </IconButton>
+                                 }
+                             >
+                             <MenuItem leftIcon = {<LanguageIcon style={styles.languageItem} iconName="cn"/>}
+                             primaryText="中文" value="zh" style={{fontSize:13}}
+                             />
+                             <MenuItem leftIcon = {<LanguageIcon style={styles.languageItem} iconName="us"/>}
+                             primaryText="English" value="en-US" style={{fontSize:13}}
+                             />
+                             </IconMenu>
+                         }
             showMenuIconButton={true}>
 
             <div className="container">
@@ -162,17 +162,33 @@ var Header = React.createClass({
                       inkBarStyle={styles.inkBar}>
 
                     <Tab style={styles.tab} value="/loginMobile"
+                         disableTouchRipple
                          label={<AccountTab currentUser={this.data.currentUser}/>}/>
 
-                    <Tab style={styles.tab} value="/list" label={logo}/>
+                    <Tab style={styles.tab} disableTouchRipple value="/list" label={logo}/>
 
-                    <Tab style={styles.tab} value="/catalog" label={addNewImage}/>
+                    <Tab style={styles.tab} value="/catalog" disableTouchRipple label={addNewImage}/>
                 </Tabs>
 
             </div>
         </AppBar>
+    },
 
-        //header + inkbar: 64+4=68px;
+    handleClick(e) {
+        console.log('click ', e);
+        this.setState({
+            current: e.key
+        });
+        console.log("this.state.current", this.state.current);
+        switch (e.key) {
+            case "mail/.$mail":
+                this.handleTabChange('/list');
+                break;
+            case "app/.$app":
+                this.handleTabChange('/catalog');
+                break;
+
+        }
     },
 
     handleLanguageChange(event, value){
