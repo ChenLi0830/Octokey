@@ -51,7 +51,7 @@ var CatalogSideBar = React.createClass({
         return <div>
             <Paper zDepth={1}
                    style={{
-             backgroundColor:"#ffffff",
+             backgroundColor:ZenColor.white,
 
              padding:0,
              borderRadius:"5px"}}>

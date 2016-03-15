@@ -201,10 +201,10 @@ var CatalogAppsBox = React.createClass({
         return <div className="layout-margin">
             <Paper zDepth={1}
                    style={{
-             backgroundColor:"#ffffff",
+             backgroundColor:ZenColor.white,
              padding:0,
              borderRadius:"5px"}}>
-                <List style={{backgroundColor:"white"}}>
+                <List style={{backgroundColor:ZenColor.white}}>
                     <Subheader>{messages.cata_listTitle}</Subheader>
                     {publicApps}
                 </List>

@@ -98,7 +98,7 @@ var CatalogSingleApp = React.createClass({
 
         return <div>
             <Row style={_.extend({}, styles.row,
-                                    {backgroundColor: this.state.hovered? "#f7f7f7" : "#ffffff"}
+                                    {backgroundColor: this.state.hovered? ZenColor.grey1_5 : ZenColor.white}
                             )}
                  onMouseOver={this.handleMouseOver}
                  onMouseOut={this.handleMouseOut}>

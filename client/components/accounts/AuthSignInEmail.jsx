@@ -33,6 +33,12 @@ const styles = {
         width: "70%",
         maxWidth: 200,
     },
+    changeLoginButton: {
+        marginTop: 10,
+        marginBottom: 10,
+        width: "70%",
+        maxWidth: 200,
+    },
     logo: {
         display: "block",
         margin: "auto",
@@ -57,7 +63,7 @@ var AuthSignInEmail = React.createClass({
     render() {
         const messages = this.context.intl.messages.signIn;
         const logo = (
-            <Link to="/"><img style={styles.logo} src="/img/logo.svg"/></Link>
+            <Link to="/"><img style={styles.logo} src="/img/logo.png"/></Link>
         );
 
         return (<Col sm={6} smOffset={3} md={4} mdOffset={4} xs={12}>
@@ -101,12 +107,11 @@ var AuthSignInEmail = React.createClass({
                         <Link to="/join">{messages["signUp_low-注册"]}</Link>
                     </p>
 
-                    <br/>
-                    <p>or</p>
+                    <p>{messages["or-或者"]}</p>
 
                     <RaisedButton label={messages["useMobile-手机登陆"]}
                                   onClick={this.handleSwitchToMobile}
-                                  style={styles.registerButton}
+                                  style={styles.changeLoginButton}
                                   primary={true}>
                     </RaisedButton>
                 </Paper>

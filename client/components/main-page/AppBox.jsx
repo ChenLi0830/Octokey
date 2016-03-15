@@ -92,7 +92,7 @@ var AppBox = React.createClass({
         switch (userEditStatus) {
             case "default" :
             case "register" :
-                baseStyle.backgroundColor = this.state.hovered ? "#FAFAFA" : "rgba(255, 255, 255, 0.0)";
+                baseStyle.backgroundColor = this.state.hovered ? ZenColor.grey1 : "rgba(255, 255, 255, 0.0)";
                 return baseStyle;
                 break;
             case "remove" :

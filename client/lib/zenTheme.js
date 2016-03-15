@@ -12,7 +12,9 @@ ZenRawTheme = {
     fontFamily: 'Roboto, sans-serif',
     palette: {
         primary1Color: "#12C5A2",
-        primary2Color: Colors.pinkA700,
+        //primary1Color: "#03A9F4",
+        //primary2Color: Colors.pinkA700,
+        primary2Color: "#FF6F00",
         primary3Color: Colors.blueGrey400,
         accent1Color: "#EB008B",
         accent2Color: Colors.grey100,
@@ -33,6 +35,7 @@ ZenColor = {
     white: "#FFFFFF",
     blue: "#03A9F4",
     grey1: "#fafafa",
+    grey1_5:"#f7f7f7",
     grey2: "#f3f3f3",
     grey3: Colors.grey500,
     blueGrey: "#607D8B",

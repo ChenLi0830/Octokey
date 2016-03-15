@@ -151,7 +151,7 @@ var AppsContainer = React.createClass({
                    style={{
                    zIndex:"1400",
                    position:"relative",
-                   backgroundColor:"#ffffff",
+                   backgroundColor:ZenColor.white,
                    boxShadow:"0 1px 6px rgba(0, 0, 0, 0.12)",
                    padding:0,
                    borderRadius:"5px"}}>

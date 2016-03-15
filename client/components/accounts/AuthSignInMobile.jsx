@@ -63,6 +63,12 @@ const styles = {
         width: "70%",
         maxWidth: 200,
     },
+    changeLoginButton: {
+        marginTop: 10,
+        marginBottom: 10,
+        width: "70%",
+        maxWidth: 200,
+    },
 };
 
 var AuthSignInMobile = React.createClass({
@@ -89,7 +95,7 @@ var AuthSignInMobile = React.createClass({
     render() {
         messages = this.context.intl.messages.signIn;
         const logo = (
-            <Link to="/"><img style={styles.logo} src="/img/logo.svg"/></Link>
+            <Link to="/"><img style={styles.logo} src="/img/logo.png"/></Link>
         );
 
         return (<Col sm={6} smOffset={3} md={4} mdOffset={4} xs={12}>
@@ -97,6 +103,7 @@ var AuthSignInMobile = React.createClass({
                     <form >
 
                         {logo}
+
 
                         <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
                         <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
@@ -191,12 +198,11 @@ var AuthSignInMobile = React.createClass({
                         <Link to="/join">{messages["signUp_low-注册"]}</Link>
                     </p>
 
-                    <br/>
-                    <p>or</p>
+                    <p>{messages["or-或者"]}</p>
 
                     <RaisedButton label={messages["useEmail-邮箱登陆"]}
                                   onClick={this.handleSwitchToMail}
-                                  style={styles.registerButton}
+                                  style={styles.changeLoginButton}
                                   primary={true}>
                     </RaisedButton>
                 </Paper>
