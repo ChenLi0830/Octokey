@@ -125,7 +125,7 @@ var AuthJoinPage = React.createClass({
             floatingCaptchaText: "",
             captchaBtn: "requestCaptcha-获取验证码",
             area: "cn",
-            step: 1,
+            step: 0,
             finalCaptcha: "",
             finalPwd: "",
             finalCell: "",
@@ -290,7 +290,7 @@ var AuthJoinPage = React.createClass({
                     <input style={{display: "none"}} type="password"
                            name="fakepasswordremembered"/>
 
-                    <Col xs={2} xsOffset={2}>
+                    <Col xs={2} xsOffset={1}>
                         <DropDownMenu value={this.state.area}
                                       style={{zIndex: 1, fontFamily: "inherit"}}
                                       underlineStyle={{border: "none"}}
@@ -382,21 +382,18 @@ var AuthJoinPage = React.createClass({
                     </h4>
                 </div>
                 <br/>
-                <Col sm={10} smOffset={1} style={{float: "none"}}>
-                    <form>
+                    <Form horizontal>
                         <input style={{display: "none"}} type="text"
                                name="fakeusernameremembered"/>
                         <input style={{display: "none"}} type="password"
                                name="fakepasswordremembered"/>
-                    </form>
-
-                    <Form horizontal>
+                        
                         <FormItem
                             label={messages["masterPWD-核心密码"]}
                             hasFeedback={true}
-                            labelCol={{ span: 10 }}
-                            wrapperCol={{ span: 14 }}
-                            validateStatus={this.state.errorText!==""?"error": this.state.pwdVerified&&"success"}
+                            labelCol={{ span: 6 }}
+                            wrapperCol={{ span: 18 }}
+                            validateStatus={this.state.errorText!==""?"error": this.state.pwdVerified ? "success" : ""}
                             help={this.state.errorText}>
                             <Popover placement="right" title={messages["pwdRequirement-密码要求"]}
                                      overlay={<div>{messages["pwdLength-密码长度"]}<br />{messages["pwdFormat-密码格式"]}</div>}
@@ -416,9 +413,9 @@ var AuthJoinPage = React.createClass({
                         <FormItem
                             label={messages["inputPWDAgain-再次输入"]}
                             hasFeedback={true}
-                            labelCol={{ span: 10 }}
-                            wrapperCol={{ span: 14 }}
-                            validateStatus={this.state.errorText2!==""?"error": this.state.twoPwdSame&&"success"}
+                            labelCol={{ span: 6 }}
+                            wrapperCol={{ span: 18 }}
+                            validateStatus={this.state.errorText2!==""? "error": this.state.twoPwdSame ? "success" : ""}
                             help={this.state.errorText2}>
                             <Popover placement="right" title={messages["pwdRequirement-密码要求"]}
                                      overlay={messages["inputPWDAgain-再次输入"]}
@@ -435,88 +432,6 @@ var AuthJoinPage = React.createClass({
 
                     </Form>
 
-
-                    {/*<Input type="password"
-                     ref="password"
-                     bsStyle={this.state.pwdVerified ? "success" : null}
-                     label={messages["masterPWD-核心密码"]}
-                     className="pwdInputStyle"
-                     hasFeedback={true}
-                     onFocus={e => this.setState({target: e.target, showPopOver: true})}
-                     onBlur={() => {
-                     if (this.state.pwdVerified) {
-                     this.setState({showPopOver: false, errorText: "" /!*message*!/})
-                     } else {
-                     this.setState({showPopOver: false, errorText: messages["pwdFormatError-密码格式有误"]})
-                     }
-                     }}
-                     onChange={this.handleInputPassword}
-                     onKeyPress={(e)=> {
-                     e.key === 'Enter' && this.handleRegister()
-                     }}
-                     />
-
-                     {//Error text
-                     this.state.errorText ?
-                     <p style={styles.errorText}>
-                     {this.state.errorText}
-                     </p> : null
-                     }
-
-                     <Input type="password"
-                     ref="password2"
-                     bsStyle={this.state.twoPwdSame ? "success" : null}
-                     label={messages["inputPWDAgain-再次输入"]}
-                     hasFeedback={true}
-                     onFocus={e => this.setState({target: e.target, showPopOver2: true})}
-                     onBlur={() => {
-                     if (this.state.twoPwdSame) {
-                     this.setState({showPopOver2: false, errorText2: "" /!*message*!/})
-                     } else {
-                     this.setState({showPopOver2: false, errorText2: messages["pwdNotMatch-两次密码不一致"]})
-                     }
-                     }}
-                     onChange={this.handleInputPassword2}
-                     onKeyPress={(e)=> {
-                     e.key === 'Enter' && this.handleRegister()
-                     }}
-                     />
-
-                     {//Error text
-                     this.state.errorText2 ?
-                     <p style={styles.errorText}>
-                     {this.state.errorText2}
-                     </p> : null
-                     }*/}
-
-                    <Overlay
-                        show={this.state.showPopOver}
-                        target={()=> ReactDOM.findDOMNode(this.state.target)}
-                        placement="right"
-                        container={this}
-                        containerPadding={20}
-                    >
-                        <Popover title={messages["pwdRequirement-密码要求"]} id="password check"
-                                 style={{marginLeft: 25}}>
-                            {messages["pwdLength-密码长度"]}
-                            <br />
-                            {messages["pwdFormat-密码格式"]}
-                        </Popover>
-                    </Overlay>
-
-                    <Overlay
-                        show={this.state.showPopOver2}
-                        target={()=> ReactDOM.findDOMNode(this.state.target)}
-                        placement="right"
-                        container={this}
-                        containerPadding={20}
-                    >
-                        <Popover id="password check"
-                                 style={{marginLeft: 25}}>
-                            {messages["inputPWDAgain-再次输入"]}
-                        </Popover>
-                    </Overlay>
-
                     <RaisedButton label={messages["ok-确认"]}
                                   onClick={this.handleRegister}
                                   style={styles.registerButton}
@@ -526,8 +441,6 @@ var AuthJoinPage = React.createClass({
 
                     {/*Todo add captcha*/}
 
-                </Col>
-
                 <br/>
 
             </Col>
@@ -535,13 +448,13 @@ var AuthJoinPage = React.createClass({
         contentOfStep[2] = (
             <Col sm={8} smOffset={2} md={6} mdOffset={3} xs={12} style={styles.contentCol}>
                 <div>
-                    <h2 style={styles.primaryText}>
+                    <h1 style={styles.primaryText}>
                         {messages["signUpSuccess-注册成功"]}
-                    </h2>
+                    </h1>
                     <br/>
-                    <h5>
+                    <h3>
                         {messages["plzWait-正在登录请稍候"]}
-                    </h5>
+                    </h3>
                     <CircularProgress size={1}/>
                 </div>
             </Col>
