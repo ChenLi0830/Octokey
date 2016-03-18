@@ -80,6 +80,7 @@ var App = React.createClass({
                         </Col>
                     </Row>
                 </Grid>
+                <LanguageSelection/>
             </div>
         )
     }

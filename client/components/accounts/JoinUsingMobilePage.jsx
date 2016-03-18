@@ -497,7 +497,7 @@ var JoinUsingMobilePage = React.createClass({
         const pwd = this.refs.password.refs.input.value;
         //console.log("pwd",pwd);
         //Check password
-        if (api.checkPassword(pwd)) {
+        if (OctoAPI.checkPassword(pwd)) {
             this.setState({pwdVerified: true, errorText: ""});
             return true;
         } else {

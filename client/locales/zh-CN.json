@@ -161,5 +161,10 @@
         "registerUsingEmail-注册":"用邮箱注册",
         "orJoinUsingMobile-或者用手机":"或者",
         "registerUsingMobile-注册":"用手机注册"
+    },
+
+    "header":{
+        "mySites-我的网站":"我的网站",
+        "allSites-所有网站":"所有网站"
     }
 }

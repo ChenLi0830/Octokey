@@ -140,7 +140,7 @@
         "inputPWDAgain-再次输入":"Master password again ",
         "pwdRequirement-密码要求":"Password requirement",
         "pwdLength-密码长度":"At least six characters",
-        "pwdFormat-密码格式":"Contain a combination of at least two of the following characters: uppercase letters, lowercase letters, numbers",
+        "pwdFormat-密码格式":"Contain a combination of uppercase letters, lowercase letters and numbers",
         "pwdConfirmPopover-pop再次输入":"Master password again",
         "stepUsername-设置用户名":"Create User",
         "stepAccountInfo-填写帐号信息":"Account Info",
@@ -158,6 +158,13 @@
         "haveAccount-已有帐号": "already have an account? ",
         "signIn_low-登录": "sign in",
         "orJoinUsingEmail-或者用邮箱":"or ",
-        "registerUsingEmail-注册":"sign up using email"
+        "registerUsingEmail-注册":"sign up using email",
+        "orJoinUsingMobile-或者用手机":"or",
+        "registerUsingMobile-注册":"sign up using mobile"
+    },
+
+    "header":{
+        "mySites-我的网站":"My Sites",
+        "allSites-所有网站":"All Sites"
     }
 }

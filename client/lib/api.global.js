@@ -82,7 +82,7 @@ isValidateCell = function (area, number) {
     }
 };
 
-api = {
+OctoAPI = {
     checkPassword: function (pass) {
         //let score = 0;
         if (!pass)

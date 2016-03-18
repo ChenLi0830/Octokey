@@ -76,7 +76,8 @@ var Header = React.createClass({
     },
 
     contextTypes: {
-        router: React.PropTypes.object.isRequired
+        router: React.PropTypes.object.isRequired,
+        intl: React.PropTypes.object.isRequired,
     },
 
     mixins: [ReactMeteorData],
@@ -84,7 +85,6 @@ var Header = React.createClass({
     getInitialState(){
         return {
             routeValue: "/loginMobile",
-            language: "zh",
         }
     },
 
@@ -126,18 +126,12 @@ var Header = React.createClass({
     },
 
     render(){
-        const addNewImage = (
-            <img style={styles.headerSVG} src="/img/addNew.svg"/>
-        );
-
-        const logo = (
-            <img style={styles.headerSVG} src="/img/logo.svg"/>
-        );
+        messages = this.context.intl.messages.header;
 
         return <AppBar
             style={{marginTop:"-68px", boxShadow:"0 1px 16px rgba(0, 0, 0, 0.18)", backgroundColor:ZenRawTheme.palette.primary4Color}}
-            iconElementLeft={
-                             <IconMenu
+            iconElementLeft={null
+                             /*<IconMenu
                                  value={this.state.language}
                                  onChange={this.handleLanguageChange}
                                  anchorOrigin={{vertical:'bottom', horizontal: 'left'}}
@@ -156,7 +150,7 @@ var Header = React.createClass({
                              <MenuItem leftIcon = {<LanguageIcon style={styles.languageItem} iconName="us"/>}
                              primaryText="English" value="en-US" style={{fontSize:13}}
                              />
-                             </IconMenu>
+                             </IconMenu>*/
                          }
             showMenuIconButton={true}>
 
@@ -177,31 +171,15 @@ var Header = React.createClass({
                         />
                         <Tab
                             icon={<ActionViewModule className="horizontal-center"style={{fill:ZenRawTheme.palette.primary1Color}}/>}
-                            label={"我的网站"/*message*/}
+                            label={messages["mySites-我的网站"]/*message*/}
                             value="/list"
                         />
                         <Tab
                             icon={<PlacesAllInclusive className="horizontal-center" style={{fill:ZenRawTheme.palette.primary1Color}}/>}
-                            label={"所有网站"/*message*/}
+                            label={messages["allSites-所有网站"]/*message*/}
                             value="/catalog"
                         />
                     </Tabs>}
-                    {
-                        /*<Tabs onChange={this.handleTabChange}
-                         value={this.state.routeValue}
-                         style={{maxWidth:"800px",marginLeft:"auto", marginRight:"auto"}}
-                         tabItemContainerStyle={{backgroundColor:ZenColor.white}}
-                         inkBarStyle={styles.inkBar}>
-
-                         <Tab style={styles.tab} value="/loginMobile"
-                         disableTouchRipple
-                         label={<AccountTab currentUser={this.data.currentUser}/>}/>
-
-                         <Tab style={styles.tab} disableTouchRipple value="/list" label={logo}/>
-
-                         <Tab style={styles.tab} value="/catalog" disableTouchRipple label={addNewImage}/>
-                         </Tabs>*/
-                    }
                 </div>
             </Col>
         </AppBar>
@@ -222,12 +200,6 @@ var Header = React.createClass({
                 break;
 
         }
-    },
-
-    handleLanguageChange(event, value){
-        //console.log("language value", value);
-        Actions.selectNewLanguage(value);
-        this.setState({language: value});
     },
 });
 
