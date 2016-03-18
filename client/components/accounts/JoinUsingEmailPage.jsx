@@ -10,6 +10,7 @@ var LanguageIcon = require('../header/LanguageIcon.jsx');
 
 const Link = ReactRouter.Link;
 
+//Todo: separate 3 steps into 3 components
 
 const {
     Paper,
@@ -113,7 +114,7 @@ const styles = {
     steps: {textAlign: "left"}
 };
 
-var AuthJoinPage = React.createClass({
+var JoinUsingEmailPage = React.createClass({
     contextTypes: {
         router: React.PropTypes.object.isRequired,
         intl: React.PropTypes.object.isRequired,
@@ -283,6 +284,9 @@ var AuthJoinPage = React.createClass({
                     <h4 style={styles.secondaryText}>
                         {messages["haveAccount-已有帐号"]}<Link
                         to="/loginMobile">{messages["signIn_low-登录"]}</Link>
+
+                        {", " + messages["orJoinUsingMobile-或者用手机"]}<Link
+                        to="/join">{messages["registerUsingMobile-注册"]}</Link>
                     </h4>
                 </div>
                 <form>
@@ -294,9 +298,7 @@ var AuthJoinPage = React.createClass({
                         <DropDownMenu value={this.state.area}
                                       style={{zIndex: 1, fontFamily: "inherit"}}
                                       underlineStyle={{border: "none"}}
-                                      onChange={(e, index, value)=> {
-            this.setState({area: value})
-        }}>
+                                      onChange={(e, index, value)=> {this.setState({area: value})}}>
                             <MenuItem
                                 leftIcon={<LanguageIcon style={styles.languageItem} iconName="cn"/>}
                                 primaryText="中国  (+86)" label="+86" value="cn"
@@ -322,9 +324,7 @@ var AuthJoinPage = React.createClass({
                             floatingLabelStyle={{fontWeight: "300"}}
                             errorText={this.state.floatingCellText}
                             inputStyle={{textAlign: "center"}}
-                            onKeyPress={(e)=> {
-            e.key === 'Enter' && this.handleRequestCode()
-        }}
+                            onKeyPress={(e)=> {e.key === 'Enter' && this.handleRequestCode()}}
                         />
                     </Col>
 
@@ -382,64 +382,64 @@ var AuthJoinPage = React.createClass({
                     </h4>
                 </div>
                 <br/>
-                    <Form horizontal>
-                        <input style={{display: "none"}} type="text"
-                               name="fakeusernameremembered"/>
-                        <input style={{display: "none"}} type="password"
-                               name="fakepasswordremembered"/>
-                        
-                        <FormItem
-                            label={messages["masterPWD-核心密码"]}
-                            hasFeedback={true}
-                            labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 18 }}
-                            validateStatus={this.state.errorText!==""?"error": this.state.pwdVerified ? "success" : ""}
-                            help={this.state.errorText}>
-                            <Popover placement="right" title={messages["pwdRequirement-密码要求"]}
-                                     overlay={<div>{messages["pwdLength-密码长度"]}<br />{messages["pwdFormat-密码格式"]}</div>}
-                                     trigger="focus"
-                            >
-                                <Input type="password"
-                                       ref="password"
-                                       autoComplete="off"
-                                       onContextMenu={false} onPaste={false} onCopy={false} onCut={false}
-                                       onBlur={this.pwdOnBlur1}
-                                       onChange={this.handleInputPassword}
-                                />
-                            </Popover>
-                        </FormItem>
+                <Form horizontal>
+                    <input style={{display: "none"}} type="text"
+                           name="fakeusernameremembered"/>
+                    <input style={{display: "none"}} type="password"
+                           name="fakepasswordremembered"/>
+
+                    <FormItem
+                        label={messages["masterPWD-核心密码"]}
+                        hasFeedback={true}
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 18 }}
+                        validateStatus={this.state.errorText!==""?"error": this.state.pwdVerified ? "success" : ""}
+                        help={this.state.errorText}>
+                        <Popover placement="right" title={messages["pwdRequirement-密码要求"]}
+                                 overlay={<div>{messages["pwdLength-密码长度"]}<br />{messages["pwdFormat-密码格式"]}</div>}
+                                 trigger="focus"
+                        >
+                            <Input type="password"
+                                   ref="password"
+                                   autoComplete="off"
+                                   onContextMenu={false} onPaste={false} onCopy={false} onCut={false}
+                                   onBlur={this.pwdOnBlur1}
+                                   onChange={this.handleInputPassword}
+                            />
+                        </Popover>
+                    </FormItem>
 
 
-                        <FormItem
-                            label={messages["inputPWDAgain-再次输入"]}
-                            hasFeedback={true}
-                            labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 18 }}
-                            validateStatus={this.state.errorText2!==""? "error": this.state.twoPwdSame ? "success" : ""}
-                            help={this.state.errorText2}>
-                            <Popover placement="right" title={messages["pwdRequirement-密码要求"]}
-                                     overlay={messages["inputPWDAgain-再次输入"]}
-                                     trigger="focus">
-                                <Input type="password"
-                                       ref="password2"
-                                       autoComplete="off"
-                                       onContextMenu={false} onPaste={false} onCopy={false} onCut={false}
-                                       onBlur={this.pwdOnBlur2}
-                                       onChange={this.handleInputPassword2}
-                                />
-                            </Popover>
-                        </FormItem>
+                    <FormItem
+                        label={messages["inputPWDAgain-再次输入"]}
+                        hasFeedback={true}
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 18 }}
+                        validateStatus={this.state.errorText2!==""? "error": this.state.twoPwdSame ? "success" : ""}
+                        help={this.state.errorText2}>
+                        <Popover placement="right" title={messages["pwdRequirement-密码要求"]}
+                                 overlay={messages["inputPWDAgain-再次输入"]}
+                                 trigger="focus">
+                            <Input type="password"
+                                   ref="password2"
+                                   autoComplete="off"
+                                   onContextMenu={false} onPaste={false} onCopy={false} onCut={false}
+                                   onBlur={this.pwdOnBlur2}
+                                   onChange={this.handleInputPassword2}
+                            />
+                        </Popover>
+                    </FormItem>
 
-                    </Form>
+                </Form>
 
-                    <RaisedButton label={messages["ok-确认"]}
-                                  onClick={this.handleRegister}
-                                  style={styles.registerButton}
-                                  secondary={true}
-                                  disabled={this.state.registerBtnDisable}
-                    />
+                <RaisedButton label={messages["ok-确认"]}
+                              onClick={this.handleRegister}
+                              style={styles.registerButton}
+                              secondary={true}
+                              disabled={this.state.registerBtnDisable}
+                />
 
-                    {/*Todo add captcha*/}
+                {/*Todo add captcha*/}
 
                 <br/>
 
@@ -569,4 +569,4 @@ var AuthJoinPage = React.createClass({
     }
 });
 
-module.exports = AuthJoinPage;
+module.exports = JoinUsingEmailPage;
