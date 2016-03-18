@@ -10,11 +10,7 @@ var CatalogSideBar = require('./CatalogSidebar.jsx');
 var CatalogAppsBox = require('./CatalogAppsBox.jsx');
 var AppLoading = require('../AppLoading.jsx');
 
-const {
-    Grid,
-    Row,
-    Col
-    } = ReactBootstrap;
+import { Row, Col } from 'antd';
 
 var Catalog = React.createClass({
     mixins: [
@@ -51,8 +47,8 @@ var Catalog = React.createClass({
         const AppOfUser = UserApps.findOne({userId: Meteor.userId()}, {reactive: true});
 
         let subscribeList = [];
-        if (subsReady){
-            allPublicApps.map(function(publicApp){
+        if (subsReady) {
+            allPublicApps.map(function (publicApp) {
                 let subscribed = _.findIndex(AppOfUser.publicApps, function (subscribedApp) {
                         return subscribedApp.appId === publicApp._id
                     }) > -1;
@@ -74,20 +70,23 @@ var Catalog = React.createClass({
         //console.log("this.data.subscribedPublicApps",this.data.subscribedPublicApps);
 
         //console.log("state.chosenCategory: ", this.state.chosenCategory);
-        let catalogPage = (<Grid>
-            <Row>
-                <Col sm={3}>
-                    <CatalogSideBar zenCategories={this.data.zenCategories}
-                                    zenApps = {this.data.zenApps}
-                                    subscribeList={this.data.subscribeList}
-                    />
-                </Col>
-                <Col sm={9}>
-                    <CatalogAppsBox zenApps={this.data.zenApps} zenCategories={this.data.zenCategories}
-                                    subscribeList={this.data.subscribeList}/>
-                </Col>
-            </Row>
-        </Grid>);
+        let catalogPage = (
+            <div>
+                <Row>
+                    <Col span="6">
+                        <CatalogSideBar zenCategories={this.data.zenCategories}
+                                        zenApps={this.data.zenApps}
+                                        subscribeList={this.data.subscribeList}
+                        />
+                    </Col>
+                    <Col span="18">
+                        <CatalogAppsBox zenApps={this.data.zenApps} zenCategories={this.data.zenCategories}
+                                        subscribeList={this.data.subscribeList}
+                        />
+                    </Col>
+                </Row>
+            </div>
+        );
 
         return <div>
             {this.data.subsReady ? catalogPage /*<AppLoading/>*/ : <AppLoading/>}

@@ -42,12 +42,12 @@ removeCredential = function (appId, username) {
     };
 
 isAdmin = function (user) {//TODO use more scalable solution to configure this, i.e.: role system
-    if (!user || !user.emails || !user.emails[0] || !user.emails[0].address){
+    if (!user || !user.emails || !user.emails[0] || !user.emails[0].address) {
         return false;
     }
 
     const admins = ["lulugeo.li@gmail.com", "yekiki@gmail.com"];
-    return user && _.indexOf(admins, user.emails[0].address)>-1
+    return user && _.indexOf(admins, user.emails[0].address) > -1
 };
 
 encrypt = function (inputData, hexKey, hexIv) {
@@ -65,13 +65,13 @@ handleError = function (error) {
     }
 };
 
-validateEmail = function(email) {//检查邮箱格式
+validateEmail = function (email) {//检查邮箱格式
     var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 };
 
-isValidateCell = function(area, number){
-    switch (area){
+isValidateCell = function (area, number) {
+    switch (area) {
         case "cn":
             return (/^\d{11}$/.test(number));
             break;
@@ -82,32 +82,33 @@ isValidateCell = function(area, number){
     }
 };
 
+api = {
+    checkPassword: function (pass) {
+        //let score = 0;
+        if (!pass)
+            return false;
 
-checkPassword = function(pass) {
-    //let score = 0;
-    if (!pass)
-        return false;
+        // award every unique letter until 5 repetitions
+        /*let letters = new Object();
+         for (let i=0; i<pass.length; i++) {
+         letters[pass[i]] = (letters[pass[i]] || 0) + 1;
+         score += 5.0 / letters[pass[i]];
+         }*/
 
-    // award every unique letter until 5 repetitions
-    /*let letters = new Object();
-    for (let i=0; i<pass.length; i++) {
-        letters[pass[i]] = (letters[pass[i]] || 0) + 1;
-        score += 5.0 / letters[pass[i]];
-    }*/
+        // bonus points for mixing it up
+        let variations = {
+            digits: /\d/.test(pass),
+            lower: /[a-z]/.test(pass),
+            upper: /[A-Z]/.test(pass),
+            //nonWords: /\W/.test(pass),
+        };
 
-    // bonus points for mixing it up
-    let variations = {
-        digits: /\d/.test(pass),
-        lower: /[a-z]/.test(pass),
-        upper: /[A-Z]/.test(pass),
-        //nonWords: /\W/.test(pass),
-    };
+        let variationCount = 0;
+        for (let check in variations) {
+            variationCount += (variations[check] == true) ? 1 : 0;
+        }
+        //score += (variationCount - 1) * 10;
 
-    let variationCount = 0;
-    for (let check in variations) {
-        variationCount += (variations[check] == true) ? 1 : 0;
+        return variationCount >= 2 && pass.length > 6;
     }
-    //score += (variationCount - 1) * 10;
-
-    return variationCount>=2 && pass.length>6;
 }

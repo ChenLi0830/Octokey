@@ -136,11 +136,12 @@
         "setMasterPWD-设置核心密码":"Set Master Password",
         "pwdFormatError-密码格式有误":"Please check your master password",
         "pwdNotMatch-两次密码不一致":"Passwords don't match, please check",
-        "masterPWD-核心密码":"Master Password",
-        "inputPWDAgain-再次输入":"Master password again",
+        "masterPWD-核心密码":"Master Password ",
+        "inputPWDAgain-再次输入":"Master password again ",
         "pwdRequirement-密码要求":"Password requirement",
         "pwdLength-密码长度":"At least six characters",
         "pwdFormat-密码格式":"Contain a combination of at least two of the following characters: uppercase letters, lowercase letters, numbers",
+        "pwdConfirmPopover-pop再次输入":"Master password again",
         "stepUsername-设置用户名":"Create User",
         "stepAccountInfo-填写帐号信息":"Account Info",
         "stepSuccessful-注册成功":"Success",
@@ -153,6 +154,8 @@
         "unknownError-两次输入的密码有误":"Please check your passwords",
         "msg-唯一要记的密码":"The only password you need to remember",
         "msg-核心密码无法取回":"Please make sure you remember the master password",
-        "requestCaptcha-获取验证码":"Get OTP"
+        "requestCaptcha-获取验证码":"Get OTP",
+        "haveAccount-已有帐号": "or ",
+        "signIn_low-登录": "sign in"
     }
 }

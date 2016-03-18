@@ -140,7 +140,7 @@ var AuthSignInMobile = React.createClass({
                                 inputStyle={{textAlign:"center"}}
                                 hintText={messages["mobile-手机号"]}
                                 hintStyle={{textAlign:"center", width:"100%"}}
-                                onKeyPress={(e)=>{e.key === 'Enter' && this.handleRequestCode()}}
+                                onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
                             />
                         </Col>
 
@@ -282,11 +282,11 @@ var AuthSignInMobile = React.createClass({
         return false;
     },
 
-    handleRequestCode(){
-        /* Error check */
+/*    handleRequestCode(){
+        /!* Error check *!/
         const noInputError = this.handleInputErrorCheckUser();
 
-        /* Save data & Handle login */
+        /!* Save data & Handle login *!/
         let userPhone = this.refs.userPhone.getValue();
         let areaCode = this.state.area === "cn" ? "+86" : "+1";
         var cell = areaCode + userPhone;
@@ -301,7 +301,7 @@ var AuthSignInMobile = React.createClass({
                 this.countdown(60);
             }.bind(this));
         }
-    },
+    },*/
 
     countdown(remaining) {
         if (remaining === 0) {

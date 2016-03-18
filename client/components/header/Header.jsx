@@ -11,7 +11,8 @@ var AccountTab = require('../accounts/AccountTab.jsx');
 
 const {
     Navbar,
-    Nav
+    Nav,
+    Col,
     } = ReactBootstrap;
 
 const {AppBar,
@@ -21,13 +22,18 @@ const {AppBar,
     IconButton,
     DropDownMenu,
     MenuItem,
-    SvgIcon
+    SvgIcon,
+    FontIcon,
     } = MUI;
 
 const {
     ToggleStar,
-    ActionLanguage
+    ActionLanguage,
+    ActionAccountCircle,
+    ActionViewModule,
+    PlacesAllInclusive,
     } = SvgIcons;
+
 
 const {Link} = ReactRouter;
 
@@ -52,15 +58,15 @@ const styles = {
         margin: "10px",
     },
     inkBar: {
-        height: "4px",
-        top: "8px",
-        width: "20%",
+        //height: "4px",
+        //top: "8px",
+        width: "10%",
         marginLeft: "6.7%",
-        backgroundColor: ZenColor.cyan,
-
-        ':hover': {
-            backgroundColor: 'red'
-        },
+        backgroundColor: ZenColor.blue,
+        transform:"translateX(50%)",
+        //':hover': {
+        //    backgroundColor: 'red'
+        //},
     },
 };
 
@@ -129,7 +135,7 @@ var Header = React.createClass({
         );
 
         return <AppBar
-            style={{marginTop:"-68px", boxShadow:"0 1px 16px rgba(0, 0, 0, 0.18)", backgroundColor:ZenColor.white}}
+            style={{marginTop:"-68px", boxShadow:"0 1px 16px rgba(0, 0, 0, 0.18)", backgroundColor:ZenRawTheme.palette.primary4Color}}
             iconElementLeft={
                              <IconMenu
                                  value={this.state.language}
@@ -154,23 +160,50 @@ var Header = React.createClass({
                          }
             showMenuIconButton={true}>
 
-            <div className="container">
-                <Tabs onChange={this.handleTabChange}
-                      value={this.state.routeValue}
-                      style={{maxWidth:"800px",marginLeft:"auto", marginRight:"auto"}}
-                      tabItemContainerStyle={{backgroundColor:ZenColor.white}}
-                      inkBarStyle={styles.inkBar}>
+            <Col xs={12}>
+                <div>
 
-                    <Tab style={styles.tab} value="/loginMobile"
+                    {<Tabs
+                        onChange={this.handleTabChange}
+                        tabItemContainerStyle={{backgroundColor:ZenRawTheme.palette.primary4Color}}
+                        contentContainerStyle={{color:"black"}}
+                        inkBarStyle={styles.inkBar}
+                        value={this.state.routeValue}
+                    >
+                        <Tab
+                            icon={<ActionAccountCircle className="horizontal-center" style={{fill:ZenRawTheme.palette.primary1Color}}/>}
+                            label={<AccountTab currentUser={this.data.currentUser}/>}
+                            value="/loginMobile"
+                        />
+                        <Tab
+                            icon={<ActionViewModule className="horizontal-center"style={{fill:ZenRawTheme.palette.primary1Color}}/>}
+                            label={"我的网站"/*message*/}
+                            value="/list"
+                        />
+                        <Tab
+                            icon={<PlacesAllInclusive className="horizontal-center" style={{fill:ZenRawTheme.palette.primary1Color}}/>}
+                            label={"所有网站"/*message*/}
+                            value="/catalog"
+                        />
+                    </Tabs>}
+                    {
+                        /*<Tabs onChange={this.handleTabChange}
+                         value={this.state.routeValue}
+                         style={{maxWidth:"800px",marginLeft:"auto", marginRight:"auto"}}
+                         tabItemContainerStyle={{backgroundColor:ZenColor.white}}
+                         inkBarStyle={styles.inkBar}>
+
+                         <Tab style={styles.tab} value="/loginMobile"
                          disableTouchRipple
                          label={<AccountTab currentUser={this.data.currentUser}/>}/>
 
-                    <Tab style={styles.tab} disableTouchRipple value="/list" label={logo}/>
+                         <Tab style={styles.tab} disableTouchRipple value="/list" label={logo}/>
 
-                    <Tab style={styles.tab} value="/catalog" disableTouchRipple label={addNewImage}/>
-                </Tabs>
-
-            </div>
+                         <Tab style={styles.tab} value="/catalog" disableTouchRipple label={addNewImage}/>
+                         </Tabs>*/
+                    }
+                </div>
+            </Col>
         </AppBar>
     },
 

@@ -16,11 +16,13 @@ ZenRawTheme = {
         //primary2Color: Colors.pinkA700,
         primary2Color: "#FF6F00",
         primary3Color: Colors.blueGrey400,
+        primary4Color: Colors.white,
         accent1Color: "#EB008B",
         accent2Color: Colors.grey100,
         accent3Color: Colors.grey500,
         textColor: Colors.darkBlack,
         alternateTextColor: "rgba(255,255,255,1)",
+        //alternateTextColor: Colors.grey700,
         canvasColor: Colors.grey100,
         borderColor: Colors.grey300,
         disabledColor: ColorManipulator.fade(Colors.darkBlack, 0.3),
@@ -45,6 +47,10 @@ customizeMUITheme = function (muiTheme){
 
     muiTheme.floatingActionButton.buttonSize = 56;
     muiTheme.floatingActionButton.miniSize = 40;
+    muiTheme.tabs.textColor = Colors.grey400;
+    //muiTheme.tabs.selectedTextColor = "#F15E0C";
+    muiTheme.tabs.selectedTextColor = Colors.blue500;
+    muiTheme.ripple.color = Colors.blue300;
 
     return muiTheme;
 }
