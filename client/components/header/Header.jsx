@@ -63,7 +63,7 @@ const styles = {
         width: "10%",
         marginLeft: "6.7%",
         backgroundColor: ZenColor.blue,
-        transform:"translateX(50%)",
+        transform: "translateX(50%)",
         //':hover': {
         //    backgroundColor: 'red'
         //},
@@ -127,10 +127,14 @@ var Header = React.createClass({
 
     render(){
         messages = this.context.intl.messages.header;
-
+        const logo = (
+            <div style={{margin:10}}>
+                <img className="vertial-middle " src="/img/logo-text.png"
+                     style={{height: 40}}/>
+            </div>);
         return <AppBar
             style={{marginTop:"-68px", boxShadow:"0 1px 16px rgba(0, 0, 0, 0.18)", backgroundColor:ZenRawTheme.palette.primary4Color}}
-            iconElementLeft={null
+            iconElementLeft={logo
                              /*<IconMenu
                                  value={this.state.language}
                                  onChange={this.handleLanguageChange}
