@@ -109,7 +109,7 @@ var CatalogSingleApp = React.createClass({
                                                          style={{width:condensed ? "25px": "50px", top:"18px"}}/>
                 </Col>
 
-                <Col xs={5} sm={4} md={condensed? 5:4}
+                <Col xs={5} sm={4} md={condensed? 5:/*4*/6}
                      className="vertical-center">
                     <p>{appName}</p>
                 </Col>
@@ -118,12 +118,12 @@ var CatalogSingleApp = React.createClass({
                     {toggleButton}
                 </Col>
 
-                {<Col xs={0} sm={2} md={2} xsHidden
+                {/*<Col xs={0} sm={2} md={2} xsHidden
                      style={{display:condensed?"none":"block",color:ZenColor.grey3}}
                      className="vertical-center">
                     <p>{subsCount + messages.cata_peopleUse}</p>
 
-                </Col>}
+                </Col>*/}
             </Row>
         </div>
     },
