@@ -110,5 +110,48 @@ OctoAPI = {
         //score += (variationCount - 1) * 10;
 
         return variationCount >= 2 && pass.length > 6;
-    }
+    },
+
+    //fetch data using meteor.call, and store the returned data in Session
+    //fetchIfNotNull(dataName, methodName, arg1,arg2, etc)
+    fetchIfNotNull: function () {
+        const dataName = arguments[0];
+        if (!Session.get(dataName)) {
+            //console.log("dataName, methodName", dataName, arguments[1]);
+            //console.log("arguments",arguments);
+            this.fetchDataToSession(arguments);
+        }
+    },
+
+    fetchDataToSession: function () {
+        if (typeof arguments[0]=== "object") {
+            //when passing arguments from fetchIfNotNull, the original arguments will be stored as arguments[0]
+            arguments = arguments[0];
+        }
+        const dataName = arguments[0];
+        const methodName = arguments[1];
+        //console.log("arguments",arguments);
+        var methodArgs = Array.prototype.slice.call(arguments, 2);
+        //console.log("methodArgs", methodArgs);
+
+        Meteor.apply(methodName, methodArgs, function (error, retrievedData) {
+            if (error) {
+                console.log(error);
+            } else {
+                //console.log("dataName, retrievedData", dataName, retrievedData);
+                Session.setAuth(dataName, retrievedData);
+            }
+        }.bind(this));
+    },
+
+    subsHandlesAreReady: function (subsHandles) {
+        return _.every(subsHandles, function (subsHandle) {
+            if (subsHandle && subsHandle.ready) {
+                return subsHandle.ready();
+            }
+            else {//make sure all data from server is assigned to state.
+                return subsHandle !== undefined;
+            }
+        });
+    },
 }

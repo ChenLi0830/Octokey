@@ -7,6 +7,7 @@
  * Catalog Apps Box component - called by "Catalog"
  *******************************************************************************/
 var CatalogSingleApp = require('./CatalogSingleApp.jsx');
+var AppLoading = require('../AppLoading.jsx');
 
 const {
     Modal,
@@ -45,10 +46,34 @@ let modalAttributes = {
 };
 
 var CatalogAppsBox = React.createClass({
+    mixins: [ReactMeteorData,],
+
+    getMeteorData(){
+        if (this.needFetchApps) {
+            console.log("fetch new apps");
+            Session.clear("appsOfChosenCategory"),
+            OctoAPI.fetchDataToSession("appsOfChosenCategory", "getPublicAppsOfCategory", this.props.chosenCategory);
+            this.needFetchApps = false;
+        }
+        const subsHandles = [
+            Session.get("appsOfChosenCategory"),
+        ];
+        return {
+            subsReady: OctoAPI.subsHandlesAreReady(subsHandles),
+        };
+    },
+
+    componentWillReceiveProps(nextProps){
+        if (nextProps.chosenCategory !== this.props.chosenCategory) {
+            //Apps should only be fetched if the user chose a different category
+            this.needFetchApps = true;
+        }
+    },
+
     propTypes: {
-        zenApps: React.PropTypes.array.isRequired,
         zenCategories: React.PropTypes.array.isRequired,
         subscribeList: React.PropTypes.array.isRequired,
+        chosenCategory: React.PropTypes.string.isRequired,
     },
 
     contextTypes: {
@@ -56,6 +81,8 @@ var CatalogAppsBox = React.createClass({
     },
 
     getInitialState(){
+        //needFetchApps is used for determine whether new apps should be fetched
+        this.needFetchApps = true;
         return {
             showModal: false,
             preview: null,
@@ -150,7 +177,6 @@ var CatalogAppsBox = React.createClass({
         } else {
             alert(this.context.intl.messages.cata_createAppAlert);
         }
-        //console.log("this.props.zenApps", this.props.zenApps);
     },
 
     handleRemoveApp(event){
@@ -167,8 +193,12 @@ var CatalogAppsBox = React.createClass({
     },
 
     render(){
+        if (!this.data.subsReady) {
+            return <AppLoading/>
+        }
+
         const {messages} = this.context.intl;
-        const publicApps = (this.props.zenApps.map(function (app) {
+        const appsOfChosenCategory = (Session.get("appsOfChosenCategory").map(function (app) {
                 let logoURL = getLogoUrl(app._id);
                 let subscribed = this.props.subscribeList[app._id];
                 return <CatalogSingleApp key={app._id}
@@ -206,7 +236,7 @@ var CatalogAppsBox = React.createClass({
              borderRadius:"5px"}}>
                 <List style={{backgroundColor:ZenColor.white}}>
                     <Subheader>{messages.cata_listTitle}</Subheader>
-                    {publicApps}
+                    {appsOfChosenCategory}
                 </List>
             </Paper>
 

@@ -25,30 +25,21 @@ var Catalog = React.createClass({
     },
 
     getMeteorData(){
+        OctoAPI.fetchIfNotNull("allPublicApps", "getAllPublicApps");
+        OctoAPI.fetchIfNotNull("allCategories", "getAllCategories");
+
         const subsHandles = [
-            Meteor.subscribe("zenApps"),
-            Meteor.subscribe("zenCategories"),
+            Session.get("allPublicApps"),
+            Session.get("allCategories"),
             Meteor.subscribe("userApps"),
         ];
-        const subsReady = _.every(subsHandles, function (subsHandle) {
-            //console.log("subsHandle", subsHandle, "is ready?", subsHandle.ready());
-            return subsHandle.ready();
-        });
-
-        //const zenApps = ZenApps.find().fetch();
-        const chosenApps = ZenApps.find({
-            categoryNames: {
-                $in: [this.state.chosenCategory]
-            }
-        }, {sort: {subscribeCount: -1}, reactive: true}).fetch();
-
-        const allPublicApps = ZenApps.find({}, {reactive: true}).fetch();
+        const subsReady = OctoAPI.subsHandlesAreReady(subsHandles);
 
         const AppOfUser = UserApps.findOne({userId: Meteor.userId()}, {reactive: true});
 
         let subscribeList = [];
         if (subsReady) {
-            allPublicApps.map(function (publicApp) {
+            Session.get("allPublicApps").map(function (publicApp) {
                 let subscribed = _.findIndex(AppOfUser.publicApps, function (subscribedApp) {
                         return subscribedApp.appId === publicApp._id
                     }) > -1;
@@ -57,8 +48,6 @@ var Catalog = React.createClass({
         }
 
         return {
-            zenApps: chosenApps,
-            zenCategories: ZenCategories.find({}, {sort: {index: 1}}).fetch(),
             subscribeList: subscribeList,
             subsReady: subsReady
         }
@@ -66,22 +55,22 @@ var Catalog = React.createClass({
 
 
     render(){
-        //console.log("Actions",Actions);
-        //console.log("this.data.subscribedPublicApps",this.data.subscribedPublicApps);
-
-        //console.log("state.chosenCategory: ", this.state.chosenCategory);
+        if (!this.data.subsReady){
+            return <AppLoading/>
+        }
         let catalogPage = (
             <div>
                 <Row>
                     <Col span="6">
-                        <CatalogSideBar zenCategories={this.data.zenCategories}
-                                        zenApps={this.data.zenApps}
+                        <CatalogSideBar zenCategories={Session.get("allCategories")}
+                                        zenApps={Session.get("allPublicApps")}
                                         subscribeList={this.data.subscribeList}
                         />
                     </Col>
                     <Col span="18">
-                        <CatalogAppsBox zenApps={this.data.zenApps} zenCategories={this.data.zenCategories}
+                        <CatalogAppsBox zenCategories={Session.get("allCategories")}
                                         subscribeList={this.data.subscribeList}
+                                        chosenCategory={this.state.chosenCategory}
                         />
                     </Col>
                 </Row>
@@ -89,7 +78,7 @@ var Catalog = React.createClass({
         );
 
         return <div>
-            {this.data.subsReady ? catalogPage /*<AppLoading/>*/ : <AppLoading/>}
+            {catalogPage}
         </div>
     },
 

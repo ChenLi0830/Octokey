@@ -158,7 +158,7 @@ var Header = React.createClass({
                          }
             showMenuIconButton={true}>
 
-            <Col xs={12}>
+            <Col xs={10} >
                 <div>
 
                     {<Tabs

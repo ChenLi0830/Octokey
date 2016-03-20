@@ -26,6 +26,24 @@ ZenApps.allow({
  });*/
 
 Meteor.methods({
+    getPublicAppsOfCategory(categoryName){
+        localSimulateLatency(500);
+        if (this.userId) {
+            return ZenApps.find({
+                categoryNames: {
+                    $in: [categoryName]
+                }
+            }, {sort: {subscribeCount: -1}}).fetch();
+        }
+    },
+
+    getAllPublicApps(){
+        localSimulateLatency(800);
+        if (this.userId) {
+            return ZenApps.find({},{sort: {subscribeCount: -1}}).fetch();
+        }
+    },
+
     addZenApp(appName, loginLink, registerLink, logo, selectedCategoryNames){
         localSimulateLatency(500);
         //console.log("appName", appName);
