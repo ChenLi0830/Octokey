@@ -71,7 +71,7 @@ const styles = {
     },
 };
 
-var AuthSignInMobile = React.createClass({
+var AuthSignIn = React.createClass({
     contextTypes: {
         router: React.PropTypes.object.isRequired,
         intl: React.PropTypes.object.isRequired,
@@ -80,9 +80,10 @@ var AuthSignInMobile = React.createClass({
     getInitialState() {
         return {
             floatingPassText: "",
-            floatingCellText: "",
+            floatingUserText: "",
             floatingCaptchaText: "",
             disableBtn: false,
+            disableAreaDropdown: false,
             area: "cn",
             captchaBtn: "requestCaptcha-获取验证码",
         };
@@ -110,7 +111,7 @@ var AuthSignInMobile = React.createClass({
 
                         <Col xs={2}>
                             <DropDownMenu value={this.state.area}
-                                          style={styles.dropDownMenu}
+                                          style={_.extend({},styles.dropDownMenu, {visibility:this.state.disableAreaDropdown?"hidden":"visible"})}
                                           underlineStyle={{border:"none"}}
                                           onChange={(e, index, value)=>{this.setState({area:value})}}>
                                 <MenuItem
@@ -133,13 +134,14 @@ var AuthSignInMobile = React.createClass({
 
                         <Col xs={10} style={styles.textInput}>
                             <TextField
-                                ref="userPhone"
+                                ref="phoneOrEmail"
                                 style={{fontWeight:"300",left:5}}
                                 floatingLabelStyle={{fontWeight:"300"}}
-                                errorText={this.state.floatingCellText}
+                                errorText={this.state.floatingUserText}
                                 inputStyle={{textAlign:"center"}}
-                                hintText={messages["mobile-手机号"]}
+                                hintText={messages["emailOrMobile-邮箱或手机号"]}
                                 hintStyle={{textAlign:"center", width:"100%"}}
+                                onChange={this.handleTextFieldChange}
                                 onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
                             />
                         </Col>
@@ -161,30 +163,30 @@ var AuthSignInMobile = React.createClass({
                         { //短信验证
                             /*<div>
 
-                                <RaisedButton label={typeof this.state.captchaBtn === "string"?
-                                                        messages[this.state.captchaBtn]:this.state.captchaBtn}
-                                              onClick={this.handleRequestCode}
-                                              style={styles.registerButton}
-                                              secondary={true}
-                                              disabled={this.state.captchaBtn!=="requestCaptcha-获取验证码"}
-                                />
+                             <RaisedButton label={typeof this.state.captchaBtn === "string"?
+                             messages[this.state.captchaBtn]:this.state.captchaBtn}
+                             onClick={this.handleRequestCode}
+                             style={styles.registerButton}
+                             secondary={true}
+                             disabled={this.state.captchaBtn!=="requestCaptcha-获取验证码"}
+                             />
 
-                                <br/>
+                             <br/>
 
-                                <TextField
-                                    ref="captcha"
-                                    style={{fontWeight:"300", width:90}}
-                                    floatingLabelStyle={{fontWeight:"300"}}
-                                    errorText={this.state.floatingCaptchaText}
-                                    //inputStyle={{textAlign:"center"}}
-                                    hintText={messages["inputCaptcha-输入验证码"]}
-                                    onKeyPress={(e)=>{e.key === 'Enter' && this.handleVerify()}}
-                                />
-                                <br/>
-                                <Link style={{display:"block", marginTop:"10px"}} to="/reset">
-                                    {messages["forgotpwd-忘记密码"]}
-                                </Link>
-                            </div>*/
+                             <TextField
+                             ref="captcha"
+                             style={{fontWeight:"300", width:90}}
+                             floatingLabelStyle={{fontWeight:"300"}}
+                             errorText={this.state.floatingCaptchaText}
+                             //inputStyle={{textAlign:"center"}}
+                             hintText={messages["inputCaptcha-输入验证码"]}
+                             onKeyPress={(e)=>{e.key === 'Enter' && this.handleVerify()}}
+                             />
+                             <br/>
+                             <Link style={{display:"block", marginTop:"10px"}} to="/reset">
+                             {messages["forgotpwd-忘记密码"]}
+                             </Link>
+                             </div>*/
                         }
                     </form>
 
@@ -197,29 +199,9 @@ var AuthSignInMobile = React.createClass({
                     <p>{messages["noAccount-还没帐号"]}
                         <Link to="/join">{messages["signUp_low-注册"]}</Link>
                     </p>
-
-                    <p>{messages["or-或者"]}</p>
-
-                    <RaisedButton label={messages["useEmail-邮箱登陆"]}
-                                  onClick={this.handleSwitchToMail}
-                                  style={styles.changeLoginButton}
-                                  primary={true}>
-                    </RaisedButton>
                 </Paper>
             </Col>
         );
-    },
-
-    handleInputErrorCheckUser(){
-        let cell = this.refs.userPhone.getValue();
-        if (!isValidateCell(this.state.area, cell)) {
-            this.setState({floatingCellText: messages["mobileFormatError-手机错误"]});
-        }
-        else {
-            this.setState({floatingCellText: ""});
-            return true;
-        }
-        return false;
     },
 
     handleInputErrorCheckPass(){
@@ -238,9 +220,10 @@ var AuthSignInMobile = React.createClass({
         const noInputError = this.handleInputErrorCheckUser() && this.handleInputErrorCheckPass();
 
         /* Save data & Handle login */
-        let userPhone = this.refs.userPhone.getValue();
+        let phoneOrEmail = this.refs.phoneOrEmail.getValue();
+
         let areaCode = this.state.area === "cn" ? "+86" : "+1";
-        var cell = areaCode + userPhone;
+        var cell = areaCode + phoneOrEmail;
 
         let password = this.refs.password.getValue();
 
@@ -252,56 +235,61 @@ var AuthSignInMobile = React.createClass({
          this.setState({floatingCaptchaText: "校验码不正确，请重新输入", verifyBtnDisable: false});
          //throw new Meteor.Error("error", error);
          } else {*/
-        if (userPhone && password && noInputError) {
+
+        if (phoneOrEmail && password && noInputError) {
             this.setState({disableBtn: true});
             console.log("cell", cell, "password", password);
-            Meteor.loginWithPhoneAndPassword({phone: cell}, password, (error) => {
-                if (error) {
-                    this.setState({disableBtn: false, floatingPassText: error.error + " " + error.reason});
-                    //console.log("error: ", error);
-                    return;
-                }
-                Actions.setPassword(password);
-                this.context.router.push('/list');
-            });
+
+            if (this.state.disableAreaDropdown){//login using email
+                Meteor.loginWithPassword(phoneOrEmail, password, (error) => {
+                    if (error) {
+                        this.setState({disableBtn: false, floatingPassText: error.error + " " + error.reason});
+                        //console.log("error: ", error);
+                        return;
+                    }
+                    Actions.setPassword(password);
+                    this.context.router.push('/list');
+                });
+            } else {//login using mobile
+                Meteor.loginWithPhoneAndPassword({phone: cell}, password, (error) => {
+                    if (error) {
+                        this.setState({disableBtn: false, floatingPassText: error.error + " " + error.reason});
+                        //console.log("error: ", error);
+                        return;
+                    }
+                    Actions.setPassword(password);
+                    this.context.router.push('/list');
+                });
+            }
         }
         /*}
          }.bind(this));*/
     },
 
     handleInputErrorCheckUser(){
-        let userPhone = this.refs.userPhone.getValue();
-        //Todo uncomment when finish testing server error check
-        if (!isValidateCell(this.state.area, userPhone)) {
-            this.setState({floatingCellText: messages["mobileFormatError-手机错误"]});
+        let phoneOrEmail = this.refs.phoneOrEmail.getValue();
+        //Todo need to check error on server side as well
+        //If it is cellnumber
+        if (!this.state.disableAreaDropdown) {
+            if (!OctoAPI.isValidateCell(this.state.area, phoneOrEmail)) {
+                this.setState({floatingUserText: messages["mobileFormatError-手机错误"]});
+            }
+            else {
+                this.setState({floatingUserText: ""});
+                return true;
+            }
+            return false;
+        } else {//If it is email
+            if (!OctoAPI.isValidateEmail(phoneOrEmail)) {
+                this.setState({floatingUserText: messages["emailFormatError-邮箱错误"]});
+            }
+            else {
+                this.setState({floatingUserText: ""});
+                return true;
+            }
+            return false;
         }
-        else {
-            this.setState({floatingCellText: ""});
-            return true;
-        }
-        return false;
     },
-
-/*    handleRequestCode(){
-        /!* Error check *!/
-        const noInputError = this.handleInputErrorCheckUser();
-
-        /!* Save data & Handle login *!/
-        let userPhone = this.refs.userPhone.getValue();
-        let areaCode = this.state.area === "cn" ? "+86" : "+1";
-        var cell = areaCode + userPhone;
-
-        if (userPhone && noInputError) {//检查格式
-            //Start to send verification code
-            Accounts.requestPhoneVerification(cell, function (error) {
-                if (error) {
-                    this.setState({floatingCellText: messages["captchaRequestExceeds-短信太频繁"]});
-                    throw new Meteor.Error("error", error);
-                }
-                this.countdown(60);
-            }.bind(this));
-        }
-    },*/
 
     countdown(remaining) {
         if (remaining === 0) {
@@ -314,9 +302,18 @@ var AuthSignInMobile = React.createClass({
         }
     },
 
-    handleSwitchToMail(){
-        this.context.router.push('/loginEmail');
+    //Check if it only contains number, if not, disable area selection
+    handleTextFieldChange(){
+        let phoneOrEmail = this.refs.phoneOrEmail.getValue();
+
+        var isNum = /^\d+$/.test(phoneOrEmail);
+        if (!isNum) {
+            this.setState({disableAreaDropdown: true});
+        }
+        else {
+            this.setState({disableAreaDropdown: false})
+        }
     },
 });
 
-module.exports = AuthSignInMobile;
+module.exports = AuthSignIn;

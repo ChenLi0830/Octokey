@@ -11,10 +11,9 @@ var AppsContainer = require('./components/main-page/AppsContainer.jsx');
 var Catalog = require('./components/catalog-page/Catalog.jsx');
 var JoinUsingMobilePage = require('./components/accounts/JoinUsingMobilePage.jsx');
 var JoinUsingEmailPage = require('./components/accounts/JoinUsingEmailPage.jsx');
-var AuthSignInEmail = require('./components/accounts/AuthSignInEmail.jsx');
-var AuthSignInMobile = require('./components/accounts/AuthSignInMobile.jsx');
 var PageNotFound = require('./components/PageNotFound.jsx');
 var IntlWrapper = require('./components/IntlWrapper.jsx');
+var AuthSignIn = require('./components/accounts/AuthSignIn.jsx');
 
 //Todo use the following line instead of /public/css/antd-index.css when Meteor fix the problem of importing css
 // from npm
@@ -32,13 +31,13 @@ const {
 // const createHistory = ReactRouter.history.createHistory;
 
 function requireAuth(nextState, replace) {
-    if (!Meteor.userId()){
+    if (!Meteor.userId()) {
         replace('/loginMobile');
     }
 }
 
-function verifyNotLogin(nextState, replace){
-    if (Meteor.userId()){
+function verifyNotLogin(nextState, replace) {
+    if (Meteor.userId()) {
         replace('/list');
     }
 }
@@ -65,13 +64,14 @@ function verifyEmail(nextState, replace) {
 
 const routes = (
     <Route path="/" component={App}>
-        <IndexRoute component={AuthSignInMobile} onEnter={verifyNotLogin}/>
+        <IndexRoute component={AuthSignIn} onEnter={verifyNotLogin}/>
         <Route path="/list" component={AppsContainer} onEnter={requireAuth}/>
         <Route path="/catalog" component={Catalog} onEnter={requireAuth}/>
         <Route path="/join" component={JoinUsingMobilePage} onEnter={verifyNotLogin}/>
         <Route path="/joinEmail" component={JoinUsingEmailPage} onEnter={verifyNotLogin}/>
-        {<Route path="/loginEmail" component={AuthSignInEmail} onEnter={verifyNotLogin}/>}
-        <Route path="/loginMobile" component={AuthSignInMobile} onEnter={verifyNotLogin}/>
+        {/*<Route path="/loginEmail" component={AuthSignInEmail} onEnter={verifyNotLogin}/>*/}
+        {<Route path="/login" component={AuthSignIn} onEnter={verifyNotLogin}/>}
+        {/*<Route path="/loginMobile" component={AuthSignInMobile} onEnter={verifyNotLogin}/>*/}
         {/*<Route path="/reset" component={AuthForgotPwdPage} onEnter={verifyNotLogin}/>*/}
         {/*<Route path="/verify-email/:token" component={AppNotFound} onEnter={verifyEmail}/>*/}
         <Route path="/*" component={PageNotFound}/>

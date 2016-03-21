@@ -6,12 +6,9 @@
  *
  * Create Public App Button component, called by "CatalogSideBar"
  *******************************************************************************/
-const {Button,
-    Modal,
-    Input,
-    ButtonInput,
+const {
+    //Modal,
     Col,
-    Image,
     Row
     } = ReactBootstrap;
 
@@ -26,6 +23,8 @@ const {
     TableFooter,
     Divider
     } = MUI;
+
+import { Modal, Button } from 'antd';
 
 var selectedCategories = [0];
 
@@ -77,7 +76,15 @@ var CreateZenAppButton = React.createClass({
 
         return <div>
             {button}
-            <Modal show={this.state.showModal} onHide={this.close}>
+            <Modal title={messages.cata_createPubApp} visible={this.state.showModal}
+                   onOk={this.handleOk} onCancel={this.close}>
+                <p>对话框的内容</p>
+                <p>对话框的内容</p>
+                <p>对话框的内容</p>
+            </Modal>
+
+            {
+                /*<Modal show={this.state.showModal} onHide={this.close}>
                 <Modal.Header closeButton>
                     <Modal.Title>{messages.cata_createPubApp}</Modal.Title>
                 </Modal.Header>
@@ -92,7 +99,7 @@ var CreateZenAppButton = React.createClass({
                                placeholder={messages.cata_linkPlaceHolder}/>
 
                         <Input type="text" ref="registerLink"
-                               label={"注册链接(非必须)"/*messages.cata_appRegisterLink*/}
+                               label={"注册链接(非必须)"/!*messages.cata_appRegisterLink*!/}
                                placeholder={messages.cata_linkPlaceHolder}/>
 
                         <Input type="file"
@@ -136,7 +143,8 @@ var CreateZenAppButton = React.createClass({
                 <Modal.Footer>
                     <Button onClick={this.handlePublicSubmit}>{messages.cata_createBtn}</Button>
                 </Modal.Footer>
-            </Modal>
+            </Modal>*/
+            }
         </div>
     },
 

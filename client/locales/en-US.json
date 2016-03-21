@@ -105,6 +105,7 @@
         "mobile-手机号":"Mobile Number",
         "useEmail-邮箱登陆":"Log in using Email",
         "useMobile-手机登陆":"Log in using Mobile",
+        "emailOrMobile-邮箱或手机号":"Email or Mobile",
         "signIn-登录": "Sign In",
         "signUp-注册": "Sign Up",
         "haveAccount-已有帐号": "or ",

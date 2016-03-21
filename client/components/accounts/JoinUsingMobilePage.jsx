@@ -283,7 +283,7 @@ var JoinUsingMobilePage = React.createClass({
                 <div>
                     <h4 style={styles.secondaryText}>
                         {messages["haveAccount-已有帐号"]}<Link
-                        to="/loginMobile">{messages["signIn_low-登录"]}</Link>
+                        to="/login">{messages["signIn_low-登录"]}</Link>
 
                         {", " + messages["orJoinUsingEmail-或者用邮箱"]}<Link
                         to="/joinEmail">{messages["registerUsingEmail-注册"]}</Link>

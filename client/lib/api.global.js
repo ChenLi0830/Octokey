@@ -65,24 +65,25 @@ handleError = function (error) {
     }
 };
 
-validateEmail = function (email) {//检查邮箱格式
-    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-};
-
-isValidateCell = function (area, number) {
-    switch (area) {
-        case "cn":
-            return (/^\d{11}$/.test(number));
-            break;
-        case "ca":
-        case "us":
-            return (/^\d{10}$/.test(number));
-            break;
-    }
-};
 
 OctoAPI = {
+    isValidateEmail: function (email) {//检查邮箱格式
+        var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    },
+
+    isValidateCell: function (area, number) {
+        switch (area) {
+            case "cn":
+                return (/^\d{11}$/.test(number));
+                break;
+            case "ca":
+            case "us":
+                return (/^\d{10}$/.test(number));
+                break;
+        }
+    },
+
     checkPassword: function (pass) {
         //let score = 0;
         if (!pass)
@@ -124,7 +125,7 @@ OctoAPI = {
     },
 
     fetchDataToSession: function () {
-        if (typeof arguments[0]=== "object") {
+        if (typeof arguments[0] === "object") {
             //when passing arguments from fetchIfNotNull, the original arguments will be stored as arguments[0]
             arguments = arguments[0];
         }
