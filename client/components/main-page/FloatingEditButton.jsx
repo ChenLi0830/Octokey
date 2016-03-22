@@ -25,7 +25,7 @@ const styles = {
     floatingBtn: {
         paddingTop: 15,
         marginBottom: 0,
-        zIndex: 1450,
+        zIndex: 450,
         position: "fixed",
         right: 40,
         bottom: 25,

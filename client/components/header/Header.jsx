@@ -68,6 +68,12 @@ const styles = {
         //    backgroundColor: 'red'
         //},
     },
+    appBar:{
+        marginTop:"-68px",
+        boxShadow:"0 1px 16px rgba(0, 0, 0, 0.18)",
+        backgroundColor:ZenRawTheme.palette.primary4Color,
+        zIndex:"auto",
+    }
 };
 
 var Header = React.createClass({
@@ -137,7 +143,7 @@ var Header = React.createClass({
                 </div>
             </div>);
         return <AppBar
-            style={{marginTop:"-68px", boxShadow:"0 1px 16px rgba(0, 0, 0, 0.18)", backgroundColor:ZenRawTheme.palette.primary4Color}}
+            style={styles.appBar}
             iconElementLeft={logo}
             showMenuIconButton={true}>
 

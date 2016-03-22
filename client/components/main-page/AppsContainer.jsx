@@ -40,7 +40,9 @@ var AppsContainer = React.createClass({
 
     getMeteorData(){
         if (Meteor.user()) {
+            // appId, appName,logoURL,loginLink,registerLink,userNames,defaultUserName,lastLoginTime
             let findUserApps = UserApps.find({userId: Meteor.userId()}).fetch()[0];
+
             return {
                 currentUser: Meteor.user(),
                 chosenPublicApps: findUserApps ? findUserApps.publicApps : [],
@@ -82,6 +84,7 @@ var AppsContainer = React.createClass({
                                appId={userApp.appId}
                                logoURL={userApp.logoURL}
                                usernames = {userApp.userNames}
+                               appName = {userApp.appName}
                                width="100%"
                                whenAppTileClicked={this.handleAppTileClick}
                                userEditStatus={this.state.userEditStatus}
@@ -150,7 +153,7 @@ var AppsContainer = React.createClass({
 
             <Paper zDepth={1}
                    style={{
-                   zIndex:"1400",
+                   zIndex:"400",
                    position:"relative",
                    backgroundColor:ZenColor.white,
                    boxShadow:"0 1px 6px rgba(0, 0, 0, 0.12)",

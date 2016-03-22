@@ -10,8 +10,13 @@ const {
     Col,
     } = ReactBootstrap;
 
+import { Modal} from 'antd';
+
 const {
     Paper,
+    Popover,
+    Menu,
+    MenuItem,
     } = MUI;
 
 const {
@@ -27,6 +32,7 @@ var AppBox = React.createClass({
         appId: React.PropTypes.string.isRequired,
         logoURL: React.PropTypes.string.isRequired,
         usernames: React.PropTypes.array.isRequired,
+        appName:React.PropTypes.string.isRequired,
         width: React.PropTypes.string.isRequired,
         whenAppTileClicked: React.PropTypes.func.isRequired,
         userEditStatus: React.PropTypes.string.isRequired,
@@ -37,6 +43,7 @@ var AppBox = React.createClass({
             hovered: false,
             //open: false,
             boxHeight: "0px",
+            modalOpen: false,
         }
     },
 
@@ -46,6 +53,61 @@ var AppBox = React.createClass({
             height: boxSize
         });
         //console.log("appBox width",ReactDOM.findDOMNode(this.refs.appBox).offsetWidth);
+    },
+
+    render() {
+        var tileStyle = this.getTileStyle(this.props.userEditStatus);
+        var image = this.getTileImage(this.props.userEditStatus);
+        var usernameItems = this.props.usernames.map((username)=> {
+            return <MenuItem primaryText={username} value={username}/>
+        });
+
+        //console.log("usernames", this.props.usernames);
+        return <div>
+            <Col lg={2} md={2} sm={3} xs={4} style={{padding:"0"}}>
+                {
+                    this.props.usernames.length <= 1 ? null : (
+                    <Modal title={this.props.appName + "-账户选择"}
+                           okText="好滴"
+                           cancelText="取消"
+                           visible={this.state.modalOpen}
+                           onOk={()=>{this.setState({modalOpen:false})}}
+                           onCancel={()=>{this.setState({modalOpen:false})}}
+                    >
+                        <Menu zDepth={0} ref="menu"
+                              onChange={this.handleAccountTouchTap}
+                              width="100%"
+                              autoWidth={false}
+                              listStyle={{display:"block"}}
+                        >
+                            {usernameItems}
+                        </Menu>
+                    </Modal>
+                    /*<Popover
+                        open={this.state.modalOpen}
+                        anchorEl={this.state.anchorEl}
+                        anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                        targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                        onRequestClose={()=>{this.setState({modalOpen:false})}}
+                    >
+                        <Menu zDepth={0} ref="menu" onChange={this.handleAccountTouchTap}>
+                            {usernameItems}
+                        </Menu>
+                    </Popover>*/)
+                }
+
+
+                <Paper rounded={false}
+                       ref="appBox"
+                       style={tileStyle}
+                       onMouseEnter={this.handleMouseEnter}
+                       onMouseLeave={this.handleMouseLeave}
+                       zDepth={this.state.hovered?1:0}
+                       onTouchTap={this.handleTouchTap}>
+                    {image}
+                </Paper>
+            </Col>
+        </div>
     },
 
     handleMouseEnter(){
@@ -60,41 +122,25 @@ var AppBox = React.createClass({
         })
     },
 
-    render() {
+    handleTouchTap(event){
+        if (this.props.usernames.length === 0) {
+            this.props.whenAppTileClicked(this.props.appId)
+        }
+        else if (this.props.usernames.length===1){
+            this.props.whenAppTileClicked(this.props.appId, this.props.usernames[0])
+        }
+        else {//More than 1 username, openPopOver to for user to choose
+            this.setState({
+                modalOpen: true,
+                anchorEl: event.currentTarget,
+            });
+        }
+    },
 
-        var tileStyle = this.getTileStyle(this.props.userEditStatus);
-        var image = this.getTileImage(this.props.userEditStatus);
-
-        console.log("usernames",usernames);
-        return <div>
-            <Col lg={2} md={2} sm={3} xs={4} style={{padding:"0"}}>
-                <Popover
-                    open={this.state.open}
-                    anchorEl={this.state.anchorEl}
-                    anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                    onRequestClose={this.handleRequestClose}
-                >
-                    <Menu zDepth={0}>
-                        <MenuItem primaryText="Refresh" />
-                        <MenuItem primaryText="Help &amp; feedback" />
-                        <MenuItem primaryText="Settings" />
-                        <MenuItem primaryText="Sign out" />
-                    </Menu>
-                </Popover>
-
-
-                <Paper rounded={false}
-                       ref="appBox"
-                       style={tileStyle}
-                       onMouseEnter={this.handleMouseEnter}
-                       onMouseLeave={this.handleMouseLeave}
-                       zDepth={this.state.hovered?1:0}
-                       onTouchTap={()=>{this.props.whenAppTileClicked(this.props.appId)}}>
-                    {image}
-                </Paper>
-            </Col>
-        </div>
+    handleAccountTouchTap(event, selectedIndex, menuItem) {
+        //console.log("selectedIndex",selectedIndex);
+        this.props.whenAppTileClicked(this.props.appId, selectedIndex);
+        this.setState({modalOpen: false});
     },
 
     getTileStyle(userEditStatus){
@@ -140,7 +186,7 @@ var AppBox = React.createClass({
             case "remove":
                 return this.state.hovered ?
                     <ContentRemove className="vertical-center horizontal-center"
-                                  style={{height:"60px", width:"60px", fill:ZenColor.white}}/> : image;
+                                   style={{height:"60px", width:"60px", fill:ZenColor.white}}/> : image;
                 break;
             case "config":
                 return this.state.hovered ?
