@@ -340,16 +340,20 @@ var AppsContainer = React.createClass({
     },
 
     generateProfile(){//For text purpose
-        const ramdomNumber = Math.floor(Math.random() * 10000);
+        const randomNumber = Math.floor(Math.random() * 10000);
         const cellNumber = "7097490481";
-        const nickName = "ChenLizhangyu" + ramdomNumber;
-        const email = "lulugeo.li+" + ramdomNumber + "@gmail.com";
-        const firstName = "Lulugeo";
-        const lastName = "Li";
+        const nickName = "ChenLizhangyu" + randomNumber;
+
+        let email = Meteor.user().emails[0].address;
+        const atSignIndex = email.indexOf('@');
+        const newEmail = email.substr(0,atSignIndex) + '+' + randomNumber + email.substr(atSignIndex,email.length-atSignIndex);
+
+        const firstName = "demo";
+        const lastName = "account";
         return {
             cellNumber: cellNumber,
             nickName: nickName,
-            email: email,
+            email: newEmail,
             firstName: firstName,
             lastName: lastName,
         };

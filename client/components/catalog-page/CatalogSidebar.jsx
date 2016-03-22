@@ -60,14 +60,13 @@ var CatalogSideBar = React.createClass({
                 />
                 {/*<Divider />*/}
                 {createPublicAppButton}
-                <CreatePrivateAppButton/>
+                {/*<CreatePrivateAppButton/>*/}
                 <Divider />
                 <CategoryList zenCategories={this.props.zenCategories}/>
                 {createCategoryButton}
             </Paper>
         </div>
     },
-
 });
 
 module.exports = CatalogSideBar;
