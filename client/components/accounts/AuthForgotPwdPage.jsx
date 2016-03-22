@@ -100,16 +100,11 @@ var AuthForgotPwdPage = React.createClass({
         if (!email) {
             this.setState({floatingUserText: this.context.intl.messages.login_emailEmpty});
         }
-        else if (!validateEmail(email)) {
+        else if (!OctoAPI.isValidateEmail(email)) {
             this.setState({floatingUserText: this.context.intl.messages.login_emailFormatError});
         }
         else {
             this.setState({floatingUserText: ""});
-        }
-
-        function validateEmail(email) {//检查邮箱格式
-            var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(email);
         }
     },
 

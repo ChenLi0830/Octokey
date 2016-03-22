@@ -128,34 +128,17 @@ var Header = React.createClass({
     render(){
         messages = this.context.intl.messages.header;
         const logo = (
-            <div style={{margin:10}}>
-                <img className="vertial-middle " src="/img/logo-text.png"
-                     style={{height: 40}}/>
+            <div style={{margin:"10px 10px 10px 30px"}}>
+                <img src="/img/logo.png"
+                     style={{height: 40, verticalAlign:"top", color:Colors.grey800}}/>
+                <div src="vertical-center" style={{display:"inline-block",marginLeft:12, color:Colors.grey700}}>
+                    <h3>Octokey</h3>
+                    <p>O钥匙</p>
+                </div>
             </div>);
         return <AppBar
             style={{marginTop:"-68px", boxShadow:"0 1px 16px rgba(0, 0, 0, 0.18)", backgroundColor:ZenRawTheme.palette.primary4Color}}
-            iconElementLeft={logo
-                             /*<IconMenu
-                                 value={this.state.language}
-                                 onChange={this.handleLanguageChange}
-                                 anchorOrigin={{vertical:'bottom', horizontal: 'left'}}
-                                 menuStyle={{backgroundColor:ZenColor.white}}
-                                 iconButtonElement={
-                                     <IconButton>
-                                     <LanguageIcon iconName={this.state.language==="zh"&&"cn" ||
-                                     this.state.language==="en-US"&&"us"}
-                                     />
-                                     </IconButton>
-                                 }
-                             >
-                             <MenuItem leftIcon = {<LanguageIcon style={styles.languageItem} iconName="cn"/>}
-                             primaryText="中文" value="zh" style={{fontSize:13}}
-                             />
-                             <MenuItem leftIcon = {<LanguageIcon style={styles.languageItem} iconName="us"/>}
-                             primaryText="English" value="en-US" style={{fontSize:13}}
-                             />
-                             </IconMenu>*/
-                         }
+            iconElementLeft={logo}
             showMenuIconButton={true}>
 
             <Col xs={10} >

@@ -109,7 +109,7 @@ var JoinUsingEmailPage = React.createClass({
         if (!email) {
             this.setState({floatingUserText: this.context.intl.messages.login_emailEmpty});
         }
-        else if (!validateEmail(email)) {
+        else if (!OctoAPI.isValidateEmail(email)) {
             this.setState({floatingUserText: this.context.intl.messages.login_emailFormatError});
         }
         else {

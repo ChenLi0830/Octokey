@@ -32,7 +32,7 @@ const {
 
 function requireAuth(nextState, replace) {
     if (!Meteor.userId()) {
-        replace('/loginMobile');
+        replace('/login');
     }
 }
 

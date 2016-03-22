@@ -83,7 +83,7 @@ var AuthSignIn = React.createClass({
             floatingUserText: "",
             floatingCaptchaText: "",
             disableBtn: false,
-            disableAreaDropdown: false,
+            disableAreaDropdown: true,
             area: "cn",
             captchaBtn: "requestCaptcha-获取验证码",
         };
@@ -143,6 +143,7 @@ var AuthSignIn = React.createClass({
                                 hintStyle={{textAlign:"center", width:"100%"}}
                                 onChange={this.handleTextFieldChange}
                                 onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
+                                autoComplete="false"
                             />
                         </Col>
 
@@ -157,6 +158,7 @@ var AuthSignIn = React.createClass({
                             hintText={messages["password-密码"]}
                             hintStyle={{textAlign:"center", width:"100%"}}
                             onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
+                            autoComplete="false"
                         />
 
 
@@ -238,7 +240,6 @@ var AuthSignIn = React.createClass({
 
         if (phoneOrEmail && password && noInputError) {
             this.setState({disableBtn: true});
-            console.log("cell", cell, "password", password);
 
             if (this.state.disableAreaDropdown){//login using email
                 Meteor.loginWithPassword(phoneOrEmail, password, (error) => {
