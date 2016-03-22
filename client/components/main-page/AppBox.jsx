@@ -21,12 +21,12 @@ const {
     AvFiberNew,
     } = SvgIcons;
 
-
 var AppBox = React.createClass({
 
     propTypes: {
         appId: React.PropTypes.string.isRequired,
         logoURL: React.PropTypes.string.isRequired,
+        usernames: React.PropTypes.array.isRequired,
         width: React.PropTypes.string.isRequired,
         whenAppTileClicked: React.PropTypes.func.isRequired,
         userEditStatus: React.PropTypes.string.isRequired,
@@ -65,8 +65,25 @@ var AppBox = React.createClass({
         var tileStyle = this.getTileStyle(this.props.userEditStatus);
         var image = this.getTileImage(this.props.userEditStatus);
 
+        console.log("usernames",usernames);
         return <div>
             <Col lg={2} md={2} sm={3} xs={4} style={{padding:"0"}}>
+                <Popover
+                    open={this.state.open}
+                    anchorEl={this.state.anchorEl}
+                    anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                    onRequestClose={this.handleRequestClose}
+                >
+                    <Menu zDepth={0}>
+                        <MenuItem primaryText="Refresh" />
+                        <MenuItem primaryText="Help &amp; feedback" />
+                        <MenuItem primaryText="Settings" />
+                        <MenuItem primaryText="Sign out" />
+                    </Menu>
+                </Popover>
+
+
                 <Paper rounded={false}
                        ref="appBox"
                        style={tileStyle}

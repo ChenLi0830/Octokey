@@ -81,6 +81,7 @@ var AppsContainer = React.createClass({
                 return <AppBox key={userApp.appId}
                                appId={userApp.appId}
                                logoURL={userApp.logoURL}
+                               usernames = {userApp.userNames}
                                width="100%"
                                whenAppTileClicked={this.handleAppTileClick}
                                userEditStatus={this.state.userEditStatus}
@@ -162,7 +163,7 @@ var AppsContainer = React.createClass({
         </div>
     },
 
-    handleAppTileClick(appId){
+    handleAppTileClick(appId, username){
         //console.log("chrome.app.isInstalled", chrome.app.isInstalled);
         if (!this.extensionIsInstalled()) {
             this.setState({openDialogPlugin: true});
@@ -179,7 +180,8 @@ var AppsContainer = React.createClass({
 
         if (this.state.userEditStatus === "default") {
             if (isPublicApp) {//是public app
-                if (this.data.chosenPublicApps[publicFocusedIndex].userNames.length > 0) {
+                //if (this.data.chosenPublicApps[publicFocusedIndex].userNames.length > 0) {
+                if (username) {
                     //Todo 加入component让用户选择登录credential
                     let username = this.data.chosenPublicApps[publicFocusedIndex].userNames[0];
                     this.handleLogin(username, "");
