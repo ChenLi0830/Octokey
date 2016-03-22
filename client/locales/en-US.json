@@ -72,15 +72,6 @@
     "app_regi_DialogCancel":"cancel",
     "app_regi_DialogComplete":"ok",
 
-    "ext_msg_connect": "Connecting",
-    "ext_msg_password": "Generating an unique strong password",
-    "ext_msg_credential": "Sending login information",
-    "ext_msg_register": "Submitting registration request",
-    "ext_msg_userInfo": "Sending user configuration",
-    "ext_msg_redirect": "Waiting for response",
-    "ext_msg_success": "Your account is registered successfully",
-    "ext_msg_error": "Account registration failed. Possible causes: 1. You've registered using this account 2. You are currently logged in this website 3. Website connection error",
-
     "cata_notFound": "No apps found",
     "cata_peopleUse": " people are using it",
 
@@ -167,5 +158,21 @@
     "header":{
         "mySites-我的网站":"My Sites",
         "allSites-所有网站":"All Sites"
+    },
+
+    "register":{
+        "cancel-取消":"cancel",
+        "ok-完成":"ok",
+        "login-去登录":"login",
+        "manual-sign-up-亲自注册":"sign up manually",
+        "auto-sign-up-自动注册":"sign up",
+        "ext_msg_connect": "Connecting",
+        "ext_msg_password": "Generating an unique strong password",
+        "ext_msg_credential": "Sending login information",
+        "ext_msg_register": "Submitting registration request",
+        "ext_msg_userInfo": "Sending user configuration",
+        "ext_msg_redirect": "Waiting for response",
+        "ext_msg_success": "Your account is registered successfully",
+        "ext_msg_error": "Account registration failed. Possible causes: 1. You've registered using this account 2. You are currently logged in this website 3. Website connection error"
     }
 }

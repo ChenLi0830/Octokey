@@ -51,30 +51,30 @@ var RegisterDialog = React.createClass({
     },
 
     render(){
-        const {messages} = this.context.intl;
+        const messages = this.context.intl.messages.register;
         const {registerRequest} = this.props;
         let actions = [
             <FlatButton
-                label={registerRequest.progress !== 100 ?"取消":"完成"/*messages.app_credentialDialogCancel*/}
+                label={registerRequest.progress !== 100 ? messages["cancel-取消"]:messages["ok-完成"]}
                 primary={true}
                 onTouchTap={this.props.whenCloseDialog}/>,
             registerRequest.progress === 100 ?
                 <FlatButton
                     secondary={true}
-                    label={"去登录"/*messages.app_credentialDialogLogin*/}
+                    label={messages["login-去登录"]}
                     onTouchTap={()=>{this.props.whenLogin();this.props.whenCloseDialog();}}
                 /> : null,
             registerRequest.progress === -100 ?
                 <FlatButton
                     secondary={true}
-                    label={"亲自去注册"/*messages.app_credentialDialogLogin*/}
+                    label={messages["manual-sign-up-亲自注册"]}
                     onTouchTap={this.handleRegisterManually}
                 /> : null
         ];
 
         //console.log("registerRequest", registerRequest);
         return <Dialog
-            title={this.props.appName + "-" + "自动注册"/*messages.app_registerDialogMessage*/}
+            title={this.props.appName + "-" + messages["auto-sign-up-自动注册"]}
             actions={actions}
             modal={true}
             open={this.props.openDialogRegister}
@@ -101,60 +101,6 @@ var RegisterDialog = React.createClass({
             throw new Meteor.Error("no registerLink for this app");
         }
     },
-
-
-    /*    handleSubmit(){
-     /!* Error check *!/
-     this.handleInputErrorCheckUser();
-     this.handleInputErrorCheckPass();
-
-     /!* Save data & Handle login *!/
-     let username = this.refs.username.getValue();
-     let password = this.refs.password.getValue();
-
-     if (username && password) {
-     let hexKey = Session.get("hexKey");
-     if (!hexKey) throw Meteor.Error("Can't find master password key");
-     let encryptedPwd = encrypt(password, hexKey, this.props.hexIv);
-     if (this.props.isPublicApp) {
-     Meteor.call("addNewCredential", this.props.appId, username, encryptedPwd, function (error) {
-     if (error) {
-     throw new Meteor.Error("Error adding new Credential");
-     }
-     }.bind(this));
-
-     Meteor.call("appAddUsername", this.props.appId, username, function (error) {
-     if (error) {
-     throw new Meteor.Error("Error adding new Credential");
-     }
-     }.bind(this));
-     this.props.whenSubmitCredential(username, password);
-     this.props.whenCloseDialog();
-     } else {
-     alert("TODO: adding credentials for the private app");
-     }
-
-     //TODO 询问用户是否登录成功,如果否,删除用户登录信息,保留textFields, 如果是,关闭modal.
-     }
-     },
-
-     handleInputErrorCheckUser(){
-     let userName = this.refs.username.getValue();
-     if (!userName) {
-     this.setState({floatingUserText: this.context.intl.messages.login_usernameEmpty});
-     } else {
-     this.setState({floatingUserText: ""});
-     }
-     },
-
-     handleInputErrorCheckPass(){
-     let password = this.refs.password.getValue();
-     if (!password) {
-     this.setState({floatingPassText: this.context.intl.messages.login_pwdEmpty});
-     } else {
-     this.setState({floatingPassText: ""});
-     }
-     },*/
 });
 
 module.exports = RegisterDialog;
