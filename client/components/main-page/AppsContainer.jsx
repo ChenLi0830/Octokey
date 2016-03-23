@@ -185,8 +185,6 @@ var AppsContainer = React.createClass({
             if (isPublicApp) {//是public app
                 //if (this.data.chosenPublicApps[publicFocusedIndex].userNames.length > 0) {
                 if (username) {
-                    //Todo 加入component让用户选择登录credential
-                    let username = this.data.chosenPublicApps[publicFocusedIndex].userNames[0];
                     this.handleLogin(username, "");
                 }
                 else {

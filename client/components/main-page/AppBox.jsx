@@ -83,17 +83,7 @@ var AppBox = React.createClass({
                             {usernameItems}
                         </Menu>
                     </Modal>
-                    /*<Popover
-                        open={this.state.modalOpen}
-                        anchorEl={this.state.anchorEl}
-                        anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                        targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                        onRequestClose={()=>{this.setState({modalOpen:false})}}
-                    >
-                        <Menu zDepth={0} ref="menu" onChange={this.handleAccountTouchTap}>
-                            {usernameItems}
-                        </Menu>
-                    </Popover>*/)
+                    )
                 }
 
 
@@ -123,18 +113,24 @@ var AppBox = React.createClass({
     },
 
     handleTouchTap(event){
-        if (this.props.usernames.length === 0) {
+        //If trying to login
+        if (this.props.userEditStatus==="default"){
+            if (this.props.usernames.length === 0) {
+                this.props.whenAppTileClicked(this.props.appId)
+            }
+            else if (this.props.usernames.length===1){
+                this.props.whenAppTileClicked(this.props.appId, this.props.usernames[0])
+            }
+            else {//More than 1 username, openPopOver to for user to choose
+                this.setState({
+                    modalOpen: true,
+                    anchorEl: event.currentTarget,
+                });
+            }
+        } else {//If trying to remove, edit or register
             this.props.whenAppTileClicked(this.props.appId)
         }
-        else if (this.props.usernames.length===1){
-            this.props.whenAppTileClicked(this.props.appId, this.props.usernames[0])
-        }
-        else {//More than 1 username, openPopOver to for user to choose
-            this.setState({
-                modalOpen: true,
-                anchorEl: event.currentTarget,
-            });
-        }
+
     },
 
     handleAccountTouchTap(event, selectedIndex, menuItem) {
