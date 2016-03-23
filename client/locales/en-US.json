@@ -81,7 +81,7 @@
     "tooltip_register":"Auto-registration",
 
     "ext_install_title":"Octokey - Install Extension",
-    "ext_install_msg":"Please install browser extension for better performance. Currently only Chrome browser is supported.",
+    "ext_install_msg":"Please install browser extension for better performance. Currently supported browsers: 360 and Chrome.",
     "ext_btn_install":"install",
     "ext_btn_cancel":"cancel",
 

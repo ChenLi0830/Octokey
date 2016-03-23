@@ -180,7 +180,7 @@ var JoinUsingMobilePage = React.createClass({
     handleInputErrorCheckUser(){
         let userPhone = this.refs.userPhone.getValue();
         //Todo uncomment when finish testing server error check
-        if (!isValidateCell(this.state.area, userPhone)) {
+        if (!OctoAPI.isValidateCell(this.state.area, userPhone)) {
             this.setState({floatingCellText: messages["mobileFormatError-手机错误"]});
         }
         else {
@@ -418,7 +418,7 @@ var JoinUsingMobilePage = React.createClass({
                         validateStatus={this.state.errorText2!==""? "error": this.state.twoPwdSame ? "success" : ""}
                         help={this.state.errorText2}>
                         <Popover placement="right" title={messages["pwdRequirement-密码要求"]}
-                                 overlay={messages["inputPWDAgain-再次输入"]}
+                                 overlay={messages["pwdConfirmPopover-pop再次输入"]}
                                  trigger="focus">
                             <Input type="password"
                                    ref="password2"

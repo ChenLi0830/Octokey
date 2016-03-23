@@ -27,7 +27,6 @@ const {
     } = SvgIcons;
 
 var AppBox = React.createClass({
-
     propTypes: {
         appId: React.PropTypes.string.isRequired,
         logoURL: React.PropTypes.string.isRequired,
