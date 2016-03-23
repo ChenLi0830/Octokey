@@ -22,6 +22,7 @@
     "cata_createPubApp":"Create Public App",
     "cata_appName":"Name",
     "cata_appLoginLink":"Login link",
+    "cata_appRegisterLink":"Sign-up link",
     "cata_namePlaceHolder":"For example, Facebook",
     "cata_linkPlaceHolder":"For example, https://www.facebook.com/login/",
     "cata_appLogo":"App logo",

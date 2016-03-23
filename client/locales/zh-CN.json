@@ -20,12 +20,13 @@
     "app_noAppBtn":"添加新网站",
 
     "cata_createPubApp":"创建Zen网签",
-    "cata_appName":"网站名",
-    "cata_appLoginLink":"登录链接",
+    "cata_appName":"网站名：",
+    "cata_appLoginLink":"登录链接：",
+    "cata_appRegisterLink":"注册链接：",
     "cata_namePlaceHolder":"例如: Google",
     "cata_linkPlaceHolder":"例如: https://www.google.com/login",
-    "cata_appLogo":"网站Logo",
-    "cata_selectCategory":"选择类别",
+    "cata_appLogo":"网站Logo：",
+    "cata_selectCategory":"选择类别：",
     "cata_createBtn":"创建",
     "cata_createAppAlert":"没填全",
 

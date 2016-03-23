@@ -37,7 +37,7 @@ removeCredential = function (appId, username) {
     Meteor.call("appRemoveUsername", appId, username, handleError);
 },
 
-    getLogoUrl = function (appId) {
+getLogoUrl = function (appId) {
         return "cfs/files/zenApps/" + appId
     };
 

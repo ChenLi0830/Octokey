@@ -8,17 +8,6 @@
  *******************************************************************************/
 var CatalogSingleApp = require('./CatalogSingleApp.jsx');
 var AppLoading = require('../AppLoading.jsx');
-
-const {
-    Modal,
-    Input,
-    Button,
-    Image,
-    Panel,
-    Row,
-    Col,
-    } = ReactBootstrap;
-
 const {
     Paper,
     RaisedButton,
@@ -30,6 +19,10 @@ const {
     TableHeaderColumn,
     TableBody,
     } = MUI;
+
+import {Modal, Form, Input, Button, Checkbox, Radio, Row, Col, Tooltip, Icon, Upload } from 'antd';
+const FormItem = Form.Item;
+const RadioGroup = Radio.Group;
 
 import Subheader from 'material-ui/lib/Subheader';
 
@@ -50,7 +43,7 @@ var CatalogAppsBox = React.createClass({
 
     getMeteorData(){
         if (this.needFetchApps) {
-            console.log("fetch new apps");
+            //console.log("fetch new apps");
             Session.clear("appsOfChosenCategory"),
             OctoAPI.fetchDataToSession("appsOfChosenCategory", "getPublicAppsOfCategory", this.props.chosenCategory);
             this.needFetchApps = false;
@@ -131,17 +124,19 @@ var CatalogAppsBox = React.createClass({
         this.open();//open时会rerender modal里的值,把modalAttributes的值填进去
     },
 
-    handleLogoUpload(){
-        let logoFile = this.refs.logoFile.refs.input.files[0];
+    /** Handle file uploaded to the browser, not to the server yet **/
+    handleLogoUpload(logoFile){
         let reader = new FileReader();
+        reader.readAsDataURL(logoFile);
 
         reader.onloadend = function () {
             this.setState({
-                preview: reader.result
+                preview: reader.result,
             });
         }.bind(this);
 
-        reader.readAsDataURL(logoFile);
+        //Stop file from being uploaded to server
+        return false;
     },
 
     onCellClick(rowNumber, columnId){
@@ -157,7 +152,6 @@ var CatalogAppsBox = React.createClass({
     },
 
     handleEditApp(event){
-        event.preventDefault();
         //console.log("modalAttributes.selectedCategoryNames", modalAttributes.selectedCategoryNames);
         //console.log("this.state.preview", this.state.preview);
         const loginLink = this.refs.loginLink.refs.input.value;
@@ -172,6 +166,9 @@ var CatalogAppsBox = React.createClass({
                     if (error) {
                         throw new Meteor.Error(error);
                     }
+
+                    //Fetch updated data from publicApps collection
+                    OctoAPI.fetchDataToSession("allPublicApps", "getAllPublicApps");
                     this.close();
                 }.bind(this));
         } else {
@@ -227,6 +224,11 @@ var CatalogAppsBox = React.createClass({
                 </TableRow>
             }.bind(this)) : null;
 
+        const formItemLayout = {
+            labelCol: { span: 6 },
+            wrapperCol: { span: 14 },
+        };
+
         //Todo: create a new component to separate Modal from AppsBox, catalogAppsBox component is getting too bulky.
         return <div className="layout-margin">
             <Paper zDepth={1}
@@ -240,34 +242,52 @@ var CatalogAppsBox = React.createClass({
                 </List>
             </Paper>
 
-            <Modal show={this.state.showModal} onHide={this.close}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{messages.cata_editPubApp}</Modal.Title>
-                    <Button onClick={this.handleRemoveApp}>{messages.cata_removePubApp}</Button>
-                </Modal.Header>
-                <Modal.Body>
-                    <form onSubmit={this.handlePublicSubmit}>
+            <Modal title={messages.cata_editPubApp}
+                   visible={this.state.showModal}
+                   onCancel={this.close}
+                   onOk={this.handleEditApp}
+                   okText={messages.cata_editPubAppBtn}
+            >
 
-                        <Input type="text" label={messages.cata_appName} ref="appName"
+                {modalAttributes.appName!=="" ?
+                    <Form horizontal>
+                    <FormItem
+                        {...formItemLayout}
+                        label={messages.cata_appName}>
+                        <Input type="text" ref="appName"
                                placeholder={messages.cata_namePlaceHolder} defaultValue={modalAttributes.appName}/>
-                        <Input type="text" label={messages.cata_appLoginLink} ref="loginLink"
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
+                        label={messages.cata_appLoginLink}>
+                        <Input type="text" ref="loginLink"
                                placeholder={messages.cata_linkPlaceHolder} defaultValue={modalAttributes.loginLink}/>
-                        <Input type="text" label={"注册链接"/*messages.cata_appRegisterLink*/} ref="registerLink"
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
+                        label={messages.cata_appRegisterLink}>
+                        <Input type="text" ref="registerLink"
                                defaultValue={modalAttributes.registerLink}/>
+                    </FormItem>
 
-                        <Input type="file"
-                               label={messages.cata_appLogo}
-                               ref="logoFile"
-                               accept=".png, .jpg"
-                               onChange={this.handleLogoUpload}
-                               help=""/>
-                        <Row>
-                            <Col xs={6} md={4}>
-                                <Image ref="preview" src={this.state.preview} rounded/>
-                            </Col>
-                        </Row>
-
-                        <hr/>
+                    <FormItem
+                        label={messages.cata_appLogo}
+                        help={"logo可能会被cache,如果发现修改没有反应，请clear cache"/*messages*/}
+                        {...formItemLayout}>
+                        <Upload
+                            action="ItIsHandledByBeforeUpload"
+                            listType="picture-card"
+                            fileList={[{
+                                uid: -1,
+                                status: 'done',
+                                url: this.state.preview
+                            }]}
+                            beforeUpload={this.handleLogoUpload}
+                        >
+                            <Icon type="plus" />
+                            <div className="ant-upload-text">上传照片</div>
+                        </Upload>
+                    </FormItem>
 
                         <Table
                             height="200px"
@@ -291,11 +311,8 @@ var CatalogAppsBox = React.createClass({
                                 {categoryTableRows}
                             </TableBody>
                         </Table>
-                    </form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={this.handleEditApp}>{messages.cata_editPubAppBtn}</Button>
-                </Modal.Footer>
+
+                </Form> : null}
             </Modal>
         </div>
     }
