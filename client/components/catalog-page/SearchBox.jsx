@@ -72,7 +72,7 @@ var SearchBox = React.createClass({
                 if (this.state.searchText.length > 0) {
                     let searchValue = (this.props.zenApps.map(function (app) {
                             if (app.appName.toLowerCase().indexOf(this.state.searchText.toLowerCase()) > -1) {
-                                let logoURL = getLogoUrl(app._id);
+                                let logoURL = OctoAPI.getLogoUrl(app._id);
                                 let subscribed = this.props.subscribeList[app._id];
                                 return <CatalogSingleApp key={app._id}
                                                          logoURL={logoURL}

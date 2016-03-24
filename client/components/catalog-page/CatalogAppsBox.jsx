@@ -104,7 +104,7 @@ var CatalogAppsBox = React.createClass({
     },
 
     handleClick(appId, appName, loginLink, registerLink, logoURL, selectedCategoryNames){
-        if (!isAdmin(Meteor.user())) {
+        if (!OctoAPI.isAdmin(Meteor.user())) {
             return
         }
 
@@ -124,18 +124,19 @@ var CatalogAppsBox = React.createClass({
         this.open();//open时会rerender modal里的值,把modalAttributes的值填进去
     },
 
-    /** Handle file uploaded to the browser, not to the server yet **/
+    /** Handle file uploaded to the browser, not to the server yet */
     handleLogoUpload(logoFile){
-        let reader = new FileReader();
-        reader.readAsDataURL(logoFile);
+        OctoAPI.checkImageFile(logoFile, function(err, imageFile){
+            if (err){
+                alert("error: "+err);
+            }
+            else {
+                this.setState({
+                    preview: imageFile,
+                });
+            }
+        }.bind(this));
 
-        reader.onloadend = function () {
-            this.setState({
-                preview: reader.result,
-            });
-        }.bind(this);
-
-        //Stop file from being uploaded to server
         return false;
     },
 
@@ -196,7 +197,7 @@ var CatalogAppsBox = React.createClass({
 
         const {messages} = this.context.intl;
         const appsOfChosenCategory = (Session.get("appsOfChosenCategory").map(function (app) {
-                let logoURL = getLogoUrl(app._id);
+                let logoURL = OctoAPI.getLogoUrl(app._id);
                 let subscribed = this.props.subscribeList[app._id];
                 return <CatalogSingleApp key={app._id}
                                          logoURL={logoURL}
@@ -272,7 +273,7 @@ var CatalogAppsBox = React.createClass({
 
                     <FormItem
                         label={messages.cata_appLogo}
-                        help={"logo可能会被cache,如果发现修改没有反应，请clear cache"/*messages*/}
+                        help={"上传Logo要求: 小于100KB的png文件, 图片尺寸最高200 * 200像素; logo可能会被cache,如果发现修改没有反应，请clear cache"/*messages*/}
                         {...formItemLayout}>
                         <Upload
                             action="ItIsHandledByBeforeUpload"
@@ -285,10 +286,10 @@ var CatalogAppsBox = React.createClass({
                             beforeUpload={this.handleLogoUpload}
                         >
                             <Icon type="plus" />
-                            <div className="ant-upload-text">上传照片</div>
+                            <div className="ant-upload-text">上传图片</div>
                         </Upload>
                     </FormItem>
-
+                        <br/>
                         <Table
                             height="200px"
                             fixedHeader={true}
@@ -311,7 +312,6 @@ var CatalogAppsBox = React.createClass({
                                 {categoryTableRows}
                             </TableBody>
                         </Table>
-
                 </Form> : null}
             </Modal>
         </div>

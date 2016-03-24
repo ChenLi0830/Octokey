@@ -100,7 +100,7 @@ var AddNewCredentialDialog = React.createClass({
         if (username && password) {
             let hexKey = Session.get("hexKey");
             if (!hexKey) throw Meteor.Error("Can't find master password key");
-            let encryptedPwd = encrypt(password, hexKey, this.props.hexIv);
+            let encryptedPwd = OctoAPI.encrypt(password, hexKey, this.props.hexIv);
 
             if (this.props.isPublicApp) {
                 Meteor.call("addNewCredential", this.props.appId, username, encryptedPwd, function (error) {

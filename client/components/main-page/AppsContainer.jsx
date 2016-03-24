@@ -336,7 +336,7 @@ var AppsContainer = React.createClass({
             if (event.data.username && event.data.password) {//event contains username && password
                 if (event.data.userId === this.data.currentUser._id) {//Check if its still the same user
                     registeredUsername = event.data.username;
-                    saveCredential(event.data.appId, this.data.hexIv, event.data.username, event.data.password, true)
+                    OctoAPI.saveCredential(event.data.appId, this.data.hexIv, event.data.username, event.data.password, true)
                 }
             }
         }

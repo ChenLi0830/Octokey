@@ -73,10 +73,8 @@ Meteor.methods({
 
     updateZenApp(appId, appName, loginLink, registerLink, logo, selectedCategoryNames){
         localSimulateLatency(500);
-        //console.log("appName",appName);
-        //console.log("loginLink",loginLink);
-        console.log("update start: appId", appId, "appName", appName, "loginLink", loginLink, "selectedCategoryNames",
-            selectedCategoryNames, "registerLink", registerLink);
+        /*console.log("update start: appId", appId, "appName", appName, "loginLink", loginLink, "selectedCategoryNames",
+            selectedCategoryNames, "registerLink", registerLink);*/
 
         checkUserLogin();
         checkAdmin();
@@ -88,7 +86,6 @@ Meteor.methods({
             throw new Meteor.Error("No existing App matches appId", appId);
         }
 
-        console.log("logo", logo);
         //注意,新上传的logo对应是一个文件,而已经存在的logo对应是一个path string
         if (logo.indexOf("cfs/files/zenApps") > -1) {//Update data only
             let updatedApp = existingApp;
