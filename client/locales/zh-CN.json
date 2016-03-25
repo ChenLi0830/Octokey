@@ -29,6 +29,8 @@
     "cata_selectCategory":"选择类别：",
     "cata_createBtn":"创建",
     "cata_createAppAlert":"没填全",
+    "cata_logoRequirement-上传要求":"上传Logo要求: 小于100KB的png文件, 图片尺寸最高200 * 200像素; logo可能会被cache,如果发现修改没有反应，请clear cache",
+    "cata_uploadLogo-上传图片":"上传图片",
 
     "cata_createPrivateMessage":"找不到需要的网站标签?",
     "cata_createPrivateBtn":"创建新网签",

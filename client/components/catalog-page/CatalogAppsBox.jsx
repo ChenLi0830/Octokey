@@ -273,7 +273,7 @@ var CatalogAppsBox = React.createClass({
 
                     <FormItem
                         label={messages.cata_appLogo}
-                        help={"上传Logo要求: 小于100KB的png文件, 图片尺寸最高200 * 200像素; logo可能会被cache,如果发现修改没有反应，请clear cache"/*messages*/}
+                        help={messages["cata_logoRequirement-上传要求"]}
                         {...formItemLayout}>
                         <Upload
                             action="ItIsHandledByBeforeUpload"
@@ -286,7 +286,7 @@ var CatalogAppsBox = React.createClass({
                             beforeUpload={this.handleLogoUpload}
                         >
                             <Icon type="plus" />
-                            <div className="ant-upload-text">上传图片</div>
+                            <div className="ant-upload-text">{messages["cata_uploadLogo-上传图片"]}</div>
                         </Upload>
                     </FormItem>
                         <br/>

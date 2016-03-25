@@ -27,11 +27,7 @@ var Catalog = React.createClass({
     getMeteorData(){
         OctoAPI.fetchDataToSessionIfNull("allPublicApps", "getAllPublicApps");
         OctoAPI.fetchDataToSessionIfNull("allCategories", "getAllCategories");
-
-
-        this.Pages = new Meteor.Pagination(UserApps);
-        console.log("this.Pages", this.Pages);
-
+        
         const subsHandles = [
             Session.get("allPublicApps"),
             Session.get("allCategories"),

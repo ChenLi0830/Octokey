@@ -29,6 +29,8 @@
     "cata_selectCategory":"Select categories",
     "cata_createBtn":"Create",
     "cata_createAppAlert":"Form not filled in correctly",
+    "cata_logoRequirement-上传要求":"Logo requirement: format: png, size < 100KB, height && width <200px. Logo might be cached, if change does not work, please clear history in your browser",
+    "cata_uploadLogo-上传图片":"upload",
 
     "cata_createPrivateMessage":"Can't find an app?",
     "cata_createPrivateBtn":"Create New App",
