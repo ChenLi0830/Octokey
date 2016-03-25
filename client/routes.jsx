@@ -8,7 +8,7 @@
  *******************************************************************************/
 var App = require('./components/App.jsx');
 var AppsContainer = require('./components/main-page/AppsContainer.jsx');
-var Catalog = require('./components/catalog-page/Catalog.jsx');
+var CatalogContainer = require('./components/catalog-page/CatalogContainer.jsx');
 var JoinUsingMobilePage = require('./components/accounts/JoinUsingMobilePage.jsx');
 var JoinUsingEmailPage = require('./components/accounts/JoinUsingEmailPage.jsx');
 var PageNotFound = require('./components/PageNotFound.jsx');
@@ -66,7 +66,7 @@ const routes = (
     <Route path="/" component={App}>
         <IndexRoute component={AuthSignIn} onEnter={verifyNotLogin}/>
         <Route path="/list" component={AppsContainer} onEnter={requireAuth}/>
-        <Route path="/catalog" component={Catalog} onEnter={requireAuth}/>
+        <Route path="/catalog" component={CatalogContainer} onEnter={requireAuth}/>
         <Route path="/join" component={JoinUsingMobilePage} onEnter={verifyNotLogin}/>
         <Route path="/joinEmail" component={JoinUsingEmailPage} onEnter={verifyNotLogin}/>
         {/*<Route path="/loginEmail" component={AuthSignInEmail} onEnter={verifyNotLogin}/>*/}

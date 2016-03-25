@@ -14,9 +14,15 @@ import { Row, Col } from 'antd';
 
 var Catalog = React.createClass({
     mixins: [
-        ReactMeteorData,
         Reflux.listenTo(CategoryStore, 'categoryChange')
     ],
+
+    propTypes:{
+        subsReady: React.PropTypes.bool.isRequired,
+        subscribeList: React.PropTypes.array.isRequired,
+        allPublicApps: React.PropTypes.array.isRequired,
+        allCategories: React.PropTypes.array.isRequired,
+    },
 
     getInitialState(){
         return {
@@ -24,61 +30,27 @@ var Catalog = React.createClass({
         }
     },
 
-    getMeteorData(){
-        OctoAPI.fetchDataToSessionIfNull("allPublicApps", "getAllPublicApps");
-        OctoAPI.fetchDataToSessionIfNull("allCategories", "getAllCategories");
-        
-        const subsHandles = [
-            Session.get("allPublicApps"),
-            Session.get("allCategories"),
-            Meteor.subscribe("userApps"),
-        ];
-        const subsReady = OctoAPI.subsHandlesAreReady(subsHandles);
-
-        const AppOfUser = UserApps.findOne({userId: Meteor.userId()}, {reactive: true});
-
-        let subscribeList = [];
-        if (subsReady) {
-            Session.get("allPublicApps").map(function (publicApp) {
-                let subscribed = _.findIndex(AppOfUser.publicApps, function (subscribedApp) {
-                        return subscribedApp.appId === publicApp._id
-                    }) > -1;
-                subscribeList[publicApp._id] = subscribed;
-            })
-        }
-
-        return {
-            subscribeList: subscribeList,
-            subsReady: subsReady
-        }
-    },
-
-
     render(){
-        if (!this.data.subsReady){
+        if (!this.props.subsReady){
             return <AppLoading/>
         }
-        let catalogPage = (
+        return <div>
             <div>
                 <Row>
                     <Col span="6">
-                        <CatalogSideBar zenCategories={Session.get("allCategories")}
-                                        zenApps={Session.get("allPublicApps")}
-                                        subscribeList={this.data.subscribeList}
+                        <CatalogSideBar zenCategories={this.props.allCategories}
+                                        zenApps={this.props.allPublicApps}
+                                        subscribeList={this.props.subscribeList}
                         />
                     </Col>
                     <Col span="18">
-                        <CatalogAppsBox zenCategories={Session.get("allCategories")}
-                                        subscribeList={this.data.subscribeList}
+                        <CatalogAppsBox zenCategories={this.props.allCategories}
+                                        subscribeList={this.props.subscribeList}
                                         chosenCategory={this.state.chosenCategory}
                         />
                     </Col>
                 </Row>
             </div>
-        );
-
-        return <div>
-            {catalogPage}
         </div>
     },
 
