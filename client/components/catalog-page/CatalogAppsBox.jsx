@@ -8,6 +8,8 @@
  *******************************************************************************/
 var CatalogSingleApp = require('./CatalogSingleApp.jsx');
 var AppLoading = require('../AppLoading.jsx');
+var Infinite = require('react-infinite');
+
 const {
     Paper,
     List,
@@ -23,10 +25,10 @@ const {
     } = SvgIcons;
 
 const styles = {
-    appListPaper:{
-        backgroundColor:ZenColor.white,
-        padding:0,
-        borderRadius:"5px"
+    appListPaper: {
+        backgroundColor: ZenColor.white,
+        padding: 0,
+        borderRadius: "5px"
     }
 };
 
@@ -35,9 +37,8 @@ var CatalogAppsBox = React.createClass({
 
     getMeteorData(){
         if (this.needFetchApps) {
-            //console.log("fetch new apps");
-            Session.clear("appsOfChosenCategory"),
-            OctoAPI.fetchDataToSession("appsOfChosenCategory", "getPublicAppsOfCategory", this.props.chosenCategory);
+            OctoAPI.fetchDataToSession("appsOfChosenCategory", "getPublicAppsOfCategory", this.props.chosenCategory,
+                this.state.loadAppsNumber);
             this.needFetchApps = false;
         }
         const subsHandles = [
@@ -50,8 +51,9 @@ var CatalogAppsBox = React.createClass({
 
     componentWillReceiveProps(nextProps){
         if (nextProps.chosenCategory !== this.props.chosenCategory) {
-            //Apps should only be fetched if the user chose a different category
+            //Apps should be fetched if the user chose a different category
             this.needFetchApps = true;
+            this.setState({loadAppsNumber:10});
         }
     },
 
@@ -72,11 +74,29 @@ var CatalogAppsBox = React.createClass({
             showModal: false,
             preview: null,
             editAppId: null,
+            loadAppsNumber: 10,
         }
     },
 
-    render(){
+    handleInfiniteLoad(){
+        console.log("handleInfiniteLoad, !this.data.subsReady is ", !this.data.subsReady);
+        //Won't try to load more apps when data-fetching is not finished.
         if (!this.data.subsReady) {
+            console.log("return");
+            return;
+        }
+        this.needFetchApps = true;
+        this.setState({loadAppsNumber: this.state.loadAppsNumber + 10});
+
+        console.log("this.data.subsReady, this.state.loadAppsNumber", this.data.subsReady, this.state.loadAppsNumber);
+    },
+
+    elementInfiniteLoad() {
+        return <AppLoading/>;
+    },
+
+    render(){
+        if (!this.data.subsReady && !Session.get("appsOfChosenCategory")) {
             return <AppLoading/>
         }
 
@@ -105,7 +125,15 @@ var CatalogAppsBox = React.createClass({
                    style={styles.appListPaper}>
                 <List style={{backgroundColor:ZenColor.white}}>
                     <Subheader>{messages.cata_listTitle}</Subheader>
-                    {appsOfChosenCategory}
+                    <Infinite elementHeight={100}
+                              useWindowAsScrollContainer
+                              infiniteLoadBeginEdgeOffset={-170}
+                              onInfiniteLoad={this.handleInfiniteLoad}
+                              loadingSpinnerDelegate={this.elementInfiniteLoad()}
+                              isInfiniteLoading={!this.data.subsReady}
+                    >
+                        {appsOfChosenCategory}
+                    </Infinite>
                 </List>
             </Paper>
         </div>

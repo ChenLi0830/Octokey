@@ -24,16 +24,22 @@ ZenApps.allow({
  return this.user();
  }
  });*/
+const MAX_APPS = 1000;
 
 Meteor.methods({
-    getPublicAppsOfCategory(categoryName){
+    getPublicAppsOfCategory(categoryName, limit){
         localSimulateLatency(500);
+        //console.log("limit for all apps",limit);
+        const options = {
+            sort: {subscribeCount: -1},
+            limit: Math.min(limit, MAX_APPS)
+        };
         if (this.userId) {
             return ZenApps.find({
                 categoryNames: {
                     $in: [categoryName]
                 }
-            }, {sort: {subscribeCount: -1}}).fetch();
+            }, options).fetch();
         }
     },
 

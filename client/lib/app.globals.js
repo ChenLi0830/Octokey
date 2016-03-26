@@ -27,7 +27,10 @@ Radium = require('radium');
 
 antd = require("antd");
 
-/*   Set up intl-polyfill for different apps, see details (Search for issue#150 in React-Intl to see details)  */
+
+/**
+ * Set up intl-polyfill for different apps, see details (Search for issue#150 in React-Intl to see details)
+ */
 if (global.Intl) {
     // Determine if the built-in `Intl` has the locale data we need.
     var IntlPolyfill = require('intl');
