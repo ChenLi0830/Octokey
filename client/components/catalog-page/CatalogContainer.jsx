@@ -47,8 +47,8 @@ var CatalogContainer = React.createClass({
             <Catalog
                 subsReady = {this.data.subsReady}
                 subscribeList= {this.data.subscribeList}
-                allPublicApps = {Session.get("allPublicApps")}
-                allCategories = {Session.get("allCategories")}
+                allPublicApps = {Session.get("allPublicApps") || []}
+                allCategories = {Session.get("allCategories") || []}
             />
         </div>
     },

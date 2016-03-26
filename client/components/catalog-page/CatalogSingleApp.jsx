@@ -34,6 +34,8 @@ let styles = {
     },
 };
 
+const CatalogAppModalContainer = require('./CatalogAppModalContainer.jsx');
+
 var CatalogSingleApp = React.createClass({
     propTypes: {
         logoURL: React.PropTypes.string.isRequired,
@@ -46,6 +48,7 @@ var CatalogSingleApp = React.createClass({
         subscribed: React.PropTypes.bool.isRequired,
         condensed: React.PropTypes.bool,
         subsCount: React.PropTypes.number,
+        zenCategories: React.PropTypes.array.isRequired,
     },
 
     getDefaultProps: function () {
@@ -54,6 +57,7 @@ var CatalogSingleApp = React.createClass({
             whenClicked: ()=> {
             },
             subsCount: 0,
+            registerLink:"",
         };
     },
 
@@ -63,7 +67,8 @@ var CatalogSingleApp = React.createClass({
 
     getInitialState(){
         return {
-            hovered: false
+            hovered: false,
+            modalOpen: false,
         }
     },
 
@@ -83,7 +88,7 @@ var CatalogSingleApp = React.createClass({
         const {messages} = this.context.intl;
         const {logoURL,appName,loginLink,registerLink,appId,selectedCategoryNames, condensed,subsCount} = this.props;
 
-        let handleToggle = this.props.subscribed ? this.handleRemove : this.handleAdd;
+        let handleToggle = this.props.subscribed ? this.handleUnsubscribe : this.handleSubscribe;
         let labelText = this.props.subscribed ? messages.cata_added : messages.cata_add;
         let toggleState = this.props.subscribed ? true : false;
 
@@ -97,13 +102,25 @@ var CatalogSingleApp = React.createClass({
             defaultToggled={toggleState}/>;
 
         return <div>
+            <CatalogAppModalContainer
+                modalOpen={this.state.modalOpen}
+                logoURL = {logoURL}
+                appName = {appName}
+                loginLink = {loginLink}
+                registerLink = {registerLink}
+                appId = {appId}
+                selectedCategoryNames = {selectedCategoryNames}
+                onModalClose={()=>{this.setState({modalOpen:false})}}
+                zenCategories={this.props.zenCategories}
+            />
+
             <Row style={_.extend({}, styles.row,
                                     {backgroundColor: this.state.hovered? ZenColor.grey1_5 : ZenColor.white}
                             )}
                  onMouseOver={this.handleMouseOver}
                  onMouseOut={this.handleMouseOut}>
                 <Col xs={3} sm={3} md={condensed? 2:3}
-                     onClick={this.props.whenClicked.bind(null, appId, appName, loginLink, registerLink, logoURL, selectedCategoryNames)}
+                     onClick={()=>{this.setState({modalOpen:true})}}
                      style={{height:"100%", textAlign:"center"}}>
                     <span className="helper"></span><img className="vertial-middle " src={logoURL}
                                                          style={{width:condensed ? "25px": "50px", top:"18px"}}/>
@@ -119,21 +136,21 @@ var CatalogSingleApp = React.createClass({
                 </Col>
 
                 {/*<Col xs={0} sm={2} md={2} xsHidden
-                     style={{display:condensed?"none":"block",color:ZenColor.grey3}}
-                     className="vertical-center">
-                    <p>{subsCount + messages.cata_peopleUse}</p>
+                 style={{display:condensed?"none":"block",color:ZenColor.grey3}}
+                 className="vertical-center">
+                 <p>{subsCount + messages.cata_peopleUse}</p>
 
-                </Col>*/}
+                 </Col>*/}
             </Row>
         </div>
     },
 
-    handleAdd(){
+    handleSubscribe(){
         const {logoURL,appName,loginLink,registerLink,appId} = this.props;
         Meteor.call("addPublicApp", appId, appName, logoURL, loginLink, registerLink);
     },
 
-    handleRemove(){
+    handleUnsubscribe(){
         Meteor.call("removePublicApp", this.props.appId);
     }
 });
