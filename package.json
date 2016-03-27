@@ -2,9 +2,6 @@
   "name": "ZenID_meteor1.3",
   "version": "1.0.0",
   "description": "",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -17,9 +14,30 @@
     "react": "^0.14.7",
     "react-bootstrap": "^0.28.2",
     "react-dom": "^0.14.7",
+    "react-infinite": "^0.9.0",
     "react-intl": "^2.0.0-beta-2",
     "react-router": "^2.0.0-rc5",
     "react-tap-event-plugin": "^0.2.2",
     "reflux": "^0.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^2.5.1",
+    "eslint-config-airbnb": "^6.2.0",
+    "eslint-plugin-meteor": "^3.4.0",
+    "eslint-plugin-react": "^4.2.3"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint --silent"
+  },
+  "eslintConfig": {
+    "plugins": [
+      "meteor"
+    ],
+    "extends": [
+      "airbnb",
+      "plugin:meteor/guide"
+    ],
+    "rules": {}
   }
 }
