@@ -8,7 +8,7 @@
  *******************************************************************************/
 //var LanguageIcon = require('../header/LanguageIcon.jsx');
 var JoinStep1 = require('./JoinStep1.jsx');
-
+var JoinStep2Mobile = require('./JoinStep2Mobile.jsx');
 const Link = ReactRouter.Link;
 
 const {
@@ -134,7 +134,8 @@ var JoinUsingMobilePage = React.createClass({
       step: 0,
       finalCaptcha: "",
       finalPwd: "",
-      finalCell: "",
+      finalMobile: "",
+      isUsingEmail: false,
       //showConfirmBtn: false,
       //verifyBtnDisable: false,
       showPopOver: false,
@@ -146,13 +147,12 @@ var JoinUsingMobilePage = React.createClass({
     };
   },
 
-  componentWillUnmount() {
-    clearTimeout(this.countDownTimer);
-  },
 
   render() {
     messages = _.extend({}, this.context.intl.messages.join, this.context.intl.messages.signIn);
     let contentOfStep = this.getContentForEachStep();
+
+    console.log("contentOfStep",contentOfStep);
 
     const steps = [{
       title: messages["stepUsername-设置用户名"],
@@ -296,105 +296,45 @@ var JoinUsingMobilePage = React.createClass({
 
   getContentForEachStep(){
     let contentOfStep = [];
-    contentOfStep[0] = <JoinStep1/>;
+    contentOfStep[0] = <JoinStep1 onStepComplete={this.onStep1Complete}/>;
 
-    contentOfStep[1] = (
-        <Col sm={8} smOffset={2} md={6} mdOffset={3} xs={12} style={styles.contentCol}>
-          <div>
-            <h1 style={styles.primaryText}>
-              {messages["setMasterPWD-设置核心密码"]}
-            </h1>
-          </div>
-          <div>
-            <h2 style={_.extend({}, styles.secondaryText, {marginTop: 30})}>
-              {messages["msg-唯一要记的密码"]}
-            </h2>
-            <h4 style={styles.secondaryText}>
-              {messages["msg-核心密码无法取回"]}
-            </h4>
-          </div>
-          <br/>
-          <Form horizontal>
-            <input style={{display: "none"}} type="text"
-                   name="fakeusernameremembered"/>
-            <input style={{display: "none"}} type="password"
-                   name="fakepasswordremembered"/>
+    if (this.state.isUsingEmail){//Register using Email
 
-            <FormItem
-                label={messages["masterPWD-核心密码"]}
-                hasFeedback={true}
-                labelCol={{ span: 6 }}
-                wrapperCol={{ span: 18 }}
-                validateStatus={this.state.errorText!==""?"error": this.state.pwdVerified ? "success" : ""}
-                help={this.state.errorText}>
-              <Popover placement="right" title={messages["pwdRequirement-密码要求"]}
-                       overlay={<div>{messages["pwdLength-密码长度"]}<br />{messages["pwdFormat-密码格式"]}</div>}
-                       trigger="focus"
-              >
-                <Input type="password"
-                       ref="password"
-                       autoComplete="off"
-                       onContextMenu={false} onPaste={false} onCopy={false} onCut={false}
-                       onBlur={this.pwdOnBlur1}
-                       onChange={this.handleInputPassword}
-                />
-              </Popover>
-            </FormItem>
+    } else {//Register using Mobile
+      contentOfStep[1] = <JoinStep2Mobile finalMobile = {this.state.finalMobile}
+                                          finalCaptcha = {this.state.finalCaptcha}
+                                          onStepComplete= {()=>{this.setState({step:2})}}
+      />;
+
+      contentOfStep[2] = (
+          <Col sm={8} smOffset={2} md={6} mdOffset={3} xs={12} style={styles.contentCol}>
+            <div>
+              <h1 style={styles.primaryText}>
+                {messages["signUpSuccess-注册成功"]}
+              </h1>
+              <br/>
+              <h3>
+                {messages["plzWait-正在登录请稍候"]}
+              </h3>
+              <CircularProgress size={1}/>
+            </div>
+          </Col>
+      );
+    }
 
 
-            <FormItem
-                label={messages["inputPWDAgain-再次输入"]}
-                hasFeedback={true}
-                labelCol={{ span: 6 }}
-                wrapperCol={{ span: 18 }}
-                validateStatus={this.state.errorText2!==""? "error": this.state.twoPwdSame ? "success" : ""}
-                help={this.state.errorText2}>
-              <Popover placement="right" title={messages["pwdRequirement-密码要求"]}
-                       overlay={messages["pwdConfirmPopover-pop再次输入"]}
-                       trigger="focus">
-                <Input type="password"
-                       ref="password2"
-                       autoComplete="off"
-                       onContextMenu={false} onPaste={false} onCopy={false} onCut={false}
-                       onBlur={this.pwdOnBlur2}
-                       onChange={this.handleInputPassword2}
-                />
-              </Popover>
-            </FormItem>
-
-          </Form>
-
-          <RaisedButton label={messages["ok-确认"]}
-                        onClick={this.handleRegister}
-                        style={styles.registerButton}
-                        secondary={true}
-                        disabled={this.state.registerBtnDisable}
-          />
-
-          {/*Todo add captcha*/}
-
-          <br/>
-
-        </Col>
-    );
-    contentOfStep[2] = (
-        <Col sm={8} smOffset={2} md={6} mdOffset={3} xs={12} style={styles.contentCol}>
-          <div>
-            <h1 style={styles.primaryText}>
-              {messages["signUpSuccess-注册成功"]}
-            </h1>
-            <br/>
-            <h3>
-              {messages["plzWait-正在登录请稍候"]}
-            </h3>
-            <CircularProgress size={1}/>
-          </div>
-        </Col>
-    );
 
     return contentOfStep;
   },
 
+  onStep1Complete(newState){
+    this.setState({
+      step: 1,
+      finalCaptcha: newState.finalCaptcha,
+      finalMobile: newState.finalMobile,
+      isUsingEmail: newState.isUsingEmail,
+    });
+  },
 /*  //Check if it only contains number, if not, disable area selection
   handleTextFieldChange(){
     let phoneOrEmail = this.refs.phoneOrEmail.getValue();
@@ -436,14 +376,14 @@ var JoinUsingMobilePage = React.createClass({
         //throw new Meteor.Error("error", error);
       } else {
         //clearTimeout(this.countDownTimer);
-        this.setState({step: 1, verifyBtnDisable: false, finalCaptcha: captcha, finalCell: cell});
+        this.setState({step: 1, verifyBtnDisable: false, finalCaptcha: captcha, finalMobile: cell});
         //console.log("verify successful!");
       }
     }.bind(this));
   },
 */
 
-  handleInputPassword(){
+/*  handleInputPassword(){
     const pwd = this.refs.password.refs.input.value;
     //console.log("pwd",pwd);
     //Check password
@@ -466,22 +406,22 @@ var JoinUsingMobilePage = React.createClass({
       this.setState({twoPwdSame: false});
       return false;
     }
-  },
+  },*/
 
-  handleRegister(){
+/*  handleRegister(){
     //if no errors, go to step 3, create account
     const noError = this.handleInputPassword() && this.handleInputPassword2();
 
     if (noError) {
       this.setState(
-          {errorText: "" /*message*/, step: 2, finalPwd: this.refs.password.refs.input.value},
+          {errorText: "" /!*message*!/, step: 2, finalPwd: this.refs.password.refs.input.value},
           setTimeout(register.bind(this), 2000));//添加2秒传递时间, 增加用户体验
 
       function register() {
-        const {finalCell,finalCaptcha,finalPwd} = this.state;
-        if (finalCell && finalCaptcha && finalPwd) {
+        const {finalMobile,finalCaptcha,finalPwd} = this.state;
+        if (finalMobile && finalCaptcha && finalPwd) {
           //Todo, 加上验证信息 - > 刚刚有人发送了验证码,如果不是本人操作请报告.
-          Accounts.verifyPhone(finalCell, finalCaptcha, finalPwd, function (error) {
+          Accounts.verifyPhone(finalMobile, finalCaptcha, finalPwd, function (error) {
             if (error) {
               throw new Meteor.Error("error", error);
             }
@@ -501,11 +441,11 @@ var JoinUsingMobilePage = React.createClass({
         this.setState({errorText: messages["unknownError-两次输入的密码有误"]})
       }
     }
-  },
+  },*/
 
-  pwdOnBlur1(){
+/*  pwdOnBlur1(){
     if (this.state.pwdVerified) {
-      this.setState({showPopOver: false, errorText: "" /*message*/})
+      this.setState({showPopOver: false, errorText: "" /!*message*!/})
     } else {
       this.setState({showPopOver: false, errorText: messages["pwdFormatError-密码格式有误"]})
     }
@@ -517,7 +457,7 @@ var JoinUsingMobilePage = React.createClass({
     } else {
       this.setState({showPopOver2: false, errorText2: messages["pwdNotMatch-两次密码不一致"]})
     }
-  }
+  }*/
 });
 
 module.exports = JoinUsingMobilePage;

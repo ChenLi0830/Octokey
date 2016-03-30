@@ -10,8 +10,6 @@ var AppLoading = require('./AppLoading.jsx');
 var Header = require('./header/Header.jsx');
 import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
 
-//import 'antd/lib/index.css';
-
 var {AppCanvas,Paper} = MUI;
 var {Grid,Row,Col} = ReactBootstrap;
 
