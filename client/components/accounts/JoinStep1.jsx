@@ -1,39 +1,25 @@
+/*******************************************************************************
+ * Copyright (C) 2015 Octokey Inc.
+ *
+ * Creator: Chen Li<chen.li@oyaoshi.com>
+ * Creation Date: 2015-2-2
+ *
+ * Sign-up Step 1, called by "JoinPage"
+ *******************************************************************************/
+
 const LanguageIcon = require('../header/LanguageIcon.jsx');
 const Link = ReactRouter.Link;
 
 const {
-    Paper,
-    FlatButton,
     TextField,
     RaisedButton,
     DropDownMenu,
     MenuItem,
-    IconMenu,
-    IconButton,
-    Tabs,
-    Tab,
-    FontIcon,
-    Divider,
-    CircularProgress,
     } = MUI;
-
-const {
-    ActionAccountCircle,
-    NotificationEnhancedEncryption,
-    ActionVerifiedUser
-    } = SvgIcons;
 
 const {FormattedMessage} = ReactIntl;
 
-const {
-    Col,
-    FormControls,
-  //Input,
-  //Popover,
-    Overlay,
-    } = ReactBootstrap;
-
-//Todo remove unnecessary require
+const {Col} = ReactBootstrap;
 
 const styles = {
   languageItem: {
@@ -85,6 +71,10 @@ var JoinStep1 = React.createClass({
     intl: React.PropTypes.object.isRequired,
   },
 
+  propTypes: {
+    onStepComplete: React.PropTypes.func.isRequired,
+  },
+
   getInitialState(){
     return {
       area: "cn",
@@ -92,9 +82,13 @@ var JoinStep1 = React.createClass({
       floatingUserText: "",
       floatingCaptchaText: "",
       captchaBtn: "requestCaptcha-获取验证码",
-      showConfirmBtn: false,
+      showConfirmBtn: true,
       verifyBtnDisable: false,
     }
+  },
+
+  componentWillUnmount() {
+    clearTimeout(this.countDownTimer);
   },
 
   render(){
@@ -160,7 +154,7 @@ var JoinStep1 = React.createClass({
                         onClick={this.handleRequestValidation}
                         style={_.extend({},styles.registerButton,{visibility:this.state.disableAreaDropdown?"visible":"hidden"})}
                         secondary={true}
-                        className={(this.state.disableAreaDropdown?"fadeInUp":"fadeOutUp")+ " animated"}
+                        className={(this.state.disableAreaDropdown? "fadeInDown":"fadeOutUp")+ " animated"}
           />
 
           <RaisedButton label={typeof this.state.captchaBtn === "string" ?
@@ -169,7 +163,7 @@ var JoinStep1 = React.createClass({
                         style={_.extend({}, styles.registerButton, {marginTop:"-20px", visibility:this.state.disableAreaDropdown?"hidden":"visible"})}
                         secondary={true}
                         disabled={this.state.captchaBtn !== "requestCaptcha-获取验证码"}
-                        className={(!this.state.disableAreaDropdown?"fadeInDown":"fadeOutDown")+ " animated"}
+                        className={(!this.state.disableAreaDropdown?"fadeInUp":"fadeOutDown")+ " animated"}
           />
           <br/>
           <br/>
@@ -240,7 +234,6 @@ var JoinStep1 = React.createClass({
     };
 
     function validateMobile() {
-      console.log("this.refs", this.refs);
       let userPhone = this.refs.phoneOrEmail.getValue();
       let areaCode = this.state.area === "cn" ? "+86" : "+1";
       var cell = areaCode + userPhone;
@@ -295,7 +288,6 @@ var JoinStep1 = React.createClass({
     };
 
     function countdown(remaining) {
-      console.log(this, remaining);
       if (remaining === 0) {
         this.setState({captchaBtn: "requestCaptcha-获取验证码"});
       } else {
@@ -311,7 +303,7 @@ var JoinStep1 = React.createClass({
 
   handleVerify(){
     this.setState({verifyBtnDisable: true});
-    let userPhone = this.refs.userPhone.getValue();
+    let userPhone = this.refs.phoneOrEmail.getValue();
     let areaCode = this.state.area === "cn" ? "+86" : "+1";
     var cell = areaCode + userPhone;
 
@@ -323,7 +315,13 @@ var JoinStep1 = React.createClass({
         //throw new Meteor.Error("error", error);
       } else {
         //clearTimeout(this.countDownTimer);
-        this.setState({step: 1, verifyBtnDisable: false, finalCaptcha: captcha, finalCell: cell});
+        this.setState({verifyBtnDisable: false});
+
+        this.props.onStepComplete({
+          finalCaptcha: captcha,
+          finalMobile: cell,
+          isUsingEmail: false
+        });
         //console.log("verify successful!");
       }
     }.bind(this));

@@ -66,7 +66,7 @@ var JoinStep2Mobile = React.createClass({
       twoPwdSame: false,
       errorText: "",
       errorText2: "",
-      registerBtnDisable:false,
+      registerBtnDisable: false,
     }
   },
 
@@ -200,26 +200,33 @@ var JoinStep2Mobile = React.createClass({
     const noError = this.handleInputPassword() && this.handleInputPassword2();
 
     if (noError) {
-        const {finalMobile,finalCaptcha} = this.props;
-        const finalPwd = this.refs.password.refs.input.value;
+      const {finalMobile,finalCaptcha} = this.props;
+      const finalPwd = this.refs.password.refs.input.value;
 
-        if (finalMobile && finalCaptcha && finalPwd) {
-          this.setState({errorText: ""});
+      if (finalMobile && finalCaptcha && finalPwd) {
+        this.setState({errorText: ""});
+        Meteor.call("setMobilePassword", finalMobile, finalCaptcha, finalPwd, function (error) {
+          if (error) {
+            console.log("error");
+            this.setState({errorText: error.reason});
+          }
+          console.log("user has been created successfully");
           this.props.onStepComplete();
-/*          //Todo, 加上验证信息 - > 刚刚有人发送了验证码,如果不是本人操作请报告.
-          Accounts.verifyPhone(finalMobile, finalCaptcha, finalPwd, function (error) {
-            if (error) {
-              throw new Meteor.Error("error", error);
-            }
-            Meteor.call("initiateUser", function (error) {
-              if (error) {
-                throw new Meteor.Error("error", error);
-              }
-              this.context.router.push("/list");
-            }.bind(this));
-          }.bind(this))*/
-        }
-        Actions.setPassword(finalPwd);
+        }.bind(this));
+        /*          //Todo, 加上验证信息 - > 刚刚有人发送了验证码,如果不是本人操作请报告.
+         Accounts.verifyPhone(finalMobile, finalCaptcha, finalPwd, function (error) {
+         if (error) {
+         throw new Meteor.Error("error", error);
+         }
+         Meteor.call("initiateUser", function (error) {
+         if (error) {
+         throw new Meteor.Error("error", error);
+         }
+         this.context.router.push("/list");
+         }.bind(this));
+         }.bind(this))*/
+      }
+      Actions.setPassword(finalPwd);
 
 
       //setTimeout(register.bind(this), 2000));//添加2秒传递时间, 增加用户体验
