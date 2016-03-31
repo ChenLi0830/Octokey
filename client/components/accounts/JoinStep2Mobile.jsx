@@ -104,7 +104,7 @@ var JoinStep2Mobile = React.createClass({
                 help={this.state.errorText}>
               <Popover placement="right" title={messages["pwdRequirement-密码要求"]}
                        overlay={<div>{messages["pwdLength-密码长度"]}<br />{messages["pwdFormat-密码格式"]}</div>}
-                       trigger="click">
+                       trigger="focus">
 
                 <Input type="password"
                        ref="password"
@@ -126,7 +126,7 @@ var JoinStep2Mobile = React.createClass({
                 help={this.state.errorText2}>
               <Popover placement="right" title={messages["pwdRequirement-密码要求"]}
                        overlay={messages["pwdConfirmPopover-pop再次输入"]}
-                       trigger="click">
+                       trigger="focus">
                 <Input type="password"
                        ref="password2"
                        autoComplete="off"
@@ -210,27 +210,10 @@ var JoinStep2Mobile = React.createClass({
             console.log("error");
             this.setState({errorText: error.reason});
           }
-          console.log("user has been created successfully");
-          this.props.onStepComplete();
+          this.props.onStepComplete(finalPwd);
         }.bind(this));
-        /*          //Todo, 加上验证信息 - > 刚刚有人发送了验证码,如果不是本人操作请报告.
-         Accounts.verifyPhone(finalMobile, finalCaptcha, finalPwd, function (error) {
-         if (error) {
-         throw new Meteor.Error("error", error);
-         }
-         Meteor.call("initiateUser", function (error) {
-         if (error) {
-         throw new Meteor.Error("error", error);
-         }
-         this.context.router.push("/list");
-         }.bind(this));
-         }.bind(this))*/
       }
       Actions.setPassword(finalPwd);
-
-
-      //setTimeout(register.bind(this), 2000));//添加2秒传递时间, 增加用户体验
-
     }
     else {
       if (this.state.errorText === "" && this.state.errorText2 === "") {

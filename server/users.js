@@ -65,7 +65,7 @@ Meteor.methods({
     },
 
     /**
-     * Mark user as verified, set its master password and initialize the user's collections
+     * Mark user as verified and set its master password
      * @param {string} mobile - The mobile number of user.
      * @param {string} captcha - The captcha input by user.
      * @param {string} pwd - The to-be-assigned master password.
@@ -75,11 +75,6 @@ Meteor.methods({
             if (error) {
                 throw new Meteor.Error("error", error);
             }
-            Meteor.call("initiateUser", function (error) {
-                if (error) {
-                    throw new Meteor.Error("error", error);
-                }
-            });
         })
     },
 });

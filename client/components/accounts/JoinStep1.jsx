@@ -82,7 +82,7 @@ var JoinStep1 = React.createClass({
       floatingUserText: "",
       floatingCaptchaText: "",
       captchaBtn: "requestCaptcha-获取验证码",
-      showConfirmBtn: true,
+      showConfirmBtn: false,
       verifyBtnDisable: false,
     }
   },
@@ -176,7 +176,7 @@ var JoinStep1 = React.createClass({
                       style={{fontWeight:"300", width:90}}
                       floatingLabelStyle={{fontWeight:"300"}}
                       errorText={this.state.floatingCaptchaText}
-                      //inputStyle={{textAlign:"center"}}
+                      inputStyle={{textAlign:"center"}}
                       hintText={messages["inputCaptcha-输入验证码"]}
                       onKeyPress={(e)=>{e.key === 'Enter' && this.handleVerify()}}
                   />
