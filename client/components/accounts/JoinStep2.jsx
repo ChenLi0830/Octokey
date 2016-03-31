@@ -49,15 +49,16 @@ const styles = {
 //Used in callback 'onStepComplete'
 let isUsingEmail = true;
 
-var JoinStep2Mobile = React.createClass({
+var JoinStep2 = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object.isRequired,
   },
 
   propTypes: {
+    finalUserName: React.PropTypes.string.isRequired,
+    finalCaptcha: React.PropTypes.string,
+    registerUsingEmail: React.PropTypes.bool.isRequired,
     onStepComplete: React.PropTypes.func.isRequired,
-    finalMobile: React.PropTypes.string.isRequired,
-    finalCaptcha: React.PropTypes.string.isRequired,
   },
 
   getInitialState(){
@@ -197,32 +198,54 @@ var JoinStep2Mobile = React.createClass({
 
   handleRegister(){
     //if no errors, go to step 3, create account
-    const noError = this.handleInputPassword() && this.handleInputPassword2();
+    const hasError = !this.handleInputPassword() || !this.handleInputPassword2();
 
-    if (noError) {
-      const {finalMobile,finalCaptcha} = this.props;
-      const finalPwd = this.refs.password.refs.input.value;
-
-      if (finalMobile && finalCaptcha && finalPwd) {
-        this.setState({errorText: ""});
-        Meteor.call("setMobilePassword", finalMobile, finalCaptcha, finalPwd, function (error) {
-          if (error) {
-            console.log("error");
-            this.setState({errorText: error.reason});
-          }
-          this.props.onStepComplete(finalPwd);
-        }.bind(this));
-      }
-      Actions.setPassword(finalPwd);
-    }
-    else {
+    if (hasError) {// Has input error
       if (this.state.errorText === "" && this.state.errorText2 === "") {
         this.setState({errorText: messages["unknownError-两次输入的密码有误"]})
       }
+      return;
+    }
+
+    const {finalUserName,finalCaptcha, registerUsingEmail} = this.props;
+    const finalPwd = this.refs.password.refs.input.value;
+
+    if (finalUserName && finalPwd && finalCaptcha||registerUsingEmail) {
+      this.setState({errorText: ""});
+
+      if (registerUsingEmail) {// Register using email
+        setEmailPassword.call(this, finalUserName, finalPwd);
+      } else {//Register using Mobile
+        setMobilePassword.call(this, finalUserName, finalCaptcha, finalPwd);
+      }
+    }
+    //Set finalPwd to Actions to get encryptionKey later
+    Actions.setPassword(finalPwd);
+
+    function setEmailPassword(finalUserName, finalPwd) {
+      Meteor.call("setEmailPassword", finalUserName, finalPwd, function (error) {
+        if (error) {
+          console.log("error");
+          this.setState({errorText: error.reason});
+        } else {
+          this.props.onStepComplete(finalPwd);
+        }
+      }.bind(this));
+    }
+
+    function setMobilePassword(finalUserName, finalCaptcha, finalPwd) {
+      Meteor.call("setMobilePassword", finalUserName, finalCaptcha, finalPwd, function (error) {
+        if (error) {
+          console.log("error");
+          this.setState({errorText: error.reason});
+        } else {
+          this.props.onStepComplete(finalPwd);
+        }
+      }.bind(this));
     }
   },
 
 });
 
 
-module.exports = JoinStep2Mobile;
+module.exports = JoinStep2;

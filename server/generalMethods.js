@@ -14,22 +14,9 @@ Meteor.methods({
 
     initiateUser(){
         localSimulateLatency(1000);
+        checkUserLogin();
         const userId = this.userId;
         console.log("initiateUser userId",userId);
-        if (!userId) {//没登录
-            throw new Meteor.Error("not signed in");
-        }
-
-        UserApps.insert({
-            userId: userId,
-            publicApps: [],
-            privateApps: []
-        });
-
-        UserAppCredentials.insert({
-            userId: userId,
-            publicApps: [],
-            privateApps: []
-        });
+        serverAPI.initiateUserById(userId);
     }
 });

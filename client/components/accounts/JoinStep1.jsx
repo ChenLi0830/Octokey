@@ -81,10 +81,14 @@ var JoinStep1 = React.createClass({
       disableAreaDropdown: true,
       floatingUserText: "",
       floatingCaptchaText: "",
-      captchaBtn: "requestCaptcha-获取验证码",
+      captchaBtn: "sendValidation-发送验证",
       showConfirmBtn: false,
       verifyBtnDisable: false,
     }
+  },
+
+  componentDidMount(){
+    this.refs.phoneOrEmail.focus()
   },
 
   componentWillUnmount() {
@@ -150,21 +154,15 @@ var JoinStep1 = React.createClass({
             {/*Todo add captcha*/}
           </form>
 
-          <RaisedButton label={messages["sendValidateEmail-发送验证邮件"]}
-                        onClick={this.handleRequestValidation}
-                        style={_.extend({},styles.registerButton,{visibility:this.state.disableAreaDropdown?"visible":"hidden"})}
-                        secondary={true}
-                        className={(this.state.disableAreaDropdown? "fadeInDown":"fadeOutUp")+ " animated"}
-          />
-
-          <RaisedButton label={typeof this.state.captchaBtn === "string" ?
+          {<RaisedButton label={typeof this.state.captchaBtn === "string" ?
             messages[this.state.captchaBtn] : this.state.captchaBtn}
-                        onClick={this.handleRequestValidation}
-                        style={_.extend({}, styles.registerButton, {marginTop:"-20px", visibility:this.state.disableAreaDropdown?"hidden":"visible"})}
-                        secondary={true}
-                        disabled={this.state.captchaBtn !== "requestCaptcha-获取验证码"}
-                        className={(!this.state.disableAreaDropdown?"fadeInUp":"fadeOutDown")+ " animated"}
-          />
+                         onClick={this.handleRequestValidation}
+                         style={_.extend({},styles.registerButton)}
+                         secondary={true}
+                         disabled={this.state.captchaBtn !== "sendValidation-发送验证"}
+                         className={"animated fadeInUp"}
+          />}
+
           <br/>
           <br/>
 
@@ -223,12 +221,22 @@ var JoinStep1 = React.createClass({
 
     function validateEmail() {
       let userEmail = this.refs.phoneOrEmail.getValue();
+      this.setState({captchaBtn:"validationSent-提交中"});
+
       Meteor.call("createUserByEmail", userEmail, function (error) {
         if (error) {
           console.log("error", error);
-          this.setState({disableBtn: false, floatingUserText: error.error + " " + error.reason});
+          this.setState({
+            disableBtn: false,
+            floatingUserText: error.error + " " + error.reason,
+            captchaBtn: "sendValidation-发送验证",
+          });
         } else {
-          console.log("一封邮件已经发送到你邮箱,请查收");
+          this.props.onStepComplete({
+            finalEmail: userEmail,
+            isUsingEmail: true
+          });
+          //console.log("一封邮件已经发送到你邮箱,请查收");
         }
       }.bind(this));
     };
@@ -326,55 +334,6 @@ var JoinStep1 = React.createClass({
       }
     }.bind(this));
   },
-
-
-  //Meteor.call("sendVerifyCode", cell);
-
-  //check if email is available
-  /*Meteor.call("emailIsAvailable", email, function(error, emailAvailable){
-   console.log("error",error);
-   console.log("emailAvailable",emailAvailable);
-   if (emailAvailable)
-   {
-   console.log("email is available");
-   }
-   else  {
-   console.log("email is not available");
-   }
-   });*/
-
-
-  /*if (email && noInputError) {
-   this.setState({disableBtn: true});
-
-   Meteor.call("createUserByEmail",email, function (error){
-   if (error){
-   console.log("error",error);
-   this.setState({disableBtn: false, floatingUserText: error.error + " " + error.reason});
-   } else {
-   console.log("一封邮件已经发送到你邮箱,请查收");
-   }
-   //console.log("userId",userId);
-   }.bind(this));
-
-
-   /!*            Accounts.createUser({
-   email: email,
-   //password: password
-   }, (error) => {
-   if (error) {
-   this.setState({disableBtn: false, floatingUserText: error.error + " " + error.reason});
-   console.log("error: ", error);
-   //alert("error: " + error);
-   return;
-   }
-   Meteor.call("initiateUser", function(){
-   Actions.setPassword(password);
-   this.context.router.push('/list');
-   }.bind(this));
-   });*!/
-   }*/
-
 });
 
 

@@ -49,19 +49,20 @@ Meteor.methods({
         }
     },
 
+    /**
+     * Create user using Email and initiate its data
+     * @param {string} email
+     * @returns {string} userId
+     */
     createUserByEmail(email){
         const userId = Accounts.createUser({
             email: email,
         });
         //console.log("userId", userId);
         Accounts.sendEnrollmentEmail(userId, email);
-        return userId;
-    },
 
-    createUserByCell(cell){
-        const userId = Accounts.createUser({
-            cell: cell,
-        });
+        serverAPI.initiateUserById(userId);
+        return userId;
     },
 
     /**
@@ -75,6 +76,20 @@ Meteor.methods({
             if (error) {
                 throw new Meteor.Error("error", error);
             }
-        })
+        });
+    },
+
+    /**
+     * Set user's master password using its email
+     * @param {string} userEmail - The email user used to register.
+     * @param {string} password - The to-be-assigned master password.
+     * @param {function} callback
+     */
+    setEmailPassword(userEmail, password){
+        var user = Accounts.findUserByEmail(userEmail);
+        if (user===null){
+            throw new Meteor.Error("无法找到与邮箱对应的用户");
+        }
+        Accounts.setPassword(user._id, password);
     },
 });

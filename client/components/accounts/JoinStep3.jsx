@@ -37,6 +37,7 @@ var JoinStep3 = React.createClass({
   },
 
   propTypes: {
+    registerUsingEmail: React.PropTypes.bool.isRequired,
     onStepComplete: React.PropTypes.func.isRequired,
   },
 
@@ -71,14 +72,18 @@ var JoinStep3 = React.createClass({
   },
 
   initiateUser(){
-    Meteor.call("initiateUser", function (error) {
-      if (error) {
-        console.log("error", error);
-      } else {
-        this.props.onStepComplete();
-        //setTimeout(this.props.onStepComplete, 1500);
-      }
-    }.bind(this));
+    if (this.props.registerUsingEmail){//If register using Email, call onStepComplete directly.
+      this.props.onStepComplete();
+    } else {//If register using Mobile, initiate the User
+      Meteor.call("initiateUser", function (error) {
+        if (error) {
+          console.log("error", error);
+        } else {
+          this.props.onStepComplete();
+          //setTimeout(this.props.onStepComplete, 1500);
+        }
+      }.bind(this));
+    }
   },
 });
 
