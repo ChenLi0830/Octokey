@@ -25,7 +25,7 @@ const styles = {
         left: 0,
         right: 0,
     }
-}
+};
 
 var App = React.createClass({
     mixins: [ReactMeteorData],

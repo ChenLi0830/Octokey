@@ -154,4 +154,4 @@ var CatalogSingleApp = React.createClass({
   }
 });
 
-module.exports = Radium(CatalogSingleApp);
+module.exports = CatalogSingleApp;

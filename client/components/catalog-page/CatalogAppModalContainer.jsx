@@ -9,7 +9,7 @@
 
 const CatalogAppModal = require('./CatalogAppModal.jsx');
 
-var CatalogAppModalContainer = React.createClass({
+const CatalogAppModalContainer = React.createClass({
     propTypes: {
         modalOpen: React.PropTypes.bool.isRequired,
         logoURL: React.PropTypes.string.isRequired,

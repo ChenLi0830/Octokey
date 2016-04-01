@@ -56,7 +56,11 @@ const styles = {
         fontSize: 13,
         fontFamily: "inherit",
     },
-    dropDownMenu: {zIndex: 1, fontFamily: "inherit", left: -20},
+    dropDownMenu: {
+        zIndex: 1,
+        fontFamily: "inherit",
+        left: -20
+    },
     registerButton: {
         marginTop: 25,
         marginBottom: 10,

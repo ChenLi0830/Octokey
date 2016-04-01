@@ -61,7 +61,6 @@ Meteor.methods({
         //console.log("userId", userId);
         Accounts.sendEnrollmentEmail(userId, email);
 
-        serverAPI.initiateUserById(userId);
         return userId;
     },
 
@@ -91,5 +90,6 @@ Meteor.methods({
             throw new Meteor.Error("无法找到与邮箱对应的用户");
         }
         Accounts.setPassword(user._id, password);
+        serverAPI.initiateUserById(user._id);
     },
 });

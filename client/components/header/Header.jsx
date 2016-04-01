@@ -196,4 +196,4 @@ var Header = React.createClass({
     },
 });
 
-module.exports = Radium(Header);
+module.exports = Header;
