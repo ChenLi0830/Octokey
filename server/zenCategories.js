@@ -7,7 +7,7 @@
  * it declares methods for ZenCatagories collection.
  *******************************************************************************/
 Meteor.methods({
-    getAllCategories(){
+/*    getAllCategories(){
         console.log("getAllCategories gets called");
         localSimulateLatency(800);
         //if (this.userId) {
@@ -15,7 +15,7 @@ Meteor.methods({
         //console.log("result",result);
         return result;
         //}
-    },
+    },*/
 
     addNewCategory(name, displayTitleChinese, displayTitleEnglish, index){
         localSimulateLatency(500);

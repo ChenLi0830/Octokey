@@ -4,12 +4,12 @@
  * Creator: Chen Li<chen.li@noc-land.com>
  * Creation Date: 2015-3-26
  *
- * The container for CatalogAppModal component
+ * The container for CatalogAppModal component, called by CatalogSingleApp
  *******************************************************************************/
 
-const CatalogAppModal = require('./CatalogAppModal.jsx');
+const AppModal = require('./AppModal.jsx');
 
-const CatalogAppModalContainer = React.createClass({
+const AppModalContainerEdit = React.createClass({
     propTypes: {
         modalOpen: React.PropTypes.bool.isRequired,
         logoURL: React.PropTypes.string.isRequired,
@@ -40,7 +40,9 @@ const CatalogAppModalContainer = React.createClass({
             url: this.state.logoPreview
         }];
 
-        return <CatalogAppModal
+        return <AppModal
+            modalTitle={"编辑网站"}
+            okText={"编辑"}
             modalOpen={this.props.modalOpen}
             modalOnCancel={this.handleModalClose}
             modalOnOk={this.handleEditApp}
@@ -50,7 +52,7 @@ const CatalogAppModalContainer = React.createClass({
             loginLink={this.props.loginLink}
             registerLink={this.props.registerLink}
             zenCategories={this.props.zenCategories}
-            selectedCategoryNames={this.state.selectedCategories}
+            selectedCategories={this.state.selectedCategories}
             onCellClick={this.handleCellClick}
         />
     },
@@ -156,4 +158,4 @@ const CatalogAppModalContainer = React.createClass({
     },*/
 });
 
-module.exports = CatalogAppModalContainer;
+module.exports = AppModalContainerEdit;

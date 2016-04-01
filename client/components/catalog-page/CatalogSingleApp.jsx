@@ -33,7 +33,7 @@ const styles = {
   },
 };
 
-const CatalogAppModalContainer = require('./CatalogAppModalContainer.jsx');
+const AppModalContainerEdit = require('./AppModalContainerEdit.jsx');
 
 var CatalogSingleApp = React.createClass({
   propTypes: {
@@ -101,7 +101,7 @@ var CatalogSingleApp = React.createClass({
         defaultToggled={toggleState}/>;
 
     return <div>
-      <CatalogAppModalContainer
+      <AppModalContainerEdit
           modalOpen={this.state.modalOpen}
           logoURL={logoURL}
           appName={appName}

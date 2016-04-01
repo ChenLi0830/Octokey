@@ -12,6 +12,11 @@ Meteor.publish("userApps", function () {
     return UserApps.find({userId: this.userId})
 });
 
+Meteor.publish("allCategories", function(){
+    localSimulateLatency(500);
+    return ZenCategories.find({});
+});
+
 Meteor.publish("appCredential", function (userId, appId, username) {
     localSimulateLatency(800);
     //console.log("publish appCredential", userId, appId, username);

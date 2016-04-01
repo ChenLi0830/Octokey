@@ -15,16 +15,16 @@ var CatalogContainer = React.createClass({
 
     getMeteorData(){
         OctoAPI.fetchDataToSessionIfNull("allPublicApps", "getAllPublicApps");
-        OctoAPI.fetchDataToSessionIfNull("allCategories", "getAllCategories");
 
         const subsHandles = [
             Session.get("allPublicApps"),
-            Session.get("allCategories"),
+            Meteor.subscribe("allCategories"),
             Meteor.subscribe("userApps"),
         ];
         const subsReady = OctoAPI.subsHandlesAreReady(subsHandles);
 
         const AppOfUser = UserApps.findOne({userId: Meteor.userId()}, {reactive: true});
+        const allCategories = ZenCategories.find({},{sort: {index: 1}}).fetch();
 
         let subscribeList = [];
         if (subsReady) {
@@ -38,6 +38,7 @@ var CatalogContainer = React.createClass({
 
         return {
             subscribeList: subscribeList,
+            allCategories: allCategories,
             subsReady: subsReady
         }
     },
@@ -48,7 +49,7 @@ var CatalogContainer = React.createClass({
                 subsReady = {this.data.subsReady}
                 subscribeList= {this.data.subscribeList}
                 allPublicApps = {Session.get("allPublicApps") || []}
-                allCategories = {Session.get("allCategories") || []}
+                allCategories = {this.data.allCategories}
             />
         </div>
     },

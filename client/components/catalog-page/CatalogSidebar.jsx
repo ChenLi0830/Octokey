@@ -6,7 +6,7 @@
  *
  * Catalog Side Bar component - called by "Catalog"
  *******************************************************************************/
-var CreateZenAppButton = require('./CreateZenAppButton.jsx');
+var CreatePublicAppButton = require('./CreatePublicAppButton.jsx');
 var CreateCategoryButton = require('./CreateCategoryButton.jsx');
 var SearchBox = require('./SearchBox.jsx');
 var CreatePrivateAppButton = require('./CreatePrivateAppButton.jsx');
@@ -43,7 +43,7 @@ var CatalogSideBar = React.createClass({
 
     render(){
         let createPublicAppButton = OctoAPI.isAdmin(this.data.currentUser) ?
-            <CreateZenAppButton zenCategories={this.props.zenCategories}/> : null;
+            <CreatePublicAppButton zenCategories={this.props.zenCategories}/> : null;
         let createCategoryButton = OctoAPI.isAdmin(this.data.currentUser) ?
             <CreateCategoryButton zenCategories={this.props.zenCategories}/> : null;
 

@@ -19,8 +19,10 @@ const {
 import {Modal, Form, Input, Button, Checkbox, Radio, Row, Col, Tooltip, Icon, Upload } from 'antd/lib/';
 const FormItem = Form.Item;
 
-var CatalogAppModal = React.createClass({
+var AppModal = React.createClass({
     propTypes:{
+        modalTitle: React.PropTypes.string.isRequired,
+        okText: React.PropTypes.string.isRequired,
         modalOpen: React.PropTypes.bool.isRequired,
         modalOnCancel: React.PropTypes.func.isRequired,
         modalOnOk: React.PropTypes.func.isRequired,
@@ -30,8 +32,16 @@ var CatalogAppModal = React.createClass({
         loginLink: React.PropTypes.string.isRequired,
         registerLink: React.PropTypes.string.isRequired,
         zenCategories: React.PropTypes.array.isRequired,
-        selectedCategoryNames: React.PropTypes.array.isRequired,
+        selectedCategories: React.PropTypes.array.isRequired,
         onCellClick: React.PropTypes.func.isRequired,
+    },
+
+    getDefaultProps() {
+        return {
+            appName: "",
+            loginLink: "",
+            registerLink: "",
+        };
     },
 
     contextTypes: {
@@ -50,6 +60,7 @@ var CatalogAppModal = React.createClass({
     },
 
     render(){
+        console.log("this.props.zenCategories",this.props.zenCategories);
         const {messages} = this.context.intl;
 
         const formItemLayout = {
@@ -58,7 +69,7 @@ var CatalogAppModal = React.createClass({
         };
 
         let categoryTableRows = this.props.zenCategories.map(function (category, index) {
-                const categorySelected = _.indexOf(this.props.selectedCategoryNames, category.name) > -1;
+                const categorySelected = _.indexOf(this.props.selectedCategories, category.name) > -1;
                 return <TableRow key={category._id}
                                  selectable={category.name!=="all"}
                                  selected={categorySelected}>
@@ -67,11 +78,12 @@ var CatalogAppModal = React.createClass({
             }.bind(this));
 
         return <div>
-        {<Modal title={messages.cata_editPubApp}
+        {this.props.modalOpen?
+        <Modal title={this.props.modalTitle}
                    visible={this.props.modalOpen}
                    onCancel={this.props.modalOnCancel}
                    onOk={this.handleModalOk}
-                   okText={messages.cata_editPubAppBtn}
+                   okText={this.props.okText}
             >
                 <Form horizontal>
                     <FormItem
@@ -131,9 +143,9 @@ var CatalogAppModal = React.createClass({
                         </TableBody>
                     </Table>
                 </Form>
-            </Modal>}
+            </Modal>:null}
         </div>
     },
 });
 
-module.exports = CatalogAppModal;
+module.exports = AppModal;
