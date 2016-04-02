@@ -54,7 +54,7 @@ var CatalogAppsBox = React.createClass({
     if (nextProps.chosenCategory !== this.props.chosenCategory) {
       //Apps should be fetched if the user chose a different category
       this.needFetchApps = true;
-      this.setState({loadAppsNumber: 10});
+      this.setState({loadAppsNumber: 20});
     }
   },
 
@@ -75,7 +75,7 @@ var CatalogAppsBox = React.createClass({
       showModal: false,
       preview: null,
       editAppId: null,
-      loadAppsNumber: 10,
+      loadAppsNumber: 20,
     }
   },
 
@@ -86,7 +86,7 @@ var CatalogAppsBox = React.createClass({
       return;
     }
     this.needFetchApps = true;
-    this.setState({loadAppsNumber: this.state.loadAppsNumber + 10});
+    this.setState({loadAppsNumber: this.state.loadAppsNumber + 20});
 
     console.log("this.data.subsReady, this.state.loadAppsNumber", this.data.subsReady,
         this.state.loadAppsNumber);
