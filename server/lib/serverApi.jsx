@@ -13,6 +13,7 @@ localSimulateLatency = function (millisec) {
 };
 
 checkUserLogin = function () {
+  //这里不是在method里直接调用,为了保险不用this.userId
   if (!Meteor.userId()) {
     throw new Meteor.Error("not logged in");
   }

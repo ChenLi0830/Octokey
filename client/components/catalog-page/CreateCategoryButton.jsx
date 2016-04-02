@@ -19,7 +19,7 @@ const {
 
 var CreateCategoryButton = React.createClass({
     propTypes: {
-        zenCategories: React.PropTypes.array.isRequired
+        allCategories: React.PropTypes.array.isRequired
     },
 
     contextTypes:{
@@ -47,17 +47,17 @@ var CreateCategoryButton = React.createClass({
     },
 
     handleRemoveChosen(e, index, value){
-        const deleteCategoryIndex = (index === this.props.zenCategories.length) ? -1 : index;
-        //console.log(this.props.zenCategories[index]._id);
+        const deleteCategoryIndex = (index === this.props.allCategories.length) ? -1 : index;
+        //console.log(this.props.allCategories[index]._id);
         console.log("index", index, "deleteCategoryIndex", deleteCategoryIndex);
         this.setState({
             deleteCategoryIndex: deleteCategoryIndex
         });
-        //console.log(this.props.zenCategories[this.state.deleteCategoryIndex].displayTitleChinese);
+        //console.log(this.props.allCategories[this.state.deleteCategoryIndex].displayTitleChinese);
     },
 
     handleRemoveCategory(){
-        let category = this.props.zenCategories[this.state.deleteCategoryIndex];
+        let category = this.props.allCategories[this.state.deleteCategoryIndex];
         //console.log("remove category:",category.displayTitleChinese, category._id);
         Meteor.call("removeCategory", category._id, function (error) {
             if (error) console.log("There is a error deleting category", error);
@@ -81,7 +81,7 @@ var CreateCategoryButton = React.createClass({
 
     render(){
         const {messages} = this.context.intl;
-        let categories = this.props.zenCategories.map(function (category) {
+        let categories = this.props.allCategories.map(function (category) {
             return <MenuItem value={category.name} key={category._id}
                              primaryText={"\""+category.displayTitleChinese+"\""}/>
         }.bind(this));
@@ -104,7 +104,7 @@ var CreateCategoryButton = React.createClass({
         ];
 
         let selectedDeleteCategory = this.state.deleteCategoryIndex > -1 ?
-            this.props.zenCategories[this.state.deleteCategoryIndex].name : "unchosen";
+            this.props.allCategories[this.state.deleteCategoryIndex].name : "unchosen";
         return <div style={{textAlign:"center"}}>
             <RaisedButton primary={true} label={messages.cata_editCategory} onTouchTap={this.handleOpen}
                           labelStyle={{color:"white"}}/>

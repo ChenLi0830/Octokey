@@ -18,7 +18,7 @@ const AppModalContainerEdit = React.createClass({
         registerLink: React.PropTypes.string.isRequired,
         appId: React.PropTypes.string.isRequired,
         selectedCategoryNames: React.PropTypes.array.isRequired,
-        zenCategories: React.PropTypes.array.isRequired,
+        allCategories: React.PropTypes.array.isRequired,
         onModalClose: React.PropTypes.func.isRequired,
     },
 
@@ -51,7 +51,7 @@ const AppModalContainerEdit = React.createClass({
             appName={this.props.appName}
             loginLink={this.props.loginLink}
             registerLink={this.props.registerLink}
-            zenCategories={this.props.zenCategories}
+            allCategories={this.props.allCategories}
             selectedCategories={this.state.selectedCategories}
             onCellClick={this.handleCellClick}
         />
@@ -65,6 +65,7 @@ const AppModalContainerEdit = React.createClass({
      * @param {string | Blob} newLogo
      */
     handleEditApp(newLoginLink, newRegisterLink, newAppName){
+        console.log("handleEditApp called");
         const newLogo = this.state.logoPreview;
 
         if (newLoginLink && newAppName && newLogo !== "") {
@@ -111,7 +112,7 @@ const AppModalContainerEdit = React.createClass({
      * @param {string} columnId
      */
     handleCellClick(rowNumber, columnId){
-        var selectedCategoryName = this.props.zenCategories[rowNumber].name;
+        var selectedCategoryName = this.props.allCategories[rowNumber].name;
         var index = this.state.selectedCategories.indexOf(selectedCategoryName);
         //react state is immutable, use this variable to act as a temp var.
         var selectedCategories = this.state.selectedCategories;

@@ -27,6 +27,13 @@ const styles = {
     }
 };
 
+let zIndex = {
+    zIndex: {
+        popover: 201,
+        layer: 200
+    }
+};
+
 var App = React.createClass({
     mixins: [ReactMeteorData],
 
@@ -50,7 +57,7 @@ var App = React.createClass({
     },
 
     getChildContext() {
-        let muiTheme = getMuiTheme(ZenRawTheme);
+        let muiTheme = getMuiTheme(ZenRawTheme, zIndex);
         let zenMUITheme = customizeMUITheme(muiTheme);
         return {
             muiTheme: zenMUITheme

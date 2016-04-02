@@ -28,7 +28,7 @@ const {
 
 var CatalogSideBar = React.createClass({
     propTypes: {
-        zenCategories: React.PropTypes.array.isRequired,
+        allCategories: React.PropTypes.array.isRequired,
         zenApps: React.PropTypes.array.isRequired,
         subscribeList: React.PropTypes.array.isRequired,
     },
@@ -43,9 +43,9 @@ var CatalogSideBar = React.createClass({
 
     render(){
         let createPublicAppButton = OctoAPI.isAdmin(this.data.currentUser) ?
-            <CreatePublicAppButton zenCategories={this.props.zenCategories}/> : null;
+            <CreatePublicAppButton allCategories={this.props.allCategories}/> : null;
         let createCategoryButton = OctoAPI.isAdmin(this.data.currentUser) ?
-            <CreateCategoryButton zenCategories={this.props.zenCategories}/> : null;
+            <CreateCategoryButton allCategories={this.props.allCategories}/> : null;
 
         //Todo Add search box
         return <div>
@@ -57,12 +57,13 @@ var CatalogSideBar = React.createClass({
              borderRadius:"5px"}}>
                 <SearchBox zenApps = {this.props.zenApps}
                            subscribeList={this.props.subscribeList}
+                           allCategories={this.props.allCategories}
                 />
                 {/*<Divider />*/}
                 {createPublicAppButton}
                 {/*<CreatePrivateAppButton/>*/}
                 <Divider />
-                <CategoryList zenCategories={this.props.zenCategories}/>
+                <CategoryList allCategories={this.props.allCategories}/>
                 {createCategoryButton}
             </Paper>
         </div>

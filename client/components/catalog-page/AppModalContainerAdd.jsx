@@ -12,7 +12,7 @@ const AppModal = require('./AppModal.jsx');
 const AppModalContainerAdd = React.createClass({
   propTypes: {
     modalOpen: React.PropTypes.bool.isRequired,
-    zenCategories: React.PropTypes.array.isRequired,
+    allCategories: React.PropTypes.array.isRequired,
     onModalClose: React.PropTypes.func.isRequired,
   },
 
@@ -42,7 +42,7 @@ const AppModalContainerAdd = React.createClass({
         modalOnOk={this.handleAddApp}
         onLogoUpload={this.handleLogoUpload}
         fileList={fileList}
-        zenCategories={this.props.zenCategories}
+        allCategories={this.props.allCategories}
         selectedCategories={this.state.selectedCategories}
         onCellClick={this.handleCellClick}
     />
@@ -87,7 +87,6 @@ const AppModalContainerAdd = React.createClass({
             //Close modal
             this.props.onModalClose();
           }.bind(this));*/
-
   },
 
   /**
@@ -116,7 +115,7 @@ const AppModalContainerAdd = React.createClass({
    */
   handleCellClick(rowNumber, columnId){
     console.log("onCellClick called");
-    var selectedCategoryName = this.props.zenCategories[rowNumber].name;
+    var selectedCategoryName = this.props.allCategories[rowNumber].name;
     var index = this.state.selectedCategories.indexOf(selectedCategoryName);
     //react state is immutable, use this variable to act as a temp var.
     var selectedCategories = this.state.selectedCategories;

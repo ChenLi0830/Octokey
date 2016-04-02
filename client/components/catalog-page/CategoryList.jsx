@@ -57,7 +57,7 @@ const nameToIcon = {
 
 var CategoryList = React.createClass({
     propTypes: {
-        zenCategories: React.PropTypes.array.isRequired
+        allCategories: React.PropTypes.array.isRequired
     },
 
     contextTypes: {
@@ -80,7 +80,7 @@ var CategoryList = React.createClass({
     render(){
         const tempIcon = <ContentGesture color={ZenColor.cyan}/>;
         const selectedItem = {backgroundColor: ZenColor.grey2};
-        const Items = this.props.zenCategories.map(function (category) {
+        const Items = this.props.allCategories.map(function (category) {
             const icon = nameToIcon[category.name] ? nameToIcon[category.name] : tempIcon;
             return <ListItem
                 key={category._id}

@@ -13,53 +13,60 @@ var AppLoading = require('../AppLoading.jsx');
 import { Row, Col } from 'antd';
 
 var Catalog = React.createClass({
-    mixins: [
-        Reflux.listenTo(CategoryStore, 'categoryChange')
-    ],
+  mixins: [
+    Reflux.listenTo(CategoryStore, 'categoryChange')
+  ],
 
-    propTypes:{
-        subsReady: React.PropTypes.bool.isRequired,
-        subscribeList: React.PropTypes.array.isRequired,
-        allPublicApps: React.PropTypes.array.isRequired,
-        allCategories: React.PropTypes.array.isRequired,
-    },
+  propTypes: {
+    subsReady: React.PropTypes.bool.isRequired,
+    subscribeList: React.PropTypes.array.isRequired,
+    allPublicApps: React.PropTypes.array.isRequired,
+    allCategories: React.PropTypes.array.isRequired,
+  },
 
-    getInitialState(){
-        return {
-            chosenCategory: "all",
-        }
-    },
-
-    render(){
-        if (!this.props.subsReady){
-            return <AppLoading/>
-        }
-        return <div>
-            <div>
-                <Row>
-                    <Col span="6">
-                        <CatalogSideBar zenCategories={this.props.allCategories}
-                                        zenApps={this.props.allPublicApps}
-                                        subscribeList={this.props.subscribeList}
-                        />
-                    </Col>
-                    <Col span="18">
-                        <CatalogAppsBox zenCategories={this.props.allCategories}
-                                        subscribeList={this.props.subscribeList}
-                                        chosenCategory={this.state.chosenCategory}
-                        />
-                    </Col>
-                </Row>
-            </div>
-        </div>
-    },
-
-    categoryChange(event, categoryName){
-        //console.log("event",event);
-        this.setState({
-            chosenCategory: categoryName
-        });
+  getDefaultProps(){
+    return {
+      subscribeList: [],
+      allCategories: [],
     }
+  },
+
+  getInitialState(){
+    return {
+      chosenCategory: "all",
+    }
+  },
+
+  render(){
+    if (!this.props.subsReady) {
+      return <AppLoading/>
+    }
+    return <div>
+      <div>
+        <Row>
+          <Col span="6">
+            <CatalogSideBar allCategories={this.props.allCategories}
+                            zenApps={this.props.allPublicApps}
+                            subscribeList={this.props.subscribeList}
+            />
+          </Col>
+          <Col span="18">
+            <CatalogAppsBox allCategories={this.props.allCategories}
+                            subscribeList={this.props.subscribeList}
+                            chosenCategory={this.state.chosenCategory}
+            />
+          </Col>
+        </Row>
+      </div>
+    </div>
+  },
+
+  categoryChange(event, categoryName){
+    //console.log("event",event);
+    this.setState({
+      chosenCategory: categoryName
+    });
+  }
 });
 
 module.exports = Catalog;

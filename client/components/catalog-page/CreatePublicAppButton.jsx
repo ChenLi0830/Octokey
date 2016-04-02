@@ -32,7 +32,7 @@ var selectedCategories = [0];
 
 var CreatePublicAppButton = React.createClass({
   propTypes: {
-    zenCategories: React.PropTypes.array.isRequired
+    allCategories: React.PropTypes.array.isRequired
   },
 
   contextTypes: {
@@ -68,7 +68,7 @@ var CreatePublicAppButton = React.createClass({
       <AppModalContainerAdd
           modalOpen={this.state.modalOpen}
           onModalClose={()=>{this.setState({modalOpen:false});}}
-          zenCategories={this.props.zenCategories}
+          allCategories={this.props.allCategories}
       />
 
       {button}
@@ -154,7 +154,7 @@ var CreatePublicAppButton = React.createClass({
    event.preventDefault();
 
    var selectedCategoryNames = selectedCategories.map(function (categoryNum) {
-   return this.props.zenCategories[categoryNum].name;
+   return this.props.allCategories[categoryNum].name;
    }.bind(this));
 
    //console.log("selectedCategoryNames",selectedCategoryNames);

@@ -80,10 +80,12 @@ OctoAPI = {
 
     /**
      * Check if a user is an admin
-     * @param {Object} user
+     * @param {Object} [user]
      * @returns {boolean} Whether the user is an admin
      */
     isAdmin: function (user) {//TODO use more scalable solution to configure this, i.e.: role system
+        !user && (user=Meteor.user());
+
         if (!user || !user.emails || !user.emails[0] || !user.emails[0].address) {
             return false;
         }

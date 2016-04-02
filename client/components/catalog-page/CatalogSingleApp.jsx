@@ -40,20 +40,20 @@ var CatalogSingleApp = React.createClass({
     logoURL: React.PropTypes.string.isRequired,
     appName: React.PropTypes.string.isRequired,
     loginLink: React.PropTypes.string.isRequired,
-    registerLink: React.PropTypes.string,
+    registerLink: React.PropTypes.string.isRequired,
     appId: React.PropTypes.string.isRequired,
     selectedCategoryNames: React.PropTypes.array.isRequired,
-    whenClicked: React.PropTypes.func,
+    onModalOpen: React.PropTypes.func.isRequired,
     subscribed: React.PropTypes.bool.isRequired,
-    condensed: React.PropTypes.bool,
-    subsCount: React.PropTypes.number,
-    zenCategories: React.PropTypes.array.isRequired,
+    condensed: React.PropTypes.bool.isRequired,
+    subsCount: React.PropTypes.number.isRequired,
+    allCategories: React.PropTypes.array.isRequired,
   },
 
   getDefaultProps: function () {
     return {
       condensed: false,
-      whenClicked: ()=> {
+      onModalOpen: ()=> {
       },
       subsCount: 0,
       registerLink: "",
@@ -109,8 +109,8 @@ var CatalogSingleApp = React.createClass({
           registerLink={registerLink}
           appId={appId}
           selectedCategoryNames={selectedCategoryNames}
-          onModalClose={()=>{this.setState({modalOpen:false});}}
-          zenCategories={this.props.zenCategories}
+          onModalClose={()=>{console.log("onModalClose called");this.setState({modalOpen:false});}}
+          allCategories={this.props.allCategories}
       />
 
       <Row style={_.extend({}, styles.row,
@@ -119,7 +119,7 @@ var CatalogSingleApp = React.createClass({
            onMouseOver={this.handleMouseOver}
            onMouseOut={this.handleMouseOut}>
         <Col xs={3} sm={3} md={condensed? 2:3}
-             onClick={()=>{this.setState({modalOpen:true})}}
+             onClick={()=>{this.handleEdit()}}
              style={{height:"100%", textAlign:"center"}}>
           <span className="helper"></span><img className="vertial-middle " src={logoURL}
                                                style={{width:condensed ? "25px": "50px", top:"18px"}}/>
@@ -142,6 +142,13 @@ var CatalogSingleApp = React.createClass({
          </Col>*/}
       </Row>
     </div>;
+  },
+
+  handleEdit(){
+    if (OctoAPI.isAdmin()){
+      this.setState({modalOpen:true});
+      this.props.onModalOpen();
+    }
   },
 
   handleSubscribe() {

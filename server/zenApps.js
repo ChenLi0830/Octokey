@@ -27,6 +27,15 @@ ZenApps.allow({
 const MAX_APPS = 1000;
 
 Meteor.methods({
+    searchApps(searchText){
+        checkUserLogin();
+
+        console.log("searchText", searchText);
+        const result = ZenApps.find({"appName":{$regex : searchText, $options:"i"}}).fetch();
+        console.log("result",result);
+        return result;
+    },
+
     getPublicAppsOfCategory(categoryName, limit){
         localSimulateLatency(500);
         //console.log("limit for all apps",limit);
@@ -45,6 +54,7 @@ Meteor.methods({
 
     getAllPublicApps(){
         localSimulateLatency(800);
+        //console.log("getAllPublicApps is called");
         if (this.userId) {
             return ZenApps.find({},{sort: {subscribeCount: -1}}).fetch();
         }
