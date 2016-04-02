@@ -55,10 +55,10 @@ var CatalogSideBar = React.createClass({
 
              padding:0,
              borderRadius:"5px"}}>
-                <SearchBox zenApps = {this.props.zenApps}
+                {/*<SearchBox zenApps = {this.props.zenApps}
                            subscribeList={this.props.subscribeList}
                            allCategories={this.props.allCategories}
-                />
+                />*/}
                 {/*<Divider />*/}
                 {createPublicAppButton}
                 {/*<CreatePrivateAppButton/>*/}

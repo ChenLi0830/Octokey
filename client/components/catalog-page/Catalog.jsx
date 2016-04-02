@@ -53,6 +53,7 @@ var Catalog = React.createClass({
           <Col span="18">
             <CatalogAppsBox allCategories={this.props.allCategories}
                             subscribeList={this.props.subscribeList}
+                            zenApps={this.props.allPublicApps}
                             chosenCategory={this.state.chosenCategory}
             />
           </Col>

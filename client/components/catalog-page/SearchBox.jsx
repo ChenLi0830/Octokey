@@ -7,15 +7,19 @@
  * Search box component, called by "CatalogSideBar"
  *******************************************************************************/
 var CatalogSingleApp = require('./CatalogSingleApp.jsx');
-const {
-    TextField,
-    } = MUI;
 
-const {
-    ActionSearch
-    } = SvgIcons;
+import { Icon, Input, Button } from 'antd';
+import classNames from 'classnames';
+const InputGroup = Input.Group;
 
 import { Popover} from 'antd';
+
+const styles = {
+  searchInput: {
+    width: "90%",
+    margin:"10px auto"
+  }
+};
 
 var SearchBox = React.createClass({
 
@@ -40,36 +44,47 @@ var SearchBox = React.createClass({
 
   render(){
 
-    return <div style={{padding:20}}>
-      <ActionSearch
-          style={{height:30,width:30,verticalAlign:"middle",
-                        fill:this.state.searchOnFocus ? "rgba(158,158,158,1)":"rgba(158,158,158,0.53)"}}
-      />
+    const btnCls = classNames({
+      'ant-search-btn': true,
+      'ant-search-btn-noempty': !!this.state.searchText.trim(),
+    });
+    const searchCls = classNames({
+      'ant-search-input': true,
+      'ant-search-input-focus': this.state.searchOnFocus,
+    });
 
-        <Popover overlay={this.state.searchResult}
-            //this.state.searchResult
-                 visible={this.state.popOpen}
-                 placement="bottom"
-                 overlayStyle={{zIndex:"inherit"}}
-            trigger="click"
-            onVisibleChange={this.handlePopVisibleChange}
+    return <Popover overlay={this.state.searchResult}
+                    visible={this.state.popOpen}
+                    placement="bottom"
+                    overlayStyle={{zIndex:"inherit"}}
+                    trigger="click"
+                    onVisibleChange={this.handlePopVisibleChange}>
 
-        >
-          <TextField
-              hintText={this.context.intl.messages.cata_search}
-              value={this.state.searchText}
-              onChange={this.handleSearch}
-              style={{width:180}}
-              onMouseEnter={()=>{this.setState({searchOnFocus:true})}}
-              onMouseLeave={()=>{this.setState({searchOnFocus:false})}}
-              onKeyDown={(e)=>{e.key==='Escape' && this.setState({searchText:"",popOpen:false});}}
-          />
-        </Popover>
-    </div>
+      <InputGroup className={searchCls} style={styles.searchInput}>
+        <Input placeholder="添加网站"
+               style={{textAlign:"center"}}
+               value={this.state.searchText}
+               onChange={this.handleSearch}
+               onFocus={this.handleFocusBlur} onBlur={this.handleFocusBlur}
+               onKeyDown={(e)=>{e.key==='Escape' && this.setState({searchText:"",popOpen:false});}}/>
+        <div className="ant-input-group-wrap">
+          <Button className={btnCls} size={this.props.size}>
+            <Icon type="search"/>
+          </Button>
+        </div>
+      </InputGroup>
+
+    </Popover>;
+  },
+
+  handleFocusBlur(e) {
+    this.setState({
+      focus: e.target === document.activeElement,
+    });
   },
 
   handlePopVisibleChange(popOpen){
-    if (popOpen===true && this.state.searchText.trim().length === 0){
+    if (popOpen === true && this.state.searchText.trim().length === 0) {
       //Don't anything if search Text is empty.
       return;
     }

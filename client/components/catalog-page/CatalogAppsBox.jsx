@@ -9,6 +9,7 @@
 var CatalogSingleApp = require('./CatalogSingleApp.jsx');
 var AppLoading = require('../AppLoading.jsx');
 var Infinite = require('react-infinite');
+var SearchBox = require('./SearchBox.jsx');
 
 const {
     Paper,
@@ -125,7 +126,11 @@ var CatalogAppsBox = React.createClass({
       <Paper zDepth={1}
              style={styles.appListPaper}>
         <List style={{backgroundColor:ZenColor.white}}>
-          <Subheader>{messages.cata_listTitle}</Subheader>
+          {/*<Subheader>{messages.cata_listTitle}</Subheader>*/}
+          <SearchBox zenApps = {this.props.zenApps}
+                     subscribeList={this.props.subscribeList}
+                     allCategories={this.props.allCategories}
+          />
           <Infinite elementHeight={100}
                     useWindowAsScrollContainer
                     infiniteLoadBeginEdgeOffset={-170}

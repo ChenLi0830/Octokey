@@ -29,10 +29,8 @@ const MAX_APPS = 1000;
 Meteor.methods({
   searchApps(searchText){
     checkUserLogin();
-
-    console.log("searchText", searchText);
     const result = ZenApps.find({"appName": {$regex: "^" + searchText, $options: "i"}}).fetch();
-    console.log("result.length", result.length);
+    //console.log("result.length", result.length);
     return result;
   },
 
@@ -62,8 +60,6 @@ Meteor.methods({
 
   addZenApp(appName, loginLink, registerLink, logo, selectedCategoryNames){
     localSimulateLatency(500);
-    //console.log("appName", appName);
-    //console.log("loginLink", loginLink);
 
     checkUserLogin();
     checkAdmin();
@@ -89,8 +85,6 @@ Meteor.methods({
 
   updateZenApp(appId, appName, loginLink, registerLink, logo, selectedCategoryNames){
     localSimulateLatency(500);
-    /*console.log("update start: appId", appId, "appName", appName, "loginLink", loginLink, "selectedCategoryNames",
-     selectedCategoryNames, "registerLink", registerLink);*/
 
     checkUserLogin();
     checkAdmin();
