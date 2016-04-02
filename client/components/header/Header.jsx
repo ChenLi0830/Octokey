@@ -29,6 +29,7 @@ const {AppBar,
 const {
     ToggleStar,
     ActionLanguage,
+    HardwareToys,
     ActionAccountCircle,
     ActionViewModule,
     PlacesAllInclusive,
@@ -163,7 +164,7 @@ var Header = React.createClass({
                             value="/login"
                         />
                         <Tab
-                            icon={<ActionViewModule className="horizontal-center"style={{fill:ZenRawTheme.palette.primary1Color}}/>}
+                            icon={<HardwareToys className="horizontal-center"style={{fill:ZenRawTheme.palette.primary1Color}}/>}
                             label={messages["mySites-我的网站"]/*message*/}
                             value="/list"
                         />
