@@ -36,18 +36,21 @@ Meteor.methods({
 
   getPublicAppsOfCategory(categoryName, limit){
     localSimulateLatency(500);
+    checkUserLogin();
     //console.log("limit for all apps",limit);
     const options = {
       sort: {subscribeCount: -1},
       limit: Math.min(limit, MAX_APPS)
     };
-    if (this.userId) {
-      return ZenApps.find({
-        categoryNames: {
-          $in: [categoryName]
-        }
-      }, options).fetch();
-    }
+    const query = {categoryNames: {
+      $in: [categoryName]
+    }};
+
+    let appsOfCategory = {};
+    appsOfCategory.total = ZenApps.find(query).count();
+    appsOfCategory.apps = ZenApps.find(query, options).fetch();
+
+    return appsOfCategory;
   },
 
   getAllPublicApps(){

@@ -33,6 +33,8 @@ const styles = {
   }
 };
 
+const InitialFetchNumber = 20;
+
 var CatalogAppsBox = React.createClass({
   mixins: [ReactMeteorData,],
 
@@ -40,23 +42,22 @@ var CatalogAppsBox = React.createClass({
     if (this.needFetchApps) {
       OctoAPI.fetchDataToSession("appsOfChosenCategory", "getPublicAppsOfCategory",
           this.props.chosenCategory,
-          this.state.loadAppsNumber);
+          this.state.requestAppsNumber);
       this.needFetchApps = false;
     }
     const subsHandles = [
-      Session.get("appsOfChosenCategory"),
+      //Subs is ready when fetched apps number = requested number OR total apps number
+      Session.get("appsOfChosenCategory") &&
+      (Session.get("appsOfChosenCategory").apps.length === this.state.requestAppsNumber ||
+      Session.get("appsOfChosenCategory").apps.length === Session.get("appsOfChosenCategory").total)
     ];
+
+    console.log("OctoAPI.subsHandlesAreReady(subsHandles)",
+        OctoAPI.subsHandlesAreReady(subsHandles));
+
     return {
       subsReady: OctoAPI.subsHandlesAreReady(subsHandles),
     };
-  },
-
-  componentWillReceiveProps(nextProps){
-    if (nextProps.chosenCategory !== this.props.chosenCategory) {
-      //Apps should be fetched if the user chose a different category
-      this.needFetchApps = true;
-      this.setState({loadAppsNumber: 20});
-    }
   },
 
   propTypes: {
@@ -76,35 +77,47 @@ var CatalogAppsBox = React.createClass({
       showModal: false,
       preview: null,
       editAppId: null,
-      loadAppsNumber: 20,
+      requestAppsNumber: InitialFetchNumber,//Initialed in componentWillReceiveProps
+      loadingMoreApp: false,
+    }
+  },
+
+  componentWillReceiveProps(nextProps){
+    if (nextProps.chosenCategory !== this.props.chosenCategory) {
+      //Apps should be fetched if the user chose a different category
+      this.needFetchApps = true;
+      this.setState({requestAppsNumber: InitialFetchNumber});
     }
   },
 
   handleInfiniteLoad(){
     //Won't try to load more apps when data-fetching is not finished.
     if (!this.data.subsReady) {
-      console.log("return");
       return;
     }
+
     this.needFetchApps = true;
-    this.setState({loadAppsNumber: this.state.loadAppsNumber + 20});
-
-    console.log("this.data.subsReady, this.state.loadAppsNumber", this.data.subsReady,
-        this.state.loadAppsNumber);
+    this.setState({
+      requestAppsNumber: Math.min(this.state.requestAppsNumber + 20,
+          Session.get("appsOfChosenCategory").total),
+      loadingMoreApp: true
+    });
   },
 
-  elementInfiniteLoad() {
-    return <AppLoading/>;
-  },
+  /*  elementInfiniteLoad() {
+   return <AppLoading/>;
+   },*/
 
   render(){
+    console.log("this.data.subsReady", this.data.subsReady);
+
     if (!this.data.subsReady && !Session.get("appsOfChosenCategory")) {
       return <AppLoading/>
     }
 
     const {messages} = this.context.intl;
 
-    const appsOfChosenCategory = (Session.get("appsOfChosenCategory").map(function (app) {
+    const appsOfChosenCategory = (Session.get("appsOfChosenCategory").apps.map(function (app) {
           let logoURL = OctoAPI.getLogoUrl(app._id);
           let subscribed = this.props.subscribeList[app._id];
           return <CatalogSingleApp key={app._id}
@@ -122,25 +135,30 @@ var CatalogAppsBox = React.createClass({
         }.bind(this))
     );
 
+    const noMoreApps = appsOfChosenCategory.length === Session.get("appsOfChosenCategory").total;
+
     return <div className="layout-margin">
       <Paper zDepth={1}
              style={styles.appListPaper}>
         <List style={{backgroundColor:ZenColor.white}}>
           {/*<Subheader>{messages.cata_listTitle}</Subheader>*/}
-          <SearchBox zenApps = {this.props.zenApps}
+          <SearchBox zenApps={this.props.zenApps}
                      subscribeList={this.props.subscribeList}
                      allCategories={this.props.allCategories}
           />
-          <Infinite elementHeight={100}
-                    useWindowAsScrollContainer
-                    infiniteLoadBeginEdgeOffset={-170}
-                    onInfiniteLoad={this.handleInfiniteLoad}
-                    loadingSpinnerDelegate={this.elementInfiniteLoad()}
-                    isInfiniteLoading={!this.data.subsReady}
-          >
-            {appsOfChosenCategory}
-          </Infinite>
+          {appsOfChosenCategory}
         </List>
+
+        {// Only show “加载更多” 按钮 if appsOfChosenCategory number > InitialFetchNumber
+          Session.get("appsOfChosenCategory").total > InitialFetchNumber ?
+            <Button
+                type="dashed"
+                size="large"
+                loading={!this.data.subsReady}
+                onClick={this.handleInfiniteLoad}
+                style={{display:"block", width: "100%", margin: "20px auto"}}>
+              {noMoreApps ? "已经到底了" : "加载更多应用"}
+            </Button> : null}
       </Paper>
     </div>
   }

@@ -208,16 +208,19 @@ OctoAPI = {
 
     /**
      * Check if all the subscriptions from Meteor are ready
-     * @param {Object[]} subsHandles - array of Meteor.subscribe() or Session.get()
+     * @param {Object[] | Boolean[]} subsHandles - array of Meteor.subscribe() or Session.get() or
+     * boolean
      */
     subsHandlesAreReady: function (subsHandles) {
         return _.every(subsHandles, function (subsHandle) {
             if (subsHandle && subsHandle.ready) {//Meteor.subscribe()
                 return subsHandle.ready();
             }
-            else {//Session.get()
-                return subsHandle !== undefined;
+            if (typeof subsHandle === "boolean"){//boolean
+                return subsHandle === true;
             }
+            //Session.get()
+            return subsHandle !== undefined;
         });
     },
 

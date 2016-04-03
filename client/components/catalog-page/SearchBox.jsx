@@ -61,7 +61,7 @@ var SearchBox = React.createClass({
                     onVisibleChange={this.handlePopVisibleChange}>
 
       <InputGroup className={searchCls} style={styles.searchInput}>
-        <Input placeholder="添加网站"
+        <Input placeholder="搜索要添加的网站"
                style={{textAlign:"center"}}
                value={this.state.searchText}
                onChange={this.handleSearch}
