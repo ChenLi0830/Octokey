@@ -8,7 +8,6 @@
  *******************************************************************************/
 var CatalogSingleApp = require('./CatalogSingleApp.jsx');
 var AppLoading = require('../AppLoading.jsx');
-var Infinite = require('react-infinite');
 var SearchBox = require('./SearchBox.jsx');
 
 const {
@@ -51,9 +50,6 @@ var CatalogAppsBox = React.createClass({
       (Session.get("appsOfChosenCategory").apps.length === this.state.requestAppsNumber ||
       Session.get("appsOfChosenCategory").apps.length === Session.get("appsOfChosenCategory").total)
     ];
-
-    console.log("OctoAPI.subsHandlesAreReady(subsHandles)",
-        OctoAPI.subsHandlesAreReady(subsHandles));
 
     return {
       subsReady: OctoAPI.subsHandlesAreReady(subsHandles),
@@ -109,8 +105,6 @@ var CatalogAppsBox = React.createClass({
    },*/
 
   render(){
-    console.log("this.data.subsReady", this.data.subsReady);
-
     if (!this.data.subsReady && !Session.get("appsOfChosenCategory")) {
       return <AppLoading/>
     }
