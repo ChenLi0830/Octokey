@@ -55,6 +55,9 @@
     "cata_categoryNameEN":"Name in English",
     "cata_categoryPosition":"Position value",
     "cata_search":"Search for an app",
+    "noMoreApps-已经到底了":"You've reached the bottom",
+    "loadMoreApps-加载更多":"Load more apps",
+    "searchApps-搜索网站":"Search for apps",
     "FAB_cancel":"back",
 
     "app_credentialDialogMessage":"Fill in your login information, it is only required once",

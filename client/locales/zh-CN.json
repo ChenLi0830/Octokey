@@ -55,6 +55,9 @@
     "cata_categoryNameEN":"英文名",
     "cata_categoryPosition":"排位值（大于0）",
     "cata_search":"搜索应用",
+    "noMoreApps-已经到底了":"已经到底了",
+    "loadMoreApps-加载更多":"加载更多应用",
+    "searchApps-搜索网站":"搜索要添加的网站",
     "FAB_cancel":"返回",
 
     "app_credentialDialogMessage":"请输入你的登录信息 (只需输入一次)",

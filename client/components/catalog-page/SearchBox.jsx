@@ -43,7 +43,7 @@ var SearchBox = React.createClass({
   },
 
   render(){
-
+    messages = this.context.intl.messages;
     const btnCls = classNames({
       'ant-search-btn': true,
       'ant-search-btn-noempty': !!this.state.searchText.trim(),
@@ -61,7 +61,7 @@ var SearchBox = React.createClass({
                     onVisibleChange={this.handlePopVisibleChange}>
 
       <InputGroup className={searchCls} style={styles.searchInput}>
-        <Input placeholder="搜索要添加的网站"
+        <Input placeholder={messages["searchApps-搜索网站"]}
                style={{textAlign:"center"}}
                value={this.state.searchText}
                onChange={this.handleSearch}
@@ -123,7 +123,7 @@ var SearchBox = React.createClass({
             });
 
             const finalResult = (renderedResult.length === 0 ?
-                this.context.intl.messages.cata_notFound :
+                messages.cata_notFound :
                 renderedResult);
 
             this.setState({
