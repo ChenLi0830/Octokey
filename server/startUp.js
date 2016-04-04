@@ -100,6 +100,16 @@ Meteor.startup(function () {
        }*/
       return true;
     });
+
+    //Stop autoLogin for certain methods
+    Accounts.validateLoginAttempt(function (info) {
+      const methodName = info.methodName;
+      //console.log("login attempt "+methodName);
+      if (methodName === "verifyEmail") {
+        return false;
+      }
+      return true;
+    });
   }
 
   function initDatabase() {

@@ -13,11 +13,11 @@ var AuthJoin = require('./components/accounts/AuthJoin.jsx');
 var PageNotFound = require('./components/PageNotFound.jsx');
 var IntlWrapper = require('./components/IntlWrapper.jsx');
 var AuthSignIn = require('./components/accounts/AuthSignIn.jsx');
+var VerifyEmailTokenPage = require('./components/VerifyEmailTokenPage.jsx');
 
 //Todo use the following line instead of /public/css/antd-index.css when Meteor fix the problem of
 // importing css from npm packages. import 'antd/lib/index.css'; // only need to import once in
 // entry module
-
 
 const {
     Router,
@@ -40,21 +40,19 @@ function verifyNotLogin(nextState, replace) {
   }
 }
 
-function verifyEmail(nextState, replace) {
+/*function verifyEmail(nextState, replace) {
   //Todo make token verification work
   console.log("nextState.params.token", nextState.params.token);
   Accounts.verifyEmail(nextState.params.token, function (error) {
     if (error) {
       console.log("error", error.reason);
-      return window.location.replace("/list");
+      return window.location.replace("/login/verifyError");
       //Bert.alert( error.reason, 'danger' );
     }
-    //console.log("verify successful!");
-    //redirectUrl = "/list";
-    window.location.replace("/list");
+    window.location.replace("/list/verifySuccessful");
     //Bert.alert( 'Email verified! Thanks!', 'success' );
   });
-}
+}*/
 
 const routes = (
     <Route path="/" component={App}>
@@ -64,7 +62,7 @@ const routes = (
       <Route path="/join" component={AuthJoin} onEnter={verifyNotLogin}/>
       {<Route path="/login" component={AuthSignIn} onEnter={verifyNotLogin}/>}
       {/*<Route path="/reset" component={AuthForgotPwdPage} onEnter={verifyNotLogin}/>*/}
-      {<Route path="/verify-email/:token" component={PageNotFound} onEnter={verifyEmail}/>}
+      {<Route path="/verify-email/:token" component={VerifyEmailTokenPage}/>}
       <Route path="/*" component={PageNotFound}/>
     </Route>
 );
