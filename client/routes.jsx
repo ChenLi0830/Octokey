@@ -9,8 +9,7 @@
 var App = require('./components/App.jsx');
 var AppsContainer = require('./components/main-page/AppsContainer.jsx');
 var CatalogContainer = require('./components/catalog-page/CatalogContainer.jsx');
-var JoinUsingMobilePage = require('./components/accounts/JoinUsingMobilePage.jsx');
-var JoinUsingEmailPage = require('./components/accounts/JoinUsingEmailPage.jsx');
+var AuthJoin = require('./components/accounts/AuthJoin.jsx');
 var PageNotFound = require('./components/PageNotFound.jsx');
 var IntlWrapper = require('./components/IntlWrapper.jsx');
 var AuthSignIn = require('./components/accounts/AuthSignIn.jsx');
@@ -66,11 +65,8 @@ const routes = (
       <IndexRoute component={AuthSignIn} onEnter={verifyNotLogin}/>
       <Route path="/list" component={AppsContainer} onEnter={requireAuth}/>
       <Route path="/catalog" component={CatalogContainer} onEnter={requireAuth}/>
-      <Route path="/join" component={JoinUsingMobilePage} onEnter={verifyNotLogin}/>
-      <Route path="/joinEmail" component={JoinUsingEmailPage} onEnter={verifyNotLogin}/>
-      {/*<Route path="/loginEmail" component={AuthSignInEmail} onEnter={verifyNotLogin}/>*/}
+      <Route path="/join" component={AuthJoin} onEnter={verifyNotLogin}/>
       {<Route path="/login" component={AuthSignIn} onEnter={verifyNotLogin}/>}
-      {/*<Route path="/loginMobile" component={AuthSignInMobile} onEnter={verifyNotLogin}/>*/}
       {/*<Route path="/reset" component={AuthForgotPwdPage} onEnter={verifyNotLogin}/>*/}
       {/*<Route path="/verify-email/:token" component={AppNotFound} onEnter={verifyEmail}/>*/}
       <Route path="/*" component={PageNotFound}/>

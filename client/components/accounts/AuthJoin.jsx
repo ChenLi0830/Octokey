@@ -36,7 +36,7 @@ const styles = {
   },
 };
 
-var JoinUsingMobilePage = React.createClass({
+var AuthJoin = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired,
     intl: React.PropTypes.object.isRequired,
@@ -127,4 +127,4 @@ var JoinUsingMobilePage = React.createClass({
   },
 });
 
-module.exports = JoinUsingMobilePage;
+module.exports = AuthJoin;
