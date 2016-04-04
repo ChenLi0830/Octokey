@@ -85,7 +85,6 @@ var AddNewCredentialDialog = React.createClass({
     </Dialog>
   },
 
-
   handleSaveAccount(){
     /* Error check */
     this.handleInputErrorCheckUser();
@@ -102,17 +101,16 @@ var AddNewCredentialDialog = React.createClass({
       let encryptedPwd = OctoAPI.encrypt(password, hexKey, this.props.hexIv);
 
       if (this.props.isPublicApp) {
-        Meteor.call("addNewCredential", this.props.appId, username, encryptedPwd, function (error) {
+        Meteor.call("appAddUsername", this.props.appId, username, (error)=>{
           if (error) {
-            throw new Meteor.Error("Error adding new Credential");
+            return console.log("error", error);
           }
-        }.bind(this));
-
-        Meteor.call("appAddUsername", this.props.appId, username, function (error) {
-          if (error) {
-            throw new Meteor.Error("Error adding new Credential");
-          }
-        }.bind(this));
+          Meteor.call("addNewCredential", this.props.appId, username, encryptedPwd, (error)=>{
+            if (error) {
+              return console.log("error", error);
+            }
+          });
+        });
         this.props.whenCloseDialog();
       } else {
         alert("TODO: adding credentials for the private app");

@@ -83,6 +83,11 @@ Meteor.methods({
     localSimulateLatency(500);
     //console.log("addConfigured start");
     generalErrorCheck(Meteor.userId());
+
+    if (Meteor.call("checkUsernameExist", appId, username)) {
+      throw new Meteor.Error("userApps: 该用户名已经存在");
+    }
+
     UserApps.update(
         {
           $and: [
@@ -129,7 +134,21 @@ Meteor.methods({
         hexIv: hexIv
       }
     });
-  }
+  },
+
+  checkUsernameExist(appId, username){
+    checkUserLogin();
+
+    const usernameExists = UserApps.findOne({
+      $and: [
+        {userId: this.userId},
+        {"publicApps.appId": appId},
+        {"publicApps.userNames": username}
+      ]
+    });
+    console.log("checkAppUserNameExist", !!usernameExists);
+    return !!usernameExists;
+  },
 });
 
 function generalErrorCheck(userId) {

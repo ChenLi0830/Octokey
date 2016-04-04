@@ -14,6 +14,7 @@ Meteor.methods({
     let userId = Meteor.userId();
     checkUserLogin();
 
+    //Todo check if username exit for appNewCredential
     let userHasThisApp = UserApps.find({
       $and: [
         {userId: userId},
