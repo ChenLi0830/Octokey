@@ -145,14 +145,14 @@ var CatalogAppsBox = React.createClass({
 
         {// Only show “加载更多” 按钮 if appsOfChosenCategory number > InitialFetchNumber
           Session.get("appsOfChosenCategory").total > InitialFetchNumber ?
-            <Button
-                type="dashed"
-                size="large"
-                loading={!this.data.subsReady}
-                onClick={this.handleInfiniteLoad}
-                style={{display:"block", width: "100%", margin: "20px auto"}}>
-              {noMoreApps ? messages["noMoreApps-已经到底了"] : messages["loadMoreApps-加载更多"]}
-            </Button> : null}
+              <Button
+                  type="dashed"
+                  size="large"
+                  loading={!this.data.subsReady}
+                  onClick={this.handleInfiniteLoad}
+                  style={{display:"block", width: "100%", margin: "20px auto"}}>
+                {noMoreApps ? messages["noMoreApps-已经到底了"] : messages["loadMoreApps-加载更多"]}
+              </Button> : null}
       </Paper>
     </div>
   }

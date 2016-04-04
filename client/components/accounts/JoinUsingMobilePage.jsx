@@ -116,7 +116,7 @@ var JoinUsingMobilePage = React.createClass({
 
   onStep3Complete(){
     if (this.state.registerUsingEmail) {
-      Meteor.loginWithPassword(this.state.finalUserName, this.state.finalPwd, ()=>{
+      Meteor.loginWithPassword(this.state.finalUserName, this.state.finalPwd, ()=> {
         this.context.router.push('/list');
       });
     } else {

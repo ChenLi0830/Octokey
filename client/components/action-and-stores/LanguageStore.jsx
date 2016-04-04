@@ -7,19 +7,19 @@
  * This is used as the 'stores' of Re-flux for the language the user select
  *******************************************************************************/
 LanguageStore = Reflux.createStore({
-    listenables: [Actions],
+  listenables: [Actions],
 
-    selectNewLanguage(language){
-        if (this.language != language) {
-            this.language = language;
-            this.trigger('languageChange', language)
-        } else {
-            console.log("language not changed");
-        }
-    },
+  selectNewLanguage(language){
+    if (this.language != language) {
+      this.language = language;
+      this.trigger('languageChange', language)
+    } else {
+      console.log("language not changed");
+    }
+  },
 
-    /*getLanguage(){
-        this.trigger('languageChange', this.language);
-    },*/
+  /*getLanguage(){
+   this.trigger('languageChange', this.language);
+   },*/
 });
 

@@ -221,7 +221,7 @@ var JoinStep1 = React.createClass({
 
     function validateEmail() {
       let userEmail = this.refs.phoneOrEmail.getValue();
-      this.setState({captchaBtn:"validationSent-提交中"});
+      this.setState({captchaBtn: "validationSent-提交中"});
 
       Meteor.call("createUserByEmail", userEmail, function (error) {
         if (error) {

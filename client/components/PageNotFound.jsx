@@ -7,11 +7,11 @@
  * Universal Page Not Found component. Called by "routes"
  *******************************************************************************/
 var PageNotFound = React.createClass({
-    render() {
-        return (
-            <div >Page not found</div>
-        );
-    }
+  render() {
+    return (
+        <div >Page not found</div>
+    );
+  }
 });
 //TODO: change its style
 

@@ -7,16 +7,16 @@
  * "generalMethods" declares the methods that is not related to any specific collection
  *******************************************************************************/
 Meteor.methods({
-    inDevMode(){
-        localSimulateLatency(500);
-        return process.env.NODE_ENV === "development";
-    },
+  inDevMode(){
+    localSimulateLatency(500);
+    return process.env.NODE_ENV === "development";
+  },
 
-    initiateUser(){
-        localSimulateLatency(1000);
-        checkUserLogin();
-        const userId = this.userId;
-        console.log("initiateUser userId",userId);
-        serverAPI.initiateUserById(userId);
-    }
+  initiateUser(){
+    localSimulateLatency(1000);
+    checkUserLogin();
+    const userId = this.userId;
+    console.log("initiateUser userId", userId);
+    serverAPI.initiateUserById(userId);
+  }
 });

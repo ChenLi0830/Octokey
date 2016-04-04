@@ -7,10 +7,10 @@
  * This is used as the 'stores' of Re-flux for the category the user select
  *******************************************************************************/
 CategoryStore = Reflux.createStore({
-    listenables: [Actions],
+  listenables: [Actions],
 
-    selectNewCategory(categoryName){
-        this.trigger('categoryChange', categoryName)
-    }
+  selectNewCategory(categoryName){
+    this.trigger('categoryChange', categoryName)
+  }
 });
 

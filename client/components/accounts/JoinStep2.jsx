@@ -210,7 +210,7 @@ var JoinStep2 = React.createClass({
     const {finalUserName,finalCaptcha, registerUsingEmail} = this.props;
     const finalPwd = this.refs.password.refs.input.value;
 
-    if (finalUserName && finalPwd && finalCaptcha||registerUsingEmail) {
+    if (finalUserName && finalPwd && finalCaptcha || registerUsingEmail) {
       this.setState({errorText: ""});
 
       if (registerUsingEmail) {// Register using email

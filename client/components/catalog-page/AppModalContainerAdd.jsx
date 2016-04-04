@@ -73,20 +73,20 @@ const AppModalContainerAdd = React.createClass({
       alert(this.context.intl.messages.cata_createAppAlert);
     }
 
-/*      //Todo 显示等待条,或者其他gif
-      Meteor.call("updateZenApp", this.props.appId, newAppName, newLoginLink, newRegisterLink,
-          newLogo,
-          this.state.selectedCategories, function (error, result) {
-            if (error) {
-              throw new Meteor.Error(error);
-            }
+    /*      //Todo 显示等待条,或者其他gif
+     Meteor.call("updateZenApp", this.props.appId, newAppName, newLoginLink, newRegisterLink,
+     newLogo,
+     this.state.selectedCategories, function (error, result) {
+     if (error) {
+     throw new Meteor.Error(error);
+     }
 
-            //Fetch updated data from publicApps collection
-            OctoAPI.fetchDataToSession("allPublicApps", "getAllPublicApps");
+     //Fetch updated data from publicApps collection
+     OctoAPI.fetchDataToSession("allPublicApps", "getAllPublicApps");
 
-            //Close modal
-            this.props.onModalClose();
-          }.bind(this));*/
+     //Close modal
+     this.props.onModalClose();
+     }.bind(this));*/
   },
 
   /**

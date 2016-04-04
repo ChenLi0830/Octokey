@@ -17,7 +17,7 @@ import { Popover} from 'antd';
 const styles = {
   searchInput: {
     width: "90%",
-    margin:"10px auto"
+    margin: "10px auto"
   }
 };
 

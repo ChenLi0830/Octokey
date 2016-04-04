@@ -9,50 +9,50 @@
 var Catalog = require('./Catalog.jsx');
 
 var CatalogContainer = React.createClass({
-    mixins: [
-        ReactMeteorData,
-    ],
+  mixins: [
+    ReactMeteorData,
+  ],
 
-    getMeteorData(){
-        OctoAPI.fetchDataToSessionIfNull("allPublicApps", "getAllPublicApps");
+  getMeteorData(){
+    OctoAPI.fetchDataToSessionIfNull("allPublicApps", "getAllPublicApps");
 
-        const subsHandles = [
-            Session.get("allPublicApps"),
-            Meteor.subscribe("allCategories"),
-            Meteor.subscribe("userApps"),
-        ];
-        const subsReady = OctoAPI.subsHandlesAreReady(subsHandles);
+    const subsHandles = [
+      Session.get("allPublicApps"),
+      Meteor.subscribe("allCategories"),
+      Meteor.subscribe("userApps"),
+    ];
+    const subsReady = OctoAPI.subsHandlesAreReady(subsHandles);
 
-        const AppOfUser = UserApps.findOne({userId: Meteor.userId()}, {reactive: true});
-        const allCategories = ZenCategories.find({},{sort: {index: 1}}).fetch();
+    const AppOfUser = UserApps.findOne({userId: Meteor.userId()}, {reactive: true});
+    const allCategories = ZenCategories.find({}, {sort: {index: 1}}).fetch();
 
-        let subscribeList = [];
-        if (subsReady) {
-            Session.get("allPublicApps").map(function (publicApp) {
-                let subscribed = _.findIndex(AppOfUser.publicApps, function (subscribedApp) {
-                        return subscribedApp.appId === publicApp._id
-                    }) > -1;
-                subscribeList[publicApp._id] = subscribed;
-            })
-        }
+    let subscribeList = [];
+    if (subsReady) {
+      Session.get("allPublicApps").map(function (publicApp) {
+        let subscribed = _.findIndex(AppOfUser.publicApps, function (subscribedApp) {
+              return subscribedApp.appId === publicApp._id
+            }) > -1;
+        subscribeList[publicApp._id] = subscribed;
+      })
+    }
 
-        return {
-            subscribeList: subscribeList,
-            allCategories: allCategories,
-            subsReady: subsReady
-        }
-    },
+    return {
+      subscribeList: subscribeList,
+      allCategories: allCategories,
+      subsReady: subsReady
+    }
+  },
 
-    render(){
-        return <div>
-            <Catalog
-                subsReady = {this.data.subsReady}
-                subscribeList= {this.data.subscribeList}
-                allPublicApps = {Session.get("allPublicApps") || []}
-                allCategories = {this.data.allCategories}
-            />
-        </div>
-    },
+  render(){
+    return <div>
+      <Catalog
+          subsReady={this.data.subsReady}
+          subscribeList={this.data.subscribeList}
+          allPublicApps={Session.get("allPublicApps") || []}
+          allCategories={this.data.allCategories}
+      />
+    </div>
+  },
 
 });
 

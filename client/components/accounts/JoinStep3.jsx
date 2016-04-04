@@ -72,7 +72,7 @@ var JoinStep3 = React.createClass({
   },
 
   initiateUser(){
-    if (this.props.registerUsingEmail){//If register using Email, call onStepComplete directly.
+    if (this.props.registerUsingEmail) {//If register using Email, call onStepComplete directly.
       this.props.onStepComplete();
     } else {//If register using Mobile, initiate the User
       Meteor.call("initiateUser", function (error) {

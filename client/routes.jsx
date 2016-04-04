@@ -15,10 +15,9 @@ var PageNotFound = require('./components/PageNotFound.jsx');
 var IntlWrapper = require('./components/IntlWrapper.jsx');
 var AuthSignIn = require('./components/accounts/AuthSignIn.jsx');
 
-//Todo use the following line instead of /public/css/antd-index.css when Meteor fix the problem of importing css
-// from npm
-// packages.
-//import 'antd/lib/index.css'; // only need to import once in entry module
+//Todo use the following line instead of /public/css/antd-index.css when Meteor fix the problem of
+// importing css from npm packages. import 'antd/lib/index.css'; // only need to import once in
+// entry module
 
 
 const {
@@ -31,58 +30,58 @@ const {
 // const createHistory = ReactRouter.history.createHistory;
 
 function requireAuth(nextState, replace) {
-    if (!Meteor.userId()) {
-        replace('/login');
-    }
+  if (!Meteor.userId()) {
+    replace('/login');
+  }
 }
 
 function verifyNotLogin(nextState, replace) {
-    if (Meteor.userId()) {
-        replace('/list');
-    }
+  if (Meteor.userId()) {
+    replace('/list');
+  }
 }
 
 function verifyEmail(nextState, replace) {
-    replace('/list');
-    //Todo make token verification work
-    ///*Accounts.verifyEmail( nextState.params.token, function(error){
-    //    if ( error ) {
-    //        console.log(error.reason);
-    //        console.log("replace", replace);
-    //        replace('/list');
-    //        //Bert.alert( error.reason, 'danger' );
-    //    } else {
-    //        //console.log("verify successful!");
-    //        console.log("replace", replace);
-    //        //redirectUrl = "/list";
-    //        replace('/list');
-    //        //Bert.alert( 'Email verified! Thanks!', 'success' );
-    //    }
-    //});*/
-    //replace(redirectUrl);
+  replace('/list');
+  //Todo make token verification work
+  ///*Accounts.verifyEmail( nextState.params.token, function(error){
+  //    if ( error ) {
+  //        console.log(error.reason);
+  //        console.log("replace", replace);
+  //        replace('/list');
+  //        //Bert.alert( error.reason, 'danger' );
+  //    } else {
+  //        //console.log("verify successful!");
+  //        console.log("replace", replace);
+  //        //redirectUrl = "/list";
+  //        replace('/list');
+  //        //Bert.alert( 'Email verified! Thanks!', 'success' );
+  //    }
+  //});*/
+  //replace(redirectUrl);
 }
 
 const routes = (
     <Route path="/" component={App}>
-        <IndexRoute component={AuthSignIn} onEnter={verifyNotLogin}/>
-        <Route path="/list" component={AppsContainer} onEnter={requireAuth}/>
-        <Route path="/catalog" component={CatalogContainer} onEnter={requireAuth}/>
-        <Route path="/join" component={JoinUsingMobilePage} onEnter={verifyNotLogin}/>
-        <Route path="/joinEmail" component={JoinUsingEmailPage} onEnter={verifyNotLogin}/>
-        {/*<Route path="/loginEmail" component={AuthSignInEmail} onEnter={verifyNotLogin}/>*/}
-        {<Route path="/login" component={AuthSignIn} onEnter={verifyNotLogin}/>}
-        {/*<Route path="/loginMobile" component={AuthSignInMobile} onEnter={verifyNotLogin}/>*/}
-        {/*<Route path="/reset" component={AuthForgotPwdPage} onEnter={verifyNotLogin}/>*/}
-        {/*<Route path="/verify-email/:token" component={AppNotFound} onEnter={verifyEmail}/>*/}
-        <Route path="/*" component={PageNotFound}/>
+      <IndexRoute component={AuthSignIn} onEnter={verifyNotLogin}/>
+      <Route path="/list" component={AppsContainer} onEnter={requireAuth}/>
+      <Route path="/catalog" component={CatalogContainer} onEnter={requireAuth}/>
+      <Route path="/join" component={JoinUsingMobilePage} onEnter={verifyNotLogin}/>
+      <Route path="/joinEmail" component={JoinUsingEmailPage} onEnter={verifyNotLogin}/>
+      {/*<Route path="/loginEmail" component={AuthSignInEmail} onEnter={verifyNotLogin}/>*/}
+      {<Route path="/login" component={AuthSignIn} onEnter={verifyNotLogin}/>}
+      {/*<Route path="/loginMobile" component={AuthSignInMobile} onEnter={verifyNotLogin}/>*/}
+      {/*<Route path="/reset" component={AuthForgotPwdPage} onEnter={verifyNotLogin}/>*/}
+      {/*<Route path="/verify-email/:token" component={AppNotFound} onEnter={verifyEmail}/>*/}
+      <Route path="/*" component={PageNotFound}/>
     </Route>
 );
 
 const router = (
     <Router history={browserHistory}>
-        {routes}
+      {routes}
     </Router>);
 
 Meteor.startup(function () {
-    ReactDOM.render(<IntlWrapper router={router}/>, document.getElementById("app-container"));
+  ReactDOM.render(<IntlWrapper router={router}/>, document.getElementById("app-container"));
 });

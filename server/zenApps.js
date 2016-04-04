@@ -42,9 +42,11 @@ Meteor.methods({
       sort: {subscribeCount: -1},
       limit: Math.min(limit, MAX_APPS)
     };
-    const query = {categoryNames: {
-      $in: [categoryName]
-    }};
+    const query = {
+      categoryNames: {
+        $in: [categoryName]
+      }
+    };
 
     let appsOfCategory = {};
     appsOfCategory.total = ZenApps.find(query).count();
