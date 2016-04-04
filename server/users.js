@@ -59,8 +59,7 @@ Meteor.methods({
       email: email,
     });
     //console.log("userId", userId);
-    Accounts.sendEnrollmentEmail(userId, email);
-
+    Accounts.sendVerificationEmail(userId, email);
     return userId;
   },
 

@@ -41,23 +41,19 @@ function verifyNotLogin(nextState, replace) {
 }
 
 function verifyEmail(nextState, replace) {
-  replace('/list');
   //Todo make token verification work
-  ///*Accounts.verifyEmail( nextState.params.token, function(error){
-  //    if ( error ) {
-  //        console.log(error.reason);
-  //        console.log("replace", replace);
-  //        replace('/list');
-  //        //Bert.alert( error.reason, 'danger' );
-  //    } else {
-  //        //console.log("verify successful!");
-  //        console.log("replace", replace);
-  //        //redirectUrl = "/list";
-  //        replace('/list');
-  //        //Bert.alert( 'Email verified! Thanks!', 'success' );
-  //    }
-  //});*/
-  //replace(redirectUrl);
+  console.log("nextState.params.token", nextState.params.token);
+  Accounts.verifyEmail(nextState.params.token, function (error) {
+    if (error) {
+      console.log("error", error.reason);
+      return window.location.replace("/list");
+      //Bert.alert( error.reason, 'danger' );
+    }
+    //console.log("verify successful!");
+    //redirectUrl = "/list";
+    window.location.replace("/list");
+    //Bert.alert( 'Email verified! Thanks!', 'success' );
+  });
 }
 
 const routes = (
@@ -68,7 +64,7 @@ const routes = (
       <Route path="/join" component={AuthJoin} onEnter={verifyNotLogin}/>
       {<Route path="/login" component={AuthSignIn} onEnter={verifyNotLogin}/>}
       {/*<Route path="/reset" component={AuthForgotPwdPage} onEnter={verifyNotLogin}/>*/}
-      {/*<Route path="/verify-email/:token" component={AppNotFound} onEnter={verifyEmail}/>*/}
+      {<Route path="/verify-email/:token" component={PageNotFound} onEnter={verifyEmail}/>}
       <Route path="/*" component={PageNotFound}/>
     </Route>
 );
