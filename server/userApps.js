@@ -73,7 +73,7 @@ Meteor.methods({
     checkUserLogin();
 
     UserApps.update(
-        {userId: Meteor.userId()},
+        {userId: this.userId},
         {
           $pull: {
             publicApps: {appId: appId}
@@ -93,13 +93,17 @@ Meteor.methods({
     localSimulateLatency(500);
     //console.log("addConfigured start");
     checkUserLogin();
+    console.log("appAddUsername start");
 
-    Meteor.call("checkUsernameExist", appId, username);
+    if (Meteor.call("isUsernameExist", appId, username)){
+      throw new Meteor.Error("userApps: 该用户名已经存在");
+    }
 
+    console.log("start to update");
     UserApps.update(
         {
           $and: [
-            {"userId": Meteor.userId()},
+            {"userId": this.userId},
             {"publicApps.appId": appId}
           ]
         },
@@ -119,7 +123,7 @@ Meteor.methods({
     UserApps.update(
         {
           $and: [
-            {"userId": Meteor.userId()},
+            {"userId": this.userId},
             {"publicApps.appId": appId}
           ]
         },
@@ -132,7 +136,7 @@ Meteor.methods({
   },
 
   addEncryptionInfo(hexSalt, hexIv){
-    const userId = Meteor.userId();
+    const userId = this.userId;
     //TODO implement inserting user salt, call it in "APP", 在保存密码前用passwordKey加密,保存iv和密文,
     // 获得密码前用password解密
     checkUserLogin();
@@ -144,7 +148,13 @@ Meteor.methods({
     });
   },
 
-  checkUsernameExist(appId, username){
+  /**
+   * Returns whether the username exists for this user in a specific app (in collection 'UserApps')
+   * @param {string} appId - Id of the app.
+   * @param {string} username - username.
+   * @returns {boolean} usernameExists - Whether the username exists
+   */
+  isUsernameExist(appId, username){
     checkUserLogin();
 
     const usernameExists = UserApps.findOne({
@@ -154,9 +164,21 @@ Meteor.methods({
         {"publicApps.userNames": username}
       ]
     });
-    //console.log("checkAppUserNameExist", !!usernameExists);
-    if (!!usernameExists){
-      throw new Meteor.Error("userApps: 该用户名已经存在");
+    return !!usernameExists;
+  },
+
+  checkUserHasAppById(appId){
+    checkUserLogin();
+    const userHasThisApp = UserApps.findOne({
+      $and: [
+        {userId: this.userId},
+        {
+          publicApps: {appId: appId}
+        }
+      ]
+    });
+    if (!userHasThisApp) {
+      throw new Meteor.Error("User doesn't have this app.");
     }
   },
 

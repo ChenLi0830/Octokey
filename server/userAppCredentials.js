@@ -7,34 +7,22 @@
  * userAppCredentials.js declare the methods for UserAppCredentials collection.
  *******************************************************************************/
 Meteor.methods({
+
+  /**
+   * Add a new credential for the user in a specific app
+   * @param {string} appId - Id of the app.
+   * @param {string} username - Username of the account.
+   * @param {string} password - Password of the account.
+   */
   addNewCredential(appId, username, password){
     localSimulateLatency(500);
-    console.log("addNewCredential start:", "appId", appId, "username", username, "password",
-        password);
-    let userId = Meteor.userId();
+    console.log("addNewCredential:", "appId", appId, "username", username, "password", password);
+    const userId = this.userId;
+
     checkUserLogin();
 
-    //Todo check if username exit for appNewCredential
-    let userHasThisApp = UserApps.find({
-      $and: [
-        {userId: userId},
-        {
-          publicApps: {appId: appId}
-        }
-      ]
-    });
-    if (!userHasThisApp) {
-      throw new Meteor.Error("User doesn't have this app.");
-    }
-
-    const userHasCredentials = UserAppCredentials.find({userId: userId}).count();
-
-    if (!userHasCredentials) {//如果用户存在,但在userHasCredentials里没有建立用户档案,就add new 档案
-      UserAppCredentials.insert({
-        userId: userId,
-        publicApps: [],
-        privateApps: []
-      });
+    if (Meteor.call("isUserCredentialExist", appId, username)) {
+      throw new Meteor.Error("userAppCredentials: 该用户名已经存在");
     }
 
     UserAppCredentials.update({userId: userId}, {
@@ -44,19 +32,63 @@ Meteor.methods({
     });
   },
 
+  /**
+   * Remove credentials by appId and username. Theoretically there should be <=1 record
+   * that matches the the appId and username. But if there are more than one record matched, all of
+   * them will be removed.
+   * @param {string} appId - Id of the app.
+   * @param {string} username - Username of the account.
+   */
   removeCredential(appId, username){
     localSimulateLatency(500);
     console.log("removeCredential start", "appId", appId, "username", username);
     checkUserLogin();
 
-    UserAppCredentials.update({userId: Meteor.userId()}, {
+    UserAppCredentials.update({userId: this.userId}, {
           $pull: {
             publicApps: {"appId": appId, "username": username}
           }
         }
     );
-
   },
 
-  //Todo update userCredential method
+  /**
+   * update user account's the password for a specific app
+   * @param {string} appId - Id of the app.
+   * @param {string} username - Username of the account.
+   * @param {string} password - To-be-updated password.
+   */
+  updateUserCredential(appId, username, password){
+    localSimulateLatency(500);
+    console.log("updateUserCredential:", "appId", appId, "username", username, "password",
+        password);
+    UserAppCredentials.update(
+        {
+          "userId": this.userId,
+          "publicApps.appId": appId,
+          "publicApps.username": username,
+        },
+        {$set: {"publicApps.$.password": password}}
+    )
+  },
+
+  /**
+   * Returns whether the username exists for this user in a specific app (in collection
+   * UserAppCredentials)
+   * @param {string} appId - Id of the app.
+   * @param {string} username - username.
+   * @returns {boolean} usernameExists - Whether the username exists
+   */
+  isUserCredentialExist(appId, username){
+    checkUserLogin();
+
+    const usernameExists = UserAppCredentials.findOne({
+      $and: [
+        {userId: this.userId},
+        {"publicApps.appId": appId},
+        {"publicApps.userNames": username}
+      ]
+    });
+    return !!usernameExists;
+  },
 });
