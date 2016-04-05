@@ -6,12 +6,20 @@
  *
  * ServerApi contains the global api that is used by the server
  *******************************************************************************/
+
+/**
+ * Simulate a latency when running meteor locally
+ * @param {number} millisec - The time to wait in millisecond.
+ */
 localSimulateLatency = function (millisec) {
   if (/localhost/.test(Meteor.absoluteUrl())) {
     Meteor._sleepForMs(millisec); //to simulate response sleep only on localhost
   }
 };
 
+/**
+ * Check if user is logged in, throw an error if not.
+ */
 checkUserLogin = function () {
   //这里不是在method里直接调用,为了保险不用this.userId
   if (!Meteor.userId()) {
@@ -19,7 +27,11 @@ checkUserLogin = function () {
   }
 };
 
+/**
+ * Check if user is logged in, and check if the logged in user is an admin. Throw an error if not.
+ */
 checkAdmin = function () {//TODO use more scalable solution to configure this, i.e.: role system
+  checkUserLogin();
   const user = Meteor.user();
   const admins = ["lulugeo.li@gmail.com", "yekiki@gmail.com"];
   if ((user && user.emails && user.emails[0] &&

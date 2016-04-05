@@ -168,7 +168,7 @@ var CreatePublicAppButton = React.createClass({
 
    if (loginLink && appName && this.state.preview !== "") {
    //console.log("this.state.preview", this.state.preview);
-   Meteor.call("addZenApp", appName, loginLink, registerLink, this.state.preview,
+   Meteor.call("addPublicApp", appName, loginLink, registerLink, this.state.preview,
    selectedCategoryNames,
    function (error, result) {
    if (error) {

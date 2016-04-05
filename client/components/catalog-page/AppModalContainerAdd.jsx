@@ -60,7 +60,7 @@ const AppModalContainerAdd = React.createClass({
     const {selectedCategories} = this.state;
 
     if (loginLink && appName && logo !== "") {
-      Meteor.call("addZenApp", appName, loginLink, registerLink, logo, selectedCategories,
+      Meteor.call("addPublicApp", appName, loginLink, registerLink, logo, selectedCategories,
           function (error) {
             if (error) {
               console.log("error", error);
@@ -74,7 +74,7 @@ const AppModalContainerAdd = React.createClass({
     }
 
     /*      //Todo 显示等待条,或者其他gif
-     Meteor.call("updateZenApp", this.props.appId, newAppName, newLoginLink, newRegisterLink,
+     Meteor.call("updatePublicApp", this.props.appId, newAppName, newLoginLink, newRegisterLink,
      newLogo,
      this.state.selectedCategories, function (error, result) {
      if (error) {
@@ -152,7 +152,7 @@ const AppModalContainerAdd = React.createClass({
    event.preventDefault();
    var delConfirm = confirm(this.context.intl.messages.cata_confirmDel);
    if (delConfirm) {
-   Meteor.call("removeZenApp", this.state.editAppId, function (error, result) {
+   Meteor.call("removePublicApp", this.state.editAppId, function (error, result) {
    if (error) {
    throw new Meteor.Error(error);
    }

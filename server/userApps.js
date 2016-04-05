@@ -7,11 +7,21 @@
  * userApps.js declares methods for UserApps collection.
  *******************************************************************************/
 Meteor.methods({
-  addPublicApp(appId, appName, logoURL, loginLink, registerLink){
+
+  /**
+   * User subscribe to a public app.
+   * @param {string} appId - App Id.
+   * @param {string} appName - App name.
+   * @param {string} logoURL - The URL of app's logo.
+   * @param {string} loginLink - Login link.
+   * @param {string} registerLink - Register link.
+   */
+  subscribePublicApp(appId, appName, logoURL, loginLink, registerLink){
+    //Todo 检查和polish userApps里的方法
     localSimulateLatency(500);
-    //console.log("addPublicApp start");
-    const userId = Meteor.userId();
-    generalErrorCheck(Meteor.userId());
+    //console.log("subscribePublicApp start");
+    checkUserLogin();
+    const userId = this.userId;
 
     let credentialRecord = UserAppCredentials.findOne({userId: userId});
 
@@ -57,10 +67,10 @@ Meteor.methods({
     }
   },
 
-  removePublicApp(appId){
+  unsubscribePublicApp(appId){
     localSimulateLatency(500);
-    //console.log("removePublicApp start");
-    generalErrorCheck(Meteor.userId());
+    //console.log("unsubscribePublicApp start");
+    checkUserLogin();
 
     UserApps.update(
         {userId: Meteor.userId()},
@@ -82,11 +92,9 @@ Meteor.methods({
   appAddUsername(appId, username){
     localSimulateLatency(500);
     //console.log("addConfigured start");
-    generalErrorCheck(Meteor.userId());
+    checkUserLogin();
 
-    if (Meteor.call("checkUsernameExist", appId, username)) {
-      throw new Meteor.Error("userApps: 该用户名已经存在");
-    }
+    Meteor.call("checkUsernameExist", appId, username);
 
     UserApps.update(
         {
@@ -106,7 +114,7 @@ Meteor.methods({
   appRemoveUsername(appId, username){
     localSimulateLatency(500);
     //console.log("appRemoveUsername start);
-    generalErrorCheck(Meteor.userId());
+    checkUserLogin();
 
     UserApps.update(
         {
@@ -127,7 +135,7 @@ Meteor.methods({
     const userId = Meteor.userId();
     //TODO implement inserting user salt, call it in "APP", 在保存密码前用passwordKey加密,保存iv和密文,
     // 获得密码前用password解密
-    generalErrorCheck(Meteor.userId());
+    checkUserLogin();
     UserApps.update({userId: userId}, {
       $set: {
         hexSalt: hexSalt,
@@ -146,16 +154,42 @@ Meteor.methods({
         {"publicApps.userNames": username}
       ]
     });
-    console.log("checkAppUserNameExist", !!usernameExists);
-    return !!usernameExists;
+    //console.log("checkAppUserNameExist", !!usernameExists);
+    if (!!usernameExists){
+      throw new Meteor.Error("userApps: 该用户名已经存在");
+    }
   },
+
+  /**
+   * When a public app is updated, this method change every single record of the public app in the
+   * UserApps collection.
+   * @param {string} appId - Id of the to-be-updated app.
+   * @param {string} appName - Name of the app.
+   * @param {string} loginLink - login link of the app.
+   * @param {string} registerLink - register link of the app.
+   */
+  updateUserApps(appId, appName, loginLink, registerLink) {
+    checkAdmin();
+
+    let ids = UserApps.find({"publicApps.appId": appId}).map(function (publicApp) {
+      return publicApp.userId;
+    });
+    //console.log(ids);
+    UserApps.update({
+          $and: [
+            {userId: {$in: ids}},
+            {"publicApps.appId": appId}
+          ]
+        },
+        {
+          $set: {
+            "publicApps.$.appName": appName,
+            "publicApps.$.loginLink": loginLink,
+            "publicApps.$.registerLink": registerLink,
+          }
+        },
+        {multi: true}
+    );
+  },
+
 });
-
-function generalErrorCheck(userId) {
-  checkUserLogin();
-
-  let credentialRecord = UserAppCredentials.findOne({userId: userId});
-  if (credentialRecord.count === 0) {
-    throw new Meteor.Error("user record error");
-  }
-}

@@ -27,6 +27,11 @@ ZenApps.allow({
 const MAX_APPS = 1000;
 
 Meteor.methods({
+  /**
+   * Search public app by appName, compared from the beginning of appName.
+   * @param {string} searchText - The string used to search for the app.
+   * @returns {Object[]} result - The search result.
+   */
   searchApps(searchText){
     checkUserLogin();
     const result = ZenApps.find({"appName": {$regex: "^" + searchText, $options: "i"}}).fetch();
@@ -34,6 +39,12 @@ Meteor.methods({
     return result;
   },
 
+  /**
+   * Fetch a certain number of publicApps of from a specific category
+   * @param {string} categoryName - The string used to search for the app.
+   * @param {number} limit - The string used to search for the app.
+   * @returns {{total: number, apps: Object[]}} - The search result.
+   */
   getPublicAppsOfCategory(categoryName, limit){
     localSimulateLatency(500);
     checkUserLogin();
@@ -47,14 +58,16 @@ Meteor.methods({
         $in: [categoryName]
       }
     };
+    const total = ZenApps.find(query).count();
+    const apps = ZenApps.find(query, options).fetch();
 
-    let appsOfCategory = {};
-    appsOfCategory.total = ZenApps.find(query).count();
-    appsOfCategory.apps = ZenApps.find(query, options).fetch();
-
-    return appsOfCategory;
+    return {total:total, apps:apps};
   },
 
+  /**
+   * Fetch all public apps
+   * @returns {Object[]} - The search result.
+   */
   getAllPublicApps(){
     localSimulateLatency(800);
     //console.log("getAllPublicApps is called");
@@ -63,10 +76,17 @@ Meteor.methods({
     }
   },
 
-  addZenApp(appName, loginLink, registerLink, logo, selectedCategoryNames){
+  /**
+   * Add a new public app
+   * @param {string} appName - App name.
+   * @param {string} loginLink - Login link
+   * @param {string} registerLink - Register link
+   * @param {string} logo - Logo file, encoded in base64
+   * @param {string[]} selectedCategoryNames - The category names which of the added app belongs to.
+   */
+  addPublicApp(appName, loginLink, registerLink, logo, selectedCategoryNames){
     localSimulateLatency(500);
 
-    checkUserLogin();
     checkAdmin();
 
     let app = new FS.File(logo);
@@ -78,9 +98,9 @@ Meteor.methods({
 
     //console.log("add new app", app);
     //Todo: change this to use a method
-    ZenApps.insert(app, function (err, fileObj) {
-      if (err) {
-        console.log("there was an error", err);
+    ZenApps.insert(app, function (error, fileObj) {
+      if (error) {
+        throw new Meteor.Error(error);
       } else {//Logo uploaded successful
         //let imagesURL = "/cfs/files/logos/"+fileObj._id;
         console.log("insert app successfully");
@@ -88,30 +108,35 @@ Meteor.methods({
     });
   },
 
-  updateZenApp(appId, appName, loginLink, registerLink, logo, selectedCategoryNames){
+  /**
+   * Update a new public app
+   * @param {string} appName - App name.
+   * @param {string} loginLink - Login link
+   * @param {string} registerLink - Register link
+   * @param {string} logo - Logo file, encoded in base64
+   * @param {string[]} selectedCategoryNames - The category names which of the added app belongs to.
+   */
+  updatePublicApp(appId, appName, loginLink, registerLink, logo, selectedCategoryNames){
     localSimulateLatency(500);
 
-    checkUserLogin();
     checkAdmin();
 
     let existingApp = ZenApps.findOne({_id: appId});
     //console.log("existingApp", existingApp);
-
     if (!existingApp) {
       throw new Meteor.Error("No existing App matches appId", appId);
     }
 
-    //注意,新上传的logo对应是一个文件,而已经存在的logo对应是一个path string
-    if (logo.indexOf("cfs/files/zenApps") > -1) {//Update data only
+    //注意,新上传的logo对应是string encoded in base64,而已经存在的logo对应是一个path string
+    if (logo.indexOf("cfs/files/zenApps") > -1) {// Logo is not changed: update existing app object
       let updatedApp = existingApp;
       updatedApp.appName = appName;
       updatedApp.loginLink = loginLink;
       updatedApp.registerLink = registerLink;
       updatedApp.categoryNames = selectedCategoryNames;
       ZenApps.update({_id: appId}, updatedApp);
-      updateUserApps(appId);
     }
-    else {//Update logo as well
+    else {// Logo is new: remove old app object and add a new one.
       let updatedApp = new FS.File(logo);
       updatedApp._id = appId;
       updatedApp.appName = appName;
@@ -130,32 +155,28 @@ Meteor.methods({
       });
     }
 
-    function updateUserApps(appId) {
-      let ids = UserApps.find({"publicApps.appId": appId}).map(function (publicApp) {
-        return publicApp.userId;
-      });
-      //console.log(ids);
-      UserApps.update({
-            $and: [
-              {userId: {$in: ids}},
-              {"publicApps.appId": appId}
-            ]
-          },
-          {
-            $set: {
-              "publicApps.$.appName": appName,
-              "publicApps.$.loginLink": loginLink,
-            }
-          },
-          {multi: true}
-      );
-    };
+    //Update every single record of the public app in the UserApps collection.
+    Meteor.call("updateUserApps", appId, appName, loginLink, registerLink);
   },
 
-  removeZenApp(appId){
+  /**
+   * Remove public app by app ID.
+   * @param {string} appId - App Id.
+   */
+  removePublicApp(appId){
     localSimulateLatency(500);
-    checkUserLogin();
     checkAdmin();
     ZenApps.remove({_id: appId});
-  }
+  },
+
+  /**
+   * Check if an public app exists by appId
+   * @param {string} appId - App Id.
+   * @returns {Object} - returns true if a public app with the same appId exist and false if it
+   * does not.
+   */
+  checkAppExistsById(appId){
+    checkUserLogin();
+    return ZenApps.findOne({_id: appId});
+  },
 });

@@ -26,6 +26,7 @@ var Catalog = React.createClass({
 
   getDefaultProps(){
     return {
+      allPublicApps: [],
       subscribeList: [],
       allCategories: [],
     }
@@ -38,6 +39,7 @@ var Catalog = React.createClass({
   },
 
   render(){
+    console.log("run Catalog render with props", this.props);
     if (!this.props.subsReady) {
       return <AppLoading/>
     }

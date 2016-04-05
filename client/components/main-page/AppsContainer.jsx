@@ -198,7 +198,7 @@ var AppsContainer = React.createClass({
 
     else if (this.state.userEditStatus === "remove") {
       if (isPublicApp) {
-        Meteor.call("removePublicApp", appId);
+        Meteor.call("unsubscribePublicApp", appId);
       } else {
         alert("remove private app!")
       }

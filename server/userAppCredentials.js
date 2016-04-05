@@ -57,4 +57,6 @@ Meteor.methods({
     );
 
   },
+
+  //Todo update userCredential method
 });
