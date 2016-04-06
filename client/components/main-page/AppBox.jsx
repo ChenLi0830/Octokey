@@ -58,7 +58,7 @@ var AppBox = React.createClass({
     var tileStyle = this.getTileStyle(this.props.userEditStatus);
     var image = this.getTileImage(this.props.userEditStatus);
     var usernameItems = this.props.usernames.map((username)=> {
-      return <MenuItem primaryText={username} value={username}/>
+      return <MenuItem key={username} primaryText={username} value={username}/>
     });
 
     //console.log("usernames", this.props.usernames);
