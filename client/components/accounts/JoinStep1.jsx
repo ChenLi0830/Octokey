@@ -96,7 +96,7 @@ var JoinStep1 = React.createClass({
   },
 
   render(){
-    //messages = _.extend({}, this.context.intl.messages.join, this.context.intl.messages.signIn);
+    messages = _.extend({}, this.context.intl.messages.join, this.context.intl.messages.signIn);
     return (
         <Col sm={8} smOffset={2} md={6} mdOffset={3} xs={12} style={styles.contentCol}>
           <div>
