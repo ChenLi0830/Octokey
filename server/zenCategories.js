@@ -20,7 +20,7 @@ Meteor.methods({
   addNewCategory(name, displayTitleChinese, displayTitleEnglish, index){
     localSimulateLatency(500);
 
-    checkAdmin();
+    checkAdmin.call(this);
     ZenCategories.insert({
       name: name,
       displayTitleChinese: displayTitleChinese,
@@ -34,7 +34,7 @@ Meteor.methods({
   removeCategory(categoryId){
     localSimulateLatency(500);
 
-    checkAdmin();
+    checkAdmin.call(this);
     ZenCategories.remove({_id: categoryId});
   }
 });

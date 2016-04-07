@@ -14,7 +14,7 @@ Meteor.methods({
 
   initiateUser(){
     localSimulateLatency(1000);
-    checkUserLogin();
+    checkUserLogin.call(this);
     const userId = this.userId;
     console.log("initiateUser userId", userId);
     serverAPI.initiateUserById(userId);

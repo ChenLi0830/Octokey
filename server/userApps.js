@@ -20,7 +20,7 @@ Meteor.methods({
     //Todo 检查和polish userApps里的方法
     localSimulateLatency(500);
     //console.log("subscribePublicApp start");
-    checkUserLogin();
+    checkUserLogin.call(this);
     const userId = this.userId;
 
     let credentialRecord = UserAppCredentials.findOne({userId: userId});
@@ -70,7 +70,7 @@ Meteor.methods({
   unsubscribePublicApp(appId){
     localSimulateLatency(500);
     //console.log("unsubscribePublicApp start");
-    checkUserLogin();
+    checkUserLogin.call(this);
 
     UserApps.update(
         {userId: this.userId},
@@ -92,10 +92,10 @@ Meteor.methods({
   appAddUsername(appId, username){
     localSimulateLatency(500);
     //console.log("addConfigured start");
-    checkUserLogin();
+    checkUserLogin.call(this);
     console.log("appAddUsername start");
 
-    if (Meteor.call("isUsernameExist", appId, username)){
+    if (Meteor.call("isUsernameExist", appId, username)) {
       throw new Meteor.Error("userApps: 该用户名已经存在");
     }
 
@@ -118,7 +118,7 @@ Meteor.methods({
   appRemoveUsername(appId, username){
     localSimulateLatency(500);
     //console.log("appRemoveUsername start);
-    checkUserLogin();
+    checkUserLogin.call(this);
 
     UserApps.update(
         {
@@ -139,7 +139,7 @@ Meteor.methods({
     const userId = this.userId;
     //TODO implement inserting user salt, call it in "APP", 在保存密码前用passwordKey加密,保存iv和密文,
     // 获得密码前用password解密
-    checkUserLogin();
+    checkUserLogin.call(this);
     UserApps.update({userId: userId}, {
       $set: {
         hexSalt: hexSalt,
@@ -155,7 +155,7 @@ Meteor.methods({
    * @returns {boolean} usernameExists - Whether the username exists
    */
   isUsernameExist(appId, username){
-    checkUserLogin();
+    checkUserLogin.call(this);
 
     const usernameExists = UserApps.findOne({
       $and: [
@@ -168,7 +168,7 @@ Meteor.methods({
   },
 
   checkUserHasAppById(appId){
-    checkUserLogin();
+    checkUserLogin.call(this);
     const userHasThisApp = UserApps.findOne({
       $and: [
         {userId: this.userId},
@@ -191,7 +191,7 @@ Meteor.methods({
    * @param {string} registerLink - register link of the app.
    */
   updateUserApps(appId, appName, loginLink, registerLink) {
-    checkAdmin();
+    checkAdmin.call(this);
 
     let ids = UserApps.find({"publicApps.appId": appId}).map(function (publicApp) {
       return publicApp.userId;
@@ -212,6 +212,23 @@ Meteor.methods({
         },
         {multi: true}
     );
+  },
+
+  /**
+   * When the Recommendation System done calculating the recommending results for a user, it calls
+   * this method to insert the results.
+   * @param {string} userId - the userId to be inserted.
+   * @param {{appId: string, score: number}[]} recommendedApps - Id of the to-be-updated app.
+   */
+  addRecommendedApps(userId, recommendedApps){
+    UserApps.find(
+        {userId: userId},
+        {
+          $set: {
+            recommendedApps: recommendedApps
+          }
+        }
+    )
   },
 
 });

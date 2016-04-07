@@ -19,7 +19,7 @@ Meteor.methods({
     console.log("addNewCredential:", "appId", appId, "username", username, "password", password);
     const userId = this.userId;
 
-    checkUserLogin();
+    checkUserLogin.call(this);
 
     if (Meteor.call("isUserCredentialExist", appId, username)) {
       throw new Meteor.Error("userAppCredentials: 该用户名已经存在");
@@ -42,7 +42,7 @@ Meteor.methods({
   removeCredential(appId, username){
     localSimulateLatency(500);
     console.log("removeCredential start", "appId", appId, "username", username);
-    checkUserLogin();
+    checkUserLogin.call(this);
 
     UserAppCredentials.update({userId: this.userId}, {
           $pull: {
@@ -80,7 +80,7 @@ Meteor.methods({
    * @returns {boolean} usernameExists - Whether the username exists
    */
   isUserCredentialExist(appId, username){
-    checkUserLogin();
+    checkUserLogin.call(this);
 
     const usernameExists = UserAppCredentials.findOne({
       $and: [

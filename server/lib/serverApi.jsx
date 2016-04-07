@@ -18,24 +18,27 @@ localSimulateLatency = function (millisec) {
 };
 
 /**
- * Check if user is logged in, throw an error if not.
+ * Check if user is logged in, throw an error if not. Since it use this.userId, remember to add
+ * .call(this) when invoking it.
  */
 checkUserLogin = function () {
   //这里不是在method里直接调用,为了保险不用this.userId
-  if (!Meteor.userId()) {
+  if (!this.userId) {
     throw new Meteor.Error("not logged in");
   }
 };
 
 /**
- * Check if user is logged in, and check if the logged in user is an admin. Throw an error if not.
+ * Check if user is logged in, and check if the logged in user is an admin. Throw an error if
+ * not. Since it use this.userId, remember to add .call(this) when invoking it.
  */
 checkAdmin = function () {//TODO use more scalable solution to configure this, i.e.: role system
-  checkUserLogin();
-  const user = Meteor.user();
+  checkUserLogin.call(this);
+  const user = Meteor.users.findOne(this.userId);
   const admins = ["lulugeo.li@gmail.com", "yekiki@gmail.com"];
   if ((user && user.emails && user.emails[0] &&
       (user.emails[0].address === admins[0] || user.emails[0].address === admins[1])) === false) {
+    console.log("not admin");
     throw new Meteor.Error("This can only be done by administrator");
   }
 };

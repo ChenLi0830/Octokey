@@ -33,7 +33,7 @@ Meteor.methods({
    * @returns {Object[]} result - The search result.
    */
   searchApps(searchText){
-    checkUserLogin();
+    checkUserLogin.call(this);
     const result = ZenApps.find({"appName": {$regex: "^" + searchText, $options: "i"}}).fetch();
     //console.log("result.length", result.length);
     return result;
@@ -47,7 +47,7 @@ Meteor.methods({
    */
   getPublicAppsOfCategory(categoryName, limit){
     localSimulateLatency(500);
-    checkUserLogin();
+    checkUserLogin.call(this);
     //console.log("limit for all apps",limit);
     const options = {
       sort: {subscribeCount: -1},
@@ -87,7 +87,7 @@ Meteor.methods({
   addPublicApp(appName, loginLink, registerLink, logo, selectedCategoryNames){
     localSimulateLatency(500);
 
-    checkAdmin();
+    checkAdmin.call(this);
 
     let app = new FS.File(logo);
     app.appName = appName;
@@ -119,7 +119,7 @@ Meteor.methods({
   updatePublicApp(appId, appName, loginLink, registerLink, logo, selectedCategoryNames){
     localSimulateLatency(500);
 
-    checkAdmin();
+    checkAdmin.call(this);
 
     let existingApp = ZenApps.findOne({_id: appId});
     //console.log("existingApp", existingApp);
@@ -165,7 +165,7 @@ Meteor.methods({
    */
   removePublicApp(appId){
     localSimulateLatency(500);
-    checkAdmin();
+    checkAdmin.call(this);
     ZenApps.remove({_id: appId});
   },
 
@@ -176,7 +176,7 @@ Meteor.methods({
    * does not.
    */
   checkAppExistsById(appId){
-    checkUserLogin();
+    checkUserLogin.call(this);
     return ZenApps.findOne({_id: appId});
   },
 });
