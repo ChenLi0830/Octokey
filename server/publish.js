@@ -9,7 +9,7 @@
 
 Meteor.publish("userApps", function () {
   localSimulateLatency(500);
-  return UserApps.find({userId: this.userId})
+  return UserApps.find({userId: this.userId});
 });
 
 Meteor.publish("allCategories", function () {
@@ -37,4 +37,25 @@ Meteor.publish("appCredential", function (userId, appId, username) {
       },
       {fields: {'publicApps.$': 1}});
   return result;
+});
+
+
+/**
+ * Public all user apps to data Analysis server
+ * @returns {cursor} - the cursor of all documents from UserApps
+ */
+Meteor.publish("allUserApps", function () {
+  localSimulateLatency(500);
+  checkAdmin.call(this);
+  return UserApps.find({}, {fields: {"userId": 1, "publicApps.appId": 1, "publicApps.appName": 1}});
+});
+
+/**
+ * Public all public apps to data Analysis server
+ * @returns {cursor} - the cursor of all documents from ZenApps
+ */
+Meteor.publish("allPublicApps", function () {
+  localSimulateLatency(500);
+  checkAdmin.call(this);
+  return ZenApps.find({}, {fields: {"appName": 1}});
 });
