@@ -13,7 +13,8 @@
  */
 localSimulateLatency = function (millisec) {
   if (/localhost/.test(Meteor.absoluteUrl())) {
-    Meteor._sleepForMs(millisec); //to simulate response sleep only on localhost
+    //The following line should be commented when using a remove database
+    //Meteor._sleepForMs(millisec); //to simulate response sleep only on localhost
   }
 };
 

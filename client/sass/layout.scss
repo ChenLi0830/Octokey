@@ -8,3 +8,9 @@ body {
   background-color: #f3f3f3;
   overflow-y: scroll;
 }
+
+#whiteOverlay{
+  -webkit-animation-duration: 0.3s;
+  -webkit-animation-delay: 1s;
+  //-webkit-animation-iteration-count: infinite;
+}

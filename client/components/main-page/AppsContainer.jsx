@@ -14,6 +14,8 @@ var EditDialog = require('./EditDialog.jsx');
 var RegisterDialog = require('./RegisterDialog.jsx');
 var FocusOverlay = require('./FocusOverlay.jsx');
 var FloatingEditButton = require('./FloatingEditButton.jsx');
+var ChooseTopicPage = require('../welcome/ChooseTopicPage.jsx');
+var ChooseAppPage = require('../welcome/ChooseAppPage.jsx');
 
 const {
     Grid,
@@ -113,6 +115,8 @@ var AppsContainer = React.createClass({
     }
 
     return <div>
+      {<ChooseTopicPage/>}
+
       <PluginInstallDialog openDialogPlugin={this.state.openDialogPlugin}
                            whenCloseDialog={()=>{this.setState({openDialogPlugin:false})}}/>
 

@@ -6,12 +6,6 @@
  *
  * it declares methods for ZenApps collection. (Public Apps)
  *******************************************************************************/
-ZenApps.deny({
-  download: function () {
-    return false;
-  }
-});
-
 ZenApps.allow({
   download: function () {
     return true;
@@ -102,8 +96,8 @@ Meteor.methods({
       if (error) {
         throw new Meteor.Error(error);
       } else {//Logo uploaded successful
-        //let imagesURL = "/cfs/files/logos/"+fileObj._id;
-        console.log("insert app successfully");
+        let imagesURL = "/cfs/files/logos/"+fileObj._id;
+        console.log("insert app successfully, imageURL="+imagesURL);
       }
     });
   },

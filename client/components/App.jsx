@@ -65,6 +65,7 @@ var App = React.createClass({
   },
 
   render(){
+    console.log("this.data.UserApps", this.data.UserApps);
     //console.log("Session.get(hexKey)", Session.get("hexKey"));
     if (this.data.UserApps) {
       if (!Session.get("hexKey")) {//when user logged in with fresh session
