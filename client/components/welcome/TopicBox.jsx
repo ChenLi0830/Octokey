@@ -6,7 +6,14 @@
  *
  * Topic Box component for a single topic
  *******************************************************************************/
-const {Row} = ReactBootstrap;
+
+const styles = {
+  icon: {/*maxHeight: "120px", maxWidth: "120px", */
+    height: "100%", width: "100%", borderRadius: "10px"},
+  topicName: {fontWeight: 200, /*textShadow: "0px 0px 30px #333"*/}
+};
+
+const {Col, Row, Grid} = ReactBootstrap;
 
 const TopicBox = React.createClass({
   propTypes: {
@@ -18,21 +25,25 @@ const TopicBox = React.createClass({
   },
 
   render(){
-    return <div>
+    return <Col xs={2}>
       {<div>
         <div>
-          <img src={this.props.iconURL}/>
+          <img src={this.props.iconURL} style={styles.icon}/>
         </div>
-        <div>
-          <p>{this.props.topicName}</p>
+        {/*<div style={{margin:"-30px 0 0 10px", color:"white"}}>*/}
+        <div style={{textAlign:"center"}}>
+          <h2 style={styles.topicName}>{this.props.topicName}</h2>
           {
             /*<TopicName/>
-          <SubscriptionNumber/>
-          <Add/>*/
+             <SubscriptionNumber/>
+             <Add/>*/
           }
         </div>
+        <div id="mask">
+
+        </div>
       </div>}
-    </div>
+    </Col>
   },
 });
 

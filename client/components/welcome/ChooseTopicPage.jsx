@@ -20,8 +20,10 @@ const styles = {
   titleDiv: {margin: "50px auto 20px auto", textAlign: "center"},
   titleMain: {color: Colors.grey800},
   titleSub: {color: Colors.grey600, fontWeight: "100"},
-  footer:{position:"fixed", width:"100%", left:0, bottom:0, height: "100px",
-    backgroundColor: "rgba(255, 255, 255, 0.9)"},
+  footer: {
+    position: "fixed", width: "100%", left: 0, bottom: 0, height: "100px",
+    backgroundColor: "rgba(255, 255, 255, 0.9)"
+  },
 };
 
 const ChooseTopicPage = React.createClass({
@@ -39,7 +41,7 @@ const ChooseTopicPage = React.createClass({
     return {
       subsReady: subsReady,
       currentUserId: currentUserId,
-      topics: currentUserId ? Topics.find({}, {sort: {rank: -1}}).fetch() : null,
+      topics: currentUserId ? Topics.find({}, {sort: {topicRank: 1}}).fetch() : null,
     };
   },
 
@@ -89,6 +91,9 @@ const ChooseTopicPage = React.createClass({
               <ActionCheckCircle style={{/*fill:Colors.grey400, */fill:ZenColor.cyan}}/>
               <Col xs={8} xsOffset={2} style={{position:"absolute"}}>
                 {topicBoxes}
+              </Col>
+              <Col xs={2}>
+
               </Col>
               <div style={styles.footer}>
                 <Col xs={12}>
