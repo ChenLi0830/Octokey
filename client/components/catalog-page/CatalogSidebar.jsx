@@ -42,9 +42,9 @@ var CatalogSideBar = React.createClass({
   },
 
   render(){
-    let createPublicAppButton = OctoAPI.isAdmin(this.data.currentUser) ?
+    let createPublicAppButton = OctoClientAPI.isAdmin(this.data.currentUser) ?
         <CreatePublicAppButton allCategories={this.props.allCategories}/> : null;
-    let createCategoryButton = OctoAPI.isAdmin(this.data.currentUser) ?
+    let createCategoryButton = OctoClientAPI.isAdmin(this.data.currentUser) ?
         <CreateCategoryButton allCategories={this.props.allCategories}/> : null;
 
     //Todo Add search box

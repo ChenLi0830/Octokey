@@ -39,7 +39,7 @@ var CatalogAppsBox = React.createClass({
 
   getMeteorData(){
     if (this.needFetchApps) {
-      OctoAPI.fetchDataToSession("appsOfChosenCategory", "getPublicAppsOfCategory",
+      OctoClientAPI.fetchDataToSession("appsOfChosenCategory", "getPublicAppsOfCategory",
           this.props.chosenCategory,
           this.state.requestAppsNumber);
       this.needFetchApps = false;
@@ -52,7 +52,7 @@ var CatalogAppsBox = React.createClass({
     ];
 
     return {
-      subsReady: OctoAPI.subsHandlesAreReady(subsHandles),
+      subsReady: OctoClientAPI.subsHandlesAreReady(subsHandles),
     };
   },
 
@@ -112,7 +112,7 @@ var CatalogAppsBox = React.createClass({
     const {messages} = this.context.intl;
 
     const appsOfChosenCategory = (Session.get("appsOfChosenCategory").apps.map(function (app) {
-          let logoURL = OctoAPI.getLogoUrl(app._id);
+          let logoURL = OctoClientAPI.getLogoUrl(app._id);
           let subscribed = this.props.subscribeList[app._id];
           return <CatalogSingleApp key={app._id}
                                    logoURL={logoURL}

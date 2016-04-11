@@ -49,7 +49,7 @@ const TopicModalContainerAdd = React.createClass({
   },
 
   /**
-   * Handle Public App Add
+   * Handle Topic Add
    * @param {string} name - The name of the topic
    * @param {number} rank - The rank fo the topic
    */
@@ -80,7 +80,7 @@ const TopicModalContainerAdd = React.createClass({
      }
 
      //Fetch updated data from publicApps collection
-     OctoAPI.fetchDataToSession("allPublicApps", "getAllPublicApps");
+     OctoClientAPI.fetchDataToSession("allPublicApps", "getAllPublicApps");
 
      //Close modal
      this.props.onModalClose();
@@ -93,7 +93,7 @@ const TopicModalContainerAdd = React.createClass({
    * @returns {boolean} false - Stop the default action of antd 'Upload' component
    */
   handleLogoUpload(logoFile){
-    OctoAPI.checkImageFile(logoFile, function (err, imageFile) {
+    OctoClientAPI.checkImageFile(logoFile, function (err, imageFile) {
       if (err) {
         alert("error: " + err);
       }
@@ -134,6 +134,7 @@ const TopicModalContainerAdd = React.createClass({
    * Close the modal and set the state to the value in "getInitialState"
    */
   handleModalClose(){
+    console.log("close modal");
     this.props.onModalClose();
     //Wait 0.5 sec to reset the state so that user won't see the change during the cancel animation
     setTimeout(()=> {

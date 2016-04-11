@@ -4,7 +4,7 @@
  * Creator: Chen Li<chen.li@noc-land.com>
  * Creation Date: 2015-12-31
  *
- * ServerApi contains the global api that is used by the server
+ * OctoServerAPI contains the global methods that are used by the server
  *******************************************************************************/
 
 /**
@@ -71,7 +71,7 @@ isMasterCode = function (code) {
       code == Accounts._options.phoneVerificationMasterCode;
 };
 
-serverAPI = {
+OctoServerAPI = {
 
   /**
    * initial user's collections

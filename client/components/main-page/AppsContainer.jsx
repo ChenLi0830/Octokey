@@ -15,7 +15,7 @@ var RegisterDialog = require('./RegisterDialog.jsx');
 var FocusOverlay = require('./FocusOverlay.jsx');
 var FloatingEditButton = require('./FloatingEditButton.jsx');
 var ChooseTopicPage = require('../welcome/ChooseTopicPage.jsx');
-var ChooseAppPage = require('../welcome/ChooseAppPage.jsx');
+//var ChooseAppPage = require('../welcome/ChooseAppPage.jsx');
 
 const {
     Grid,
@@ -115,7 +115,7 @@ var AppsContainer = React.createClass({
     }
 
     return <div>
-      {<ChooseTopicPage/>}
+      <ChooseTopicPage/>
 
       <PluginInstallDialog openDialogPlugin={this.state.openDialogPlugin}
                            whenCloseDialog={()=>{this.setState({openDialogPlugin:false})}}/>
@@ -341,7 +341,7 @@ var AppsContainer = React.createClass({
       if (event.data.username && event.data.password) {//event contains username && password
         if (event.data.userId === this.data.currentUser._id) {//Check if its still the same user
           registeredUsername = event.data.username;
-          OctoAPI.saveCredential(event.data.appId, this.data.hexIv, event.data.username,
+          OctoClientAPI.saveCredential(event.data.appId, this.data.hexIv, event.data.username,
               event.data.password, true)
         }
       }

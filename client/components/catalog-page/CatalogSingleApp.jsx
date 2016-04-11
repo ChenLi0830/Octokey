@@ -145,7 +145,7 @@ var CatalogSingleApp = React.createClass({
   },
 
   handleEdit(){
-    if (OctoAPI.isAdmin()) {
+    if (OctoClientAPI.isAdmin()) {
       this.setState({modalOpen: true});
       this.props.onModalOpen();
     }

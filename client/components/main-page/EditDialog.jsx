@@ -92,7 +92,7 @@ var EditDialog = React.createClass({
       openDialogAdd: false,
       focusedUsername: null,
     }, function () {//setState完成后再remove,保证UI不出glitch
-      OctoAPI.removeCredential(this.props.appId, focusedUsername);
+      OctoClientAPI.removeCredential(this.props.appId, focusedUsername);
     });
   },
 

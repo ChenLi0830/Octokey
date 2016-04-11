@@ -53,7 +53,6 @@ const AppModalContainerAdd = React.createClass({
    * @param {string} loginLink - The login link from modal form
    * @param {string} [registerLink=""] - The register link from modal form
    * @param {string} appName  - The login link from modal form
-   * @param {string | Blob} logo
    */
   handleAddApp(loginLink, registerLink, appName){
     const logo = this.state.logoPreview;
@@ -82,7 +81,7 @@ const AppModalContainerAdd = React.createClass({
      }
 
      //Fetch updated data from publicApps collection
-     OctoAPI.fetchDataToSession("allPublicApps", "getAllPublicApps");
+     OctoClientAPI.fetchDataToSession("allPublicApps", "getAllPublicApps");
 
      //Close modal
      this.props.onModalClose();
@@ -95,7 +94,7 @@ const AppModalContainerAdd = React.createClass({
    * @returns {boolean} false - Stop the default action of antd 'Upload' component
    */
   handleLogoUpload(logoFile){
-    OctoAPI.checkImageFile(logoFile, function (err, imageFile) {
+    OctoClientAPI.checkImageFile(logoFile, function (err, imageFile) {
       if (err) {
         alert("error: " + err);
       }

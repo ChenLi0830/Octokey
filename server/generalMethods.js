@@ -17,6 +17,6 @@ Meteor.methods({
     checkUserLogin.call(this);
     const userId = this.userId;
     console.log("initiateUser userId", userId);
-    serverAPI.initiateUserById(userId);
+    OctoServerAPI.initiateUserById(userId);
   }
 });

@@ -159,7 +159,7 @@ var JoinStep2 = React.createClass({
     const pwd = this.refs.password.refs.input.value;
     //console.log("pwd",pwd);
     //Check password
-    if (OctoAPI.checkPassword(pwd)) {
+    if (OctoClientAPI.checkPassword(pwd)) {
       this.setState({pwdVerified: true, errorText: ""});
       return true;
     } else {

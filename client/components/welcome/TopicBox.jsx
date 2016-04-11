@@ -9,18 +9,29 @@
 const {Row} = ReactBootstrap;
 
 const TopicBox = React.createClass({
+  propTypes: {
+    topicId: React.PropTypes.string.isRequired,
+    iconURL: React.PropTypes.string.isRequired,
+    topicName: React.PropTypes.string.isRequired,
+    topicRank: React.PropTypes.number.isRequired,
+    followCount: React.PropTypes.number.isRequired,
+  },
+
   render(){
     return <div>
-      {/*/!*right box*!/
-      <div>
-        <TopicLogo/>
-      </div>
-      /!*left box*!/
-      <div>
-        <TopicName/>
-        <SubscriptionNumber/>
-        <Add/>
-      </div>*/}
+      {<div>
+        <div>
+          <img src={this.props.iconURL}/>
+        </div>
+        <div>
+          <p>{this.props.topicName}</p>
+          {
+            /*<TopicName/>
+          <SubscriptionNumber/>
+          <Add/>*/
+          }
+        </div>
+      </div>}
     </div>
   },
 });

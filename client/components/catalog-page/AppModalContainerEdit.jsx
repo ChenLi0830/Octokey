@@ -78,7 +78,7 @@ const AppModalContainerEdit = React.createClass({
             }
 
             //Fetch updated data from publicApps collection
-            OctoAPI.fetchDataToSession("allPublicApps", "getAllPublicApps");
+            OctoClientAPI.fetchDataToSession("allPublicApps", "getAllPublicApps");
 
             //Close modal
             this.props.onModalClose();
@@ -94,7 +94,7 @@ const AppModalContainerEdit = React.createClass({
    * @returns {boolean} false - Stop the default action of antd 'Upload' component
    */
   handleLogoUpload(logoFile){
-    OctoAPI.checkImageFile(logoFile, function (err, imageFile) {
+    OctoClientAPI.checkImageFile(logoFile, function (err, imageFile) {
       if (err) {
         alert("error: " + err);
       }

@@ -14,14 +14,14 @@ var CatalogContainer = React.createClass({
   ],
 
   getMeteorData(){
-    OctoAPI.fetchDataToSessionIfNull("allPublicApps", "getAllPublicApps");
+    OctoClientAPI.fetchDataToSessionIfNull("allPublicApps", "getAllPublicApps");
 
     const subsHandles = [
       Session.get("allPublicApps"),
       Meteor.subscribe("allCategories"),
       Meteor.subscribe("userApps"),
     ];
-    const subsReady = OctoAPI.subsHandlesAreReady(subsHandles);
+    const subsReady = OctoClientAPI.subsHandlesAreReady(subsHandles);
 
     const AppOfUser = UserApps.findOne({userId: Meteor.userId()}, {reactive: true});
     const allCategories = ZenCategories.find({}, {sort: {index: 1}}).fetch();

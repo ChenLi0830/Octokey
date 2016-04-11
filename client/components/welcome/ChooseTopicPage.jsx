@@ -20,9 +20,29 @@ const styles = {
   titleDiv: {margin: "50px auto 20px auto", textAlign: "center"},
   titleMain: {color: Colors.grey800},
   titleSub: {color: Colors.grey600, fontWeight: "100"},
+  footer:{position:"fixed", width:"100%", left:0, bottom:0, height: "100px",
+    backgroundColor: "rgba(255, 255, 255, 0.9)"},
 };
 
 const ChooseTopicPage = React.createClass({
+  mixins: [ReactMeteorData],
+
+  getMeteorData() {
+    const subHandles = Meteor.userId() ?
+        [Meteor.subscribe("topics"),] : [];
+
+    const subsReady = _.every(subHandles, function (handle) {
+      return handle.ready();
+    });
+
+    const currentUserId = Meteor.userId();
+    return {
+      subsReady: subsReady,
+      currentUserId: currentUserId,
+      topics: currentUserId ? Topics.find({}, {sort: {rank: -1}}).fetch() : null,
+    };
+  },
+
   getInitialState(){
     return {
       modalOpen: false,
@@ -30,12 +50,24 @@ const ChooseTopicPage = React.createClass({
   },
 
   render(){
+
+    const topicBoxes = this.data.topics.map((topic)=> {
+      //const iconURL = OctoClientAPI.getTopicIconUrl(topic._id);
+      return <TopicBox key={topic._id}
+                       topicId={topic._id}
+                       iconURL={OctoClientAPI.getTopicIconUrl(topic._id)}
+                       topicName={topic.topicName}
+                       topicRank={topic.topicRank}
+                       followCount={topic.followCount}
+                       whenTopicClicked={this.handleTopicClicked}/>;
+    });
+
     const title = <div style={styles.titleDiv}>
       <h1 style={styles.titleMain}>你想关注的兴趣</h1>
       <h2 style={styles.titleSub}>我们将根据你关注的兴趣定制你的应用推荐</h2>
     </div>;
 
-    const createTopicBtn = OctoAPI.isAdmin() ?
+    const createTopicBtn = OctoClientAPI.isAdmin() ?
         <div>
           <TopicModalContainerAdd
               modalOpen={this.state.modalOpen}
@@ -51,19 +83,26 @@ const ChooseTopicPage = React.createClass({
 
     return (
         <WhiteOverlay visibility={true}>
-          <Grid>
-            {title}
-            <ActionCheckCircle style={{/*fill:Colors.grey400, */fill:ZenColor.cyan}}/>
-            <Col xs={8} xsOffset={2}>
-              <TopicBox/>
-            </Col>
-
-            <Col xs={12}>
-              {createTopicBtn}
-            </Col>
-          </Grid>
+          <div>
+            <Grid>
+              {title}
+              <ActionCheckCircle style={{/*fill:Colors.grey400, */fill:ZenColor.cyan}}/>
+              <Col xs={8} xsOffset={2} style={{position:"absolute"}}>
+                {topicBoxes}
+              </Col>
+              <div style={styles.footer}>
+                <Col xs={12}>
+                  {createTopicBtn}
+                </Col>
+              </div>
+            </Grid>
+          </div>
         </WhiteOverlay>
     )
+  },
+
+  handleTopicClicked(){
+    console.log("topic clicked");
   },
 });
 

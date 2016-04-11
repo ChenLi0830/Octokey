@@ -8,7 +8,14 @@
  *******************************************************************************/
 ZenApps.allow({
   download: function () {
+    //checkUserLogin();
     return true;
+  }
+});
+
+ZenApps.deny({
+  download: function () {
+    return false;
   }
 });
 

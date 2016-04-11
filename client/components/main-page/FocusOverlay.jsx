@@ -11,7 +11,6 @@ const {
     Paper,
     } = MUI;
 
-
 var FocusOverlay = React.createClass({
   propTypes: {
     visibility: React.PropTypes.bool.isRequired

@@ -7,10 +7,32 @@
  * It declares methods for Topics collection.
  *******************************************************************************/
 Topics.allow({
-  download: function () {
+  insert: function () {
+    checkAdmin();
     return true;
-  }
+  },
+  download: function () {
+    //checkUserLogin();
+    return true;
+  },
+  //update: function () {
+  //  return true
+  //},
 });
+
+Topics.deny({
+  insert: function () {
+    checkAdmin();
+    return false;
+  },
+  download: function () {
+    return false;
+  },
+  //update: function () {
+  //  return false
+  //},
+});
+
 
 //topicName, icon, shownPosition, followCount, top100AppsOverall, top100AppsLastweek,
 // top100AppsLastMonth
@@ -26,22 +48,23 @@ Meteor.methods({
     localSimulateLatency(500);
 
     checkAdmin.call(this);
+    //console.log("name, icon, rank", name, icon, rank);
 
     let topic = new FS.File(icon);
 
-    topic.name = name;
-    topic.rank = rank;
+    topic.topicName = name;
+    topic.topicRank = Number(rank);
     topic.followCount = 0;
     topic.topAppsOverall = [];
     topic.topAppsLastWeek = [];
-    topic.topAppsLastMonth= [];
+    topic.topAppsLastMonth = [];
 
     Topics.insert(topic, function (error, fileObj) {
       if (error) {
         throw new Meteor.Error(error);
       } else {//Logo uploaded successful
         const imagesURL = "/cfs/files/topics/" + fileObj._id;
-        console.log("insert app successfully, imageURL=" + imagesURL);
+        console.log("insert topic " + topic.topicName + "successfully, imageURL=" + imagesURL);
       }
     });
   },
@@ -69,9 +92,9 @@ Meteor.methods({
     checkAdmin.call(this);
 
     let documentName;
-    topPeriod==="overall" && (documentName="topAppsOverall");
-    topPeriod==="week" && (documentName="topAppsLastWeek");
-    topPeriod==="month" && (documentName="topAppsLastMonth");
+    topPeriod === "overall" && (documentName = "topAppsOverall");
+    topPeriod === "week" && (documentName = "topAppsLastWeek");
+    topPeriod === "month" && (documentName = "topAppsLastMonth");
 
     let qry = {};
     qry[documentName] = {
@@ -81,8 +104,8 @@ Meteor.methods({
     };
 
     Topics.update(
-        {_id:topicId},
-        {$addToSet:qry}
+        {_id: topicId},
+        {$addToSet: qry}
     );
   },
 
@@ -97,16 +120,16 @@ Meteor.methods({
     checkAdmin.call(this);
 
     let documentName;
-    topPeriod==="overall" && (documentName="topAppsOverall");
-    topPeriod==="week" && (documentName="topAppsLastWeek");
-    topPeriod==="month" && (documentName="topAppsLastMonth");
+    topPeriod === "overall" && (documentName = "topAppsOverall");
+    topPeriod === "week" && (documentName = "topAppsLastWeek");
+    topPeriod === "month" && (documentName = "topAppsLastMonth");
 
     let qry = {};
     qry[documentName] = {appId: appId};
 
     Topics.update(
-        {_id:topicId},
-        {$pull:qry}
+        {_id: topicId},
+        {$pull: qry}
     );
   },
 

@@ -26,7 +26,6 @@ ReactIntl = require("react-intl");
 
 antd = require("antd");
 
-
 /**
  * Set up intl-polyfill for different apps, see details (Search for issue#150 in React-Intl to see
  * details)

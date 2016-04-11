@@ -6,6 +6,11 @@
  *
  * publish.js controls the publish part for all collections.
  *******************************************************************************/
+Meteor.publish("topics", function () {
+  localSimulateLatency(500);
+  checkUserLogin.call(this);
+  return Topics.find({});
+});
 
 Meteor.publish("userApps", function () {
   localSimulateLatency(500);
@@ -38,7 +43,6 @@ Meteor.publish("appCredential", function (userId, appId, username) {
       {fields: {'publicApps.$': 1}});
   return result;
 });
-
 
 /**
  * Public all user apps to data Analysis server

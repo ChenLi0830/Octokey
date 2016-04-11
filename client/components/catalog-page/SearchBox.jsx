@@ -106,7 +106,7 @@ var SearchBox = React.createClass({
               return;
             }
             let renderedResult = searchResult.map((app)=> {
-              const logoURL = OctoAPI.getLogoUrl(app._id),
+              const logoURL = OctoClientAPI.getLogoUrl(app._id),
                   subscribed = this.props.subscribeList[app._id];
 
               return <CatalogSingleApp key={app._id}

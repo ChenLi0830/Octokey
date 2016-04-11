@@ -127,7 +127,7 @@ var CredentialDialog = React.createClass({
     let password = this.refs.password.getValue();
 
     if (username && password) {
-      if (OctoAPI.saveCredential(this.props.appId, this.props.hexIv, username, password,
+      if (OctoClientAPI.saveCredential(this.props.appId, this.props.hexIv, username, password,
               this.props.isPublicApp)) {//If
         // it's successful
         this.props.whenSubmitCredential(username, password);
@@ -174,7 +174,7 @@ var CredentialDialog = React.createClass({
   },
 
   verifyUnsuccess(){//login unsuccessful, reset username and password
-    OctoAPI.removeCredential(this.props.appId, savedUsername);
+    OctoClientAPI.removeCredential(this.props.appId, savedUsername);
     this.setState({openVerify: false});
   },
 });

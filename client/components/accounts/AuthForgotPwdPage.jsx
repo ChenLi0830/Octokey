@@ -100,7 +100,7 @@ var AuthForgotPwdPage = React.createClass({
     if (!email) {
       this.setState({floatingUserText: this.context.intl.messages.login_emailEmpty});
     }
-    else if (!OctoAPI.isValidateEmail(email)) {
+    else if (!OctoClientAPI.isValidateEmail(email)) {
       this.setState({floatingUserText: this.context.intl.messages.login_emailFormatError});
     }
     else {

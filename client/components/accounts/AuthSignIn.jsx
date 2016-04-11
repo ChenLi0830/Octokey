@@ -276,7 +276,7 @@ var AuthSignIn = React.createClass({
     //Todo need to check error on server side as well
     //If it is cellnumber
     if (!this.state.disableAreaDropdown) {
-      if (!OctoAPI.isValidateCell(this.state.area, phoneOrEmail)) {
+      if (!OctoClientAPI.isValidateCell(this.state.area, phoneOrEmail)) {
         this.setState({floatingUserText: messages["mobileFormatError-手机错误"]});
       }
       else {
@@ -285,7 +285,7 @@ var AuthSignIn = React.createClass({
       }
       return false;
     } else {//If it is email
-      if (!OctoAPI.isValidateEmail(phoneOrEmail)) {
+      if (!OctoClientAPI.isValidateEmail(phoneOrEmail)) {
         this.setState({floatingUserText: messages["emailFormatError-邮箱错误"]});
       }
       else {

@@ -89,6 +89,8 @@ Meteor.methods({
       throw new Meteor.Error("无法找到与邮箱对应的用户");
     }
     Accounts.setPassword(user._id, password);
-    serverAPI.initiateUserById(user._id);
+    OctoServerAPI.initiateUserById(user._id);
   },
+
+
 });
