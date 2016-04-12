@@ -9,10 +9,10 @@
 
 const styles = {
   icon: {height: "100%", width: "100%", borderRadius: "10px"},
-  topicNameBox: {bottom: 18, left: 38, color: Colors.white, position: "absolute"},
+  topicNameBox: {bottom: 33, left: 38, color: Colors.white, position: "absolute"},
   topicName: {fontWeight: 200, fontSize: 17, /*textShadow: "0px 0px 30px #333"*/},
   imgBox: {margin: 10},
-  circleCheck: {height: 25, top: "1.5em", right: "3em", position: "absolute"},
+  circleCheck: {height: 25, top: "2.9em", right: "3.2em", position: "absolute"},
 };
 
 const {Col, Row, Grid} = ReactBootstrap;
@@ -36,14 +36,14 @@ const TopicBox = React.createClass({
 
   render(){
     const {topicId, topicName, topicRank} = this.props;
-    return <Col xs={3}>
+    return <Col xs={3} style={{padding:15}}>
       {<div style={{cursor:"pointer"}}
             onClick={this.props.whenTopicClicked.bind(null, topicId, topicName, topicRank)}
             onMouseOver={()=>{this.setState({focused:true})}}
             onMouseOut={()=>{this.setState({focused:false})}}>
 
         <div style={styles.imgBox}>
-          <img src={this.props.iconURL} style={_.extend({},styles.icon,{opacity:this.state.focused?0.9:1})}/>
+          <img src={this.props.iconURL} style={_.extend({},styles.icon,{opacity:this.state.focused?0.8:1})}/>
         </div>
 
         <div style={styles.topicNameBox}>
