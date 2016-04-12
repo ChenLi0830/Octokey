@@ -267,7 +267,7 @@ OctoClientAPI = {
       return;
     }
 
-    if (logoFile.size > 100 * 1000) {
+    if (logoFile.size > 200 * 1000) {
       callback(new Error("Image size must be less than 100KB"), null);
       return;
     }
@@ -279,8 +279,8 @@ OctoClientAPI = {
       var image = new Image();
       image.src = theFile.target.result;
       image.onload = function () {
-        if (this.width > 200 || this.height > 200) {
-          callback(new Error("Image height && width should both be less than 200px"), null);
+        if (this.width > 250 || this.height > 250) {
+          callback(new Error("Image height && width should both be less than 250px"), null);
           return;
         }
         callback(null, theFile.target.result);

@@ -11,7 +11,6 @@ const TopicBox = require('./TopicBox.jsx');
 const TopicModalContainerAdd = require('./TopicModalContainerAdd.jsx');
 
 const {Col, Row, Grid} = ReactBootstrap;
-const {ActionCheckCircle} = SvgIcons;
 
 const { Button } = antd;
 
@@ -48,12 +47,16 @@ const ChooseTopicPage = React.createClass({
   getInitialState(){
     return {
       modalOpen: false,
+      selectedTopics:[],
     }
   },
 
   render(){
-
     const topicBoxes = this.data.topics.map((topic)=> {
+      const checked = _.findIndex(this.state.selectedTopics, (selectedTopic)=>{
+            return selectedTopic.topicId===topic._id;
+          }) > -1;
+
       //const iconURL = OctoClientAPI.getTopicIconUrl(topic._id);
       return <TopicBox key={topic._id}
                        topicId={topic._id}
@@ -61,6 +64,7 @@ const ChooseTopicPage = React.createClass({
                        topicName={topic.topicName}
                        topicRank={topic.topicRank}
                        followCount={topic.followCount}
+                       checked = {checked}
                        whenTopicClicked={this.handleTopicClicked}/>;
     });
 
@@ -88,13 +92,15 @@ const ChooseTopicPage = React.createClass({
           <div>
             <Grid>
               {title}
-              <ActionCheckCircle style={{/*fill:Colors.grey400, */fill:ZenColor.cyan}}/>
-              <Col xs={8} xsOffset={2} style={{position:"absolute"}}>
-                {topicBoxes}
-              </Col>
-              <Col xs={2}>
 
-              </Col>
+              <Row>
+                <Col xs={8} xsOffset={2}>
+                  {topicBoxes}
+                </Col>
+                <Col xs={2}>
+                </Col>
+              </Row>
+
               <div style={styles.footer}>
                 <Col xs={12}>
                   {createTopicBtn}
@@ -106,8 +112,21 @@ const ChooseTopicPage = React.createClass({
     )
   },
 
-  handleTopicClicked(){
-    console.log("topic clicked");
+  handleTopicClicked(topicId, topicName, topicRank){
+    const clickedTopic = {topicId : topicId, topicName : topicName, topicRank : topicRank};
+    let selectedTopics = this.state.selectedTopics;
+
+    const topicIndex = _.findIndex(selectedTopics, (selectedTopic)=>{
+      return selectedTopic.topicId === clickedTopic.topicId
+    });
+
+    if (topicIndex === -1){// Select topic
+      selectedTopics.push(clickedTopic);
+    } else {// Unselect topic
+      selectedTopics.splice(topicIndex, 1);
+    }
+
+    this.setState({ selectedTopics: selectedTopics});
   },
 });
 

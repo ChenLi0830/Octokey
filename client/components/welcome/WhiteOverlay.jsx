@@ -19,9 +19,9 @@ var WhiteOverlay = React.createClass({
     return <div className="animated fadeIn"
                 id="whiteOverlay"
                 style={{position:"fixed", top:0, left:0,
-                        background: this.props.visibility ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.0)",
+                        background: this.props.visibility ? "rgba(250,250,250,0.95)" : "rgba(250,250,250,0.0)",
                         zIndex: this.props.visibility ? "500" : "-1",
-                        width:"100%", minHeight:"100%", overflow:"scroll",
+                        width:"100%", height:"100%", overflow:"scroll",
                         }}>
       {this.props.children}
     </div>

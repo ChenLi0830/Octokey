@@ -8,9 +8,11 @@
  *******************************************************************************/
 
 const styles = {
-  icon: {/*maxHeight: "120px", maxWidth: "120px", */
-    height: "100%", width: "100%", borderRadius: "10px"},
-  topicName: {fontWeight: 200, /*textShadow: "0px 0px 30px #333"*/}
+  icon: {height: "100%", width: "100%", borderRadius: "10px"},
+  topicNameBox: {bottom: 18, left: 38, color: Colors.white, position: "absolute"},
+  topicName: {fontWeight: 200, fontSize: 17, /*textShadow: "0px 0px 30px #333"*/},
+  imgBox: {margin: 10},
+  circleCheck: {height: 25, top: "1.5em", right: "3em", position: "absolute"},
 };
 
 const {Col, Row, Grid} = ReactBootstrap;
@@ -22,28 +24,42 @@ const TopicBox = React.createClass({
     topicName: React.PropTypes.string.isRequired,
     topicRank: React.PropTypes.number.isRequired,
     followCount: React.PropTypes.number.isRequired,
+    checked: React.PropTypes.bool.isRequired,
+    whenTopicClicked: React.PropTypes.func.isRequired,
+  },
+
+  getInitialState(){
+    return {
+      focused:false,
+    }
   },
 
   render(){
-    return <Col xs={2}>
-      {<div>
-        <div>
-          <img src={this.props.iconURL} style={styles.icon}/>
-        </div>
-        {/*<div style={{margin:"-30px 0 0 10px", color:"white"}}>*/}
-        <div style={{textAlign:"center"}}>
-          <h2 style={styles.topicName}>{this.props.topicName}</h2>
-          {
-            /*<TopicName/>
-             <SubscriptionNumber/>
-             <Add/>*/
-          }
-        </div>
-        <div id="mask">
+    const {topicId, topicName, topicRank} = this.props;
+    return <Col xs={3}>
+      {<div style={{cursor:"pointer"}}
+            onClick={this.props.whenTopicClicked.bind(null, topicId, topicName, topicRank)}
+            onMouseOver={()=>{this.setState({focused:true})}}
+            onMouseOut={()=>{this.setState({focused:false})}}>
 
+        <div style={styles.imgBox}>
+          <img src={this.props.iconURL} style={_.extend({},styles.icon,{opacity:this.state.focused?0.9:1})}/>
         </div>
+
+        <div style={styles.topicNameBox}>
+          <h2 style={styles.topicName}>{this.props.topicName}</h2>
+        </div>
+
+        <img src={this.props.checked? "img/circleCheck.png":"img/circleUncheck.png"}
+             style={styles.circleCheck}/>
+
       </div>}
     </Col>
+  },
+
+  handleClick(){
+    this.setState({checked: !this.props.checked});
+    //alert("clicked")
   },
 });
 
