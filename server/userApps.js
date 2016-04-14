@@ -221,7 +221,7 @@ Meteor.methods({
    * @param {{appId: string, score: number}[]} recommendedApps - Id of the to-be-updated app.
    */
   addRecommendedApps(userId, recommendedApps){
-    UserApps.find(
+    UserApps.update(
         {userId: userId},
         {
           $set: {
@@ -229,6 +229,53 @@ Meteor.methods({
           }
         }
     )
+  },
+
+  /**
+   * User follow topics
+   * @param {object[]} topics - The topics being followed by the user
+   * @param topic.topicId - the Id of the topic
+   * @param topic.topicName - the name of the topic
+   * @param topic.topicRank - the Rank of the topic
+   */
+  followTopics(topics){
+    console.log("followTopics start, topics: ", topics);
+    checkUserLogin.call(this);
+    for (let i = 0; i < topics.length; i++) {
+      let topic = topics[i];
+      UserApps.update({userId: this.userId}, {
+        $addToSet: {
+          topics: {topicId: topic.topicId, topicName: topic.topicName, topicRank: topic.topicRank}
+        }
+      });
+
+      //Make record changes in Topics collection
+      Meteor.call('topicIsFollowed', topics[i].topicId);
+    }
+  },
+
+  /**
+   * User update followed topics
+   * @param {object[]} topics - The topics being followed by the user
+   * @param topic.topicId - the Id of the topic
+   * @param topic.topicName - the name of the topic
+   * @param topic.topicRank - the Rank of the topic
+   */
+  updateFollowedTopics(topics){
+    checkUserLogin.call(this);
+
+    //Unfollow all current topics
+    UserApps.update({userId:this.userId}, {
+      $set:{topics:[]}
+    });
+
+    for (let i = 0; i < topics.length; i++) {
+      //Make record changes in Topics collection
+      Meteor.call('topicIsUnfollowed', topics[i].topicId);
+    }
+
+    // Re-follow all the new topics
+    Meteor.call('followTopics', topics);
   },
 
 });

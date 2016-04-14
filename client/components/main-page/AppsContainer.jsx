@@ -48,12 +48,14 @@ var AppsContainer = React.createClass({
       return {
         currentUser: Meteor.user(),
         chosenPublicApps: findUserApps ? findUserApps.publicApps : [],
+        chosenTopics: findUserApps ? findUserApps.topics : [],
         hexIv: findUserApps && findUserApps.hexIv ? findUserApps.hexIv : "",
       }
     } else {
       return {
         currentUser: null,
         chosenPublicApps: [],
+        chosenTopics:[],
         salt: "",
         hexIv: "",
       }
@@ -68,10 +70,17 @@ var AppsContainer = React.createClass({
       openDialogPlugin: false,
       openDialogRegister: false,
       registerRequest: defaultRequest,
+      openChooseTopicPage: false,
     }
   },
 
   componentWillMount(){
+    //if chosenTopics is empty, show choose topic page
+    if (!this.data.chosenTopics){
+      this.setState({openChooseTopicPage:true});
+    } else {
+      console.log("this.data.chosenTopics is ", this.data.chosenTopics);
+    }
     window.addEventListener("message", this.handleUpdateProgress);
   },
 
@@ -115,7 +124,11 @@ var AppsContainer = React.createClass({
     }
 
     return <div>
-      <ChooseTopicPage/>
+      {
+        this.state.openChooseTopicPage ?
+          <ChooseTopicPage onClosePage={()=>{this.setState({openChooseTopicPage: false})}}/>
+          : null
+      }
 
       <PluginInstallDialog openDialogPlugin={this.state.openDialogPlugin}
                            whenCloseDialog={()=>{this.setState({openDialogPlugin:false})}}/>

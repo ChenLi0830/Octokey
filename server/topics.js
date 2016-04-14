@@ -70,6 +70,32 @@ Meteor.methods({
   },
 
   /**
+   * Make database change when a topic is followed
+   * 1. Increase followCount
+   * @param {string} topicId - The Id of the topic
+   */
+  topicIsFollowed(topicId){
+    Topics.update({_id:topicId}, {
+      $inc:{
+        followCount:1
+      }
+    });
+  },
+
+  /**
+   * Make database change when a topic is unfollowed
+   * 1. Decrease followCount
+   * @param {string} topicId - The Id of the topic
+   */
+  topicIsUnfollowed(topicId){
+    Topics.update({_id:topicId}, {
+      $inc:{
+        followCount: -1
+      }
+    });
+  },
+
+  /**
    * Remove a topic
    * @param {string} topicId - Topic Id
    */
@@ -80,7 +106,7 @@ Meteor.methods({
   },
 
   /**
-   * Add app in topApps of a specific topic
+   * Add an app in topApps of a specific topic
    * @param {string} appId
    * @param {string} appName
    * @param {number} rank - The rank of the app in the top list

@@ -8,6 +8,8 @@
  *******************************************************************************/
 const WhiteOverlay = require('./WhiteOverlay.jsx');
 const TopicBox = require('./TopicBox.jsx');
+const ChoosePageFooter = require('./ChoosePageFooter.jsx');
+
 const TopicModalContainerAdd = require('./TopicModalContainerAdd.jsx');
 
 const {Col, Row, Grid} = ReactBootstrap;
@@ -15,17 +17,16 @@ const {Col, Row, Grid} = ReactBootstrap;
 const { Button } = antd;
 
 const styles = {
-  addTopicBtn: {margin: "auto", display: "block"},
   titleDiv: {margin: "50px auto 20px auto", textAlign: "center"},
   titleMain: {color: Colors.grey800},
   titleSub: {color: Colors.grey600, fontWeight: "100"},
-  footer: {
-    position: "fixed", width: "100%", left: 0, bottom: 0, height: "100px",
-    backgroundColor: "rgba(255, 255, 255, 0.9)"
-  },
 };
 
 const ChooseTopicPage = React.createClass({
+  propTypes:{
+    onClosePage: React.PropTypes.func.isRequired,
+  },
+
   mixins: [ReactMeteorData],
 
   getMeteorData() {
@@ -100,18 +101,19 @@ const ChooseTopicPage = React.createClass({
                 <Col xs={2}>
                 </Col>
               </Row>
-
-              <div style={styles.footer}>
-                <Col xs={12}>
-                  {createTopicBtn}
-                </Col>
-              </div>
+              {createTopicBtn}
+              <ChoosePageFooter
+                  okText = {"选好了" /*message*/}
+                  onOkClicked = {this.handleOKBtnClicked/*message*/}
+                  onSkipClicked = {()=>{alert("skip button clicked")}}
+              />
             </Grid>
           </div>
         </WhiteOverlay>
     )
   },
 
+  // 用户添加or取消topic
   handleTopicClicked(topicId, topicName, topicRank){
     const clickedTopic = {topicId : topicId, topicName : topicName, topicRank : topicRank};
     let selectedTopics = this.state.selectedTopics;
@@ -127,6 +129,17 @@ const ChooseTopicPage = React.createClass({
     }
 
     this.setState({ selectedTopics: selectedTopics});
+  },
+
+  handleOKBtnClicked(){
+    console.log("handleOKBtnClicked");
+    Meteor.call("followTopics", this.state.selectedTopics, (error)=>{
+      if (error){
+        console.log("error", error);
+      }
+      console.log("User successfully followed the topics");
+      this.props.onClosePage();
+    });
   },
 });
 
