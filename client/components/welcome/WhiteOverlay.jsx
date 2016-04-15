@@ -10,21 +10,27 @@
 
 var WhiteOverlay = React.createClass({
   propTypes: {
-    visibility: React.PropTypes.bool.isRequired,
     children: React.PropTypes.element,
+    openOverlay: React.PropTypes.bool.isRequired,
+    // The name of the entrance & exit animations (from animate.css)
+    entrance: React.PropTypes.string,
+    exit: React.PropTypes.string,
   },
 
   render (){
-    //console.log("this.props.visibility", this.props.visibility);
-    return <div className="animated fadeIn"
-                id="whiteOverlay"
-                style={{position:"fixed", top:0, left:0,
-                        background: this.props.visibility ? "rgba(250,250,250,0.95)" : "rgba(250,250,250,0.0)",
-                        zIndex: this.props.visibility ? "500" : "-1",
-                        width:"100%", height:"100%", overflow:"scroll",
+    const {openOverlay, entrance, exit} = this.props;
+    //console.log("this.props.openOverlay", this.props.openOverlay);
+    return (
+        <div className={"animated "+ openOverlay? entrance:exit}
+             id="whiteOverlay"
+             style={{position:"fixed", top:0, left:0,
+                        background: this.props.openOverlay ? "rgba(250,250,250,0.95)" : "rgba(250,250,250,0.0)",
+                        zIndex: this.props.openOverlay ? "500" : "-1",
+                        width:"100%", height:"100%", overflowY:"scroll",
                         }}>
-      {this.props.children}
-    </div>
+          {this.props.children}
+        </div>
+    )
   }
 });
 

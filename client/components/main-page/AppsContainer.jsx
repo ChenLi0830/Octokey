@@ -6,15 +6,16 @@
  *
  * AppsContainer Component contains all the app boxes of the main page, called by "routes"
  *******************************************************************************/
-var AppBox = require('./AppBox.jsx');
-var AddNewApp = require('./AddNewApp.jsx');
-var PluginInstallDialog = require('./PluginInstallDialog.jsx');
-var CredentialDialog = require('./CredentialDialog.jsx');
-var EditDialog = require('./EditDialog.jsx');
-var RegisterDialog = require('./RegisterDialog.jsx');
-var FocusOverlay = require('./FocusOverlay.jsx');
-var FloatingEditButton = require('./FloatingEditButton.jsx');
-var ChooseTopicPage = require('../welcome/ChooseTopicPage.jsx');
+const AppBox = require('./AppBox.jsx');
+const AddNewApp = require('./AddNewApp.jsx');
+const PluginInstallDialog = require('./PluginInstallDialog.jsx');
+const CredentialDialog = require('./CredentialDialog.jsx');
+const EditDialog = require('./EditDialog.jsx');
+const RegisterDialog = require('./RegisterDialog.jsx');
+const FocusOverlay = require('./FocusOverlay.jsx');
+const FloatingEditButton = require('./FloatingEditButton.jsx');
+const ChooseTopicPage = require('../welcome/ChooseTopicPage.jsx');
+const ChooseAppPage = require('../welcome/ChooseAppPage.jsx');
 //var ChooseAppPage = require('../welcome/ChooseAppPage.jsx');
 
 const {
@@ -71,12 +72,13 @@ var AppsContainer = React.createClass({
       openDialogRegister: false,
       registerRequest: defaultRequest,
       openChooseTopicPage: false,
+      openChooseAppPage: false,
     }
   },
 
   componentWillMount(){
     //if chosenTopics is empty, show choose topic page
-    if (!this.data.chosenTopics){
+    if (!this.data.chosenTopics || this.data.chosenTopics.length===0){
       this.setState({openChooseTopicPage:true});
     } else {
       console.log("this.data.chosenTopics is ", this.data.chosenTopics);
@@ -124,10 +126,14 @@ var AppsContainer = React.createClass({
     }
 
     return <div>
-      {
-        this.state.openChooseTopicPage ?
-          <ChooseTopicPage onClosePage={()=>{this.setState({openChooseTopicPage: false})}}/>
-          : null
+      {this.state.openChooseTopicPage ?
+          <ChooseTopicPage onClosePage={this.handleCloseTopicPage}
+                           openPage = {this.state.openChooseTopicPage}/>: null
+      }
+
+      {/*this.state.openChooseAppPage ?
+          <ChooseAppPage onClosePage={()=>{this.setState({openChooseAppPage: false})}}
+                         openPage = {this.state.openChooseAppPage} />: null*/
       }
 
       <PluginInstallDialog openDialogPlugin={this.state.openDialogPlugin}
@@ -183,8 +189,16 @@ var AppsContainer = React.createClass({
     </div>
   },
 
+  handleCloseTopicPage(chooseApps){
+    if (chooseApps){// 开始选择常用的网站
+      this.setState({openChooseTopicPage: false, openChooseAppPage:true});
+    } else {
+      this.setState({openChooseTopicPage: false});
+    }
+  },
+
   handleAppTileClick(appId, username){
-    //console.log("chrome.app.isInstalled", chrome.app.isInstalled);
+    // console.log("chrome.app.isInstalled", chrome.app.isInstalled);
     if (!this.extensionIsInstalled()) {
       this.setState({openDialogPlugin: true});
       return;

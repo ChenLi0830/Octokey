@@ -10,7 +10,13 @@ body {
 }
 
 #whiteOverlay{
-  -webkit-animation-duration: 0.3s;
+  -webkit-animation-duration: 1s;
+  //-webkit-animation-delay: 1s;
+  //-webkit-animation-iteration-count: infinite;
+}
+
+#TopicPage{
+  -webkit-animation-duration: 0.2s;
   -webkit-animation-delay: 1s;
   //-webkit-animation-iteration-count: infinite;
 }

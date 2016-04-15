@@ -11,7 +11,7 @@ const {Col, Row, Grid} = ReactBootstrap;
 
 const styles = {
   footer: {
-    position: "fixed", width: "100%", left: 0, bottom: 0, height: "100px",
+    position: "fixed", width: "100%", left: 0, bottom: 0, height: "100px", zIndex:501,
     backgroundColor: "rgba(255, 255, 255, 0.9)",
   },
   col: {lineHeight: "100px", textAlign: "center"},

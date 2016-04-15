@@ -13,16 +13,23 @@ const {Col, Row, Grid} = ReactBootstrap;
 
 
 const ChooseAppPage = React.createClass({
+  propTypes: {
+    onClosePage: React.PropTypes.func.isRequired,
+    openPage: React.PropTypes.bool.isRequired,
+  },
+
   render(){
-    const title = <div className="animated fadeInUp"
-                       style={{margin: "50px auto 20px auto", textAlign:"center"}}>
-      <h1 style={{color:Colors.grey800}}>网上应用订制推荐</h1>
-      <h2 style={{color:Colors.grey600, fontWeight:"100"}}>添加新应用, 给你的Octokey超能力{'\u26A1'}</h2>
-    </div>
     return (
-        <WhiteOverlay visibility={true}>
+        <WhiteOverlay entrance = "fadeInLeft"
+                      exit = "fadeOutLeft"
+                      openOverlay = {this.props.openPage}>
           <Grid>
-            {title}
+            <div className="animated fadeInUp"
+                 style={{margin: "50px auto 20px auto", textAlign:"center"}}>
+              <h1 style={{color:Colors.grey800}}>网站订制推荐</h1>
+              <h2 style={{color:Colors.grey600, fontWeight:"100"}}>添加新应用, 给你的Octokey超能力{'\u26A1'}</h2>
+            </div>
+
             <Col xs={8} xsOffset={2}>
               <RecommendedAppBox/>
             </Col>

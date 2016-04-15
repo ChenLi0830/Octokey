@@ -14,17 +14,21 @@ const TopicModalContainerAdd = require('./TopicModalContainerAdd.jsx');
 
 const {Col, Row, Grid} = ReactBootstrap;
 
-const { Button } = antd;
+const { Button, Checkbox } = antd;
 
 const styles = {
   titleDiv: {margin: "50px auto 20px auto", textAlign: "center"},
   titleMain: {color: Colors.grey800},
   titleSub: {color: Colors.grey600, fontWeight: "100"},
+  extraInfoCol: {marginBottom: "120px", textAlign: "center"},
+  extraInfoDiv: {margin: "40px auto"},
+  extraInfoContent: {fontWeight: 200, display: "inline-block", marginLeft: "5px"},
 };
 
 const ChooseTopicPage = React.createClass({
-  propTypes:{
+  propTypes: {
     onClosePage: React.PropTypes.func.isRequired,
+    openPage: React.PropTypes.bool.isRequired,
   },
 
   mixins: [ReactMeteorData],
@@ -48,14 +52,15 @@ const ChooseTopicPage = React.createClass({
   getInitialState(){
     return {
       modalOpen: false,
-      selectedTopics:[],
+      selectedTopics: [],
+      chooseAppsCheck: true,
     }
   },
 
   render(){
     const topicBoxes = this.data.topics.map((topic)=> {
-      const checked = _.findIndex(this.state.selectedTopics, (selectedTopic)=>{
-            return selectedTopic.topicId===topic._id;
+      const checked = _.findIndex(this.state.selectedTopics, (selectedTopic)=> {
+            return selectedTopic.topicId === topic._id;
           }) > -1;
 
       //const iconURL = OctoClientAPI.getTopicIconUrl(topic._id);
@@ -65,14 +70,9 @@ const ChooseTopicPage = React.createClass({
                        topicName={topic.topicName}
                        topicRank={topic.topicRank}
                        followCount={topic.followCount}
-                       checked = {checked}
+                       checked={checked}
                        whenTopicClicked={this.handleTopicClicked}/>;
     });
-
-    const title = <div style={styles.titleDiv}>
-      <h1 style={styles.titleMain}>你想关注的兴趣</h1>
-      <h2 style={styles.titleSub}>我们将根据你关注的兴趣定制你的应用推荐</h2>
-    </div>;
 
     const createTopicBtn = OctoClientAPI.isAdmin() ?
         <div>
@@ -81,64 +81,93 @@ const ChooseTopicPage = React.createClass({
               onModalClose={()=>{this.setState({modalOpen:false});}}
               //allCategories={this.props.allCategories}
           />
-          <Button type="primary" style={styles.addTopicBtn}
+          <Button type="ghost"
                   onClick={()=>{this.setState({modalOpen:true})}}>
             {"添加Topic"/*message*/}
           </Button>
         </div>
         : null;
 
-    return (
-        <WhiteOverlay visibility={true}>
-          <div>
-            <Grid>
-              {title}
+    return (<div>
+      <WhiteOverlay entrance = "fadeInUp"
+                    exit = "fadeOutLeft"
+                    openOverlay = {this.props.openPage}>
+        <div>
+          <Grid>
 
-              <Row>
-                <Col xs={8} xsOffset={2}>
-                  {topicBoxes}
-                </Col>
-                <Col xs={2}>
-                </Col>
-              </Row>
-              {createTopicBtn}
-              <ChoosePageFooter
-                  okText = {"选好了" /*message*/}
-                  onOkClicked = {this.handleOKBtnClicked/*message*/}
-                  onSkipClicked = {()=>{alert("skip button clicked")}}
-              />
-            </Grid>
-          </div>
-        </WhiteOverlay>
-    )
+            <div style={styles.titleDiv}>
+              <h1 style={styles.titleMain}>你想关注的兴趣</h1>
+              <h2 style={styles.titleSub}>我们将根据你关注的兴趣定制你的应用推荐</h2>
+            </div>
+
+            <Row>
+              <Col xs={8} xsOffset={2}>
+                {topicBoxes}
+              </Col>
+              <Col xs={2}>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col xs={12} style={styles.extraInfoCol}>
+                {createTopicBtn}
+                <div style={styles.extraInfoDiv}>
+                  <label>
+                    <Checkbox checked={this.state.chooseAppsCheck}
+                              onChange={()=>{this.setState({chooseAppsCheck:!this.state.chooseAppsCheck})}}/>
+                    <h3 style={styles.extraInfoContent}>
+                      开启智能兴趣分析，自动筛选好评网站
+                    </h3>
+                  </label>
+                </div>
+              </Col>
+            </Row>
+          </Grid>
+        </div>
+      </WhiteOverlay>
+      <ChoosePageFooter
+          okText={"选好了" /*message*/}
+          onOkClicked={this.handleOKBtnClicked}
+          onSkipClicked={this.handleSkipBtnClicked}
+      />
+    </div>)
   },
 
   // 用户添加or取消topic
   handleTopicClicked(topicId, topicName, topicRank){
-    const clickedTopic = {topicId : topicId, topicName : topicName, topicRank : topicRank};
+    const clickedTopic = {topicId: topicId, topicName: topicName, topicRank: topicRank};
     let selectedTopics = this.state.selectedTopics;
 
-    const topicIndex = _.findIndex(selectedTopics, (selectedTopic)=>{
+    const topicIndex = _.findIndex(selectedTopics, (selectedTopic)=> {
       return selectedTopic.topicId === clickedTopic.topicId
     });
 
-    if (topicIndex === -1){// Select topic
+    if (topicIndex === -1) {// Select topic
       selectedTopics.push(clickedTopic);
     } else {// Unselect topic
       selectedTopics.splice(topicIndex, 1);
     }
 
-    this.setState({ selectedTopics: selectedTopics});
+    this.setState({selectedTopics: selectedTopics});
   },
 
   handleOKBtnClicked(){
-    console.log("handleOKBtnClicked");
-    Meteor.call("followTopics", this.state.selectedTopics, (error)=>{
-      if (error){
+    Meteor.call("followTopics", this.state.selectedTopics, (error)=> {
+      if (error) {
         console.log("error", error);
       }
       console.log("User successfully followed the topics");
-      this.props.onClosePage();
+      this.props.onClosePage(this.state.chooseAppsCheck);
+    });
+  },
+
+  handleSkipBtnClicked(){
+    Meteor.call("followTopics", [], (error)=> {
+      if (error) {
+        console.log("error", error);
+      }
+      console.log("User successfully skipped the topics");
+      this.props.onClosePage(this.state.chooseAppsCheck);
     });
   },
 });
