@@ -7,8 +7,6 @@
  * It defines the theme object used by the app in Material UI
  *******************************************************************************/
 ZenRawTheme = {
-  spacing: Spacing,
-  zIndex: zIndex,
   fontFamily: 'Roboto, sans-serif',
   palette: {
     primary1Color: "#12C5A2",

@@ -11,8 +11,9 @@ const {
     ListItem,
     Colors,
     RaisedButton,
+    Subheader
     } = MUI;
-import Subheader from 'material-ui/lib/Subheader';
+//import Subheader from 'material-ui/lib/Subheader';
 
 
 const {

@@ -8,8 +8,9 @@
  *******************************************************************************/
 const {
     FloatingActionButton,
-    Tooltip,
     } = MUI;
+
+import { Tooltip } from 'antd';
 
 const {
     ToggleStar,
@@ -92,22 +93,25 @@ var FloatingEditButton = React.createClass({
       };
       basicLiStyle.transitionDelay = (miniButtonIconElements.length - i) * 0.05 + "s";
       return <li style={_.extend({},basicLiStyle,styles.floatingLi)} key={i}>
-        <FloatingActionButton
-            secondary={true} mini={true}
-            backgroundColor={miniIconColor[i].background}
-            iconStyle={{fill:miniIconColor[i].icon}}
-            onTouchTap={this.handleFABClick.bind(null,i)}
-            children={iconElement}
-            onMouseEnter={this.handleTooltipOpen.bind(this,i)}
-            onMouseLeave={this.handleTooltipClose}
-        />
-        <Tooltip show={this.state.hoveredTooltip===i}
-                 label={toolTips[i]}
-                 style={{right: 62, top:16}}
-                 horizontalPosition="left"
-                 verticalPosition="top"
-                 touch={true}
-        />
+        <Tooltip placement="left" title={toolTips[i]}>
+          <FloatingActionButton
+              mini={true}
+              backgroundColor={ZenColor.cyan}
+              //backgroundColor={miniIconColor[i].background}
+              iconStyle={{fill:miniIconColor[i].icon}}
+              onTouchTap={this.handleFABClick.bind(null,i)}
+              children={iconElement}
+              onMouseEnter={this.handleTooltipOpen.bind(this,i)}
+              onMouseLeave={this.handleTooltipClose}
+          />
+        </Tooltip>
+        {/*<Tooltip show={this.state.hoveredTooltip===i}
+         label={toolTips[i]}
+         style={{right: 62, top:16}}
+         horizontalPosition="left"
+         verticalPosition="top"
+         touch={true}
+         />*/}
       </li>
     }.bind(this));
 

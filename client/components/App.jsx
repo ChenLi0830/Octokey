@@ -8,7 +8,7 @@
  *******************************************************************************/
 var AppLoading = require('./AppLoading.jsx');
 var Header = require('./header/Header.jsx');
-import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 var {AppCanvas,Paper} = MUI;
 var {Grid,Row,Col} = ReactBootstrap;
@@ -18,12 +18,13 @@ injectTapEventPlugin();
 const styles = {
   wrapper: {
     //padding: "0 0 0 0",
-    padding: "64px 0 0 0",
+    //padding: "64px 0 0 0",
     position: "absolute",
     top: 0,
     bottom: 0,
     left: 0,
     right: 0,
+    backgroundColor: "wheat",
   }
 };
 

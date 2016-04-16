@@ -13,12 +13,13 @@ var SearchBox = require('./SearchBox.jsx');
 const {
     Paper,
     List,
+    Subheader
     } = MUI;
 
 import {Modal, Form, Input, Button, Checkbox, Radio, Row, Col, Tooltip, Icon, Upload } from 'antd/lib/';
 const FormItem = Form.Item;
 
-import Subheader from 'material-ui/lib/Subheader';
+//import Subheader from 'material-ui/lib/Subheader';
 
 const {
     NavigationExpandMoreIcon
