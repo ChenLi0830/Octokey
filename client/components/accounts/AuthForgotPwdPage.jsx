@@ -82,7 +82,7 @@ var AuthForgotPwdPage = React.createClass({
             <RaisedButton label={messages.login_resetPwd}
                           onClick={this.handleSubmit}
                           style={style.registerButton}
-                          secondary={true}/>
+                          primary={ true }/>
             <Snackbar
                 open={this.state.snackBarOpen}
                 message={<FormattedMessage id="login_emailNotif"

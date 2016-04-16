@@ -102,10 +102,10 @@ var EditDialog = React.createClass({
       <RaisedButton label={messages.app_editDialogAdd}
                     style={style.addNewAccountButton}
                     onTouchTap={()=>{this.setState({openDialogAdd:true})}}
-                    secondary={true}/>,
+                    primary={ true }/>,
       <FlatButton
           label={messages.app_editDialogFinish}
-          secondary={true}
+          primary={ true }
           onTouchTap={this.props.whenCloseDialog}/>,
     ];
 

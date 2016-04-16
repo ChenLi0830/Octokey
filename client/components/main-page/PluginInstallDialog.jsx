@@ -30,7 +30,7 @@ var PluginInstallDialog = React.createClass({
           primary={true}
           onTouchTap={this.props.whenCloseDialog}/>,
       <FlatButton
-          secondary={true}
+          primary={ true }
           label={messages.ext_btn_install}
           onTouchTap={this.handleSubmit}/>
     ];

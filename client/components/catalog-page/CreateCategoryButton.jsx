@@ -94,7 +94,7 @@ var CreateCategoryButton = React.createClass({
     const actions = [
       <FlatButton
           label={messages.cata_cancel}
-          secondary={true}
+          primary={ true }
           onTouchTap={this.handleClose}/>,
       <FlatButton
           label={this.state.deleteCategoryIndex>-1 ? messages.cata_del

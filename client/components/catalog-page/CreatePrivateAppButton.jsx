@@ -45,7 +45,7 @@ var CreatePrivateAppButton = React.createClass({
     let button = (<div style={{textAlign:"center", padding:"10px 0 30px 0"}}>
       <p>{messages.cata_createPrivateMessage}</p>
       <RaisedButton label={messages.cata_createPrivateBtn}
-                    secondary={true}
+                    primary={ true }
                     onClick={this.open}
                     labelStyle={{color:"white"}}/>
     </div>);

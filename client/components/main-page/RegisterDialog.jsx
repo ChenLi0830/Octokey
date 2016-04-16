@@ -60,13 +60,13 @@ var RegisterDialog = React.createClass({
           onTouchTap={this.props.whenCloseDialog}/>,
       registerRequest.progress === 100 ?
           <FlatButton
-              secondary={true}
+              primary={ true }
               label={messages["login-去登录"]}
               onTouchTap={()=>{this.props.whenLogin();this.props.whenCloseDialog();}}
           /> : null,
       registerRequest.progress === -100 ?
           <FlatButton
-              secondary={true}
+              primary={ true }
               label={messages["manual-sign-up-亲自注册"]}
               onTouchTap={this.handleRegisterManually}
           /> : null

@@ -48,6 +48,15 @@ var ListPage = React.createClass({
     }
   },
 
+  componentWillMount(){
+    console.log("this.props.chosenTopics", this.data.chosenTopics);
+    if (!this.data.chosenTopics || this.data.chosenTopics.length === 0) {
+      this.setState({openChooseTopicPage: true});
+    } else {
+      console.log("this.data.chosenTopics is ", this.data.chosenTopics);
+    }
+  },
+
   render(){
     //console.log("this.data.chosenTopics", this.data.chosenTopics);
 
@@ -76,6 +85,7 @@ var ListPage = React.createClass({
             chosenTopics = {this.data.chosenTopics}
             hexIv = {this.data.hexIv}
             userEditStatus = {this.state.userEditStatus}
+            appContainerZIndex = {(this.state.userEditStatus === "remove" || this.state.userEditStatus === "config")? "400":"inherit"}
         />
       }
     </div>

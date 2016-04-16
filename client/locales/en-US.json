@@ -146,6 +146,9 @@
         "registerUsingMobile-注册": "sign up using mobile"
     },
     "header": {
+        "login-登录": "Sign in",
+        "account-账户": "Account",
+        "logout-登出": "Log out",
         "mySites-我的网站": "My Sites",
         "allSites-所有网站": "All Sites"
     },

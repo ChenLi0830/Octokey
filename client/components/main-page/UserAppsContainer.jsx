@@ -2,9 +2,9 @@
  * Copyright (C) 2015 ZenID Inc.
  *
  * Creator: Chen Li<chen.li@noc-land.com>
- * Creation Date: 2015-12-31
+ * Creation Date: 2015-4-16
  *
- * Component for a single App box, called by "AppsContainer"
+ * Component for a the container of user apps in the list page, called by "ListPage"
  *******************************************************************************/
 const AppBox = require('./AppBox.jsx');
 const AddNewApp = require('./AddNewApp.jsx');
@@ -37,6 +37,7 @@ var UserAppsContainer = React.createClass({
     currentUser: React.PropTypes.object.isRequired,
     hexIv: React.PropTypes.string.isRequired,
     userEditStatus: React.PropTypes.string.isRequired,
+    appContainerZIndex: React.PropTypes.string.isRequired,
   },
 
   contextTypes: {
@@ -57,11 +58,6 @@ var UserAppsContainer = React.createClass({
 
   componentWillMount(){
     //if chosenTopics is empty, show choose topic page
-    if (!this.props.chosenTopics || this.props.chosenTopics.length === 0) {
-      this.setState({openChooseTopicPage: true});
-    } else {
-      console.log("this.props.chosenTopics is ", this.props.chosenTopics);
-    }
     window.addEventListener("message", this.handleUpdateProgress);
   },
 
@@ -108,7 +104,7 @@ var UserAppsContainer = React.createClass({
         <div>
           <Paper zDepth={1}
                  style={{
-                   zIndex:"400",
+                   zIndex:this.props.appContainerZIndex,
                    position:"relative",
                    backgroundColor:ZenColor.white,
                    boxShadow:"0 1px 6px rgba(0, 0, 0, 0.12)",

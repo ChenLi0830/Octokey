@@ -44,7 +44,7 @@ var AddNewCredentialDialog = React.createClass({
           primary={true}
           onTouchTap={this.props.whenCloseDialog}/>,
       <FlatButton
-          secondary={true}
+          primary={ true }
           label={messages.app_newCredentialDialogAdd}
           onTouchTap={this.handleSaveAccount}/>
     ];

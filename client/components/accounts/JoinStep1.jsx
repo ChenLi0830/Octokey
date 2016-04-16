@@ -158,7 +158,7 @@ var JoinStep1 = React.createClass({
             messages[this.state.captchaBtn] : this.state.captchaBtn}
                          onClick={this.handleRequestValidation}
                          style={_.extend({},styles.registerButton)}
-                         secondary={true}
+                         primary={ true }
                          disabled={this.state.captchaBtn !== "sendValidation-发送验证"}
                          className={"animated fadeInUp"}
           />}
@@ -182,7 +182,7 @@ var JoinStep1 = React.createClass({
                   <RaisedButton label={messages["ok-确认"]}
                                 onClick={this.handleVerify}
                                 style={styles.registerButton}
-                                secondary={true}
+                                primary={ true }
                                 disabled={this.state.verifyBtnDisable}
                   />
                 </div>

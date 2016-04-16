@@ -143,7 +143,7 @@ var JoinStep2 = React.createClass({
           <RaisedButton label={messages["ok-确认"]}
                         onClick={this.handleRegister}
                         style={styles.registerButton}
-                        secondary={true}
+                        primary={ true }
                         disabled={this.state.registerBtnDisable}
           />
 

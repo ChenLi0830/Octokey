@@ -47,7 +47,7 @@ var CredentialDialog = React.createClass({
           primary={true}
           onTouchTap={this.handleCloseDialog}/>,
       <FlatButton
-          secondary={true}
+          primary={ true }
           label={messages.app_credentialDialogLogin}
           onTouchTap={this.handleSubmit}/>
     ];
@@ -59,7 +59,7 @@ var CredentialDialog = React.createClass({
           primary={true}
           onTouchTap={this.verifyUnsuccess}/>,
       <FlatButton
-          secondary={true}
+          primary={ true }
           label={messages.credentialDialog.verifyBtn_success}
           onTouchTap={this.handleCloseDialog}/>
     ];

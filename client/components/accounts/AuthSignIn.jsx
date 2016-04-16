@@ -173,7 +173,7 @@ var AuthSignIn = React.createClass({
                  messages[this.state.captchaBtn]:this.state.captchaBtn}
                  onClick={this.handleRequestCode}
                  style={styles.registerButton}
-                 secondary={true}
+                 primary={true}
                  disabled={this.state.captchaBtn!=="requestCaptcha-获取验证码"}
                  />
 
@@ -199,7 +199,7 @@ var AuthSignIn = React.createClass({
             <RaisedButton label={messages["signIn-登录"]}
                           onClick={this.handleSubmit}
                           style={styles.registerButton}
-                          secondary={true}
+                          primary={true}
                           disabled={this.state.disableBtn}/>
 
             <p>{messages["noAccount-还没帐号"]}
