@@ -7,15 +7,6 @@
  * Modal component for administrators to edit/app App
  *******************************************************************************/
 
-const {
-    TableRow,
-    TableRowColumn,
-    Table,
-    TableHeader,
-    TableHeaderColumn,
-    TableBody,
-    } = MUI;
-
 import {Modal, Form, Input, Button, Checkbox, Radio, Row, Col, Tooltip, Icon, Upload } from 'antd/lib/';
 const FormItem = Form.Item;
 
@@ -64,16 +55,6 @@ var TopicModal = React.createClass({
       wrapperCol: {span: 14},
     };
 
-/*
-    let categoryTableRows = this.props.allCategories.map(function (category, index) {
-      const categorySelected = _.indexOf(this.props.selectedCategories, category.name) > -1;
-      return <TableRow key={category._id}
-                       selectable={category.name!=="all"}
-                       selected={categorySelected}>
-        <TableRowColumn>{category.displayTitleChinese}</TableRowColumn>
-      </TableRow>
-    }.bind(this));
-*/
 
     return <div>
       {this.props.modalOpen ?
@@ -114,28 +95,7 @@ var TopicModal = React.createClass({
                 </Upload>
               </FormItem>
               <br/>
-              {/*<Table
-                  height="200px"
-                  fixedHeader={true}
-                  fixedFooter={true}
-                  selectable={true}
-                  onCellClick={this.props.onCellClick}
-                  multiSelectable={true}>
-                <TableHeader enableSelectAll={false} displaySelectAll={false}
-                             adjustForCheckbox={false}>
-                  <TableRow>
-                    <TableHeaderColumn style={{textAlign: 'center'}}>
-                      {messages.cata_selectCategory}
-                    </TableHeaderColumn>
-                  </TableRow>
-                </TableHeader>
-                <TableBody
-                    deselectOnClickaway={false}
-                    showRowHover={false}
-                    stripedRows={false}>
-                  {categoryTableRows}
-                </TableBody>
-              </Table>*/}
+
             </Form>
           </Modal> : null}
     </div>

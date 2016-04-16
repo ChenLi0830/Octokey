@@ -7,7 +7,7 @@
  * routes uses React-router, it is the root of the client-side app
  *******************************************************************************/
 var App = require('./components/App.jsx');
-var AppsContainer = require('./components/main-page/AppsContainer.jsx');
+var ListPage = require('./components/main-page/ListPage.jsx');
 var CatalogContainer = require('./components/catalog-page/CatalogContainer.jsx');
 var AuthJoin = require('./components/accounts/AuthJoin.jsx');
 var PageNotFound = require('./components/PageNotFound.jsx');
@@ -57,7 +57,7 @@ function verifyNotLogin(nextState, replace) {
 const routes = (
     <Route path="/" component={App}>
       <IndexRoute component={AuthSignIn} onEnter={verifyNotLogin}/>
-      <Route path="/list" component={AppsContainer} onEnter={requireAuth}/>
+      <Route path="/list" component={ListPage} onEnter={requireAuth}/>
       <Route path="/catalog" component={CatalogContainer} onEnter={requireAuth}/>
       <Route path="/join" component={AuthJoin} onEnter={verifyNotLogin}/>
       {<Route path="/login" component={AuthSignIn} onEnter={verifyNotLogin}/>}
