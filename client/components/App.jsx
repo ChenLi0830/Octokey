@@ -19,12 +19,13 @@ const styles = {
   wrapper: {
     //padding: "0 0 0 0",
     //padding: "64px 0 0 0",
-    position: "absolute",
+    minHeight:"100%",
+    position: "relative",
     top: 0,
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: "wheat",
+    backgroundColor: "lightslategrey",
   }
 };
 

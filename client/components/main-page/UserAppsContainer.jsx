@@ -109,6 +109,7 @@ var UserAppsContainer = React.createClass({
                    backgroundColor:ZenColor.white,
                    boxShadow:"0 1px 6px rgba(0, 0, 0, 0.12)",
                    padding:0,
+                   marginBottom:70,
                    borderRadius:"5px"}}>
             <Row style={{marginLeft:0, marginRight:0}}>
               {appBoxes}
