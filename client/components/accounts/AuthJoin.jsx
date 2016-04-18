@@ -69,7 +69,7 @@ var AuthJoin = React.createClass({
 
     return (<div>
           <Col style={{backgroundColor:ZenColor.grey1}}>
-            <Paper style={styles.paper} zDepth={0}>
+            <Paper style={styles.paper} zDepth={1}>
               <Col sm={8} smOffset={2} md={8} mdOffset={2} xs={12} style={styles.paperCol}>
                 <div style={{textAlign:"left"}}>
                   <Steps current={this.state.step} className="antdsteps">{steps}</Steps>

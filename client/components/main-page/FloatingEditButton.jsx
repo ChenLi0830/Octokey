@@ -66,7 +66,7 @@ var FloatingEditButton = React.createClass({
 
     let miniButtonIconElements = [/*<ContentCreate/>, */<ContentAdd/>, <ContentRemove/>,
       <ContentCreate/>,
-      <AvFiberNew/>];
+      /*暂时隐藏自动注册选项 <AvFiberNew/>*/];
     let miniIconColor = [
       {background: ZenColor.cyan, icon: ZenColor.white},
       {background: ZenColor.orange, icon: ZenColor.white},
