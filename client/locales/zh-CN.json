@@ -74,8 +74,8 @@
     "tooltip_delete": "删除网站",
     "tooltip_setting": "添加删除账号",
     "tooltip_register": "自动注册",
-    "ext_install_title": "章鱼钥匙：插件安装",
-    "ext_install_msg": "请安装浏览器插件以确保安全（支持：360浏览器, Chrome浏览器)",
+    "ext_install_title": "选择浏览器安装插件 - 3重加密, 确保安全",
+    "ext_install_msg": "请选择你使用的浏览器：",
     "ext_btn_install": "安装",
     "ext_btn_cancel": "取消",
     "credentialDialog": {

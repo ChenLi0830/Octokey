@@ -74,8 +74,8 @@
     "tooltip_delete": "Remove app",
     "tooltip_setting": "Edit accounts",
     "tooltip_register": "Auto-registration",
-    "ext_install_title": "Octokey - Install Extension",
-    "ext_install_msg": "Please install browser extension for better performance. Currently supported browsers: 360 and Chrome.",
+    "ext_install_title": "Choose your browser to install extension - improve performance",
+    "ext_install_msg": "Which browser are you using?",
     "ext_btn_install": "install",
     "ext_btn_cancel": "cancel",
     "credentialDialog": {

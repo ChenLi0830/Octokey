@@ -159,7 +159,7 @@ var UserAppsContainer = React.createClass({
   handleAppTileClick(appId, username){
     // console.log("chrome.app.isInstalled", chrome.app.isInstalled);
     if (!this.extensionIsInstalled()) {
-      this.props.onDialogPluginOpen();
+      //this.props.onDialogPluginOpen();
       this.setState({openDialogPlugin: true});
       return;
     }
