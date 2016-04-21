@@ -26,6 +26,21 @@ const {
     AvFiberNew,
     } = SvgIcons;
 
+const styles = {
+  boxBottomBanner: {
+    position: "absolute",
+    height: 35,
+    bottom: 0,
+    backgroundColor: "#fafafa",
+    textAlign: "center",
+    lineHeight: "35px",
+    fontSize: "14px",
+    color: "#888",
+    borderRadius: "0px 0px 5px 5px",
+    webkitAnimationDuration:"0.3s",
+  }
+};
+
 var AppBox = React.createClass({
   propTypes: {
     appId: React.PropTypes.string.isRequired,
@@ -67,7 +82,7 @@ var AppBox = React.createClass({
         {
           this.props.usernames.length <= 1 ? null : (
               <Modal title={this.props.appName + "-账户选择"}
-                     okText="好滴"
+                     okText="完成"
                      cancelText="取消"
                      visible={this.state.modalOpen}
                      onOk={()=>{this.setState({modalOpen:false})}}
@@ -94,6 +109,14 @@ var AppBox = React.createClass({
                zDepth={this.state.hovered?1:0}
                onTouchTap={this.handleTouchTap}>
           {image}
+          {
+            this.state.hovered ?
+                <div className="animated fadeIn"
+                     style={_.extend({}, styles.boxBottomBanner, {width: this.props.width})}>
+                  {this.props.appName}
+                </div>
+                : null
+          }
         </Paper>
       </Col>
     </div>

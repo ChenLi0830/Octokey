@@ -153,7 +153,7 @@ var Header = React.createClass({
     );
 
     let account;
-    console.log("this.data.currentUser", this.data.currentUser);
+    //console.log("this.data.currentUser", this.data.currentUser);
 
     if (this.data.currentUser && this.data.currentUser.emails &&
         this.data.currentUser.emails.length > 0) {
@@ -162,7 +162,7 @@ var Header = React.createClass({
       account = this.data.currentUser.phone.number;
     }
 
-    console.log("account", account);
+    //console.log("account", account);
     return (<Paper style={{display: "flex", position: "relative",
     boxShadow: "0 0px 12px rgba(0, 0, 0, 0.18)", backgroundColor:"white"}}>
           <Col xs={2}>
