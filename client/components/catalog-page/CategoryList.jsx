@@ -25,7 +25,6 @@ const {
     ImageBlurOn,
     ImageAudiotrack,
     ContentGesture,
-    MapsDirectionsBike,
     PlacesPool,
     ActionShoppingBasket,
     ActionExplore,
@@ -33,6 +32,11 @@ const {
     ActionLightbulbOutline,
     ActionUpdate,
     ActionAssignmentInd,
+    CommunicationImportContacts,
+    CommunicationMailOutline,
+    EditorBubbleChart,
+    NotificationOndemandVideo,
+    AvMusicVideo,
     } = SvgIcons;
 
 const iconColor = ZenColor.cyan;
@@ -54,6 +58,13 @@ const nameToIcon = {
   "productivity": <ActionLightbulbOutline color={iconColor}/>,
   "news": <ActionUpdate color={iconColor}/>,
   "business": <ActionAssignmentInd color={iconColor}/>,
+  "novels": <CommunicationImportContacts color={iconColor}/>,
+  "email": <CommunicationMailOutline color={iconColor}/>,
+  "animation": <EditorBubbleChart color={iconColor}/>,
+  "video": <NotificationOndemandVideo color={iconColor}/>,
+  "blog": <CommunicationForum color={iconColor}/>,
+  "music": <AvMusicVideo color={iconColor}/>,
+
 };
 
 var CategoryList = React.createClass({
