@@ -26,15 +26,15 @@ Meteor.startup(function () {
   function setupEmail() {
     // 2. Format the email
     //-- Set the from address
-    Accounts.emailTemplates.from = "章鱼钥匙 <no-reply@oyaoshi.com>";
+    Accounts.emailTemplates.from = "O钥匙 <no-reply@oyaoshi.com>";
 
     //-- Application name
-    Accounts.emailTemplates.siteName = '章鱼钥匙';
+    Accounts.emailTemplates.siteName = 'O钥匙';
 
     //-- Subject line of the email.
     Accounts.emailTemplates.verifyEmail.subject = function (user) {
       //return 'Confirm Your Email Address for Octokey';
-      return '验证Email地址 - 章鱼钥匙';
+      return '验证Email地址 - O钥匙';
     };
 
     /***********-- Email text ************/
