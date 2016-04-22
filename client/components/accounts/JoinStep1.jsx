@@ -159,7 +159,8 @@ var JoinStep1 = React.createClass({
                          onClick={this.handleRequestValidation}
                          style={_.extend({},styles.registerButton)}
                          primary={ true }
-                         disabled={this.state.captchaBtn !== "sendValidation-发送验证"}
+                         disabled={this.state.captchaBtn !== "sendValidation-发送验证" &&
+                           this.state.captchaBtn !== "requestCaptcha-获取验证码"}
                          className={"animated fadeInUp"}
           />}
 

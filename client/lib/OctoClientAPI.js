@@ -27,13 +27,13 @@ OctoClientAPI = {
     if (isPublicApp) {
       Meteor.call("addNewCredential", appId, username, encryptedPwd, function (error) {
         if (error) {
-          throw new Error("Error adding new Credential");
+          throw new Error("Error adding new Credential", error);
         }
       }.bind(this));
 
       Meteor.call("appAddUsername", appId, username, function (error) {
         if (error) {
-          throw new Error("Error adding new Credential");
+          throw new Error("Error adding new Credential", error);
         }
       }.bind(this));
       //Todo this return doesn't do anything since meteor call is asynchronous, fix it later.
