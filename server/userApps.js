@@ -160,8 +160,10 @@ Meteor.methods({
     const usernameExists = UserApps.findOne({
       $and: [
         {userId: this.userId},
-        {"publicApps.appId": appId},
-        {"publicApps.userNames": username}
+        {"publicApps": {$elemMatch: {
+          "appId": appId,
+          "userNames":{$in:[username]}
+        }}}
       ]
     });
     return !!usernameExists;

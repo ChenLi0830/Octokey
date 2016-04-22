@@ -62,14 +62,16 @@ Meteor.methods({
     localSimulateLatency(500);
     console.log("updateUserCredential:", "appId", appId, "username", username, "password",
         password);
+
     UserAppCredentials.update(
         {
-          "userId": this.userId,
-          "publicApps.appId": appId,
-          "publicApps.username": username,
+          $and: [
+            {"userId": this.userId},
+            {"publicApps": {$elemMatch: {"appId": appId, "username": username}}}
+          ]
         },
         {$set: {"publicApps.$.password": password}}
-    )
+    );
   },
 
   /**
