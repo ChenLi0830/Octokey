@@ -80,7 +80,7 @@ OctoClientAPI = {
    * @returns {string} image URL
    */
   getImageUrl: function (objId, imagePath) {
-    return "cfs/files/"+imagePath + objId;
+    return "cfs/files/" + imagePath + objId;
   },
 
   /**
@@ -215,7 +215,8 @@ OctoClientAPI = {
   },
 
   /**
-   * If a Session variable is null, fetch this static (non-reactive) Meteor data to Session using
+   * If a Session variable is null or an empty array, fetch this static (non-reactive) Meteor
+   * data to Session using
    * Meteor method.
    * @param {string} dataName - The result returned from Meteor method will be called this name in
    *     Session
@@ -224,7 +225,7 @@ OctoClientAPI = {
    */
   fetchDataToSessionIfNull: function () {
     const dataName = arguments[0];
-    if (!Session.get(dataName)) {
+    if (!Session.get(dataName) || Session.get(dataName).length === 0) {
       //console.log("dataName, methodName", dataName, arguments[1]);
       //console.log("arguments",arguments);
       this.fetchDataToSession(arguments);

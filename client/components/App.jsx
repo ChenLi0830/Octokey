@@ -19,7 +19,7 @@ const styles = {
   wrapper: {
     //padding: "0 0 0 0",
     //padding: "64px 0 0 0",
-    minHeight:"100%",
+    minHeight: "100%",
     position: "relative",
     top: 0,
     bottom: 0,
@@ -58,6 +58,15 @@ var App = React.createClass({
     muiTheme: React.PropTypes.object
   },
 
+  componentWillMount(){
+    // Listen to the Extension's request for user's login info and hexIv
+    window.addEventListener("message", this.checkAndSendData);
+  },
+
+  componentWillUnmount(){
+    window.removeEventListener("message", this.checkAndSendData);
+  },
+
   getChildContext() {
     let muiTheme = getMuiTheme(ZenRawTheme/*, zIndex*/);
     let zenMUITheme = customizeMUITheme(muiTheme);
@@ -71,6 +80,7 @@ var App = React.createClass({
     //console.log("Session.get(hexKey)", Session.get("hexKey"));
     if (this.data.UserApps) {
       if (!Session.get("hexKey")) {//when user logged in with fresh session
+        // Set Session variable "hexKey"
         Actions.initKeySaltIv(this.data.UserApps.hexSalt, this.data.UserApps.hexIv);
       }
     }
@@ -92,7 +102,41 @@ var App = React.createClass({
           <LanguageSelection/>
         </div>
     )
-  }
+  },
+
+  checkAndSendData(event){//Wait for meteor data to be ready
+    if (event.data.type === "extensionRequestInfo") {
+      if (this.data.subsReady) {
+        this.handleSendInfoToExtension(event);
+      } else {
+        //console.log("meteor data not ready");
+        setTimeout(this.checkAndSendData.bind(this, event), 100);
+      }
+    }
+  },
+
+  handleSendInfoToExtension(event){
+    var origin = event.origin || event.originalEvent.origin;
+    if (origin !== document.location.origin) {//make sure message comes from Octokey
+      return;
+    }
+
+    const targetUrl = document.location.origin;
+    if (event.data.type === "extensionRequestInfo") {
+      //console.log("send meteor data");
+      window.postMessage(//Communicate with plugin, post the message to the 'targetUrl'
+          {
+            event: "sendInfoToExtension",
+            loginToken: localStorage["Meteor.loginToken"],
+            loginTokenExpires: localStorage["Meteor.loginTokenExpires"],
+            userId: localStorage["Meteor.userId"],
+            hexIv: this.data.UserApps.hexIv,
+            hexKey: Session.get("hexKey"),
+          },
+          targetUrl
+      );
+    }
+  },
 });
 
 module.exports = App;

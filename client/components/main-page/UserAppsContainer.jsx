@@ -40,6 +40,12 @@ var UserAppsContainer = React.createClass({
     appContainerZIndex: React.PropTypes.string.isRequired,
   },
 
+  getDefaultProps(){
+    return {
+      chosenTopics:[]
+    }
+  },
+
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
@@ -57,7 +63,7 @@ var UserAppsContainer = React.createClass({
   },
 
   componentWillMount(){
-    //if chosenTopics is empty, show choose topic page
+    // Listen to the registration progress
     window.addEventListener("message", this.handleUpdateProgress);
   },
 
@@ -231,16 +237,13 @@ var UserAppsContainer = React.createClass({
       loginLink = "";
     }
     //Todo 让这一步的Meteor.userID()放到server里执行
-    window.postMessage(//Communicate with plugin
+    window.postMessage(//Communicate with plugin, post the message to the 'targetUrl'
         {
           event: "logIn",
-          userId: Meteor.userId(),
           appId: appId,
           loginLink: loginLink,
           username: username,
           password: password,
-          hexIv: this.props.hexIv,
-          hexKey: Session.get("hexKey")
         },
         targetUrl);
     //console.log("Meteor.userId(), appId, loginLink, username, password,
@@ -265,10 +268,9 @@ var UserAppsContainer = React.createClass({
 
     if (registerLink) {//If there is a register link for this app
       this.setState({openDialogRegister: true});
-      window.postMessage(//Communicate with plugin
+      window.postMessage(//Communicate with plugin, post the message to the 'targetUrl'
           {
             event: "register",
-            userId: Meteor.userId(),
             appId: appId,
             registerLink: registerLink,
             profile: profile,
