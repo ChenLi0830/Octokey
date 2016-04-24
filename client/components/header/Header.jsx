@@ -183,8 +183,8 @@ var Header = React.createClass({
                   </SubMenu>
 
                   : <Menu.Item key="/login">
-                    <Icon type="solution"/>{messages["login-登录"]}
-                  </Menu.Item>
+                <Icon type="solution"/>{messages["login-登录"]}
+              </Menu.Item>
               }
 
               <Menu.Item key="/list" style={{marginLeft:"25%", marginRight:"12.5%"}}>
@@ -200,78 +200,15 @@ var Header = React.createClass({
         </Paper>
 
     )
-    {
-      /*      <AppBar
-       style={styles.appBar}
-       iconElementLeft={logo}
-       showMenuIconButton={true}>
-
-       <Col xs={10}>
-       <div>
-
-       {<Tabs
-       onChange={this.handleTabChange}
-       tabItemContainerStyle={{backgroundColor:ZenRawTheme.palette.primary4Color}}
-       inkBarStyle={styles.inkBar}
-       value={this.state.routeValue}
-       >
-       <Tab
-       icon={<ActionAccountCircle className="horizontal-center"
-       style={{fill:ZenRawTheme.palette.primary1Color}}/>}
-       label={<AccountTab currentUser={this.data.currentUser}/>}
-       value="/login"
-       />
-       <Tab
-       icon={<HardwareToys className="horizontal-center"
-       style={{fill:ZenRawTheme.palette.primary1Color, height:"68px"}}/>}
-       label={messages["mySites-我的网站"]/!*message*!/}
-       value="/list"
-       />
-       <Tab
-       icon={<PlacesAllInclusive className="horizontal-center"
-       style={{fill:ZenRawTheme.palette.primary1Color, height:"68px"}}/>}
-       label={messages["allSites-所有网站"]/!*message*!/}
-       value="/catalog"
-       />
-       </Tabs>}
-
-       <Tabs>
-       <Tab
-       icon={<FontIcon className="material-icons">phone</FontIcon>}
-       label="RECENTS"
-       />
-       <Tab
-       icon={<FontIcon className="material-icons">favorite</FontIcon>}
-       label="FAVORITES"
-       />
-       <Tab
-       icon={<MapsPersonPin />}
-       label="NEARBY"
-       />
-       </Tabs>
-
-       </div>
-       </Col>
-       </AppBar>*/
-    }
   },
 
   handleClick(e) {
-    console.log('click ', e);
+    //console.log('click ', e);
     this.setState({current: e.key}, ()=> {
-      console.log("this.state.current", this.state.current);
+      //console.log("this.state.current", this.state.current);
     });
 
     this.handleTabChange(e.key);
-    /*switch (e.key) {
-     case "mail/.$mail":
-     this.handleTabChange('/list');
-     break;
-     case "app/.$app":
-     this.handleTabChange('/catalog');
-     break;
-
-     }*/
   },
 });
 

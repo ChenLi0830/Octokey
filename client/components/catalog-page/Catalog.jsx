@@ -39,7 +39,7 @@ var Catalog = React.createClass({
   },
 
   render(){
-    console.log("run Catalog render with props", this.props);
+    //console.log("run Catalog render with props", this.props);
     if (!this.props.subsReady) {
       return <AppLoading/>
     }

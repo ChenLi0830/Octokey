@@ -54,7 +54,7 @@ var VerifyEmailTokenPage = React.createClass({
     Accounts.verifyEmail(this.props.params.token, (error)=> {
       if (error) {
         //Auto login is stopped intentionally in /server/startUp to prevent auto-redirect
-        if (error.reason==="Login forbidden"){
+        if (error.reason === "Login forbidden") {
           console.log("验证成功, 正在跳转");
           this.setState({verifyMessage: "验证成功, 正在跳转"});
           setTimeout(redirect.bind(this, '/login'), 1500)
@@ -66,7 +66,7 @@ var VerifyEmailTokenPage = React.createClass({
       }
     });
 
-    function redirect(url){
+    function redirect(url) {
       this.context.router.push(url);
     }
   }

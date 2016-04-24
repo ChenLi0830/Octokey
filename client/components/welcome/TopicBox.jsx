@@ -30,7 +30,7 @@ const TopicBox = React.createClass({
 
   getInitialState(){
     return {
-      focused:false,
+      focused: false,
     }
   },
 
@@ -43,7 +43,8 @@ const TopicBox = React.createClass({
             onMouseOut={()=>{this.setState({focused:false})}}>
 
         <div style={styles.imgBox}>
-          <img src={this.props.iconURL} style={_.extend({},styles.icon,{opacity:this.state.focused?0.85:1})}/>
+          <img src={this.props.iconURL}
+               style={_.extend({},styles.icon,{opacity:this.state.focused?0.85:1})}/>
         </div>
 
         <div style={styles.topicNameBox}>

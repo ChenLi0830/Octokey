@@ -14,7 +14,7 @@ const TopicModalContainerAdd = require('./TopicModalContainerAdd.jsx');
 
 const {Col, Row, Grid} = ReactBootstrap;
 
-const { Button, Checkbox } = antd;
+import { Button, Checkbox } from 'antd';
 
 const styles = {
   titleDiv: {margin: "50px auto 20px auto", textAlign: "center"},
@@ -89,9 +89,9 @@ const ChooseTopicPage = React.createClass({
         : null;
 
     return (<div>
-      <WhiteOverlay entrance = "fadeInUp"
-                    exit = "fadeOutLeft"
-                    openOverlay = {this.props.openPage}>
+      <WhiteOverlay entrance="fadeInUp"
+                    exit="fadeOutLeft"
+                    openOverlay={this.props.openPage}>
         <div>
           <Grid>
 

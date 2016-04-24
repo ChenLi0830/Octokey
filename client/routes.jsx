@@ -40,20 +40,6 @@ function verifyNotLogin(nextState, replace) {
   }
 }
 
-/*function verifyEmail(nextState, replace) {
-  //Todo make token verification work
-  console.log("nextState.params.token", nextState.params.token);
-  Accounts.verifyEmail(nextState.params.token, function (error) {
-    if (error) {
-      console.log("error", error.reason);
-      return window.location.replace("/login/verifyError");
-      //Bert.alert( error.reason, 'danger' );
-    }
-    window.location.replace("/list/verifySuccessful");
-    //Bert.alert( 'Email verified! Thanks!', 'success' );
-  });
-}*/
-
 const routes = (
     <Route path="/" component={App}>
       <IndexRoute component={AuthSignIn} onEnter={verifyNotLogin}/>

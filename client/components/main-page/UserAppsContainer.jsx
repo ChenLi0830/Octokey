@@ -42,7 +42,7 @@ var UserAppsContainer = React.createClass({
 
   getDefaultProps(){
     return {
-      chosenTopics:[]
+      chosenTopics: []
     }
   },
 

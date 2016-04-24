@@ -37,7 +37,7 @@ const styles = {
     fontSize: "14px",
     color: "#888",
     borderRadius: "0px 0px 5px 5px",
-    WebkitAnimationDuration:"0.3s",
+    WebkitAnimationDuration: "0.3s",
   }
 };
 

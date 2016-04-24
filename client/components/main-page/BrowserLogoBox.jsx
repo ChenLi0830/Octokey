@@ -9,12 +9,12 @@
 const {Col} = ReactBootstrap;
 
 const styles = {
-  boxStyle:{
-    margin:"20px 20px 0px 20px",
-    display:"inline-block",
+  boxStyle: {
+    margin: "20px 20px 0px 20px",
+    display: "inline-block",
     cursor: "pointer",
   },
-  imgStyle:{
+  imgStyle: {
     height: "85px",
   },
 };
@@ -34,13 +34,13 @@ var BrowserLogoBox = React.createClass({
     const {messages} = this.context.intl;
 
     return (
-            <div style={styles.boxStyle} onClick={this.props.onClick}>
-              <img src={this.props.logoPath}  style={styles.imgStyle}/>
-              <div style={{lineHeight:"35px"}}>
-                {this.props.name}
-              </div>
-            </div>
-        )
+        <div style={styles.boxStyle} onClick={this.props.onClick}>
+          <img src={this.props.logoPath} style={styles.imgStyle}/>
+          <div style={{lineHeight:"35px"}}>
+            {this.props.name}
+          </div>
+        </div>
+    )
   },
 });
 

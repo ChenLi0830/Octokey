@@ -20,7 +20,6 @@ react-meteor-data
 fourseven:scss
 u2622:persistent-session
 meteorhacks:ssr
-okland:accounts-phone
 accounts-password
 kadira:debug
 meteorhacks:kadira
@@ -29,3 +28,4 @@ standard-minifier-css
 standard-minifier-js
 cfs:standard-packages
 static-html
+okland:accounts-phone

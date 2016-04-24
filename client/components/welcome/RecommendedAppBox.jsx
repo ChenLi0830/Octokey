@@ -13,15 +13,15 @@ const RecommendedAppBox = React.createClass({
     return <div>
       123
       {/*/!*right box*!/
-      <div>
-        <TopicLogo/>
-      </div>
-      /!*left box*!/
-      <div>
-        <TopicName/>
-        <SubscriptionNumber/>
-        <Add/>
-      </div>*/
+       <div>
+       <TopicLogo/>
+       </div>
+       /!*left box*!/
+       <div>
+       <TopicName/>
+       <SubscriptionNumber/>
+       <Add/>
+       </div>*/
       }
     </div>
   },

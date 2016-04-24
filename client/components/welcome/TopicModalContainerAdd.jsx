@@ -70,21 +70,6 @@ const TopicModalContainerAdd = React.createClass({
     } else {
       alert(this.context.intl.messages.cata_createAppAlert);
     }
-
-    /*      //Todo 显示等待条,或者其他gif
-     Meteor.call("updatePublicApp", this.props.appId, newAppName, newLoginLink, newRegisterLink,
-     newLogo,
-     this.state.selectedCategories, function (error, result) {
-     if (error) {
-     throw new Meteor.Error(error);
-     }
-
-     //Fetch updated data from publicApps collection
-     OctoClientAPI.fetchDataToSession("allPublicApps", "getAllPublicApps");
-
-     //Close modal
-     this.props.onModalClose();
-     }.bind(this));*/
   },
 
   /**
@@ -106,30 +91,6 @@ const TopicModalContainerAdd = React.createClass({
     return false;
   },
 
-/*
-  /!**
-   * Handle click on category cell, either select or un-select a category for an app
-   * @param {string} rowNumber - Row number of clicked category
-   * @param {string} columnId
-   *!/
-  handleCellClick(rowNumber, columnId){
-    console.log("onCellClick called");
-    var selectedCategoryName = this.props.allCategories[rowNumber].name;
-    var index = this.state.selectedCategories.indexOf(selectedCategoryName);
-    //react state is immutable, use this variable to act as a temp var.
-    var selectedCategories = this.state.selectedCategories;
-
-    if (index > -1) {//already selected
-      selectedCategories.splice(index, 1);
-      this.setState({selectedCategories: selectedCategories});
-    }
-    else {
-      selectedCategories.push(selectedCategoryName);
-      this.setState({selectedCategories: selectedCategories});
-    }
-  },
-*/
-
   /**
    * Close the modal and set the state to the value in "getInitialState"
    */
@@ -145,22 +106,6 @@ const TopicModalContainerAdd = React.createClass({
     }, 500);
   },
 
-  /**
-   * Handle remove a public app
-   * @param {string} appId - the id of the to-be-removed app
-   */
-  /*handleRemoveApp(event){
-   event.preventDefault();
-   var delConfirm = confirm(this.context.intl.messages.cata_confirmDel);
-   if (delConfirm) {
-   Meteor.call("removePublicApp", this.state.editAppId, function (error, result) {
-   if (error) {
-   throw new Meteor.Error(error);
-   }
-   this.close();
-   }.bind(this));
-   }
-   },*/
 });
 
 module.exports = TopicModalContainerAdd;

@@ -34,7 +34,7 @@ var ListPage = React.createClass({
       return {
         currentUser: null,
         chosenPublicApps: [],
-        chosenTopics:[],
+        chosenTopics: [],
         hexIv: "",
       }
     }
@@ -63,13 +63,13 @@ var ListPage = React.createClass({
     return <div>
       {
         this.state.openChooseTopicPage ?
-          <ChooseTopicPage onClosePage={this.handleCloseTopicPage}
-                           openPage = {this.state.openChooseTopicPage}/>: null
+            <ChooseTopicPage onClosePage={this.handleCloseTopicPage}
+                             openPage={this.state.openChooseTopicPage}/> : null
       }
 
       {/*this.state.openChooseAppPage ?
-          <ChooseAppPage onClosePage={()=>{this.setState({openChooseAppPage: false})}}
-                         openPage = {this.state.openChooseAppPage} />: null*/
+       <ChooseAppPage onClosePage={()=>{this.setState({openChooseAppPage: false})}}
+       openPage = {this.state.openChooseAppPage} />: null*/
       }
 
       <FloatingEditButton
@@ -80,20 +80,20 @@ var ListPage = React.createClass({
 
       {
         <UserAppsContainer
-            currentUser = {this.data.currentUser}
-            chosenPublicApps = {this.data.chosenPublicApps}
-            chosenTopics = {this.data.chosenTopics}
-            hexIv = {this.data.hexIv}
-            userEditStatus = {this.state.userEditStatus}
-            appContainerZIndex = {(this.state.userEditStatus === "remove" || this.state.userEditStatus === "config")? "400":"inherit"}
+            currentUser={this.data.currentUser}
+            chosenPublicApps={this.data.chosenPublicApps}
+            chosenTopics={this.data.chosenTopics}
+            hexIv={this.data.hexIv}
+            userEditStatus={this.state.userEditStatus}
+            appContainerZIndex={(this.state.userEditStatus === "remove" || this.state.userEditStatus === "config")? "400":"inherit"}
         />
       }
     </div>
   },
 
   handleCloseTopicPage(chooseApps){
-    if (chooseApps){// 开始选择常用的网站
-      this.setState({openChooseTopicPage: false, openChooseAppPage:true});
+    if (chooseApps) {// 开始选择常用的网站
+      this.setState({openChooseTopicPage: false, openChooseAppPage: true});
     } else {
       this.setState({openChooseTopicPage: false});
     }

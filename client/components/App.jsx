@@ -40,8 +40,15 @@ var App = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData() {
-    const subHandles = Meteor.userId() ?
-        [Meteor.subscribe("userApps"),] : [];
+    if (!Meteor.userId()) {//If user is not logged in
+      return {
+        subsReady: true,
+        currentUserId: Meteor.userId(),
+        UserApps: null,
+      };
+    }
+
+    const subHandles = [Meteor.subscribe("userApps"),];
 
     const subsReady = _.every(subHandles, function (handle) {
       return handle.ready();
@@ -50,7 +57,7 @@ var App = React.createClass({
     return {
       subsReady: subsReady,
       currentUserId: currentUserId,
-      UserApps: currentUserId ? UserApps.find({userId: currentUserId}).fetch()[0] : null,
+      UserApps: UserApps.find({userId: currentUserId}).fetch()[0],
     };
   },
 
@@ -118,6 +125,10 @@ var App = React.createClass({
   handleSendInfoToExtension(event){
     var origin = event.origin || event.originalEvent.origin;
     if (origin !== document.location.origin) {//make sure message comes from Octokey
+      return;
+    }
+
+    if (!this.data.currentUserId) {//make sure the user is logged in
       return;
     }
 
