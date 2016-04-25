@@ -21,8 +21,6 @@ fourseven:scss
 u2622:persistent-session
 meteorhacks:ssr
 accounts-password
-kadira:debug
-meteorhacks:kadira
 meteorhacks:zones
 standard-minifier-css
 standard-minifier-js

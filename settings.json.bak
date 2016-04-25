@@ -1,0 +1,14 @@
+{
+    "public": {
+    },
+    "kadira": {
+        "appId": "e9kvQTQX4Hx6HyZyN",
+        "appSecret": "1ff9d905-c0a0-45b4-b1b3-8f119b8bdc1f",
+        "debug": {
+            "authKey": "<8B2CF97A5B847A8FBC24AD477A4C8>"
+        },
+        "options": {
+
+        }
+    }
+}
