@@ -63,8 +63,8 @@ var PluginInstallDialog = React.createClass({
      location.reload();
      }, (err)=> {
      console.log(err);
+     this.props.whenCloseDialog();
      });*/
-    this.props.whenCloseDialog();
   },
 
   handle360Security(){
