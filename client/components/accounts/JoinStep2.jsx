@@ -32,7 +32,8 @@ const styles = {
   },
   primaryText: {
     color: ZenColor.cyan,
-    fontWeight: "300"
+    fontWeight: "300",
+    lineHeight: "50px",
   },
   secondaryText: {
     color: ZenColor.grey3,
@@ -82,7 +83,7 @@ var JoinStep2 = React.createClass({
             </h1>
           </div>
           <div>
-            <h2 style={_.extend({}, styles.secondaryText, {marginTop: 30})}>
+            <h2 style={_.extend({}, styles.secondaryText, {fontSize: "15px"})}>
               {messages["msg-唯一要记的密码"]}
             </h2>
             <h4 style={styles.secondaryText}>
@@ -99,8 +100,8 @@ var JoinStep2 = React.createClass({
             <FormItem
                 label={messages["masterPWD-核心密码"]}
                 hasFeedback={true}
-                labelCol={{ span: 6 }}
-                wrapperCol={{ span: 18 }}
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 19 }}
                 validateStatus={this.state.errorText!==""?"error": this.state.pwdVerified ? "success" : ""}
                 help={this.state.errorText}>
               <Popover placement="right" title={messages["pwdRequirement-密码要求"]}
@@ -121,8 +122,8 @@ var JoinStep2 = React.createClass({
             <FormItem
                 label={messages["inputPWDAgain-再次输入"]}
                 hasFeedback={true}
-                labelCol={{ span: 6 }}
-                wrapperCol={{ span: 18 }}
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 19 }}
                 validateStatus={this.state.errorText2!==""? "error": this.state.twoPwdSame ? "success" : ""}
                 help={this.state.errorText2}>
               <Popover placement="right" title={messages["pwdRequirement-密码要求"]}
@@ -207,7 +208,7 @@ var JoinStep2 = React.createClass({
       return;
     }
 
-    const {finalUserName,finalCaptcha, registerUsingEmail} = this.props;
+    const {finalUserName, finalCaptcha, registerUsingEmail} = this.props;
     const finalPwd = this.refs.password.refs.input.value;
 
     if (finalUserName && finalPwd && finalCaptcha || registerUsingEmail) {
@@ -226,7 +227,7 @@ var JoinStep2 = React.createClass({
       Meteor.call("setEmailPassword", finalUserName, finalPwd, function (error) {
         if (error) {
           console.log("error");
-          this.setState({errorText: error.reason});
+          this.setState({errorText: T9n.get('error.accounts.'+error.reason)});
         } else {
           this.props.onStepComplete(finalPwd);
         }
@@ -237,7 +238,7 @@ var JoinStep2 = React.createClass({
       Meteor.call("setMobilePassword", finalUserName, finalCaptcha, finalPwd, function (error) {
         if (error) {
           console.log("error");
-          this.setState({errorText: error.reason});
+          this.setState({errorText: T9n.get('error.accounts.'+error.reason)});
         } else {
           this.props.onStepComplete(finalPwd);
         }

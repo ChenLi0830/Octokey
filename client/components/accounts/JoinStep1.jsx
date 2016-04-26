@@ -101,7 +101,7 @@ var JoinStep1 = React.createClass({
         <Col sm={8} smOffset={2} md={6} mdOffset={3} xs={12} style={styles.contentCol}>
           <div>
             <h2 style={styles.primaryText}>
-              {messages["username-输入你的用户名"]}
+              {messages["register-账户注册"]}
             </h2>
           </div>
           <br/>
@@ -147,6 +147,8 @@ var JoinStep1 = React.createClass({
                   errorText={this.state.floatingUserText}
                   inputStyle={{textAlign: "center"}}
                   onChange={this.handleTextFieldChange}
+                  hintText={messages["username-邮箱或手机"]}
+                  hintStyle={{width:"100%"}}
                   onKeyPress={(e)=> {e.key === 'Enter' && this.handleRequestValidation()}}
               />
             </Col>
@@ -229,7 +231,7 @@ var JoinStep1 = React.createClass({
           console.log("error", error);
           this.setState({
             disableBtn: false,
-            floatingUserText: error.error + " " + error.reason,
+            floatingUserText: T9n.get('error.accounts.'+error.reason),
             captchaBtn: "sendValidation-发送验证",
           });
         } else {

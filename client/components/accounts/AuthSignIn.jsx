@@ -38,6 +38,12 @@ const styles = {
     margin: "auto",
     height: 150,
   },
+  loginMessage: {
+    lineHeight: "60px",
+    fontWeight: "500",
+    fontSize: "16px",
+    color: "#666",
+  },
   languageItem: {
     position: "absolute",
     display: "block",
@@ -109,6 +115,9 @@ var AuthSignIn = React.createClass({
 
               {logo}
 
+              <h2 style={styles.loginMessage}>
+                {messages["login-账户登录"]}
+              </h2>
 
               <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
               <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
@@ -248,7 +257,7 @@ var AuthSignIn = React.createClass({
       if (this.state.disableAreaDropdown) {//login using email
         Meteor.loginWithPassword(phoneOrEmail, password, (error) => {
           if (error) {
-            this.setState({disableBtn: false, floatingPassText: error.error + " " + error.reason});
+            this.setState({disableBtn: false, floatingPassText: T9n.get('error.accounts.'+error.reason)});
             //console.log("error: ", error);
             return;
           }
@@ -258,7 +267,7 @@ var AuthSignIn = React.createClass({
       } else {//login using mobile
         Meteor.loginWithPhoneAndPassword({phone: cell}, password, (error) => {
           if (error) {
-            this.setState({disableBtn: false, floatingPassText: error.error + " " + error.reason});
+            this.setState({disableBtn: false, floatingPassText: T9n.get('error.accounts.'+error.reason)});
             //console.log("error: ", error);
             return;
           }

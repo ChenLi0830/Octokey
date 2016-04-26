@@ -85,6 +85,7 @@
         "verifyMessage": "Did you log in successfully?"
     },
     "signIn": {
+        "login-账户登录": "Octokey - Login",
         "mobile-手机号": "Mobile Number",
         "useEmail-邮箱登陆": "Log in using Email",
         "useMobile-手机登陆": "Log in using Mobile",
@@ -112,7 +113,8 @@
     },
     "resendCaptcha-重发验证码": "Resend OTP({remaining} s)",
     "join": {
-        "username-输入你的用户名": "Mobile or Email",
+        "register-账户注册": "Octokey - Register",
+        "username-邮箱或手机" : "Email or Mobile",
         "ok-确认": "ok",
         "inputCaptcha-输入验证码": "Input OTP",
         "setMasterPWD-设置核心密码": "Set Master Password",
