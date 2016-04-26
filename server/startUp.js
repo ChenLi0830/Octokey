@@ -7,16 +7,19 @@
  * startUp.js calls the startup function, it runs before everything else,
  * and can be used to set environment variables in the app, or setup database, etc.
  *******************************************************************************/
-  //T9n.setLanguage("zh_cn");
-
 Meteor.startup(function () {
   //Simulating production environment to boost react spped
   /*process.env.NODE_ENV = JSON.stringify('production');
    console.log("process.env",process.env);*/
 
   //1. Set up stmp
-  process.env.MAIL_URL =
-      'smtp://postmaster@sandbox4e97a79afccd430d8897f90ad78054be.mailgun.org:0011d852303b11544220c77d6572bc1d@smtp.mailgun.org:587';
+
+  //如果是localhost,发邮件就用mailgun,如果是server,就用aliyun
+  console.log("/localhost/.test(Meteor.absoluteUrl())", /localhost/.test(Meteor.absoluteUrl()));
+  process.env.MAIL_URL = /localhost/.test(Meteor.absoluteUrl()) ?
+      'smtp://postmaster@sandbox4e97a79afccd430d8897f90ad78054be.mailgun.org:0011d852303b11544220c77d6572bc1d@smtp.mailgun.org:587':
+      'smtp://no-reply@mail.oyaoshi.com:Oyaoshifour21@smtpdm.aliyun.com:25/';
+  //smtp://USERNAME:PASSWORD@HOST:PORT/
 
   setupEmail();
   setupSMS();
@@ -26,7 +29,7 @@ Meteor.startup(function () {
   function setupEmail() {
     // 2. Format the email
     //-- Set the from address
-    Accounts.emailTemplates.from = "O钥匙 <no-reply@oyaoshi.com>";
+    Accounts.emailTemplates.from = "O钥匙<no-reply@mail.oyaoshi.com>";
 
     //-- Application name
     Accounts.emailTemplates.siteName = 'O钥匙';
@@ -75,7 +78,7 @@ Meteor.startup(function () {
     SMS.phoneTemplates = {
       from: '+16502156909',
       text: function (user, code) {
-        return '（O钥匙 - https://oyaoshi.com）你的手机验证码是: ' + code;
+        return "【O钥匙】https://oyaoshi.com 您的验证码是#"+ code+"#。如非本人操作，请忽略本短信"
       }
     };
 
