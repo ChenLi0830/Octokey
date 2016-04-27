@@ -20,6 +20,9 @@ const AppModalContainerEdit = React.createClass({
     selectedCategoryNames: React.PropTypes.array.isRequired,
     allCategories: React.PropTypes.array.isRequired,
     onModalClose: React.PropTypes.func.isRequired,
+    //Todo add isRequired for the following props
+    popUpLoginFlag: React.PropTypes.bool,
+    homepageLink: React.PropTypes.string,
   },
 
   contextTypes: {
@@ -48,9 +51,11 @@ const AppModalContainerEdit = React.createClass({
         modalOnOk={this.handleEditApp}
         onLogoUpload={this.handleLogoUpload}
         fileList={fileList}
-        appName={this.props.appName}
-        loginLink={this.props.loginLink}
-        registerLink={this.props.registerLink}
+        initialAppName={this.props.appName}
+        initialPopUpLoginFlag={this.props.popUpLoginFlag}
+        initialHomepageLink={this.props.homepageLink}
+        initialLoginLink={this.props.loginLink}
+        initialRegisterLink={this.props.registerLink}
         allCategories={this.props.allCategories}
         selectedCategories={this.state.selectedCategories}
         onCellClick={this.handleCellClick}
@@ -62,17 +67,19 @@ const AppModalContainerEdit = React.createClass({
    * @param {string} newLoginLink - The login link from modal form
    * @param {string} [newRegisterLink=""] - The register link from modal form
    * @param {string} newAppName  - The login link from modal form
-   * @param {string | Blob} newLogo
+   * @param {bool} newPopUpLoginFlag  - flag whether the user needs to click "登录" before actually
+   * fill in credentials
+   * @param {string} newHomepageLink - Home page link
    */
-  handleEditApp(newLoginLink, newRegisterLink, newAppName){
+  handleEditApp(newLoginLink, newRegisterLink, newAppName, newPopUpLoginFlag, newHomepageLink){
     console.log("handleEditApp called");
     const newLogo = this.state.logoPreview;
 
-    if (newLoginLink && newAppName && newLogo !== "") {
+    if (newLoginLink && newAppName && newLogo !== "" && newPopUpLoginFlag && newHomepageLink) {
       //Todo 显示等待条,或者其他gif
       Meteor.call("updatePublicApp", this.props.appId, newAppName, newLoginLink, newRegisterLink,
-          newLogo,
-          this.state.selectedCategories, function (error, result) {
+          newLogo, this.state.selectedCategories, newPopUpLoginFlag, newHomepageLink,
+          function (error, result) {
             if (error) {
               throw new Meteor.Error(error);
             }

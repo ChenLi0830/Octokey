@@ -84,8 +84,11 @@ Meteor.methods({
    * @param {string} registerLink - Register link
    * @param {string} logo - Logo file, encoded in base64
    * @param {string[]} selectedCategoryNames - The category names which of the added app belongs to.
+   * @param {bool} popUpLoginFlag  - flag whether the user needs to click "登录" before actually
+   * fill in credentials
+   * @param {string} homepageLink - Home page link
    */
-  addPublicApp(appName, loginLink, registerLink, logo, selectedCategoryNames){
+  addPublicApp(appName, loginLink, registerLink, logo, selectedCategoryNames, popUpLoginFlag, homepageLink){
     localSimulateLatency(500);
 
     checkAdmin.call(this);
@@ -95,6 +98,8 @@ Meteor.methods({
     app.loginLink = loginLink;
     app.registerLink = registerLink;
     app.categoryNames = selectedCategoryNames;
+    app.popUpLoginFlag = popUpLoginFlag;
+    app.homepageLink = homepageLink;
     app.subscribeCount = 0;
 
     //console.log("add new app", app);
@@ -111,13 +116,17 @@ Meteor.methods({
 
   /**
    * Update a new public app
+   * @param {string} appId - Id of the to-be-updated app.
    * @param {string} appName - App name.
    * @param {string} loginLink - Login link
    * @param {string} registerLink - Register link
    * @param {string} logo - Logo file, encoded in base64
    * @param {string[]} selectedCategoryNames - The category names which of the added app belongs to.
+   * @param {bool} popUpLoginFlag - flag whether the user needs to click "登录" before actually
+   * fill in credentials
+   * @param {string} homepageLink - Home page link
    */
-  updatePublicApp(appId, appName, loginLink, registerLink, logo, selectedCategoryNames){
+  updatePublicApp(appId, appName, loginLink, registerLink, logo, selectedCategoryNames, popUpLoginFlag, homepageLink){
     localSimulateLatency(500);
 
     checkAdmin.call(this);
@@ -135,6 +144,8 @@ Meteor.methods({
       updatedApp.loginLink = loginLink;
       updatedApp.registerLink = registerLink;
       updatedApp.categoryNames = selectedCategoryNames;
+      updatedApp.popUpLoginFlag = popUpLoginFlag;
+      updatedApp.homepageLink = homepageLink;
       ZenApps.update({_id: appId}, updatedApp);
     }
     else {// Logo is new: remove old app object and add a new one.
@@ -144,6 +155,8 @@ Meteor.methods({
       updatedApp.loginLink = loginLink;
       updatedApp.registerLink = registerLink;
       updatedApp.categoryNames = selectedCategoryNames;
+      updatedApp.popUpLoginFlag = popUpLoginFlag;
+      updatedApp.homepageLink = homepageLink;
       updatedApp.subscribeCount = existingApp.subscribeCount ? existingApp.subscribeCount : 0;
       //console.log("updatedApp", updatedApp);
 
@@ -157,7 +170,7 @@ Meteor.methods({
     }
 
     //Update every single record of the public app in the UserApps collection.
-    Meteor.call("updateUserApps", appId, appName, loginLink, registerLink);
+    Meteor.call("updateUserApps", appId, appName, loginLink, registerLink, popUpLoginFlag, homepageLink);
   },
 
   /**

@@ -191,8 +191,11 @@ Meteor.methods({
    * @param {string} appName - Name of the app.
    * @param {string} loginLink - login link of the app.
    * @param {string} registerLink - register link of the app.
+   * @param {bool} popUpLoginFlag - flag whether the user needs to click "登录" before actually
+   * fill in credentials
+   * @param {string} homepageLink - home page link of the app.
    */
-  updateUserApps(appId, appName, loginLink, registerLink) {
+  updateUserApps(appId, appName, loginLink, registerLink, popUpLoginFlag, homepageLink) {
     checkAdmin.call(this);
 
     let ids = UserApps.find({"publicApps.appId": appId}).map(function (publicApp) {
@@ -210,6 +213,8 @@ Meteor.methods({
             "publicApps.$.appName": appName,
             "publicApps.$.loginLink": loginLink,
             "publicApps.$.registerLink": registerLink,
+            "publicApps.$.popUpLoginFlag": popUpLoginFlag,
+            "publicApps.$.homepageLink": homepageLink,
           }
         },
         {multi: true}

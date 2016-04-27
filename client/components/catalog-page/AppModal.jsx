@@ -28,20 +28,34 @@ var AppModal = React.createClass({
     modalOnOk: React.PropTypes.func.isRequired,
     onLogoUpload: React.PropTypes.func.isRequired,
     fileList: React.PropTypes.array.isRequired,
-    appName: React.PropTypes.string.isRequired,
-    loginLink: React.PropTypes.string.isRequired,
-    registerLink: React.PropTypes.string.isRequired,
+    initialAppName: React.PropTypes.string.isRequired,
+    initialLoginLink: React.PropTypes.string.isRequired,
+    initialRegisterLink: React.PropTypes.string.isRequired,
     allCategories: React.PropTypes.array.isRequired,
     selectedCategories: React.PropTypes.array.isRequired,
     onCellClick: React.PropTypes.func.isRequired,
+    initialPopUpLoginFlag: React.PropTypes.bool.isRequired,
+    initialHomepageLink: React.PropTypes.string.isRequired,
   },
 
   getDefaultProps() {
     return {
-      appName: "",
-      loginLink: "",
-      registerLink: "",
+      initialAppName: "",
+      initialLoginLink: "",
+      initialRegisterLink: "",
+      initialPopUpLoginFlag: false,
+      initialHomepageLink: "",
     };
+  },
+
+  getInitialState(){
+    return {
+      appName: this.props.initialAppName,
+      loginLink: this.props.initialLoginLink,
+      registerLink: this.props.initialRegisterLink,
+      popUpLoginFlag: this.props.initialPopUpLoginFlag,
+      homepageLink: this.props.initialHomepageLink,
+    }
   },
 
   contextTypes: {
@@ -53,13 +67,12 @@ var AppModal = React.createClass({
   },
 
   handleModalOk(){
-    const loginLink = this.refs.loginLink.refs.input.value;
-    const registerLink = this.refs.registerLink.refs.input.value;
-    const appName = this.refs.appName.refs.input.value;
-    this.props.modalOnOk(loginLink, registerLink, appName);
+    const {appName, loginLink, registerLink, popUpLoginFlag, homepageLink} = this.state;
+    this.props.modalOnOk(loginLink, registerLink, appName, popUpLoginFlag, homepageLink);
   },
 
   render(){
+    this.props.initialAppName==="123"&&console.log("this.props.initialPopUpLoginFlag", this.props.initialPopUpLoginFlag);
     const {messages} = this.context.intl;
 
     const formItemLayout = {
@@ -88,22 +101,42 @@ var AppModal = React.createClass({
               <FormItem
                   {...formItemLayout}
                   label={messages.cata_appName}>
-                <Input type="text" ref="appName"
-                       placeholder={messages.cata_namePlaceHolder}
-                       defaultValue={this.props.appName}/>
+                <Input type="text" placeholder={messages.cata_namePlaceHolder}
+                       onChange={(event)=>{this.setState({appName:event.target.value})}}
+                       value={this.state.appName}/>
               </FormItem>
+
+              <FormItem
+                  {...formItemLayout}
+                  label={messages.cata_appHomepageLink}>
+                <Input type="text" placeholder={messages.cata_homepagePlaceHolder}
+                       onChange={(event)=>{this.setState({homepageLink:event.target.value})}}
+                       value={this.state.homepageLink}/>
+              </FormItem>
+
               <FormItem
                   {...formItemLayout}
                   label={messages.cata_appLoginLink}>
-                <Input type="text" ref="loginLink"
-                       placeholder={messages.cata_linkPlaceHolder}
-                       defaultValue={this.props.loginLink}/>
+                <Input type="text" placeholder={messages.cata_linkPlaceHolder}
+                       onChange={(event)=>{this.setState({loginLink:event.target.value})}}
+                       value={this.state.loginLink}/>
               </FormItem>
+
+              <FormItem
+                  {...formItemLayout}
+                  label={<span> {messages.cata_checkBoxTitle} <Tooltip title={messages.cata_checkBoxTooltip}><Icon type="question-circle-o" /></Tooltip> ：</span>}>
+                <label>
+                  <Checkbox onChange={(event)=>{this.setState({popUpLoginFlag:event.target.checked})}}
+                            checked={this.state.popUpLoginFlag}/>
+                  {messages.cata_checkBoxInfo}
+                </label>
+              </FormItem>
+
               <FormItem
                   {...formItemLayout}
                   label={messages.cata_appRegisterLink}>
-                <Input type="text" ref="registerLink"
-                       defaultValue={this.props.registerLink}/>
+                <Input type="text" onChange={(event)=>{this.setState({registerLink:event.target.value})}}
+                       value={this.state.registerLink}/>
               </FormItem>
 
               <FormItem

@@ -53,13 +53,17 @@ const AppModalContainerAdd = React.createClass({
    * @param {string} loginLink - The login link from modal form
    * @param {string} [registerLink=""] - The register link from modal form
    * @param {string} appName  - The login link from modal form
+   * @param {bool} popUpLoginFlag  - flag whether the user needs to click "登录" before actually
+   * fill in credentials
+   * @param {string} homepageLink - Home page link
    */
-  handleAddApp(loginLink, registerLink, appName){
+  handleAddApp(loginLink, registerLink, appName, popUpLoginFlag, homepageLink){
     const logo = this.state.logoPreview;
     const {selectedCategories} = this.state;
 
     if (loginLink && appName && logo !== "") {
       Meteor.call("addPublicApp", appName, loginLink, registerLink, logo, selectedCategories,
+          popUpLoginFlag, homepageLink,
           function (error) {
             if (error) {
               console.log("error", error);

@@ -43,6 +43,10 @@ var CatalogSingleApp = React.createClass({
     registerLink: React.PropTypes.string.isRequired,
     appId: React.PropTypes.string.isRequired,
     selectedCategoryNames: React.PropTypes.array.isRequired,
+    //Todo add isRequired for the following to parameters
+    popUpLoginFlag: React.PropTypes.bool,
+    homepageLink: React.PropTypes.string,
+
     onModalOpen: React.PropTypes.func.isRequired,
     subscribed: React.PropTypes.bool.isRequired,
     condensed: React.PropTypes.bool.isRequired,
@@ -85,7 +89,8 @@ var CatalogSingleApp = React.createClass({
 
   render(){
     const {messages} = this.context.intl;
-    const {logoURL,appName,loginLink,registerLink,appId,selectedCategoryNames, condensed,subsCount} = this.props;
+    const {logoURL,appName,loginLink,registerLink,appId,
+        popUpLoginFlag,homepageLink,selectedCategoryNames, condensed,subsCount} = this.props;
 
     let handleToggle = this.props.subscribed ? this.handleUnsubscribe : this.handleSubscribe;
     let labelText = this.props.subscribed ? messages.cata_added : messages.cata_add;
@@ -107,6 +112,8 @@ var CatalogSingleApp = React.createClass({
           appName={appName}
           loginLink={loginLink}
           registerLink={registerLink}
+          popUpLoginFlag={popUpLoginFlag}
+          homepageLink={homepageLink}
           appId={appId}
           selectedCategoryNames={selectedCategoryNames}
           onModalClose={()=>{console.log("onModalClose called");this.setState({modalOpen:false});}}
