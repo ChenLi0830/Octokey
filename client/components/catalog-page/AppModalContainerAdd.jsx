@@ -61,7 +61,7 @@ const AppModalContainerAdd = React.createClass({
     const logo = this.state.logoPreview;
     const {selectedCategories} = this.state;
 
-    if (loginLink && appName && logo !== "") {
+    if (loginLink && appName && logo !== "" && homepageLink) {
       Meteor.call("addPublicApp", appName, loginLink, registerLink, logo, selectedCategories,
           popUpLoginFlag, homepageLink,
           function (error) {
