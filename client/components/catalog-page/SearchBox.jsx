@@ -115,9 +115,12 @@ var SearchBox = React.createClass({
                                        loginLink={app.loginLink}
                                        registerLink={app.registerLink}
                                        selectedCategoryNames={app.categoryNames}
+                                       popUpLoginFlag={app.popUpLoginFlag}
+                                       homepageLink={app.homepageLink}
                                        appId={app._id}
                                        subscribed={subscribed}
                                        condensed={true}
+                                       subsCount={app.subscribeCount}
                                        allCategories={this.props.allCategories}
               />
             });

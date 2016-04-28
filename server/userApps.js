@@ -15,8 +15,11 @@ Meteor.methods({
    * @param {string} logoURL - The URL of app's logo.
    * @param {string} loginLink - Login link.
    * @param {string} registerLink - Register link.
+   * @param {bool} popUpLoginFlag - flag whether the user needs to click "登录" before actually
+   * fill in credentials
+   * @param {string} homepageLink - home page link of the app.
    */
-  subscribePublicApp(appId, appName, logoURL, loginLink, registerLink){
+  subscribePublicApp(appId, appName, logoURL, loginLink, registerLink, popUpLoginFlag, homepageLink){
     //Todo 检查和polish userApps里的方法
     localSimulateLatency(500);
     //console.log("subscribePublicApp start");
@@ -44,7 +47,9 @@ Meteor.methods({
               "registerLink": registerLink,
               "userNames": usernameList,
               "defaultUserName": "",
-              "lastLoginTime": ""
+              "lastLoginTime": "",
+              "popUpLoginFlag": popUpLoginFlag,
+              "homepageLink": homepageLink,
             }
           }
         }

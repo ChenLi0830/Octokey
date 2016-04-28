@@ -159,8 +159,8 @@ var CatalogSingleApp = React.createClass({
   },
 
   handleSubscribe() {
-    const {logoURL,appName,loginLink,registerLink,appId} = this.props;
-    Meteor.call("subscribePublicApp", appId, appName, logoURL, loginLink, registerLink);
+    const {logoURL,appName,loginLink,registerLink,appId, popUpLoginFlag, homepageLink} = this.props;
+    Meteor.call("subscribePublicApp", appId, appName, logoURL, loginLink, registerLink, popUpLoginFlag, homepageLink);
   },
 
   handleUnsubscribe() {

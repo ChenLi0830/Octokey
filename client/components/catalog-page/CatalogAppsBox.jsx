@@ -123,7 +123,6 @@ var CatalogAppsBox = React.createClass({
                                    selectedCategoryNames={app.categoryNames}
                                    popUpLoginFlag={app.popUpLoginFlag}
                                    homepageLink={app.homepageLink}
-                                   whenClicked={this.handleClick}
                                    appId={app._id}
                                    subscribed={subscribed}
                                    subsCount={app.subscribeCount}
