@@ -227,14 +227,16 @@ var UserAppsContainer = React.createClass({
 
     //console.log("username: ",username);
     let isPublicApp = publicFocusedIndex > -1;
-    let appId = "", loginLink = "";
+    let appId = "", loginLink = "", popUpLoginFlag = false;
     if (isPublicApp) {
       appId = this.props.chosenPublicApps[publicFocusedIndex].appId;
       loginLink = this.props.chosenPublicApps[publicFocusedIndex].loginLink;
+      popUpLoginFlag = this.props.chosenPublicApps[publicFocusedIndex].popUpLoginFlag;
     } else {//private app
       alert("it is a private app!");
       appId = "";
       loginLink = "";
+      popUpLoginFlag = false;
     }
     //Todo 让这一步的Meteor.userID()放到server里执行
     window.postMessage(//Communicate with plugin, post the message to the 'targetUrl'
@@ -244,6 +246,7 @@ var UserAppsContainer = React.createClass({
           loginLink: loginLink,
           username: username,
           password: password,
+          popUpLogin: popUpLoginFlag,
         },
         targetUrl);
     //console.log("Meteor.userId(), appId, loginLink, username, password,
