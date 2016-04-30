@@ -75,7 +75,7 @@ const AppModalContainerEdit = React.createClass({
     console.log("handleEditApp called");
     const newLogo = this.state.logoPreview;
 
-    if (newLoginLink && newAppName && newLogo !== "" && newHomepageLink) {
+    if (newLoginLink && newAppName /*&& newLogo !== ""*/ && newHomepageLink) {
       Meteor.call("updatePublicApp", this.props.appId, newAppName, newLoginLink, newRegisterLink,
           newLogo, this.state.selectedCategories, newPopUpLoginFlag, newHomepageLink,
           function (error, result) {

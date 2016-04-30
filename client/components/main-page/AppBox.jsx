@@ -4,7 +4,7 @@
  * Creator: Chen Li<chen.li@noc-land.com>
  * Creation Date: 2015-12-31
  *
- * Component for a single App box, called by "AppsContainer"
+ * Component for a single App box, called by "UserAppsContainer"
  *******************************************************************************/
 const {
     Col,
@@ -71,6 +71,7 @@ var AppBox = React.createClass({
 
   render() {
     var tileStyle = this.getTileStyle(this.props.userEditStatus);
+
     var image = this.getTileImage(this.props.userEditStatus);
     var usernameItems = this.props.usernames.map((username)=> {
       return <MenuItem key={username} primaryText={username} value={username}/>
@@ -99,7 +100,6 @@ var AppBox = React.createClass({
               </Modal>
           )
         }
-
 
         <Paper rounded={false}
                ref="appBox"
@@ -190,9 +190,13 @@ var AppBox = React.createClass({
   },
 
   getTileImage(userEditStatus){
-    let image = <img src={this.props.logoURL}
-                     style={{width:"100px"}}
-                     className="vertical-center horizontal-center"/>;
+    //if (this.props.logoURL===""){
+    //
+    //}
+    let image = this.props.logoURL === "" ? <p>no logo!</p>
+        :<img src={this.props.logoURL}
+              style={{width:"100px"}}
+              className="vertical-center horizontal-center"/>;
 
     switch (userEditStatus) {
       case "default":

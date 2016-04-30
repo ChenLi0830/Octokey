@@ -11,23 +11,19 @@ Meteor.methods({
   /**
    * User subscribe to a public app.
    * @param {string} appId - App Id.
-   * @param {string} appName - App name.
-   * @param {string} logoURL - The URL of app's logo.
-   * @param {string} loginLink - Login link.
-   * @param {string} registerLink - Register link.
-   * @param {bool} popUpLoginFlag - flag whether the user needs to click "登录" before actually
-   * fill in credentials
-   * @param {string} homepageLink - home page link of the app.
    */
-  subscribePublicApp(appId, appName, logoURL, loginLink, registerLink, popUpLoginFlag, homepageLink){
+  subscribePublicApp(appId){
     //Todo 检查和polish userApps里的方法
     localSimulateLatency(500);
     //console.log("subscribePublicApp start");
     checkUserLogin.call(this);
     const userId = this.userId;
 
+    const app = ZenApps.findOne({_id: appId});
+
     let credentialRecord = UserAppCredentials.findOne({userId: userId});
 
+    // 处理用户的usernames
     let usernameList = [];
     credentialRecord.publicApps.map(function (publicApp) {
       if (publicApp.appId === appId) {
@@ -35,21 +31,22 @@ Meteor.methods({
       }
     });
 
+    console.log("user subscribes app", app);
     UserApps.update(//前面的check都通过,then add this public app to user's record
         {userId: userId},
         {
           $addToSet: {//用addToSet而不是push来防止已经有该app的情况
             "publicApps": {
               "appId": appId,
-              "appName": appName,
-              "logoURL": logoURL,
-              "loginLink": loginLink,
-              "registerLink": registerLink,
+              "appName": app.appName,
+              "logoURL": app.noLogo ? "":"cfs/files/zenApps/"+appId,
+              "loginLink": app.loginLink,
+              "registerLink": app.registerLink,
               "userNames": usernameList,
               "defaultUserName": "",
               "lastLoginTime": "",
-              "popUpLoginFlag": popUpLoginFlag,
-              "homepageLink": homepageLink,
+              "popUpLoginFlag": app.popUpLoginFlag || false,
+              "homepageLink": app.homepageLink || "",
             }
           }
         }
@@ -200,8 +197,10 @@ Meteor.methods({
    * fill in credentials
    * @param {string} homepageLink - home page link of the app.
    */
-  updateUserApps(appId, appName, loginLink, registerLink, popUpLoginFlag, homepageLink) {
+  updateUserApps(appId/*, appName, loginLink, registerLink, popUpLoginFlag, homepageLink*/) {
     checkAdmin.call(this);
+
+    const app = ZenApps.findOne({_id: appId});
 
     let ids = UserApps.find({"publicApps.appId": appId}).map(function (publicApp) {
       return publicApp.userId;
@@ -215,17 +214,17 @@ Meteor.methods({
         },
         {
           $set: {
-            "publicApps.$.appName": appName,
-            "publicApps.$.loginLink": loginLink,
-            "publicApps.$.registerLink": registerLink,
-            "publicApps.$.popUpLoginFlag": popUpLoginFlag,
-            "publicApps.$.homepageLink": homepageLink,
+            "publicApps.$.appName": app.appName,
+            "publicApps.$.logoURL": app.noLogo ? "":"cfs/files/zenApps/"+appId,
+            "publicApps.$.loginLink": app.loginLink,
+            "publicApps.$.registerLink": app.registerLink,
+            "publicApps.$.popUpLoginFlag": !!app.popUpLoginFlag,
+            "publicApps.$.homepageLink": app.homepageLink,
           }
         },
         {multi: true}
     );
   },
-
   /**
    * When the Recommendation System done calculating the recommending results for a user, it calls
    * this method to insert the results.

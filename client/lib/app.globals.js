@@ -19,8 +19,6 @@ Reflux = require('reflux');
 
 Colors = require('material-ui/styles/colors');
 ColorManipulator = require('material-ui/utils/colorManipulator');
-//Spacing = require('material-ui/styles/spacing');
-//zIndex = require('material-ui/styles/zIndex');
 
 ReactIntl = require("react-intl");
 

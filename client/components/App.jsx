@@ -48,16 +48,37 @@ var App = React.createClass({
       };
     }
 
-    const subHandles = [Meteor.subscribe("userApps"),];
+    //console.log("Session.get(ajaxReadyCount)", Session.get("ajaxReadyCount"));
+    const
+        subHandles = [Meteor.subscribe("userApps")],
+        currentUserId = Meteor.userId(),
+        userApps = UserApps.findOne({userId: currentUserId}),
 
-    const subsReady = _.every(subHandles, function (handle) {
-      return handle.ready();
-    });
-    const currentUserId = Meteor.userId();
+        subsReady = _.every(subHandles, function (handle) {
+          return handle.ready();
+        });
+
+    //Todo add this part in welcome page for topic images
+/*    if (subsReady) {
+      if (Session.get("ajaxReadyCount") === 0) {//Ajax call should only be triggered once
+        userApps.publicApps.map((publicApp)=> {
+          fetch(publicApp.logoURL).then((response)=> {
+            if (response.status === 200) {//inc if successfully loaded the image
+              var prevValue = Session.get("ajaxReadyCount");
+              //Todo 标记没有logo的app,将来用
+              //if (response.headers.getAll("Content-Type") === "image/noFile")
+              Session.set("ajaxReadyCount", prevValue + 1);
+              return response.text();
+            }
+          })
+        });
+      }
+    }*/
+
     return {
-      subsReady: subsReady,
+      subsReady: subsReady /*&& Session.get("ajaxReadyCount") >= userApps.publicApps.length*/,//Todo remove -1
       currentUserId: currentUserId,
-      UserApps: UserApps.find({userId: currentUserId}).fetch()[0],
+      UserApps: userApps,
     };
   },
 
@@ -68,6 +89,9 @@ var App = React.createClass({
   componentWillMount(){
     // Listen to the Extension's request for user's login info and hexIv
     window.addEventListener("message", this.checkAndSendData);
+
+    //Ajax handle for images
+    /*Session.set("ajaxReadyCount", 0);*/
   },
 
   componentWillUnmount(){
