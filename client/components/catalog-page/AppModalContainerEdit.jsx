@@ -50,6 +50,7 @@ const AppModalContainerEdit = React.createClass({
         modalOnCancel={this.handleModalClose}
         modalOnOk={this.handleEditApp}
         onLogoUpload={this.handleLogoUpload}
+        onLogoRemove={this.handleLogoRemove}
         fileList={fileList}
         initialAppName={this.props.appName}
         initialPopUpLoginFlag={this.props.popUpLoginFlag}
@@ -92,6 +93,13 @@ const AppModalContainerEdit = React.createClass({
     } else {
       alert(this.context.intl.messages.cata_createAppAlert);
     }
+  },
+
+  /**
+   * To remove the logo from fileList
+   */
+  handleLogoRemove(){
+    this.setState({logoPreview: ""});
   },
 
   /**

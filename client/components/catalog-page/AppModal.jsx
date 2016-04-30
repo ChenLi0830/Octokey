@@ -27,6 +27,7 @@ var AppModal = React.createClass({
     modalOnCancel: React.PropTypes.func.isRequired,
     modalOnOk: React.PropTypes.func.isRequired,
     onLogoUpload: React.PropTypes.func.isRequired,
+    onLogoRemove: React.PropTypes.func.isRequired,
     fileList: React.PropTypes.array.isRequired,
     initialAppName: React.PropTypes.string.isRequired,
     initialLoginLink: React.PropTypes.string.isRequired,
@@ -66,13 +67,18 @@ var AppModal = React.createClass({
     this.props.onLogoUpload(logoFile);
   },
 
+  handleLogoOnChange({file, fileList}){
+    if (fileList.length===0){
+      this.props.onLogoRemove();
+    }
+  },
+
   handleModalOk(){
     const {appName, loginLink, registerLink, popUpLoginFlag, homepageLink} = this.state;
     this.props.modalOnOk(loginLink, registerLink, appName, popUpLoginFlag, homepageLink);
   },
 
   render(){
-    this.props.initialAppName==="123"&&console.log("this.props.initialPopUpLoginFlag", this.props.initialPopUpLoginFlag);
     const {messages} = this.context.intl;
 
     const formItemLayout = {
@@ -126,8 +132,9 @@ var AppModal = React.createClass({
                   {...formItemLayout}
                   label={<span> {messages.cata_checkBoxTitle} <Tooltip title={messages.cata_checkBoxTooltip}><Icon type="question-circle-o" /></Tooltip> ：</span>}>
                 <label>
-                  <Checkbox onChange={(event)=>{this.setState({popUpLoginFlag:event.target.checked})}}
-                            checked={this.state.popUpLoginFlag}/>
+                  <Checkbox
+                      onChange={(event)=>{this.setState({popUpLoginFlag:event.target.checked})}}
+                      checked={this.state.popUpLoginFlag}/>
                   {messages.cata_checkBoxInfo}
                 </label>
               </FormItem>
@@ -135,7 +142,8 @@ var AppModal = React.createClass({
               <FormItem
                   {...formItemLayout}
                   label={messages.cata_appRegisterLink}>
-                <Input type="text" onChange={(event)=>{this.setState({registerLink:event.target.value})}}
+                <Input type="text"
+                       onChange={(event)=>{this.setState({registerLink:event.target.value})}}
                        value={this.state.registerLink}/>
               </FormItem>
 
@@ -148,6 +156,7 @@ var AppModal = React.createClass({
                     listType="picture-card"
                     fileList={this.props.fileList}
                     beforeUpload={this.handleUploadLogo}
+                    onChange={this.handleLogoOnChange}
                 >
                   <Icon type="plus"/>
                   <div className="ant-upload-text">{messages["cata_uploadLogo-上传图片"]}</div>

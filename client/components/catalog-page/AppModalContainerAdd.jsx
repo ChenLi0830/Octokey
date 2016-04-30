@@ -41,6 +41,7 @@ const AppModalContainerAdd = React.createClass({
         modalOnCancel={this.handleModalClose}
         modalOnOk={this.handleAddApp}
         onLogoUpload={this.handleLogoUpload}
+        onLogoRemove={this.handleLogoRemove}
         fileList={fileList}
         allCategories={this.props.allCategories}
         selectedCategories={this.state.selectedCategories}
@@ -90,6 +91,13 @@ const AppModalContainerAdd = React.createClass({
      //Close modal
      this.props.onModalClose();
      }.bind(this));*/
+  },
+
+  /**
+   * To remove the logo from fileList
+   */
+  handleLogoRemove(){
+    this.setState({logoPreview: ""});
   },
 
   /**
