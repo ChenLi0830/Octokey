@@ -38,7 +38,25 @@ const styles = {
     color: "#888",
     borderRadius: "0px 0px 5px 5px",
     WebkitAnimationDuration: "0.3s",
-  }
+  },
+  noLogoBox: {
+    position: "relative",
+    height: "52%",
+    width: "52%",
+    backgroundColor: "#3399FF",
+    borderRadius: "5px",
+    top: "24%",
+    left: "24%",
+  },
+  noLogoText: {
+    textAlign: "center",
+    top: "50%",
+    transform: "translateY(-50%)",
+    position: "relative",
+    color: "white",
+    fontSize: "48px",
+    fontWeight: "800",
+  },
 };
 
 var AppBox = React.createClass({
@@ -57,7 +75,7 @@ var AppBox = React.createClass({
       hovered: false,
       //open: false,
       boxHeight: "0px",
-      modalOpen: false,
+      modalChooseAccountOpen: false,
     }
   },
 
@@ -85,9 +103,9 @@ var AppBox = React.createClass({
               <Modal title={this.props.appName + "-账户选择"}
                      okText="完成"
                      cancelText="取消"
-                     visible={this.state.modalOpen}
-                     onOk={()=>{this.setState({modalOpen:false})}}
-                     onCancel={()=>{this.setState({modalOpen:false})}}
+                     visible={this.state.modalChooseAccountOpen}
+                     onOk={()=>{this.setState({modalChooseAccountOpen:false})}}
+                     onCancel={()=>{this.setState({modalChooseAccountOpen:false})}}
               >
                 <Menu zDepth={0} ref="menu"
                       onChange={this.handleAccountTouchTap}
@@ -145,7 +163,7 @@ var AppBox = React.createClass({
       }
       else {//More than 1 username, openPopOver to for user to choose
         this.setState({
-          modalOpen: true,
+          modalChooseAccountOpen: true,
           anchorEl: event.currentTarget,
         });
       }
@@ -158,7 +176,7 @@ var AppBox = React.createClass({
   handleAccountTouchTap(event, selectedIndex, menuItem) {
     //console.log("selectedIndex",selectedIndex);
     this.props.whenAppTileClicked(this.props.appId, selectedIndex);
-    this.setState({modalOpen: false});
+    this.setState({modalChooseAccountOpen: false});
   },
 
   getTileStyle(userEditStatus){
@@ -193,10 +211,13 @@ var AppBox = React.createClass({
     //if (this.props.logoURL===""){
     //
     //}
-    let image = this.props.logoURL === "" ? <p>no logo!</p>
-        :<img src={this.props.logoURL}
-              style={{width:"100px"}}
-              className="vertical-center horizontal-center"/>;
+    let image = this.props.logoURL === "" ?
+        <div style={styles.noLogoBox}>
+          <div style={styles.noLogoText}>{this.props.appName[0]}</div>
+        </div>
+        : <img src={this.props.logoURL}
+               style={{width:"100px"}}
+               className="vertical-center horizontal-center"/>;
 
     switch (userEditStatus) {
       case "default":
