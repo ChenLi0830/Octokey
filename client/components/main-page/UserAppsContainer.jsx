@@ -180,11 +180,14 @@ var UserAppsContainer = React.createClass({
 
     if (this.props.userEditStatus === "default") {
       if (isPublicApp) {//是public app
-        //if (this.props.chosenPublicApps[publicFocusedIndex].userNames.length > 0) {
-        if (username) {
+        const loginLink = this.props.chosenPublicApps[publicFocusedIndex].loginLink;
+        if (loginLink==="无登录"){//无登录地址
+          this.handleVisitHomePage();
+        } else
+        if (username) {//有登录地址,且有用户名
           this.handleLogin(username, "");
         }
-        else {
+        else {//有登录地址,尚无用户名
           this.setState({openDialogCredential: true});
         }
       }
@@ -249,7 +252,7 @@ var UserAppsContainer = React.createClass({
           popUpLogin: popUpLoginFlag,
         },
         targetUrl);
-    //console.log("Meteor.userId(), appId, loginLink, username, password,
+    // console.log("Meteor.userId(), appId, loginLink, username, password,
     // this.props.hexIv,Session.get(hexKey)", Meteor.userId(), appId, loginLink, username, password,
     // this.props.hexIv,Session.get("hexKey"));
   },
@@ -325,6 +328,29 @@ var UserAppsContainer = React.createClass({
     };
   },
 
+  handleVisitHomePage(){
+    let targetUrl = document.location.origin;
+
+    //console.log("username: ",username);
+    let isPublicApp = publicFocusedIndex > -1;
+    let appId = "", homepageLink = "";
+    if (isPublicApp) {
+      appId = this.props.chosenPublicApps[publicFocusedIndex].appId;
+      homepageLink = this.props.chosenPublicApps[publicFocusedIndex].homepageLink;
+    } else {//private app
+      alert("it is a private app!");
+      appId = "";
+      homepageLink = "";
+    }
+    //Todo 让这一步的Meteor.userID()放到server里执行
+    window.postMessage(//Communicate with plugin, post the message to the 'targetUrl'
+        {
+          event: "visitHomepage",
+          appId: appId,
+          homepageLink: homepageLink,
+        },
+        targetUrl);
+  },
 });
 
 module.exports = UserAppsContainer;
