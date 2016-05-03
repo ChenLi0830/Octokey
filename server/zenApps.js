@@ -220,4 +220,15 @@ Meteor.methods({
     checkUserLogin.call(this);
     return ZenApps.findOne({_id: appId});
   },
+
+  /**
+   * Check if an public app exists by appId
+   * @param {string} appId - App Id.
+   * @returns {Object} - returns true if a public app with the same appId exist and false if it
+   * does not.
+   */
+  checkAppExistsByName(appName){
+    checkUserLogin.call(this);
+    return ZenApps.findOne({appName: appName});
+  },
 });
