@@ -113,7 +113,7 @@ var CatalogAppsBox = React.createClass({
     const {messages} = this.context.intl;
 
     const appsOfChosenCategory = (Session.get("appsOfChosenCategory").apps.map(function (app) {
-          let logoURL = OctoClientAPI.getLogoUrl(app._id);
+          let logoURL = app.noLogo ? "" : OctoClientAPI.getLogoUrl(app._id);
           let subscribed = this.props.subscribeList[app._id];
           return <CatalogSingleApp key={app._id}
                                    logoURL={logoURL}

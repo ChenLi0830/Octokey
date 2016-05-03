@@ -31,6 +31,34 @@ const styles = {
     marginRight: "auto",
     minWidth: "340px",
   },
+  noLogoBox: {
+    position: "relative",
+    backgroundColor: "#3399FF",
+    borderRadius: "5px",
+    top: "25%",
+    height: "50px",
+    width: "50px",
+    fontSize: "28px",
+    display: "inline-block",
+/* line-height: 100px; */
+/* top: 25%; */
+/* left: 25%; */
+/* margin-top: 25px; */
+  },
+  noLogoBoxCondensed: {
+    top: "37%",
+    height: "25px",
+    width: "25px",
+    fontSize: "18px",
+  },
+  noLogoText: {
+    textAlign: "center",
+    top: "50%",
+    transform: "translateY(-50%)",
+    position: "relative",
+    color: "white",
+    fontWeight: "800",
+  },
 };
 
 const AppModalContainerEdit = require('./AppModalContainerEdit.jsx');
@@ -128,8 +156,15 @@ var CatalogSingleApp = React.createClass({
         <Col xs={3} sm={3} md={condensed? 2:3}
              onClick={()=>{this.handleEdit()}}
              style={{height:"100%", textAlign:"center"}}>
-          <span className="helper"></span><img className="vertial-middle " src={logoURL}
-                                               style={{width:condensed ? "25px": "50px", top:"18px"}}/>
+          {this.props.logoURL === ""?
+              <div style={_.extend({}, styles.noLogoBox, condensed?styles.noLogoBoxCondensed:{})}>
+                <div style={styles.noLogoText}>{this.props.appName[0]}</div>
+              </div> :
+              <div style={{display:"block", height:"100%", width:"100%"}}>
+                <img src={logoURL} style={{top: "50%", position: "relative", transform: "translateY(-50%)",
+                      width:condensed ? "25px": "50px"}}/>
+              </div>
+          }
         </Col>
 
         <Col xs={5} sm={4} md={condensed? 5:/*4*/6}

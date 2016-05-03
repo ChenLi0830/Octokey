@@ -12,6 +12,7 @@
     "intl": "^1.1.0",
     "lodash": "^4.1.0",
     "material-ui": "0.15.0-beta.1",
+    "meteor-node-stubs": "^0.2.3",
     "react": "^15.0.1",
     "react-addons-pure-render-mixin": "^15.0.1",
     "react-bootstrap": "^0.28.5",

@@ -2,3 +2,5 @@
 node_modules/
 mup.json
 mup.*
+public/Icons/*
+public/homePage*
