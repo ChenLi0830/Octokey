@@ -181,7 +181,7 @@ var UserAppsContainer = React.createClass({
     if (this.props.userEditStatus === "default") {
       if (isPublicApp) {//是public app
         const loginLink = this.props.chosenPublicApps[publicFocusedIndex].loginLink;
-        if (loginLink==="无登录"){//无登录地址
+        if (loginLink.indexOf("无登录")>-1){//无登录地址
           this.handleVisitHomePage();
         } else
         if (username) {//有登录地址,且有用户名

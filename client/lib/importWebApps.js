@@ -11,7 +11,7 @@ var fs = require('fs');
 require('../../public/js/jquery.csv.min');
 var CryptoJS = require('crypto-js');
 
-var path = '/homePage缩减版300.csv';
+var path = '/homePage高级版35.csv';
 var logoFile;
 
 startImport = function () {
@@ -63,7 +63,7 @@ function processData(data) {
     var app = dataObj[index];
     const appName = app.sf1,
         popUpLoginFlag = app.ff3 === "弹出式",
-        loginLink = app.ff3 === "弹出式" || app.ff3 === "原地址" ? app.f2 : app.ff3,
+        loginLink = app.ff3.indexOf("弹出式")>-1 || app.ff3 === "原地址" ? app.f2 : app.ff3,
         homepageLink = app.f2,
         registerLink = "";
 
