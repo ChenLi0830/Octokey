@@ -36,10 +36,13 @@ var PluginInstallDialog = React.createClass({
                  okText={messages.ext_btn_install}
                  cancelText={messages.ext_btn_cancel}
                  onOk={this.handleChrome}
-                 onCancel={this.props.whenCloseDialog}>
+                 onCancel={this.props.whenCloseDialog}
+                 width="680px">
             <div style={{textAlign:"center"}}>
               <BrowserLogoBox name="Chrome" logoPath="/img/browsersLogo/chrome.png"
                               onClick={this.handleChrome}/>
+              <BrowserLogoBox name="百度浏览器" logoPath="/img/browsersLogo/baidu.png"
+                              onClick={this.handleBaidu}/>
               <BrowserLogoBox name="360安全" logoPath="/img/browsersLogo/360Security.png"
                               onClick={this.handle360Security}/>
               <BrowserLogoBox name="360极速" logoPath="/img/browsersLogo/360fast.png"
@@ -65,6 +68,13 @@ var PluginInstallDialog = React.createClass({
      console.log(err);
      this.props.whenCloseDialog();
      });*/
+  },
+
+  handleBaidu(){
+    //console.log("360 security");
+    var win = window.open("http://chajian.baidu.com/2015/#home/ibjiiiailkhfaakoopiiflobajlkiock");
+    win.focus();
+    this.props.whenCloseDialog();
   },
 
   handle360Security(){
