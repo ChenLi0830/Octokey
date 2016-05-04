@@ -11,7 +11,7 @@ var fs = require('fs');
 require('../../public/js/jquery.csv.min');
 var CryptoJS = require('crypto-js');
 
-var path = '/homePage高级版35.csv';
+var path = '/homePage缩减版3.csv';
 var logoFile;
 
 startImport = function () {
@@ -40,9 +40,9 @@ startImport = function () {
    logoFile = data;
    }
    });*/
-  setTimeout(function () {
-    console.log("logoFile", logoFile)
-  }, 2000);
+  //setTimeout(function () {
+  //  console.log("logoFile", logoFile)
+  //}, 2000);
 }
 
 function processData(data) {
@@ -58,6 +58,7 @@ function processData(data) {
         timeoutLoop(fn, index + 1, delay);
       }, delay);
   }
+
 
   function loopFunc(index) {// Async for 循环里要执行的function, 用来call handleAddApp
     var app = dataObj[index];
@@ -84,11 +85,11 @@ function processData(data) {
   }
 
   // pass your function as callback
-  timeoutLoop(loopFunc, 0, 3000);
+  timeoutLoop(loopFunc, 0, 2000);
 }
 
 function getLogoName(homepage){
-  const domainName = homepage.split('//')[1];
+  const domainName = homepage.split('www.')[1];
   //console.log("domainName", domainName);
   var hash = CryptoJS.MD5(domainName);
   //console.log("hash", hash);
