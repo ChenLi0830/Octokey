@@ -190,14 +190,9 @@ Meteor.methods({
    * When a public app is updated, this method change every single record of the public app in the
    * UserApps collection.
    * @param {string} appId - Id of the to-be-updated app.
-   * @param {string} appName - Name of the app.
-   * @param {string} loginLink - login link of the app.
-   * @param {string} registerLink - register link of the app.
-   * @param {bool} popUpLoginFlag - flag whether the user needs to click "登录" before actually
-   * fill in credentials
-   * @param {string} homepageLink - home page link of the app.
    */
-  updateUserApps(appId/*, appName, loginLink, registerLink, popUpLoginFlag, homepageLink*/) {
+  updateUserApps(appId) {
+    console.log("updateUserApps");
     checkAdmin.call(this);
 
     const app = ZenApps.findOne({_id: appId});
@@ -205,7 +200,6 @@ Meteor.methods({
     let ids = UserApps.find({"publicApps.appId": appId}).map(function (publicApp) {
       return publicApp.userId;
     });
-    //console.log(ids);
     UserApps.update({
           $and: [
             {userId: {$in: ids}},

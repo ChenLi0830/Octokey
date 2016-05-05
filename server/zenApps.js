@@ -181,16 +181,11 @@ Meteor.methods({
       updatedApp.subscribeCount = existingApp.subscribeCount ? existingApp.subscribeCount : 0;
       //console.log("updatedApp", updatedApp);
 
-      ZenApps.remove({_id: appId}, function (err) {
-        if (err) console.log("there was an error removing zenApp when updating this app:", err);
-        //When is app is removed successfully, insert the new app
-        ZenApps.insert(updatedApp, function (err) {
-          if (err) console.log("there was an error inserting zenApp when updating this app:", err);
-          //Update every single record of the public app in the UserApps collection.
-          Meteor.call("updateUserApps", appId/*, appName, loginLink, registerLink, popUpLoginFlag, homepageLink*/);
-        });
-      });
+      ZenApps.remove({_id: appId});
+      ZenApps.insert(updatedApp);
     }
+    //Update user Apps. 没有callback的collection操作都是sync的,所以前面的操作结束后才会运行这个操作.
+    Meteor.call("updateUserApps", appId);
   },
 
   /**
