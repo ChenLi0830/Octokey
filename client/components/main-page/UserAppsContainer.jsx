@@ -37,6 +37,7 @@ var UserAppsContainer = React.createClass({
     currentUser: React.PropTypes.object.isRequired,
     hexIv: React.PropTypes.string.isRequired,
     userEditStatus: React.PropTypes.string.isRequired,
+    userCredentials: React.PropTypes.object.isRequired,
     appContainerZIndex: React.PropTypes.string.isRequired,
   },
 
@@ -185,7 +186,12 @@ var UserAppsContainer = React.createClass({
           this.handleVisitHomePage();
         } else
         if (username) {//有登录地址,且有用户名
-          this.handleLogin(username, "");
+          const credential = _.find(this.props.userCredentials.publicApps, (app)=>{
+            return app.appId===appId && app.username===username
+          });
+          const password = OctoClientAPI.decryptAES(credential.password, this.props.hexIv, Session.get("hexKey"));
+          //const password = userCredentials
+          this.handleLogin(username, password);
         }
         else {//有登录地址,尚无用户名
           this.setState({openDialogCredential: true});

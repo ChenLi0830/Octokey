@@ -22,6 +22,14 @@ Meteor.publish("allCategories", function () {
   return ZenCategories.find({});
 });
 
+Meteor.publish("userCredentials", function () {
+  localSimulateLatency(800);
+  checkUserLogin.call(this);
+  //console.log("publish appCredential", userId, appId, username);
+  //console.log("this.user", this.user);
+  return UserAppCredentials.find({userId: this.userId});
+});
+
 Meteor.publish("appCredential", function (userId, appId, username) {
   localSimulateLatency(800);
   //console.log("publish appCredential", userId, appId, username);

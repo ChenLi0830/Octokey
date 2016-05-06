@@ -22,13 +22,15 @@ var ListPage = React.createClass({
   getMeteorData(){
     if (Meteor.user()) {
       // appId, appName,logoURL,loginLink,registerLink,userNames,defaultUserName,lastLoginTime
-      let findUserApps = UserApps.find({userId: Meteor.userId()}).fetch()[0];
+      const findUserApps = UserApps.find({userId: Meteor.userId()}).fetch()[0];
+      const userCredentials = UserAppCredentials.findOne({userId: Meteor.userId()});
 
       return {
         currentUser: Meteor.user(),
         chosenPublicApps: findUserApps ? findUserApps.publicApps : [],
         chosenTopics: findUserApps ? findUserApps.topics : [],
         hexIv: findUserApps && findUserApps.hexIv ? findUserApps.hexIv : "",
+        userCredentials: userCredentials,
       }
     } else {
       return {
@@ -49,16 +51,17 @@ var ListPage = React.createClass({
   },
 
   componentWillMount(){
-    console.log("this.props.chosenTopics", this.data.chosenTopics);
+    //console.log("this.props.chosenTopics", this.data.chosenTopics);
     if (!this.data.chosenTopics || this.data.chosenTopics.length === 0) {
       this.setState({openChooseTopicPage: true});
     } else {
-      console.log("this.data.chosenTopics is ", this.data.chosenTopics);
+      //console.log("this.data.chosenTopics is ", this.data.chosenTopics);
     }
   },
 
   render(){
     //console.log("this.data.chosenTopics", this.data.chosenTopics);
+    //console.log("this.data.userCredentials", this.data.userCredentials);
 
     return <div>
       {
@@ -85,6 +88,7 @@ var ListPage = React.createClass({
             chosenTopics={this.data.chosenTopics}
             hexIv={this.data.hexIv}
             userEditStatus={this.state.userEditStatus}
+            userCredentials={this.data.userCredentials}
             appContainerZIndex={(this.state.userEditStatus === "remove" || this.state.userEditStatus === "config")? "400":"inherit"}
         />
       }

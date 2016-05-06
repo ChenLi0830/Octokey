@@ -35,6 +35,7 @@ var CredentialDialog = React.createClass({
     return {
       floatingUserError: "",
       floatingPassError: "",
+      //dialog state for 刚刚登录是否成功?
       openVerify: false,
     }
   },
@@ -128,8 +129,12 @@ var CredentialDialog = React.createClass({
 
     if (username && password) {
       if (OctoClientAPI.saveCredential(this.props.appId, this.props.hexIv, username, password,
-              this.props.isPublicApp)) {//If
-        // it's successful
+              this.props.isPublicApp)) {//If user credential is saved to database successfully
+        //Todo only encrypt pwd first and pass it into saveCredential,而不是encrypt两次
+        const hexKey = Session.get("hexKey");
+        const encryptedPwd = OctoClientAPI.encrypt(password, hexKey, this.props.hexIv);
+        //console.log("encryptedPwd", encryptedPwd);
+
         this.props.whenSubmitCredential(username, password);
         savedUsername = username;
 

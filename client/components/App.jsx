@@ -50,7 +50,7 @@ var App = React.createClass({
 
     //console.log("Session.get(ajaxReadyCount)", Session.get("ajaxReadyCount"));
     const
-        subHandles = [Meteor.subscribe("userApps")],
+        subHandles = [Meteor.subscribe("userApps"), Meteor.subscribe("userCredentials")],
         currentUserId = Meteor.userId(),
         userApps = UserApps.findOne({userId: currentUserId}),
 
@@ -78,7 +78,7 @@ var App = React.createClass({
     return {
       subsReady: subsReady /*&& Session.get("ajaxReadyCount") >= userApps.publicApps.length*/,//Todo remove -1
       currentUserId: currentUserId,
-      UserApps: userApps,
+      userApps: userApps,
     };
   },
 
@@ -107,12 +107,13 @@ var App = React.createClass({
   },
 
   render(){
-    //console.log("this.data.UserApps", this.data.UserApps);
+    //console.log("this.data.userApps", this.data.userApps);
     //console.log("Session.get(hexKey)", Session.get("hexKey"));
-    if (this.data.UserApps) {
+
+    if (this.data.userApps) {
       if (!Session.get("hexKey")) {//when user logged in with fresh session
         // Set Session variable "hexKey"
-        Actions.initKeySaltIv(this.data.UserApps.hexSalt, this.data.UserApps.hexIv);
+        Actions.initKeySaltIv(this.data.userApps.hexSalt, this.data.userApps.hexIv);
       }
     }
 
@@ -165,7 +166,7 @@ var App = React.createClass({
             loginToken: localStorage["Meteor.loginToken"],
             loginTokenExpires: localStorage["Meteor.loginTokenExpires"],
             userId: localStorage["Meteor.userId"],
-            hexIv: this.data.UserApps.hexIv,
+            hexIv: this.data.userApps.hexIv,
             hexKey: Session.get("hexKey"),
           },
           targetUrl
