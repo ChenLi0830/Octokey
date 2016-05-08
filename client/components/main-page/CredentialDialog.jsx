@@ -8,17 +8,39 @@
  *******************************************************************************/
 const {FormattedMessage} = ReactIntl;
 
-import { Button, Form, Input, Modal } from 'antd';
+import { Button, Form, Input, Modal, Tooltip, Icon } from 'antd';
 const createForm = Form.create;
 const FormItem = Form.Item;
 
 let savedUsername = "";
+const styles = {
+  logo: {
+    height: "18px",
+    margin: "-2px 5px 0px 0px",
+    borderRadius: "3px",
+  },
+  noLogoBox: {
+    display: "inline-block",
+    height: "20px",
+    width: "20px",
+    margin: "0px 5px 0px 0px",
+    borderRadius: "2px",
+    backgroundColor: "#3399FF",
+  },
+  noLogoText: {
+    textAlign: "center",
+    color: "white",
+    fontSize: "16px",
+    fontWeight: "200",
+  },
+};
 
 var CredentialDialog = React.createClass({
   propTypes: {
     appName: React.PropTypes.string.isRequired,
     appId: React.PropTypes.string.isRequired,
     isPublicApp: React.PropTypes.bool.isRequired,
+    logoURL: React.PropTypes.string.isRequired,
     openDialogCredential: React.PropTypes.bool.isRequired,
     whenCloseDialog: React.PropTypes.func.isRequired,
     whenSubmitCredential: React.PropTypes.func.isRequired,
@@ -44,7 +66,8 @@ var CredentialDialog = React.createClass({
     const formItemLayout = {
       labelCol: {span: 6},
       wrapperCol: {span: 14},
-      required: {true},
+      required: true,
+      hasFeedback: true,
     };
 
     const loginForms = (
@@ -56,7 +79,7 @@ var CredentialDialog = React.createClass({
           <FormItem
               {...formItemLayout}
               label={"用户名："}
-              validateStatus={this.state.floatingUserError.length===0? "success": "error"}
+              validateStatus={this.state.floatingUserError.length===0? "": "error"}
               help={this.state.floatingUserError}>
             <Input ref="username"
                    placeholder="请输入账户名"
@@ -69,7 +92,7 @@ var CredentialDialog = React.createClass({
           <FormItem
               {...formItemLayout}
               label={"密码："}
-              validateStatus={this.state.floatingPassError.length===0? "success": "error"}
+              validateStatus={this.state.floatingPassError.length===0? "": "error"}
               help={this.state.floatingPassError}>
             <Input type="password"
                    ref="password"
@@ -89,10 +112,10 @@ var CredentialDialog = React.createClass({
 
     return <div>
       <Modal
-          onOk = {this.state.openVerify ? this.handleCloseDialog: this.handleSubmit}
-          onCancel = {this.state.openVerify ? this.verifyUnsuccess : this.handleCloseDialog}
-          okText = {this.state.openVerify ? messages.credentialDialog.verifyBtn_success: "登录"}
-          cancelText = {this.state.openVerify ? messages.credentialDialog.verifyBtn_fail: "取消"}
+          onOk={this.state.openVerify ? this.handleCloseDialog: this.handleSubmit}
+          onCancel={this.state.openVerify ? this.verifyUnsuccess : this.handleCloseDialog}
+          okText={this.state.openVerify ? messages.credentialDialog.verifyBtn_success: "登录"}
+          cancelText={this.state.openVerify ? messages.credentialDialog.verifyBtn_fail: "取消"}
           title={this.getTitle()}
           visible={this.props.openDialogCredential}>
         <Form horizontal form={this.props.form}>
@@ -106,8 +129,20 @@ var CredentialDialog = React.createClass({
   getTitle(){
     const verifyTitle = this.props.appName +
         this.context.intl.messages.credentialDialog.verifyTitle;
-    const normalTitle = this.props.appName + "-" +
-        this.context.intl.messages.app_credentialDialogMessage;
+
+    const logo = this.props.logoURL === "" ?
+        <div style={styles.noLogoBox}>
+          <div style={styles.noLogoText}>{this.props.appName[0]}</div>
+        </div> :
+        <img style={styles.logo} src={OctoClientAPI.getLogoUrl(this.props.appId)}/>;
+
+    const normalTitle = <div>
+      {logo}
+      {<FormattedMessage id="app_credentialDialogMessage" values={{appName:this.props.appName}}/>}
+      <Tooltip title={<ul><li>该登录信息会被放入您的登录保险箱</li><li>国际领先加密算法AES256, 保证安全无虞</li></ul>}>
+        <Icon type="question-circle-o"/>
+      </Tooltip>
+    </div>;
     return this.state.openVerify ? verifyTitle : normalTitle;
   },
 

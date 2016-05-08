@@ -216,7 +216,7 @@ var AppBox = React.createClass({
           <div style={styles.noLogoText}>{this.props.appName[0]}</div>
         </div>
         : <img src={this.props.logoURL}
-               style={{width:"100px"}}
+               style={{width:"100px", borderRadius:"5px"}}
                className="vertical-center horizontal-center"/>;
 
     switch (userEditStatus) {

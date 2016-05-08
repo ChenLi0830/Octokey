@@ -91,21 +91,7 @@ var UserAppsContainer = React.createClass({
     }
 
     let isPublicApp = publicFocusedIndex > -1;
-    let appName = "", appId = "", loginLink, registerLink;
-    if (this.state.openDialogCredential ||
-        this.state.openDialogEdit ||
-        this.state.openDialogRegister) {//Dialog is about to open
-      if (isPublicApp) {
-        appName = this.props.chosenPublicApps[publicFocusedIndex].appName;
-        appId = this.props.chosenPublicApps[publicFocusedIndex].appId;
-        loginLink = this.props.chosenPublicApps[publicFocusedIndex].loginLink;
-        registerLink = this.props.chosenPublicApps[publicFocusedIndex].registerLink;
-      } else {//private app
-        alert("it is a private app!");
-        appName = "";
-        appId = "";
-      }
-    }
+    const app = publicFocusedIndex>-1 ? this.props.chosenPublicApps[publicFocusedIndex]:{};
 
     return (
         <div>
@@ -123,21 +109,25 @@ var UserAppsContainer = React.createClass({
             </Row>
           </Paper>
 
+          {this.state.openDialogPlugin ?
           <PluginInstallDialog openDialogPlugin={this.state.openDialogPlugin}
-                               whenCloseDialog={()=>{this.setState({openDialogPlugin:false})}}/>
+                               whenCloseDialog={()=>{this.setState({openDialogPlugin:false})}}
+          /> : null}
 
-          <CredentialDialog appName={appName}
-                            appId={appId}
+          {this.state.openDialogCredential ?
+            <CredentialDialog appName={app.appName}
+                            appId={app.appId}
                             isPublicApp={isPublicApp}
+                            logoURL = {app.logoURL}
                             openDialogCredential={this.state.openDialogCredential}
                             whenCloseDialog={()=>{this.setState({openDialogCredential: false})}}
                             whenSubmitCredential={this.handleLogin}
                             hexIv={this.props.hexIv}
-          />
+          /> : null}
 
           {this.state.openDialogEdit ?
-              <EditDialog appName={appName}
-                          appId={appId}
+              <EditDialog appName={app.appName}
+                          appId={app.appId}
                           isPublicApp={isPublicApp}
                           usernames={isPublicApp?this.props.chosenPublicApps[publicFocusedIndex].userNames:null}
                           openDialogEdit={this.state.openDialogEdit}
@@ -145,14 +135,15 @@ var UserAppsContainer = React.createClass({
                           hexIv={this.props.hexIv}
               /> : null}
 
-          <RegisterDialog appName={appName}
-                          appId={appId}
+          {this.state.openDialogRegister ?
+          <RegisterDialog appName={app.appName}
+                          appId={app.appId}
                           registerRequest={this.state.registerRequest}
                           openDialogRegister={this.state.openDialogRegister}
                           whenLogin={this.handleLogin.bind(this, registeredUsername, "")}
                           whenCloseDialog={()=>{this.setState({openDialogRegister:false, registerRequest:defaultRequest})}}
-                          registerLink={registerLink}
-          />
+                          registerLink={app.registerLink}
+          /> : null}
 
           <FocusOverlay visibility={_.indexOf(["config", "remove"],this.props.userEditStatus)>-1}/>
         </div>
