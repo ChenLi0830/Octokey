@@ -6,13 +6,11 @@
  *
  * Dialog component for user input app credential, called by "AppsContainer"
  *******************************************************************************/
-const {
-    Dialog,
-    FlatButton,
-    TextField
-    } = MUI;
-
 const {FormattedMessage} = ReactIntl;
+
+import { Button, Form, Input, Modal } from 'antd';
+const createForm = Form.create;
+const FormItem = Form.Item;
 
 let savedUsername = "";
 
@@ -42,28 +40,12 @@ var CredentialDialog = React.createClass({
 
   render(){
     const {messages} = this.context.intl;
-    const actions = [
-      <FlatButton
-          label={messages.app_credentialDialogCancel}
-          primary={true}
-          onTouchTap={this.handleCloseDialog}/>,
-      <FlatButton
-          primary={ true }
-          label={messages.app_credentialDialogLogin}
-          onTouchTap={this.handleSubmit}/>
-    ];
 
-    //The buttons of verify page
-    const verifyActions = [
-      <FlatButton
-          label={messages.credentialDialog.verifyBtn_fail}
-          primary={true}
-          onTouchTap={this.verifyUnsuccess}/>,
-      <FlatButton
-          primary={ true }
-          label={messages.credentialDialog.verifyBtn_success}
-          onTouchTap={this.handleCloseDialog}/>
-    ];
+    const formItemLayout = {
+      labelCol: {span: 6},
+      wrapperCol: {span: 14},
+      required: {true},
+    };
 
     const loginForms = (
         <div>
@@ -71,42 +53,53 @@ var CredentialDialog = React.createClass({
           <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
           <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
 
-          <TextField
-              ref="username"
-              style={{fontWeight:"300"}}
-              floatingLabelStyle={{fontWeight:"300"}}
-              errorText={this.state.floatingUserError}
-              onChange={this.handleInputErrorCheckUser}
-              onKeyPress={(e)=>{e.key==='Enter' && this.handleSubmit()}}
-              hintText={messages.app_username}
-              defaultValue={savedUsername}
-          />
-          <br/>
-          <TextField
-              ref="password"
-              type="password"
-              style={{fontWeight:"300"}}
-              floatingLabelStyle={{fontWeight:"300"}}
-              errorText={this.state.floatingPassError}
-              onChange={this.handleInputErrorCheckPass}
-              onKeyPress={(e)=>{e.key==='Enter' && this.handleSubmit()}}
-              hintText={messages.app_password}/>
+          <FormItem
+              {...formItemLayout}
+              label={"用户名："}
+              validateStatus={this.state.floatingUserError.length===0? "success": "error"}
+              help={this.state.floatingUserError}>
+            <Input ref="username"
+                   placeholder="请输入账户名"
+                   autoComplete="off"
+                   onContextMenu={false} onPaste={false} onCopy={false} onCut={false}
+                   onBlur={this.pwdOnBlur1}
+                   onChange={this.handleInputErrorCheckUser}
+            />
+          </FormItem>
+          <FormItem
+              {...formItemLayout}
+              label={"密码："}
+              validateStatus={this.state.floatingPassError.length===0? "success": "error"}
+              help={this.state.floatingPassError}>
+            <Input type="password"
+                   ref="password"
+                   placeholder="请输入密码"
+                   autoComplete="off"
+                   onContextMenu={false} onPaste={false} onCopy={false} onCut={false}
+                   onBlur={this.pwdOnBlur1}
+                   onChange={this.handleInputErrorCheckPass}
+            />
+          </FormItem>
         </div>
     );
 
-    const verifyText = (<div>
+    const verifyForm = (<div>
       <p>{messages.credentialDialog.verifyMessage}</p>
     </div>);
 
     return <div>
-      <Dialog
+      <Modal
+          onOk = {this.state.openVerify ? this.handleCloseDialog: this.handleSubmit}
+          onCancel = {this.state.openVerify ? this.verifyUnsuccess : this.handleCloseDialog}
+          okText = {this.state.openVerify ? messages.credentialDialog.verifyBtn_success: "登录"}
+          cancelText = {this.state.openVerify ? messages.credentialDialog.verifyBtn_fail: "取消"}
           title={this.getTitle()}
-          actions={this.state.openVerify ? verifyActions:actions}
-          modal={false}
-          open={this.props.openDialogCredential}
-          onRequestClose={this.handleCloseDialog}
-          children={this.state.openVerify ? verifyText : loginForms}
-      />
+          visible={this.props.openDialogCredential}>
+        <Form horizontal form={this.props.form}>
+          {this.state.openVerify ? verifyForm : loginForms}
+        </Form>
+      </Modal>
+
     </div>
   },
 
@@ -124,8 +117,8 @@ var CredentialDialog = React.createClass({
     this.handleInputErrorCheckPass();
 
     /* Save data & Handle login */
-    let username = this.refs.username.getValue();
-    let password = this.refs.password.getValue();
+    let username = this.refs.username.refs.input.value;
+    let password = this.refs.password.refs.input.value;
 
     if (username && password) {
       if (OctoClientAPI.saveCredential(this.props.appId, this.props.hexIv, username, password,
@@ -145,7 +138,8 @@ var CredentialDialog = React.createClass({
   },
 
   handleInputErrorCheckUser(){
-    let userName = this.refs.username.getValue();
+    //console.log("this.refs.username.refs.input.value", this.refs.username.refs.input.value);
+    let userName = this.refs.username.refs.input.value;
     if (!userName) {
       this.setState({floatingUserError: this.context.intl.messages.login_usernameEmpty});
     } else {
@@ -154,7 +148,7 @@ var CredentialDialog = React.createClass({
   },
 
   handleInputErrorCheckPass(){
-    let password = this.refs.password.getValue();
+    let password = this.refs.password.refs.input.value;
     if (!password) {
       this.setState({floatingPassError: this.context.intl.messages.login_pwdEmpty});
     } else {
