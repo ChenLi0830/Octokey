@@ -14,9 +14,7 @@ const {
     Paper,
     } = MUI;
 
-const {
-    Col,
-    } = ReactBootstrap;
+var {Grid,Row,Col} = ReactBootstrap;
 
 import {
     Steps,
@@ -67,20 +65,26 @@ var AuthJoin = React.createClass({
       //description: '描述啊描述啊'
     }].map((s, i) => <Step key={i} title={s.title} description={s.description}/>);
 
-    return (<div>
-          <Col style={{backgroundColor:ZenColor.grey1}}>
-            <Paper style={styles.paper} zDepth={1}>
-              <Col sm={8} smOffset={2} md={8} mdOffset={2} xs={12} style={styles.paperCol}>
-                <div style={{textAlign:"left"}}>
-                  <Steps current={this.state.step} className="antdsteps">{steps}</Steps>
-                  {this.state.step === 0 && contentOfStep[0]}
-                  {this.state.step === 1 && contentOfStep[1]}
-                  {this.state.step === 2 && contentOfStep[2]}
-                </div>
-              </Col>
-            </Paper>
-          </Col>
-        </div>
+    return (<Grid>
+          <Row style={{marginTop:"60px"}}>
+            <Col xs={12}>
+              <div>
+                <Col style={{backgroundColor:ZenColor.grey1}}>
+                  <Paper style={styles.paper} zDepth={1}>
+                    <Col sm={8} smOffset={2} md={8} mdOffset={2} xs={12} style={styles.paperCol}>
+                      <div style={{textAlign:"left"}}>
+                        <Steps current={this.state.step} className="antdsteps">{steps}</Steps>
+                        {this.state.step === 0 && contentOfStep[0]}
+                        {this.state.step === 1 && contentOfStep[1]}
+                        {this.state.step === 2 && contentOfStep[2]}
+                      </div>
+                    </Col>
+                  </Paper>
+                </Col>
+              </div>
+            </Col>
+          </Row>
+        </Grid>
     );
   },
 

@@ -59,24 +59,26 @@ var App = React.createClass({
         });
 
     //Todo add this part in welcome page for topic images
-/*    if (subsReady) {
-      if (Session.get("ajaxReadyCount") === 0) {//Ajax call should only be triggered once
-        userApps.publicApps.map((publicApp)=> {
-          fetch(publicApp.logoURL).then((response)=> {
-            if (response.status === 200) {//inc if successfully loaded the image
-              var prevValue = Session.get("ajaxReadyCount");
-              //Todo 标记没有logo的app,将来用
-              //if (response.headers.getAll("Content-Type") === "image/noFile")
-              Session.set("ajaxReadyCount", prevValue + 1);
-              return response.text();
-            }
-          })
-        });
-      }
-    }*/
+    /*    if (subsReady) {
+     if (Session.get("ajaxReadyCount") === 0) {//Ajax call should only be triggered once
+     userApps.publicApps.map((publicApp)=> {
+     fetch(publicApp.logoURL).then((response)=> {
+     if (response.status === 200) {//inc if successfully loaded the image
+     var prevValue = Session.get("ajaxReadyCount");
+     //Todo 标记没有logo的app,将来用
+     //if (response.headers.getAll("Content-Type") === "image/noFile")
+     Session.set("ajaxReadyCount", prevValue + 1);
+     return response.text();
+     }
+     })
+     });
+     }
+     }*/
 
     return {
-      subsReady: subsReady /*&& Session.get("ajaxReadyCount") >= userApps.publicApps.length*/,//Todo remove -1
+      subsReady: subsReady /*&& Session.get("ajaxReadyCount") >= userApps.publicApps.length*/,//Todo
+                                                                                              // remove
+                                                                                              // -1
       currentUserId: currentUserId,
       userApps: userApps,
     };
@@ -117,20 +119,21 @@ var App = React.createClass({
       }
     }
 
+    //flag of 是否show header
+    const showHeader = this.checkIfShowHeader();
+
     //Todo check userlogin status and check if the children is a restricted link, if it is,
     // redirect to login
     return (
         <div style={styles.wrapper}>
-          <Header location={this.props.location}/>
-          <Grid>
-            <Row style={{marginTop:"60px"}}>
-              <Col xs={12}>
+          {
+            showHeader ? <Header location={this.props.location}/> : null
+          }
+
                 {this.data.subsReady ?
                     this.props.children :
                     <AppLoading />}
-              </Col>
-            </Row>
-          </Grid>
+
           <LanguageSelection/>
         </div>
     )
@@ -172,6 +175,15 @@ var App = React.createClass({
           targetUrl
       );
     }
+  },
+
+  //登录和注册页面不显示header,其他都要
+  checkIfShowHeader(){
+    const routerPath = this.props.children.props.location.pathname;
+    const noHeaderPaths = ["/login", "/join"];
+    return _.every(noHeaderPaths, (noHeaderPath)=> {
+      return routerPath.indexOf(noHeaderPath) === -1;
+    });
   },
 });
 

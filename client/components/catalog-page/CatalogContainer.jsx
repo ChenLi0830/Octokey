@@ -7,6 +7,7 @@
  * Container of Catalog component - separate data from UI and logic, called by "routes"
  *******************************************************************************/
 var Catalog = require('./Catalog.jsx');
+var {Grid,Row,Col} = ReactBootstrap;
 
 var CatalogContainer = React.createClass({
   mixins: [
@@ -44,14 +45,20 @@ var CatalogContainer = React.createClass({
   },
 
   render(){
-    return <div>
-      <Catalog
-          subsReady={this.data.subsReady}
-          subscribeList={this.data.subsReady ? this.data.subscribeList : []}
-          allPublicApps={this.data.subsReady ? Session.get("allPublicApps") : []}
-          allCategories={this.data.subsReady ? this.data.allCategories : []}
-      />
-    </div>
+    return <Grid>
+      <Row style={{marginTop:"60px"}}>
+        <Col xs={12}>
+          <div>
+            <Catalog
+                subsReady={this.data.subsReady}
+                subscribeList={this.data.subsReady ? this.data.subscribeList : []}
+                allPublicApps={this.data.subsReady ? Session.get("allPublicApps") : []}
+                allCategories={this.data.subsReady ? this.data.allCategories : []}
+            />
+          </div>
+        </Col>
+      </Row>
+    </Grid>
   },
 
 });

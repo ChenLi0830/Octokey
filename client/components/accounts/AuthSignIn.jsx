@@ -7,6 +7,7 @@
  * Sign-in page component, called by "routes"
  *******************************************************************************/
 var LanguageIcon = require('../header/LanguageIcon.jsx');
+var {Grid,Row,Col} = ReactBootstrap;
 
 const Link = ReactRouter.Link;
 
@@ -18,10 +19,6 @@ const {
     DropDownMenu,
     MenuItem,
     } = MUI;
-
-const {
-    Col,
-    } = ReactBootstrap;
 
 const {FormattedMessage} = ReactIntl;
 
@@ -109,113 +106,120 @@ var AuthSignIn = React.createClass({
         <Link to="/"><img style={styles.logo} src="/img/logo.png"/></Link>
     );
 
-    return (<Col sm={6} smOffset={3} md={4} mdOffset={4} xs={12}>
-          <Paper style={styles.paper} zDepth={1}>
-            <form >
+    return (
+        <Grid>
+          <Row style={{marginTop:"60px"}}>
+            <Col xs={12}>
+              <Col sm={6} smOffset={3} md={4} mdOffset={4} xs={12}>
+                <Paper style={styles.paper} zDepth={1}>
+                  <form >
 
-              {logo}
+                    {logo}
 
-              <h2 style={styles.loginMessage}>
-                {messages["login-账户登录"]}
-              </h2>
+                    <h2 style={styles.loginMessage}>
+                      {messages["login-账户登录"]}
+                    </h2>
 
-              <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
-              <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
+                    <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
+                    <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
 
-              <Col xs={2}>
-                <DropDownMenu value={this.state.area}
-                              style={_.extend({},styles.dropDownMenu, {visibility:this.state.disableAreaDropdown?"hidden":"visible"})}
-                              underlineStyle={{border:"none"}}
-                              onChange={(e, index, value)=>{this.setState({area:value})}}>
-                  <MenuItem
-                      leftIcon={<LanguageIcon style={styles.languageItem} iconName="cn"/>}
-                      primaryText="中国  (+86)" label="+86" value="cn"
-                      style={styles.menuItem}
-                  />
-                  <MenuItem
-                      leftIcon={<LanguageIcon style={styles.languageItem} iconName="ca"/>}
-                      primaryText="Canada  (+1)" label="+1" value="ca"
-                      style={styles.menuItem}
-                  />
-                  <MenuItem
-                      leftIcon={<LanguageIcon style={styles.languageItem} iconName="us"/>}
-                      primaryText="United States  (+1)" label="+1" value="us"
-                      style={styles.menuItem}
-                  />
-                </DropDownMenu>
+                    <Col xs={2}>
+                      <DropDownMenu value={this.state.area}
+                                    style={_.extend({},styles.dropDownMenu, {visibility:this.state.disableAreaDropdown?"hidden":"visible"})}
+                                    underlineStyle={{border:"none"}}
+                                    onChange={(e, index, value)=>{this.setState({area:value})}}>
+                        <MenuItem
+                            leftIcon={<LanguageIcon style={styles.languageItem} iconName="cn"/>}
+                            primaryText="中国  (+86)" label="+86" value="cn"
+                            style={styles.menuItem}
+                        />
+                        <MenuItem
+                            leftIcon={<LanguageIcon style={styles.languageItem} iconName="ca"/>}
+                            primaryText="Canada  (+1)" label="+1" value="ca"
+                            style={styles.menuItem}
+                        />
+                        <MenuItem
+                            leftIcon={<LanguageIcon style={styles.languageItem} iconName="us"/>}
+                            primaryText="United States  (+1)" label="+1" value="us"
+                            style={styles.menuItem}
+                        />
+                      </DropDownMenu>
+                    </Col>
+
+                    <Col xs={10} style={styles.textInput}>
+                      <TextField
+                          ref="phoneOrEmail"
+                          style={{fontWeight:"300",left:5}}
+                          floatingLabelStyle={{fontWeight:"300"}}
+                          errorText={this.state.floatingUserText}
+                          inputStyle={{textAlign:"center"}}
+                          hintText={messages["emailOrMobile-邮箱或手机号"]}
+                          hintStyle={{textAlign:"center", width:"100%"}}
+                          onChange={this.handleTextFieldChange}
+                          onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
+                          autoComplete="false"
+                      />
+                    </Col>
+
+                    <br/>
+                    <TextField
+                        ref="password"
+                        type="password"
+                        style={{fontWeight:"300"}}
+                        floatingLabelStyle={{fontWeight:"300"}}
+                        errorText={this.state.floatingPassText}
+                        inputStyle={{textAlign:"center"}}
+                        hintText={messages["password-密码"]}
+                        hintStyle={{textAlign:"center", width:"100%"}}
+                        onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
+                        autoComplete="false"
+                    />
+
+
+                    { //短信验证
+                      /*<div>
+
+                       <RaisedButton label={typeof this.state.captchaBtn === "string"?
+                       messages[this.state.captchaBtn]:this.state.captchaBtn}
+                       onClick={this.handleRequestCode}
+                       style={styles.registerButton}
+                       primary={true}
+                       disabled={this.state.captchaBtn!=="requestCaptcha-获取验证码"}
+                       />
+
+                       <br/>
+
+                       <TextField
+                       ref="captcha"
+                       style={{fontWeight:"300", width:90}}
+                       floatingLabelStyle={{fontWeight:"300"}}
+                       errorText={this.state.floatingCaptchaText}
+                       //inputStyle={{textAlign:"center"}}
+                       hintText={messages["inputCaptcha-输入验证码"]}
+                       onKeyPress={(e)=>{e.key === 'Enter' && this.handleVerify()}}
+                       />
+                       <br/>
+                       <Link style={{display:"block", marginTop:"10px"}} to="/reset">
+                       {messages["forgotpwd-忘记密码"]}
+                       </Link>
+                       </div>*/
+                    }
+                  </form>
+
+                  <RaisedButton label={messages["signIn-登录"]}
+                                onClick={this.handleSubmit}
+                                style={styles.registerButton}
+                                primary={true}
+                                disabled={this.state.disableBtn}/>
+
+                  <p>{messages["noAccount-还没帐号"]}
+                    <Link to="/join">{messages["signUp_low-注册"]}</Link>
+                  </p>
+                </Paper>
               </Col>
-
-              <Col xs={10} style={styles.textInput}>
-                <TextField
-                    ref="phoneOrEmail"
-                    style={{fontWeight:"300",left:5}}
-                    floatingLabelStyle={{fontWeight:"300"}}
-                    errorText={this.state.floatingUserText}
-                    inputStyle={{textAlign:"center"}}
-                    hintText={messages["emailOrMobile-邮箱或手机号"]}
-                    hintStyle={{textAlign:"center", width:"100%"}}
-                    onChange={this.handleTextFieldChange}
-                    onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
-                    autoComplete="false"
-                />
-              </Col>
-
-              <br/>
-              <TextField
-                  ref="password"
-                  type="password"
-                  style={{fontWeight:"300"}}
-                  floatingLabelStyle={{fontWeight:"300"}}
-                  errorText={this.state.floatingPassText}
-                  inputStyle={{textAlign:"center"}}
-                  hintText={messages["password-密码"]}
-                  hintStyle={{textAlign:"center", width:"100%"}}
-                  onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
-                  autoComplete="false"
-              />
-
-
-              { //短信验证
-                /*<div>
-
-                 <RaisedButton label={typeof this.state.captchaBtn === "string"?
-                 messages[this.state.captchaBtn]:this.state.captchaBtn}
-                 onClick={this.handleRequestCode}
-                 style={styles.registerButton}
-                 primary={true}
-                 disabled={this.state.captchaBtn!=="requestCaptcha-获取验证码"}
-                 />
-
-                 <br/>
-
-                 <TextField
-                 ref="captcha"
-                 style={{fontWeight:"300", width:90}}
-                 floatingLabelStyle={{fontWeight:"300"}}
-                 errorText={this.state.floatingCaptchaText}
-                 //inputStyle={{textAlign:"center"}}
-                 hintText={messages["inputCaptcha-输入验证码"]}
-                 onKeyPress={(e)=>{e.key === 'Enter' && this.handleVerify()}}
-                 />
-                 <br/>
-                 <Link style={{display:"block", marginTop:"10px"}} to="/reset">
-                 {messages["forgotpwd-忘记密码"]}
-                 </Link>
-                 </div>*/
-              }
-            </form>
-
-            <RaisedButton label={messages["signIn-登录"]}
-                          onClick={this.handleSubmit}
-                          style={styles.registerButton}
-                          primary={true}
-                          disabled={this.state.disableBtn}/>
-
-            <p>{messages["noAccount-还没帐号"]}
-              <Link to="/join">{messages["signUp_low-注册"]}</Link>
-            </p>
-          </Paper>
-        </Col>
+            </Col>
+          </Row>
+        </Grid>
     );
   },
 
@@ -257,7 +261,8 @@ var AuthSignIn = React.createClass({
       if (this.state.disableAreaDropdown) {//login using email
         Meteor.loginWithPassword(phoneOrEmail, password, (error) => {
           if (error) {
-            this.setState({disableBtn: false, floatingPassText: T9n.get('error.accounts.'+error.reason)});
+            this.setState(
+                {disableBtn: false, floatingPassText: T9n.get('error.accounts.' + error.reason)});
             //console.log("error: ", error);
             return;
           }
@@ -267,7 +272,8 @@ var AuthSignIn = React.createClass({
       } else {//login using mobile
         Meteor.loginWithPhoneAndPassword({phone: cell}, password, (error) => {
           if (error) {
-            this.setState({disableBtn: false, floatingPassText: T9n.get('error.accounts.'+error.reason)});
+            this.setState(
+                {disableBtn: false, floatingPassText: T9n.get('error.accounts.' + error.reason)});
             //console.log("error: ", error);
             return;
           }
