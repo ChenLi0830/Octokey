@@ -55,8 +55,8 @@ var SearchBox = React.createClass({
 
     return <Popover overlay={this.state.searchResult}
                     visible={this.state.popOpen}
-                    placement="bottom"
-                    overlayStyle={{zIndex:"inherit"}}
+                    placement="top"
+                    overlayStyle={{zIndex:"inherit", overflow:"auto", height:"360px"}}
                     trigger="click"
                     onVisibleChange={this.handlePopVisibleChange}>
 
