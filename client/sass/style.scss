@@ -33,3 +33,14 @@ img {
 .control-label {
   font-weight: 300;
 }
+
+#rotateLock {
+  //animation-name: example;
+  //animation-duration: 5s;
+  //animation-timing-function: linear;
+  //animation-delay: 2s;
+  //animation-iteration-count: infinite;
+  //animation-direction: alternate;
+  -webkit-transition: 0.2s; /* Safari */
+  transition: 0.2s;
+}

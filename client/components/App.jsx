@@ -26,6 +26,10 @@ const styles = {
     left: 0,
     right: 0,
     backgroundColor: "lightslategrey",
+  },
+
+  heightPercent100: {
+    height: "100%",
   }
 };
 
@@ -124,15 +128,19 @@ var App = React.createClass({
 
     //Todo check userlogin status and check if the children is a restricted link, if it is,
     // redirect to login
+
+    let containerStyle = this.getContainerStyle();
+    console.log("containerStyle", containerStyle);
+
     return (
-        <div style={styles.wrapper}>
+        <div style={containerStyle}>
           {
             showHeader ? <Header location={this.props.location}/> : null
           }
 
-                {this.data.subsReady ?
-                    this.props.children :
-                    <AppLoading />}
+          {this.data.subsReady ?
+              this.props.children :
+              <AppLoading />}
 
           <LanguageSelection/>
         </div>
@@ -184,6 +192,15 @@ var App = React.createClass({
     return _.every(noHeaderPaths, (noHeaderPath)=> {
       return routerPath.indexOf(noHeaderPath) === -1;
     });
+  },
+
+  getContainerStyle(){
+    //如果是登录页面,就把height固定成100%, 否则就直接用styles.wrapper
+    if (this.props.children.props.location.pathname==='/login2'){
+      return _.extend({}, styles.wrapper, styles.heightPercent100);
+    } else {
+      return styles.wrapper;
+    }
   },
 });
 

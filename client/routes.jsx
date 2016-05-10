@@ -10,6 +10,7 @@ var App = require('./components/App.jsx');
 var ListPage = require('./components/main-page/ListPage.jsx');
 var CatalogContainer = require('./components/catalog-page/CatalogContainer.jsx');
 var AuthJoin = require('./components/accounts/AuthJoin.jsx');
+var AuthSignInNew = require('./components/accounts/AuthSignInNew.jsx');
 var PageNotFound = require('./components/PageNotFound.jsx');
 var IntlWrapper = require('./components/IntlWrapper.jsx');
 var AuthSignIn = require('./components/accounts/AuthSignIn.jsx');
@@ -46,6 +47,7 @@ const routes = (
       <Route path="/list" component={ListPage} onEnter={requireAuth}/>
       <Route path="/catalog" component={CatalogContainer} onEnter={requireAuth}/>
       <Route path="/join" component={AuthJoin} onEnter={verifyNotLogin}/>
+      <Route path="/login2" component={AuthSignInNew}/>
       {<Route path="/login" component={AuthSignIn} onEnter={verifyNotLogin}/>}
       {/*<Route path="/reset" component={AuthForgotPwdPage} onEnter={verifyNotLogin}/>*/}
       {<Route path="/verify-email/:token" component={VerifyEmailTokenPage}/>}
