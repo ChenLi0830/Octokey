@@ -33,7 +33,7 @@ var Footer = React.createClass({
 
     return (<div style={styles.container}>
           <p>
-            ©2016  Octokey  | O钥匙 - 360满分验证安全网站 | 鲁 ICP 备 16008215 号
+            ©2016  Octokey  | O钥匙 - 360安全验证满分网站 | 鲁 ICP 备 16008215 号
           </p>
         </div>
     )

@@ -55,7 +55,7 @@ const styles = {
     left: "100%",
     zIndex: "1",
     top: "40%",
-    width: "250px",
+    width: "200px",
     transform: "translateX(-50%) translateY(-48%)",
   },
 
@@ -65,7 +65,7 @@ const styles = {
     left: "100%",
     zIndex: "2",
     top: "40%",
-    width: "222px",
+    width: "178px",
     WebkitTransition: "0.2s", /* Safari */
     transition: "0.2s",
   },
