@@ -32,6 +32,13 @@ const styles = {
   paperCol: {
     float: "none",
   },
+
+  row:{
+    position: "relative",
+    top: "45%",
+    display: "block",
+    transform: "translateY(-50%)",
+  },
 };
 
 var AuthJoin = React.createClass({
@@ -65,8 +72,8 @@ var AuthJoin = React.createClass({
       //description: '描述啊描述啊'
     }].map((s, i) => <Step key={i} title={s.title} description={s.description}/>);
 
-    return (<Grid>
-          <Row style={{marginTop:"60px"}}>
+    return (<Grid style={{height:"100%"}}>
+          <Row style={styles.row}>
             <Col xs={12}>
               <div>
                 <Col style={{backgroundColor:ZenColor.grey1}}>

@@ -45,20 +45,14 @@ var CatalogContainer = React.createClass({
   },
 
   render(){
-    return <Grid>
-      <Row style={{marginTop:"60px"}}>
-        <Col xs={12}>
-          <div>
-            <Catalog
-                subsReady={this.data.subsReady}
-                subscribeList={this.data.subsReady ? this.data.subscribeList : []}
-                allPublicApps={this.data.subsReady ? Session.get("allPublicApps") : []}
-                allCategories={this.data.subsReady ? this.data.allCategories : []}
-            />
-          </div>
-        </Col>
-      </Row>
-    </Grid>
+    return <div>
+      <Catalog
+          subsReady={this.data.subsReady}
+          subscribeList={this.data.subsReady ? this.data.subscribeList : []}
+          allPublicApps={this.data.subsReady ? Session.get("allPublicApps") : []}
+          allCategories={this.data.subsReady ? this.data.allCategories : []}
+      />
+    </div>
   },
 
 });

@@ -34,13 +34,17 @@ img {
   font-weight: 300;
 }
 
-#rotateLock {
-  //animation-name: example;
-  //animation-duration: 5s;
-  //animation-timing-function: linear;
-  //animation-delay: 2s;
-  //animation-iteration-count: infinite;
-  //animation-direction: alternate;
-  -webkit-transition: 0.2s; /* Safari */
-  transition: 0.2s;
+#phoneUsername{
+  //width:100%;
+  span{
+    span.ant-select-selection--single{
+      height:38px;
+      border-radius:5px 0px 0px 5px;
+      border-right-width:0px;
+      span.ant-select-selection__rendered{
+        line-height:36px;
+      }
+    }
+
+  }
 }

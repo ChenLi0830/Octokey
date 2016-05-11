@@ -8,7 +8,7 @@
  *******************************************************************************/
 var LanguageIcon = require('../header/LanguageIcon.jsx');
 var AccountTab = require('../accounts/AccountTab.jsx');
-
+var HeaderLogo = require('./HeaderLogo.jsx');
 const {
     Navbar,
     Nav,
@@ -140,17 +140,6 @@ var Header = React.createClass({
 
   render(){
     messages = this.context.intl.messages.header;
-    const logo = (
-        <div style={{margin:"10px 10px 10px 30px"}}>
-          <img src="/img/logo.png"
-               style={{height: 40, verticalAlign:"top", color:Colors.grey800}}/>
-          <div src="vertical-center"
-               style={{display:"inline-block",marginLeft:12, color:Colors.grey700}}>
-            <h3>Octokey</h3>
-            <p>O钥匙</p>
-          </div>
-        </div>
-    );
 
     let account;
     //console.log("this.data.currentUser", this.data.currentUser);
@@ -166,7 +155,7 @@ var Header = React.createClass({
     return (<Paper style={{display: "flex", position: "relative",
     boxShadow: "0 0px 12px rgba(0, 0, 0, 0.18)", backgroundColor:"white"}}>
           <Col xs={2}>
-            {logo}
+            <HeaderLogo/>
           </Col>
 
           <Col xs={8} xsOffset={1}>

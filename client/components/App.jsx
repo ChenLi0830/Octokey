@@ -8,6 +8,8 @@
  *******************************************************************************/
 var AppLoading = require('./AppLoading.jsx');
 var Header = require('./header/Header.jsx');
+var UnloginHeader = require('./header/UnloginHeader.jsx');
+const Footer = require('./header/Footer.jsx');
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 var {AppCanvas,Paper} = MUI;
@@ -25,7 +27,7 @@ const styles = {
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: "lightslategrey",
+    backgroundColor: "#ECEFF1",
   },
 
   heightPercent100: {
@@ -124,8 +126,9 @@ var App = React.createClass({
     }
 
     //flag of 是否show header
-    const showHeader = this.checkIfShowHeader();
+    const showFullHeader = this.checkIfShowFullHeader();
 
+    console.log("showFullHeader", showFullHeader);
     //Todo check userlogin status and check if the children is a restricted link, if it is,
     // redirect to login
 
@@ -135,14 +138,31 @@ var App = React.createClass({
     return (
         <div style={containerStyle}>
           {
-            showHeader ? <Header location={this.props.location}/> : null
+            showFullHeader ?
+                <Header location={this.props.location}/> : <UnloginHeader location={this.props.location}/>
           }
 
-          {this.data.subsReady ?
-              this.props.children :
-              <AppLoading />}
+          {//不showheader的page也不添加grid
+            showFullHeader ?
+                <Grid>
+                  <Row style={{marginTop:"60px"}}>
+                    <Col xs={12}>
+                      {this.data.subsReady ?
+                          this.props.children :
+                          <AppLoading />
+                      }
+                    </Col>
+                  </Row>
+                </Grid> :
+                (
+                    this.data.subsReady ?
+                          this.props.children :
+                          <AppLoading />
+                )
+          }
 
           <LanguageSelection/>
+          <Footer/>
         </div>
     )
   },
@@ -186,7 +206,7 @@ var App = React.createClass({
   },
 
   //登录和注册页面不显示header,其他都要
-  checkIfShowHeader(){
+  checkIfShowFullHeader(){
     const routerPath = this.props.children.props.location.pathname;
     const noHeaderPaths = ["/login", "/join"];
     return _.every(noHeaderPaths, (noHeaderPath)=> {
@@ -196,7 +216,7 @@ var App = React.createClass({
 
   getContainerStyle(){
     //如果是登录页面,就把height固定成100%, 否则就直接用styles.wrapper
-    if (this.props.children.props.location.pathname==='/login2'){
+    if (this.props.children.props.location.pathname === '/login' || this.props.children.props.location.pathname === '/join') {
       return _.extend({}, styles.wrapper, styles.heightPercent100);
     } else {
       return styles.wrapper;

@@ -45,7 +45,7 @@ var Catalog = React.createClass({
     }
     return <div>
       <div>
-        <Row>
+        <Row style={{marginBottom:"60px"}}>
           <Col span="6">
             <CatalogSideBar allCategories={this.props.allCategories}
                             zenApps={this.props.allPublicApps}

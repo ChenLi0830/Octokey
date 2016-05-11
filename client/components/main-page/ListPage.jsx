@@ -65,42 +65,36 @@ var ListPage = React.createClass({
     //console.log("this.data.chosenTopics", this.data.chosenTopics);
     //console.log("this.data.userCredentials", this.data.userCredentials);
 
-    return <Grid>
-      <Row style={{marginTop:"60px"}}>
-        <Col xs={12}>
-          <div>
-            {
-              this.state.openChooseTopicPage ?
-                  <ChooseTopicPage onClosePage={this.handleCloseTopicPage}
-                                   openPage={this.state.openChooseTopicPage}/> : null
-            }
+    return <div>
+      {
+        this.state.openChooseTopicPage ?
+            <ChooseTopicPage onClosePage={this.handleCloseTopicPage}
+                             openPage={this.state.openChooseTopicPage}/> : null
+      }
 
-            {/*this.state.openChooseAppPage ?
-             <ChooseAppPage onClosePage={()=>{this.setState({openChooseAppPage: false})}}
-             openPage = {this.state.openChooseAppPage} />: null*/
-            }
+      {/*this.state.openChooseAppPage ?
+       <ChooseAppPage onClosePage={()=>{this.setState({openChooseAppPage: false})}}
+       openPage = {this.state.openChooseAppPage} />: null*/
+      }
 
-            <FloatingEditButton
-                whenEditButtonClicked={this.handleEditButtonClick}
-                userEditStatus={this.state.userEditStatus}
-            />
+      <FloatingEditButton
+          whenEditButtonClicked={this.handleEditButtonClick}
+          userEditStatus={this.state.userEditStatus}
+      />
 
 
-            {
-              <UserAppsContainer
-                  currentUser={this.data.currentUser}
-                  chosenPublicApps={this.data.chosenPublicApps}
-                  chosenTopics={this.data.chosenTopics}
-                  hexIv={this.data.hexIv}
-                  userEditStatus={this.state.userEditStatus}
-                  userCredentials={this.data.userCredentials}
-                  appContainerZIndex={(this.state.userEditStatus === "remove" || this.state.userEditStatus === "config")? "400":"inherit"}
-              />
-            }
-          </div>
-        </Col>
-      </Row>
-    </Grid>
+      {
+        <UserAppsContainer
+            currentUser={this.data.currentUser}
+            chosenPublicApps={this.data.chosenPublicApps}
+            chosenTopics={this.data.chosenTopics}
+            hexIv={this.data.hexIv}
+            userEditStatus={this.state.userEditStatus}
+            userCredentials={this.data.userCredentials}
+            appContainerZIndex={(this.state.userEditStatus === "remove" || this.state.userEditStatus === "config")? "400":"inherit"}
+        />
+      }
+    </div>
   },
 
   handleCloseTopicPage(chooseApps){
