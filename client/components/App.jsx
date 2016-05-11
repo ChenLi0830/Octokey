@@ -161,7 +161,7 @@ var App = React.createClass({
                 )
           }
 
-          <LanguageSelection/>
+          {/*<LanguageSelection/>*/}
           <Footer/>
         </div>
     )
@@ -208,15 +208,18 @@ var App = React.createClass({
   //登录和注册页面不显示header,其他都要
   checkIfShowFullHeader(){
     const routerPath = this.props.children.props.location.pathname;
-    const noHeaderPaths = ["/login", "/join"];
+    console.log("routerPath", routerPath);
+    const noHeaderPaths = ["/login", "/join", "/"];
     return _.every(noHeaderPaths, (noHeaderPath)=> {
-      return routerPath.indexOf(noHeaderPath) === -1;
+      return routerPath !== noHeaderPath;
+      //return routerPath.indexOf(noHeaderPath) === -1;
     });
   },
 
   getContainerStyle(){
+    const showHeader = this.checkIfShowFullHeader();
     //如果是登录页面,就把height固定成100%, 否则就直接用styles.wrapper
-    if (this.props.children.props.location.pathname === '/login' || this.props.children.props.location.pathname === '/join') {
+    if (!showHeader) {
       return _.extend({}, styles.wrapper, styles.heightPercent100);
     } else {
       return styles.wrapper;

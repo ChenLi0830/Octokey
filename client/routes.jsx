@@ -43,7 +43,7 @@ function verifyNotLogin(nextState, replace) {
 
 const routes = (
     <Route path="/" component={App}>
-      <IndexRoute component={AuthSignIn} onEnter={verifyNotLogin}/>
+      <IndexRoute component={AuthSignInNew} onEnter={verifyNotLogin}/>
       <Route path="/list" component={ListPage} onEnter={requireAuth}/>
       <Route path="/catalog" component={CatalogContainer} onEnter={requireAuth}/>
       <Route path="/join" component={AuthJoin} onEnter={verifyNotLogin}/>

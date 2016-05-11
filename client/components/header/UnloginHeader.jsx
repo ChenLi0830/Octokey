@@ -30,7 +30,7 @@ const styles = {
     lineHeight: "30px",
     marginTop: "10px",
     color: ZenColor.blueGrey,
-    fontSize: "14px",
+    fontSize: "12px",
   }
 };
 
@@ -51,7 +51,7 @@ var UnloginHeader = React.createClass({
 
     //右上角的Btn
     let btnLink, btnTitle;
-    if (this.props.location.pathname==='/login'){
+    if (this.props.location.pathname==='/login' || this.props.location.pathname==='/'){
       btnLink = '/join';
       btnTitle = '注册';
     } else if (this.props.location.pathname==='/join'){
