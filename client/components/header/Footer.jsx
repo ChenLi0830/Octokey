@@ -9,7 +9,7 @@
 const styles = {
   container: {
     //position: "fixed",
-    position:"absolute",
+    position: "absolute",
     bottom: "20px",
     width: "100%",
     textAlign: "center",
@@ -33,7 +33,10 @@ var Footer = React.createClass({
 
     return (<div style={styles.container}>
           <p>
-            ©2016  Octokey  | O钥匙 - 360安全验证满分网站 | 鲁 ICP 备 16008215 号
+            ©2016 Octokey | O钥匙 - <a href="http://webscan.360.cn/index/checkwebsite/url/oyaoshi.com"
+                                     name="9b4249c04b2e8136624aa54bdae090f9"
+                                     style={{color:"#AEBDC9"}}>360安全验证满分网站
+          </a> | 鲁 ICP 备 16008215 号
           </p>
         </div>
     )
