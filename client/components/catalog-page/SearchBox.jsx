@@ -55,14 +55,14 @@ var SearchBox = React.createClass({
 
     return <Popover overlay={this.state.searchResult}
                     visible={this.state.popOpen}
-                    placement="top"
-                    overlayStyle={{zIndex:"inherit", overflow:"auto", height:"360px"}}
+                    placement="bottom"
+                    overlayStyle={{zIndex:"inherit"}}
                     trigger="click"
                     onVisibleChange={this.handlePopVisibleChange}>
 
       <InputGroup className={searchCls} style={styles.searchInput}>
         <Input placeholder={messages["searchApps-搜索网站"]}
-               style={{textAlign:"center"}}
+               style={{textAlign:"center", zIndex:"inherit"}}
                value={this.state.searchText}
                onChange={this.handleSearch}
                onFocus={this.handleFocusBlur} onBlur={this.handleFocusBlur}
