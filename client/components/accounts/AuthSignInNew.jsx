@@ -37,6 +37,7 @@ const styles = {
     transform: "translateX(1px)",
     borderTop: "none",
     borderBottom: "none",
+    transitionDuration:"1s",
   },
 
   doorStripLeft: {
@@ -57,6 +58,7 @@ const styles = {
     top: "40%",
     width: "200px",
     transform: "translateX(-50%) translateY(-48%)",
+    transition: "opacity 0.5s ease",
   },
 
   lockRotatePart: {
@@ -66,8 +68,8 @@ const styles = {
     zIndex: "2",
     top: "40%",
     width: "178px",
-    WebkitTransition: "0.2s", /* Safari */
-    transition: "0.2s",
+    //WebkitTransition: "0.2s", /* Safari */
+    transition: "all 0.3s ease, opacity 0.5s ease",
   },
 
   registerButton: {
@@ -98,6 +100,7 @@ var AuthSignInNew = React.createClass({
       captchaBtn: "requestCaptcha-获取验证码",
       rotateAngle: 0,
       loginSuccessful: false,
+      lockPartsLoaded:0,//如果lockPartsLoaded===2表示两张图都load好了
     };
   },
 
@@ -120,19 +123,22 @@ var AuthSignInNew = React.createClass({
             <Col span="7" style={{height:"100%"}} className={this.state.loginSuccessful ? "animated fadeOutLeft":""}>
               <div id="leftDoor" style={{backgroundColor:"#eceff1", height:"100%"}}>
                 <div id="leftStrip"
-                     style={_.extend({}, styles.doorStripBase, styles.doorStripLeft)}>
+                     style={_.extend({}, styles.doorStripBase, styles.doorStripLeft, {opacity:this.state.lockPartsLoaded===2?1:0})}>
                 </div>
-                <img style={styles.lockFixedPart} src="/img/lock_stable.png"/>
+                <img style={_.extend({}, styles.lockFixedPart, {opacity:this.state.lockPartsLoaded===2?1:0})}
+                     src="/img/lock_stable.png"
+                     onLoad={()=>{this.setState({lockPartsLoaded:this.state.lockPartsLoaded+1})}}/>
                 <img id="rotateLock"
-                     style={_.extend({}, styles.lockRotatePart, {transform: lockTransform})}
-                     src="/img/lock_rotate.png" onClick={this.handleRotateLock}/>
+                     style={_.extend({}, styles.lockRotatePart, {transform: lockTransform}, {opacity:this.state.lockPartsLoaded===2?1:0})}
+                     src="/img/lock_rotate.png" onClick={this.handleRotateLock}
+                     onLoad={()=>{this.setState({lockPartsLoaded:this.state.lockPartsLoaded+1})}}/>
               </div>
             </Col>
 
             <Col span="17" style={{height:"100%"}} className={this.state.loginSuccessful ? "animated fadeOutRight":""}>
               <div id="rightDoor" style={{backgroundColor:"#eceff1", height:"100%"}}>
                 <div id="rightStrip"
-                     style={_.extend({}, styles.doorStripBase, styles.doorStripRight)}>
+                     style={_.extend({}, styles.doorStripBase, styles.doorStripRight, {opacity:this.state.lockPartsLoaded===2?1:0})}>
                 </div>
 
                 <Col span="6" offset="4"
