@@ -1,7 +1,7 @@
 /*******************************************************************************
- * Copyright (C) 2015 ZenID Inc.
+ * Copyright (C) 2015-2016 Octokey Inc.
  *
- * Creator: Chen Li<chen.li@noc-land.com>
+ * Creator: Chen Li<yichen.li0830@gmail.com>
  * Creation Date: 2015-12-26
  *
  * Dialog for Add New Account for an App, this should present when user choose to add a new app
