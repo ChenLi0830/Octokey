@@ -21,7 +21,6 @@ fourseven:scss
 u2622:persistent-session
 meteorhacks:ssr
 accounts-password
-meteorhacks:zones
 standard-minifier-css
 standard-minifier-js
 cfs:standard-packages
