@@ -20,7 +20,7 @@ const styles = {
 
 var Footer = React.createClass({
   propTypes: {
-    location: React.PropTypes.object.isRequired,
+    //location: React.PropTypes.object.isRequired,
   },
 
   contextTypes: {

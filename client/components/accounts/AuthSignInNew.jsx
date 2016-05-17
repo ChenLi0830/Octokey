@@ -12,12 +12,7 @@ var LanguageIcon = require('../header/LanguageIcon.jsx');
 const Link = ReactRouter.Link;
 
 const {
-    Paper,
-    FlatButton,
-    TextField,
     RaisedButton,
-    DropDownMenu,
-    MenuItem,
     } = MUI;
 
 import { Row, Col, Input, Select, Form } from 'antd';
@@ -213,8 +208,8 @@ var AuthSignInNew = React.createClass({
 
   handleInputErrorCheckUser(){
     let phoneOrEmail = this.refs.phoneOrEmail.refs.input.value;
-    console.log("phoneOrEmail", phoneOrEmail);
-    console.log("this.state.disableAreaDropdown", this.state.disableAreaDropdown);
+    //console.log("phoneOrEmail", phoneOrEmail);
+    //console.log("this.state.disableAreaDropdown", this.state.disableAreaDropdown);
 
     //Todo need to check error on server side as well
     //If it is cellnumber
@@ -240,11 +235,11 @@ var AuthSignInNew = React.createClass({
   },
 
   handleSubmit(){
-    console.log("handleSubmit");
+    //console.log("handleSubmit");
     /* Error check */
     const noInputError = this.handleInputErrorCheckUser() && this.handleInputErrorCheckPass();
 
-    console.log("noInputError", noInputError);
+    //console.log("noInputError", noInputError);
     /* Save data & Handle login */
     let phoneOrEmail = this.refs.phoneOrEmail.refs.input.value;
 
@@ -265,7 +260,7 @@ var AuthSignInNew = React.createClass({
     if (phoneOrEmail && password && noInputError) {
       this.setState({disableBtn: true});
 
-      console.log("phoneOrEmail, password", phoneOrEmail, password);
+      //console.log("phoneOrEmail, password", phoneOrEmail, password);
       if (this.state.disableAreaDropdown) {//login using email
         Meteor.loginWithPassword(phoneOrEmail, password, (error) => {
           if (error) {
@@ -323,7 +318,7 @@ var AuthSignInNew = React.createClass({
   },
 
   handleRotateLock(){
-    console.log("handleRotateLock");
+    //console.log("handleRotateLock");
     const angle = Math.random() * 180 - 90;
     this.setState({rotateAngle: this.state.rotateAngle + angle});
   },
@@ -341,7 +336,7 @@ var AuthSignInNew = React.createClass({
   },
 
   handleSelectArea(selectedValue){
-    console.log("selectedValue", selectedValue);
+    //console.log("selectedValue", selectedValue);
     this.setState({area: selectedValue});
   },
 

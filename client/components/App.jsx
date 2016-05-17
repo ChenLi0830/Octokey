@@ -128,12 +128,12 @@ var App = React.createClass({
     //flag of 是否show header
     const showFullHeader = this.checkIfShowFullHeader();
 
-    console.log("showFullHeader", showFullHeader);
+    //console.log("showFullHeader", showFullHeader);
     //Todo check userlogin status and check if the children is a restricted link, if it is,
     // redirect to login
 
     let containerStyle = this.getContainerStyle();
-    console.log("containerStyle", containerStyle);
+    //console.log("containerStyle", containerStyle);
 
     return (
         <div style={containerStyle}>
@@ -208,7 +208,7 @@ var App = React.createClass({
   //登录和注册页面不显示header,其他都要
   checkIfShowFullHeader(){
     const routerPath = this.props.children.props.location.pathname;
-    console.log("routerPath", routerPath);
+    //console.log("routerPath", routerPath);
     const noHeaderPaths = ["/login", "/join", "/"];
     return _.every(noHeaderPaths, (noHeaderPath)=> {
       return routerPath !== noHeaderPath;
