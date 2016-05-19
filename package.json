@@ -1,46 +1,72 @@
 {
-  "name": "ZenID_meteor1.3",
-  "version": "1.0.0",
-  "description": "",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "scripts": {
+    "pretest": "npm run lint --silent",
+    "test": "meteor test --once --driver-package dispatch:mocha-phantomjs",
+    "test-watch": "meteor test --driver-package practicalmeteor:mocha",
+    "test-app-watch": "meteor test --full-app --driver-package practicalmeteor:mocha",
+    "lint": "eslint .",
+    "chimp-watch": "chimp --ddp=http://localhost:3000 --watch --mocha --path=tests"
+  },
   "dependencies": {
     "antd": "^0.12.13",
+    "autoprefixer": "^6.3.1",
+    "classnames": "^2.2.3",
     "crypto-js": "^3.1.6",
+    "faker": "^3.0.1",
     "indexof": "0.0.1",
     "intl": "^1.1.0",
     "lodash": "^4.1.0",
     "material-ui": "0.15.0-beta.1",
     "meteor-node-stubs": "^0.2.3",
     "react": "^15.0.1",
+    "react-addons-css-transition-group": "^15.0.0",
     "react-addons-pure-render-mixin": "^15.0.1",
     "react-bootstrap": "^0.28.5",
     "react-dom": "^15.0.1",
     "react-intl": "^2.0.0-beta-2",
-    "react-router": "^2.0.0-rc5",
+    "react-router": "^2.0.0",
     "react-tap-event-plugin": "^1.0.0",
     "reflux": "^0.3.0",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
-    "eslint": "^2.5.1",
-    "eslint-config-airbnb": "^6.2.0",
-    "eslint-plugin-meteor": "^3.4.0",
-    "eslint-plugin-react": "^4.2.3"
-  },
-  "scripts": {
-    "lint": "eslint .",
-    "pretest": "npm run lint --silent"
+    "eslint": "^2.3.0",
+    "eslint-config-airbnb": "^6.1.0",
+    "eslint-plugin-meteor": "^3.0.1",
+    "eslint-plugin-react": "^4.0.0"
   },
   "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module"
+    },
     "plugins": [
       "meteor"
     ],
     "extends": [
       "airbnb",
-      "plugin:meteor/guide"
+      "plugin:meteor/recommended"
     ],
-    "rules": {}
+    "rules": {
+      "meteor/eventmap-params": [
+        2,
+        {
+          "eventParamName": "event",
+          "templateInstanceParamName": "instance"
+        }
+      ],
+      "meteor/template-names": [
+        0
+      ]
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {
+        "browsers": [
+          "last 2 versions"
+        ]
+      }
+    }
   }
 }
