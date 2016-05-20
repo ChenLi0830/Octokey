@@ -10,6 +10,8 @@ var CatalogSingleApp = require('./CatalogSingleApp.jsx');
 
 import { Icon, Input, Button } from 'antd';
 import classNames from 'classnames';
+import _ from 'lodash'
+
 const InputGroup = Input.Group;
 
 import { Popover} from 'antd';
@@ -95,16 +97,16 @@ var SearchBox = React.createClass({
     let eventTarget = event.currentTarget;
     this.setState({searchText: event.target.value},
         function () {
-          if (this.state.searchText.trim().length === 0) {//If no search text
+          let searchText = this.state.searchText.trim().toLowerCase();
+          if (searchText.length === 0) {//If no search text
             this.setState({searchResult: null, popOpen: false});
             return;
           }
 
-          Meteor.call("searchApps", this.state.searchText.trim(), (error, searchResult)=> {
-            if (error) {
-              console.log("error", error);
-              return;
-            }
+          const searchResult = _.filter(this.props.zenApps, (app)=> {
+            return app.appName.toLowerCase().startsWith(searchText);
+          });
+
             let renderedResult = searchResult.map((app)=> {
               const logoURL = app.noLogo ? "" : OctoClientAPI.getLogoUrl(app._id),
                   subscribed = this.props.subscribeList[app._id];
@@ -134,7 +136,6 @@ var SearchBox = React.createClass({
               popOpen: true,
               anchorEl: eventTarget,
             });
-          });
         }.bind(this));
   }
 });
