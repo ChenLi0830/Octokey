@@ -161,7 +161,7 @@ var AuthSignInNew = React.createClass({
                              style={!this.state.disableAreaDropdown ? {borderRadius: "0 5px 5px 0", height:"38px", fontSize:"14px"}:{borderRadius: "5px", height:"38px", fontSize:"14px"}}
                              validateStatus={this.state.floatingUserText===""?"":"error"}
                              onChange={this.handleTextFieldChange}
-                             onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit()}}
+                             onKeyPress={(e)=>{e.key === 'Enter' && this.handleSubmit();e.key !== 'Enter' && this.handleRotateLock()}}
                              help={this.state.floatingUserText}
                       />
                     </InputGroup>

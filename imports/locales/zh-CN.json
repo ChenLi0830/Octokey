@@ -59,7 +59,7 @@
     "loadMoreApps-加载更多": "加载更多应用",
     "searchApps-搜索网站": "搜索要添加的网站",
     "FAB_cancel": "返回",
-    "app_credentialDialogMessage": "安全登录: 请输入登录信息【{appName}】",
+    "app_credentialDialogMessage": "安全登录: 请选择访问方式【{appName}】",
     "app_credentialDialogCancel": "取消",
     "app_credentialDialogLogin": "去登录",
     "app_username": "用户名",

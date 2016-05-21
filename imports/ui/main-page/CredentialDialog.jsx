@@ -4,11 +4,12 @@
  * Creator: Chen Li<yichen.li0830@gmail.com>
  * Creation Date: 2015-12-31
  *
- * Dialog component for user input app credential, called by "AppsContainer"
- *******************************************************************************/ import React from "react"
+ * Dialog component for user input app credential, called by "UserAppsContainer"
+ *******************************************************************************/
+import React from "react"
 import {FormattedMessage} from "react-intl";
-
-import { Button, Form, Input, Modal, Tooltip, Icon } from 'antd';
+import _ from "lodash";
+import { Button, Form, Input, Modal, Tooltip, Icon,DatePicker, Row, Col, Checkbox } from 'antd';
 const createForm = Form.create;
 const FormItem = Form.Item;
 
@@ -33,6 +34,17 @@ const styles = {
     fontSize: "16px",
     fontWeight: "200",
   },
+  inlineCol: {
+    display: "inline-block",
+    float: "none",
+  },
+  inlineColTitle: {
+    textAlign: "center",
+    lineHeight: "50px",
+  },
+  verticalDivider: {
+    borderLeft: "thin solid #E9E9E9",
+  }
 };
 
 var CredentialDialog = React.createClass({
@@ -44,6 +56,7 @@ var CredentialDialog = React.createClass({
     openDialogCredential: React.PropTypes.bool.isRequired,
     whenCloseDialog: React.PropTypes.func.isRequired,
     whenSubmitCredential: React.PropTypes.func.isRequired,
+    whenVisitHomePage: React.PropTypes.func.isRequired,
     hexIv: React.PropTypes.string.isRequired,
   },
 
@@ -71,44 +84,60 @@ var CredentialDialog = React.createClass({
     };
 
     const loginForms = (
-        <div>
-          {/*This is here to stop chrome's username and password autofill*/}
-          <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
-          <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
+        <Row type="flex" align="middle">
+        <Col span="9" style={styles.inlineCol}>
+            <h3 style={styles.inlineColTitle}>直接访问</h3>
+            <Form horizontal form={this.props.form}>
 
-          <FormItem
-              {...formItemLayout}
-              label={"用户名："}
-              validateStatus={this.state.floatingUserError.length===0? "": "error"}
-              help={this.state.floatingUserError}>
-            <Input ref="username"
-                   placeholder="请输入账户名"
-                   autoComplete="off"
-                   onContextMenu={false} onPaste={false} onCopy={false} onCut={false}
-                   onBlur={this.pwdOnBlur1}
-                   onChange={this.handleInputErrorCheckUser}
-            />
-          </FormItem>
-          <FormItem
-              {...formItemLayout}
-              label={"密码："}
-              validateStatus={this.state.floatingPassError.length===0? "": "error"}
-              help={this.state.floatingPassError}>
-            <Input type="password"
-                   ref="password"
-                   placeholder="请输入密码"
-                   autoComplete="off"
-                   onContextMenu={false} onPaste={false} onCopy={false} onCut={false}
-                   onBlur={this.pwdOnBlur1}
-                   onChange={this.handleInputErrorCheckPass}
-            />
-          </FormItem>
-        </div>
+              <FormItem style={{ marginTop: 24, textAlign:"center" }}>
+                <Button htmlType="submit" onClick={this.handleVisitHomePage}>去主页</Button>
+              </FormItem>
+            </Form>
+          </Col>
+
+          <Col span="15" style={_.extend({}, styles.inlineCol, styles.verticalDivider)}>
+            <h3 style={styles.inlineColTitle}>帐号登录访问</h3>
+            <Form horizontal form={this.props.form}>
+
+              {/*This is here to stop chrome's username and password autofill*/}
+              <input style={{display:"none"}} type="text" name="fakeusernameremembered"/>
+              <input style={{display:"none"}} type="password" name="fakepasswordremembered"/>
+
+              <FormItem
+                  {...formItemLayout}
+                  label={"用户名："}
+                  validateStatus={this.state.floatingUserError.length===0? "": "error"}
+                  help={this.state.floatingUserError}>
+                <Input ref="username"
+                       placeholder="请输入账户名"
+                       autoComplete="off"
+                       onContextMenu={false} onPaste={false} onCopy={false} onCut={false}
+                       onBlur={this.pwdOnBlur1}
+                       onChange={this.handleInputErrorCheckUser}
+                />
+              </FormItem>
+              <FormItem
+                  {...formItemLayout}
+                  label={"密码："}
+                  validateStatus={this.state.floatingPassError.length===0? "": "error"}
+                  help={this.state.floatingPassError}>
+                <Input type="password"
+                       ref="password"
+                       placeholder="请输入密码"
+                       autoComplete="off"
+                       onContextMenu={false} onPaste={false} onCopy={false} onCut={false}
+                       onBlur={this.pwdOnBlur1}
+                       onChange={this.handleInputErrorCheckPass}
+                />
+              </FormItem>
+            </Form>
+          </Col>
+        </Row>
     );
 
-    const verifyForm = (<div>
+    const verifyForm = (<Form horizontal form={this.props.form}>
       <p>{messages.credentialDialog.verifyMessage}</p>
-    </div>);
+    </Form>);
 
     return <div>
       <Modal
@@ -118,9 +147,8 @@ var CredentialDialog = React.createClass({
           cancelText={this.state.openVerify ? messages.credentialDialog.verifyBtn_fail: "取消"}
           title={this.getTitle()}
           visible={this.props.openDialogCredential}>
-        <Form horizontal form={this.props.form}>
-          {this.state.openVerify ? verifyForm : loginForms}
-        </Form>
+
+        {this.state.openVerify ? verifyForm : loginForms}
       </Modal>
 
     </div>
@@ -139,7 +167,7 @@ var CredentialDialog = React.createClass({
     const normalTitle = <div>
       {logo}
       {<FormattedMessage id="app_credentialDialogMessage" values={{appName:this.props.appName}}/>}
-      <Tooltip title={<ul><li>该登录信息会被放入您的登录保险箱</li><li>国际领先加密算法AES256, 保证安全无虞</li></ul>}>
+      <Tooltip title={<ul><li>国际领先加密算法AES256, 保证安全无虞</li></ul>}>
         <Icon type="question-circle-o"/>
       </Tooltip>
     </div>;
@@ -166,7 +194,7 @@ var CredentialDialog = React.createClass({
         this.props.whenSubmitCredential(username, password);
         savedUsername = username;
 
-        this.verifyCredential();
+        this.openVerifyDialog();
         //this.props.whenCloseDialog();
       }
     }
@@ -202,15 +230,20 @@ var CredentialDialog = React.createClass({
     this.props.whenCloseDialog();
   },
 
-  verifyCredential(){
+  openVerifyDialog(){
     this.setState({openVerify: true});
-
   },
 
   verifyUnsuccess(){//login unsuccessful, reset username and password
     OctoClientAPI.removeCredential(this.props.appId, savedUsername);
     this.setState({openVerify: false});
   },
+
+  handleVisitHomePage(){
+    this.handleCloseDialog();
+    this.props.whenVisitHomePage();
+  },
+
 });
 
 module.exports = CredentialDialog;

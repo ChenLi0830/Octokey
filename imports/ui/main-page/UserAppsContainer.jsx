@@ -121,6 +121,7 @@ var UserAppsContainer = React.createClass({
                             openDialogCredential={this.state.openDialogCredential}
                             whenCloseDialog={()=>{this.setState({openDialogCredential: false})}}
                             whenSubmitCredential={this.handleLogin}
+                            whenVisitHomePage={this.handleVisitHomePage}
                             hexIv={this.props.hexIv}
           /> : null}
 
