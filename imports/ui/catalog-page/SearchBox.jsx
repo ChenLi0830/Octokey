@@ -55,7 +55,7 @@ var SearchBox = React.createClass({
       'ant-search-input-focus': this.state.searchOnFocus,
     });
 
-    return <Popover overlay={this.state.searchResult}
+    return <Popover content={this.state.searchResult}
                     visible={this.state.popOpen}
                     placement="bottom"
                     overlayStyle={{zIndex:"inherit"}}
