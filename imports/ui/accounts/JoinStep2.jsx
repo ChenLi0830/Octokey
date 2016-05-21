@@ -13,7 +13,7 @@ import {
 
 var Actions = require("../action-and-stores/Actions.jsx");
 
-import {Col} from "react-bootstrap";
+import {Col} from "antd";
 
 import {
     Button,
@@ -79,7 +79,7 @@ var JoinStep2 = React.createClass({
   render(){
     //messages = _.extend({}, this.context.intl.messages.join, this.context.intl.messages.signIn);
     return (
-        <Col sm={8} smOffset={2} md={6} mdOffset={3} xs={12} style={styles.contentCol}>
+        <Col sm={{ span: 16, offset: 4}} md={{ span: 12, offset: 6}} xs={24} style={styles.contentCol}>
           <div>
             <h1 style={styles.primaryText}>
               {messages["setMasterPWD-设置核心密码"]}

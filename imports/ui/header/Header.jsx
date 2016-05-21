@@ -9,7 +9,7 @@
 var LanguageIcon = require('../header/LanguageIcon.jsx');
 var HeaderLogo = require('./HeaderLogo.jsx');
 
-import {Col,} from "react-bootstrap";
+import {Col,} from "antd";
 import _ from "lodash";
 import {
     Paper
@@ -131,11 +131,11 @@ var Header = React.createClass({
     //console.log("account", account);
     return (<Paper style={{display: "flex", position: "relative",
     boxShadow: "0 0px 12px rgba(0, 0, 0, 0.18)", backgroundColor:"white"}}>
-          <Col xs={2}>
+          <Col xs={4}>
             <HeaderLogo/>
           </Col>
 
-          <Col xs={8} xsOffset={1}>
+          <Col xs={{ span: 16, offset: 2 }}>
             <Menu onClick={this.handleClick}
                   selectedKeys={[this.state.routeValue]}
                   style={{fontSize: "14px", fontWeight: 200, lineHeight:"60px"}}

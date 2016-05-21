@@ -20,7 +20,7 @@ import {
 
 import {FormattedMessage} from "react-intl";
 
-import {Col} from "react-bootstrap";
+import {Col} from "antd";
 
 const styles = {
   languageItem: {
@@ -99,7 +99,7 @@ var JoinStep1 = React.createClass({
   render(){
     messages = _.extend({}, this.context.intl.messages.join, this.context.intl.messages.signIn);
     return (
-        <Col sm={8} smOffset={2} md={6} mdOffset={3} xs={12} style={styles.contentCol}>
+        <Col sm={{ span: 16, offset: 4}} md={{ span: 12, offset: 6}} xs={24} style={styles.contentCol}>
           <div>
             <h2 style={styles.primaryText}>
               {messages["register-账户注册"]}
@@ -117,7 +117,7 @@ var JoinStep1 = React.createClass({
             <input style={{display: "none"}} type="password"
                    name="fakepasswordremembered"/>
 
-            <Col xs={2} xsOffset={1}>
+            <Col xs={{ span: 4, offset: 2}}>
               <DropDownMenu value={this.state.area}
                             style={_.extend({},styles.dropDownMenu, {visibility:this.state.disableAreaDropdown?"hidden":"visible"})}
                             underlineStyle={{border: "none"}}
@@ -140,7 +140,7 @@ var JoinStep1 = React.createClass({
               </DropDownMenu>
             </Col>
 
-            <Col xs={6} style={styles.textInput}>
+            <Col xs={12} style={styles.textInput}>
               <TextField
                   ref="phoneOrEmail"
                   style={{fontWeight: "300"}}

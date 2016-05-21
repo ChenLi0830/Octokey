@@ -17,7 +17,7 @@ import {
     Snackbar
     } from "material-ui";
 
-import{Col} from "react-bootstrap";
+import{Col} from "antd";
 
 import {FormattedMessage} from "react-intl";
 

@@ -7,7 +7,7 @@
  * Modal component for administrators to edit/app App
  *******************************************************************************/ import React from "react"
 
-import {Modal, Form, Input, Button, Checkbox, Radio, Row, Col, Tooltip, Icon, Upload } from 'antd/lib/';
+import {Modal, Form, Input, Button, Checkbox, Radio, Row, Col, Tooltip, Icon, Upload } from 'antd';
 const FormItem = Form.Item;
 
 var TopicModal = React.createClass({

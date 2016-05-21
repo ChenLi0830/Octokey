@@ -90,6 +90,7 @@ var CredentialDialog = React.createClass({
             <Form horizontal form={this.props.form}>
 
               <FormItem style={{ marginTop: 24, textAlign:"center" }}>
+                {/*<Checkbox defaultChecked={false} >Checkbox</Checkbox>*/}
                 <Button htmlType="submit" onClick={this.handleVisitHomePage}>去主页</Button>
               </FormItem>
             </Form>

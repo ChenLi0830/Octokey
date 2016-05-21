@@ -11,7 +11,7 @@ import React from "react";
 import {
     Row,
     Col,
-    } from "react-bootstrap";
+    } from "antd";
 
 import {
     Toggle,
@@ -146,7 +146,7 @@ var CatalogSingleApp = React.createClass({
                             )}
            onMouseOver={this.handleMouseOver}
            onMouseOut={this.handleMouseOut}>
-        <Col xs={3} sm={3} md={condensed? 2:3}
+        <Col xs={6} sm={6} md={condensed? 4:6}
              onClick={()=>{this.handleEdit()}}
              style={{height:"100%", textAlign:"center"}}>
           {this.props.logoURL === ""?
@@ -160,12 +160,12 @@ var CatalogSingleApp = React.createClass({
           }
         </Col>
 
-        <Col xs={5} sm={4} md={condensed? 5:/*4*/6}
+        <Col xs={10} sm={8} md={condensed? 10:/*4*/12}
              className="vertical-center">
           <p>{appName}</p>
         </Col>
 
-        <Col xs={4} sm={3} md={condensed? 5:3} className="vertical-center">
+        <Col xs={8} sm={6} md={condensed? 10:6} className="vertical-center">
           {toggleButton}
         </Col>
 

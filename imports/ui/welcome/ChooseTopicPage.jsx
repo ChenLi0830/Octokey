@@ -12,7 +12,7 @@ const ChoosePageFooter = require('./ChoosePageFooter.jsx');
 
 const TopicModalContainerAdd = require('./TopicModalContainerAdd.jsx');
 
-import {Col, Row, Grid} from "react-bootstrap";
+import {Col, Row, /*Grid*/} from "antd";
 import _ from "lodash";
 import {colors as Colors} from "material-ui/styles";
 import { Button, Checkbox } from 'antd';
@@ -94,7 +94,6 @@ const ChooseTopicPage = React.createClass({
                     exit="fadeOutLeft"
                     openOverlay={this.props.openPage}>
         <div>
-          <Grid>
 
             <div style={styles.titleDiv}>
               <h1 style={styles.titleMain}>你想关注的兴趣</h1>
@@ -102,15 +101,15 @@ const ChooseTopicPage = React.createClass({
             </div>
 
             <Row>
-              <Col xs={8} xsOffset={2}>
+              <Col xs={{ span: 12, offset: 6 }}>
                 {topicBoxes}
               </Col>
-              <Col xs={2}>
+              <Col xs={4}>
               </Col>
             </Row>
 
             <Row>
-              <Col xs={12} style={styles.extraInfoCol}>
+              <Col xs={24} style={styles.extraInfoCol}>
                 {createTopicBtn}
                 <div style={styles.extraInfoDiv}>
                   <label>
@@ -123,7 +122,6 @@ const ChooseTopicPage = React.createClass({
                 </div>
               </Col>
             </Row>
-          </Grid>
         </div>
       </WhiteOverlay>
       <ChoosePageFooter

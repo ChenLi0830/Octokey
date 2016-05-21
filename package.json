@@ -8,7 +8,7 @@
     "chimp-watch": "chimp --ddp=http://localhost:3000 --watch --mocha --path=tests"
   },
   "dependencies": {
-    "antd": "^0.12.13",
+    "antd": "^1.1.0",
     "autoprefixer": "^6.3.1",
     "classnames": "^2.2.3",
     "crypto-js": "^3.1.6",
@@ -21,7 +21,6 @@
     "react": "^15.0.1",
     "react-addons-css-transition-group": "^15.0.0",
     "react-addons-pure-render-mixin": "^15.0.1",
-    "react-bootstrap": "^0.28.5",
     "react-dom": "^15.0.1",
     "react-intl": "^2.0.0-beta-2",
     "react-router": "^2.0.0",

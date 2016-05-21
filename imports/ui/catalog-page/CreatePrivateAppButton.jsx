@@ -13,7 +13,7 @@ import {Button,
     Col,
     Image,
     Row
-    } from "react-bootstrap";
+    } from "antd";
 
 import {RaisedButton} from "material-ui";
 

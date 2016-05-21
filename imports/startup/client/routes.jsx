@@ -9,7 +9,6 @@ var AuthJoin = require('../../ui/accounts/AuthJoin.jsx');
 
 var PageNotFound = require('../../ui/PageNotFound.jsx');
 var IntlWrapper = require('../../ui/IntlWrapper.jsx');
-var AuthSignIn = require('../../ui/accounts/AuthSignIn.jsx');
 var VerifyEmailTokenPage = require('../../ui/VerifyEmailTokenPage.jsx');
 
 function requireAuth(nextState, replace) {
@@ -32,7 +31,6 @@ const router = (
         <Route path="/catalog" component={CatalogContainer} onEnter={requireAuth}/>
         <Route path="/join" component={AuthJoin} onEnter={verifyNotLogin}/>
         <Route path="/login" component={AuthSignInNew} onEnter={verifyNotLogin}/>
-        {<Route path="/login_bak" component={AuthSignIn} onEnter={verifyNotLogin}/>}
         {/*<Route path="/reset" component={AuthForgotPwdPage} onEnter={verifyNotLogin}/>*/}
         {<Route path="/verify-email/:token" component={VerifyEmailTokenPage}/>}
         <Route path="/*" component={PageNotFound}/>

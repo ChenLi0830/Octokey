@@ -8,7 +8,7 @@
  *******************************************************************************/
 import React from "react"
 import {colors as Colors} from "material-ui/styles";
-import {Col, Row, Grid} from "react-bootstrap";
+import {Col, Row, /*Grid*/} from "antd";
 
 const WhiteOverlay = require('./WhiteOverlay.jsx');
 const RecommendedAppBox = require('./RecommendedAppBox.jsx');
@@ -24,7 +24,7 @@ const ChooseAppPage = React.createClass({
         <WhiteOverlay entrance="fadeInLeft"
                       exit="fadeOutLeft"
                       openOverlay={this.props.openPage}>
-          <Grid>
+          <div>
             <div className="animated fadeInUp"
                  style={{margin: "50px auto 20px auto", textAlign:"center"}}>
               <h1 style={{color:Colors.grey800}}>网站订制推荐</h1>
@@ -32,10 +32,10 @@ const ChooseAppPage = React.createClass({
                 给你的Octokey超能力{'\u26A1'}</h2>
             </div>
 
-            <Col xs={8} xsOffset={2}>
+            <Col xs={{ span: 12, offset: 6 }}>
               <RecommendedAppBox/>
             </Col>
-          </Grid>
+          </div>
         </WhiteOverlay>
     )
   },

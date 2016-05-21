@@ -8,7 +8,7 @@
  *******************************************************************************/
 import React from "react"
 import {colors as Colors} from "material-ui/styles";
-import {Col} from "react-bootstrap";
+import {Col} from "antd";
 import {CircularProgress,} from "material-ui";
 
 const LanguageIcon = require('../header/LanguageIcon.jsx');
@@ -56,7 +56,7 @@ var JoinStep3 = React.createClass({
     messages = this.context.intl.messages.join;
     //Show step 3 for 1500ms.
     this.initiateUser();
-    return <Col sm={8} smOffset={2} md={6} mdOffset={3} xs={12} style={styles.contentCol}>
+    return <Col sm={{ span: 16, offset: 4}} md={{ span: 12, offset: 6}} xs={24} style={styles.contentCol}>
       <div>
         <h1 style={styles.primaryText}>
           {messages["signUpSuccess-注册成功"]}

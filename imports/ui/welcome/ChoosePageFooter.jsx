@@ -7,7 +7,7 @@
  * The footer of choose-something-page
  *******************************************************************************/ import React from "react"
 import { Button} from 'antd';
-import {Col} from "react-bootstrap";
+import {Col} from "antd";
 
 const styles = {
   footer: {
@@ -36,7 +36,7 @@ const ChoosePageFooter = React.createClass({
 
   render(){
     return <div style={styles.footer}>
-      <Col xs={12} style={styles.col}>
+      <Col xs={24} style={styles.col}>
         {<Button type="primary" style={styles.okBtn}
                  size="large"
                  onClick={this.props.onOkClicked}>

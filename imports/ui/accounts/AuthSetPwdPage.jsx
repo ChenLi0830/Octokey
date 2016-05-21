@@ -16,7 +16,7 @@ import {
     RaisedButton
     } from "material-ui"
 
-import {Col} from "react-bootstrap";
+import {Col} from "antd";
 
 const style = {
   paper: {

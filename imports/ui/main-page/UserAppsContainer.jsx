@@ -15,7 +15,7 @@ const RegisterDialog = require('./RegisterDialog.jsx');
 const FocusOverlay = require('./FocusOverlay.jsx');
 const FloatingEditButton = require('./FloatingEditButton.jsx');
 
-import {Row} from "react-bootstrap";
+import {Row} from "antd";
 import _ from "lodash";
 
 import {

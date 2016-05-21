@@ -9,7 +9,7 @@
  *******************************************************************************/
 import React from "react"
 import {RefreshIndicator,Paper  } from "material-ui";
-import {Grid,Row,Col} from "react-bootstrap";
+import {Row,Col} from "antd";
 import {colors as Colors} from "material-ui/styles";
 
 var VerifyEmailTokenPage = React.createClass({

@@ -19,7 +19,7 @@ const styles = {
   circleCheck: {height: 25, top: "2.5em", right: "2.9em", position: "absolute"},
 };
 
-import {Col} from "react-bootstrap";
+import {Col} from "antd";
 
 let boxSize;
 const TopicBox = React.createClass({
@@ -48,7 +48,7 @@ const TopicBox = React.createClass({
 
   render(){
     const {topicId, topicName, topicRank} = this.props;
-    return <Col xs={3} style={{padding:15}}>
+    return <Col xs={6} style={{padding:15}}>
       {<div style={{cursor:"pointer"}}
             ref="boxCol"
             onClick={this.props.whenTopicClicked.bind(null, topicId, topicName, topicRank)}

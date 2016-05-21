@@ -8,3 +8,18 @@
   overflow: auto;
   max-height: 360px;
 }
+
+#phoneUsername{
+  //width:100%;
+  div{
+    div.ant-select-selection--single{
+      height:38px;
+      border-radius:5px 0px 0px 5px;
+      border-right-width:0px;
+      div.ant-select-selection__rendered{
+        line-height:36px;
+      }
+    }
+
+  }
+}

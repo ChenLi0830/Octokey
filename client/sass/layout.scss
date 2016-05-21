@@ -7,7 +7,7 @@ body {
   padding: 0;
   margin: 0;
   overflow: auto;
-  font-weight: 200;
+  font-weight: 200 !important;
 }
 
 #app-container {
@@ -45,14 +45,18 @@ body {
   }
 }
 
-
-/*
-.loader {
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  z-index: 9999;
-  background: url('/img/giphy.gif') 50% 50% no-repeat rgb(249,249,249);
-}*/
+@-webkit-keyframes AnimationName {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes AnimationName {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}

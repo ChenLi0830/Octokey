@@ -8,7 +8,7 @@
  *******************************************************************************/
 import React from "react"
 import {Paper} from "material-ui";
-import {Grid,Row,Col} from "react-bootstrap";
+import {Row,Col} from "antd";
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import _ from "lodash";
 import {customizeMUITheme, ZenRawTheme} from "../../client/globals/theme";
@@ -37,13 +37,15 @@ const styles = {
     left: 0,
     right: 0,
     backgroundColor: "#ECEFF1",
+/*    background: "linear-gradient(270deg, #4bcf93, #4b79cf, #a24bcf)",
+    backgroundSize: "600% 600%",
+    animation: "AnimationName 5s ease infinite",*/
   },
 
   heightPercent100: {
     height: "100%",
   }
 };
-
 
 var App = React.createClass({
   mixins: [ReactMeteorData],
@@ -150,16 +152,16 @@ var App = React.createClass({
 
           {//不showheader的page也不添加grid
             showFullHeader ?
-                <Grid>
+                <div>
                   <Row style={{marginTop:"60px"}}>
-                    <Col xs={12}>
+                    <Col xs={{ span: 18, offset: 3 }}>
                       {this.data.subsReady ?
                           this.props.children :
                           <AppLoading />
                       }
                     </Col>
                   </Row>
-                </Grid> :
+                </div> :
                 (
                     this.data.subsReady ?
                           this.props.children :

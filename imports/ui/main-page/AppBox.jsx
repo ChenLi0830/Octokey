@@ -9,7 +9,7 @@
 
 import ReactDOM from "react-dom";
 
-import {Col} from "react-bootstrap";
+import {Col} from "antd";
 import _ from "lodash";
 import { Modal} from 'antd';
 
@@ -97,7 +97,7 @@ var AppBox = React.createClass({
 
     //console.log("usernames", this.props.usernames);
     return <div>
-      <Col lg={2} md={2} sm={3} xs={4} style={{padding:"0"}}>
+      <Col lg={4} md={4} sm={6} xs={8} style={{padding:"0"}}>
         {
           this.props.usernames.length <= 1 ? null : (
               <Modal title={this.props.appName + "-账户选择"}

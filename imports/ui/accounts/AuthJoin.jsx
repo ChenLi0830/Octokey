@@ -16,7 +16,7 @@ import {
     Paper,
     } from "material-ui";
 
-import {Grid,Row,Col} from "react-bootstrap";
+import {/*Grid,*/Row,Col} from "antd";
 
 import {
     Steps,
@@ -74,13 +74,13 @@ var AuthJoin = React.createClass({
       //description: '描述啊描述啊'
     }].map((s, i) => <Step key={i} title={s.title} description={s.description}/>);
 
-    return (<Grid style={{height:"100%"}}>
+    return (<div style={{height:"100%"}}>
           <Row style={styles.row}>
-            <Col xs={12}>
+            <Col xs={{ span: 16, offset: 4}}>
               <div>
                 <Col style={{backgroundColor:ZenColor.grey1}}>
                   <Paper style={styles.paper} zDepth={1}>
-                    <Col sm={8} smOffset={2} md={8} mdOffset={2} xs={12} style={styles.paperCol}>
+                    <Col sm={{ span: 16, offset: 4}} md={{ span: 16, offset: 4}} xs={24} style={styles.paperCol}>
                       <div style={{textAlign:"left"}}>
                         <Steps current={this.state.step} className="antdsteps">{steps}</Steps>
                         {this.state.step === 0 && contentOfStep[0]}
@@ -93,7 +93,7 @@ var AuthJoin = React.createClass({
               </div>
             </Col>
           </Row>
-        </Grid>
+        </div>
     );
   },
 

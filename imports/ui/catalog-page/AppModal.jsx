@@ -18,7 +18,7 @@ import {
 
 import _ from "lodash";
 
-import {Modal, Form, Input, Button, Checkbox, Radio, Row, Col, Tooltip, Icon, Upload } from 'antd/lib/';
+import {Modal, Form, Input, Button, Checkbox, Radio, Row, Col, Tooltip, Icon, Upload } from 'antd';
 const FormItem = Form.Item;
 
 var AppModal = React.createClass({

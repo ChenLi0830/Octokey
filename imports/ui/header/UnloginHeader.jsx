@@ -10,7 +10,7 @@ var LanguageIcon = require('../header/LanguageIcon.jsx');
 var HeaderLogo = require('./HeaderLogo.jsx');
 import {
     Col,
-    } from "react-bootstrap";
+    } from "antd";
 
 import { Menu, Icon, Button } from 'antd';
 
@@ -65,11 +65,11 @@ var UnloginHeader = React.createClass({
     </Link>;
     //console.log("account", account);
     return (<div style={styles.container}>
-          <Col xs={6}>
+          <Col xs={12}>
             <HeaderLogo/>
           </Col>
 
-          <Col md={1} mdOffset={5} xs={2} xsOffset={4}>
+          <Col md={{ span: 2, offset: 10 }} xs={{ span: 4, offset: 8 }}>
             {button}
           </Col>
         </div>
