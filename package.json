@@ -16,7 +16,7 @@
     "indexof": "0.0.1",
     "intl": "^1.1.0",
     "lodash": "^4.1.0",
-    "material-ui": "0.15.0-beta.1",
+    "material-ui": "^0.15.0",
     "meteor-node-stubs": "^0.2.3",
     "react": "^15.0.1",
     "react-addons-css-transition-group": "^15.0.0",
