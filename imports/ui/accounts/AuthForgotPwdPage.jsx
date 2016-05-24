@@ -8,16 +8,14 @@
  *******************************************************************************/
 import React from "react";
 
-import {Link} from "react-router";
+import {Link} from "react-router/lib/Link";
 
-import {
-    Paper,
-    TextField,
-    RaisedButton,
-    Snackbar
-    } from "material-ui";
+import Paper from "material-ui/Paper";
+import TextField from "material-ui/TextField";
+import RaisedButton from "material-ui/RaisedButton";
+import Snackbar from "material-ui/Snackbar";
 
-import{Col} from "antd";
+import Col from "antd/lib/col";
 
 import {FormattedMessage} from "react-intl";
 

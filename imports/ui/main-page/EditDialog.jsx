@@ -5,20 +5,18 @@
  * Creation Date: 2015-12-31
  *
  * Dialog component for user to edit an app's credential, called by "AppsContainer"
- *******************************************************************************/ import React from "react"
+ *******************************************************************************/
+import React from "react";
 var AddNewCredentialDialog = require('./AddNewCredentialDialog.jsx');
 
-import {
-    Dialog,
-    FlatButton,
-    List,
-    ListItem,
-    RaisedButton,
-    Divider,
-    Popover,
-    Menu,
-    MenuItem,
-    } from "material-ui";
+import Dialog from "material-ui/Dialog";
+import FlatButton from "material-ui/FlatButton";
+import {List, ListItem } from "material-ui/List";
+import RaisedButton from "material-ui/RaisedButton";
+import Divider from "material-ui/Divider";
+import Popover from "material-ui/Popover";
+import Menu from "material-ui/Menu";
+import MenuItem from "material-ui/MenuItem";
 
 import {
     ActionInfo,

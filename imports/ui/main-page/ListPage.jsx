@@ -6,7 +6,8 @@
  *
  * ListPage Component is the main page user can use to enter his/her apps, called by
  * "routes"
- *******************************************************************************/ import React from "react"
+ *******************************************************************************/
+import React from "react";
 const FloatingEditButton = require('./FloatingEditButton.jsx');
 const ChooseTopicPage = require('../welcome/ChooseTopicPage.jsx');
 const ChooseAppPage = require('../welcome/ChooseAppPage.jsx');

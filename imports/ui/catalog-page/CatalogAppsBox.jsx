@@ -5,21 +5,17 @@
  * Creation Date: 2015-12-26
  *
  * Catalog Apps Box component - called by "Catalog"
- *******************************************************************************/ import React from "react"
+ *******************************************************************************/
+import React from "react";
+import Paper from "material-ui/Paper"
+import List from "material-ui/List"
+import Subheader from "material-ui/Subheader"
+
+import Button from "antd/lib/button"
+
 var CatalogSingleApp = require('./CatalogSingleApp.jsx');
 var AppLoading = require('../AppLoading.jsx');
 var SearchBox = require('./SearchBox.jsx');
-
-import {
-    Paper,
-    List,
-    Subheader
-    } from "material-ui";
-
-import {Modal, Form, Input, Button, Checkbox, Radio, Row, Col, Tooltip, Icon, Upload } from 'antd';
-const FormItem = Form.Item;
-
-//import Subheader from 'material-ui/lib/Subheader';
 
 const styles = {
   appListPaper: {

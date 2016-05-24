@@ -1,6 +1,5 @@
 import React from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
-//var App = require('../../ui/App.jsx');
 var App = require("../../ui/App.jsx");
 var AuthSignInNew = require('../../ui/accounts/AuthSignInNew.jsx');
 var ListPage = require('../../ui/main-page/ListPage.jsx');

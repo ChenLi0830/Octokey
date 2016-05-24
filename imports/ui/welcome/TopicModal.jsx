@@ -5,9 +5,20 @@
  * Creation Date: 2015-3-25
  *
  * Modal component for administrators to edit/app App
- *******************************************************************************/ import React from "react"
+ *******************************************************************************/
+import React from "react";
 
-import {Modal, Form, Input, Button, Checkbox, Radio, Row, Col, Tooltip, Icon, Upload } from 'antd';
+import Modal from "antd/lib/modal";
+import Form from "antd/lib/form";
+import Input from "antd/lib/input";
+import Button from "antd/lib/button";
+import Checkbox from "antd/lib/checkbox";
+import Radio from "antd/lib/radio";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import Tooltip from "antd/lib/tooltip";
+import Icon from "antd/lib/icon";
+import Upload from "antd/lib/upload";
 const FormItem = Form.Item;
 
 var TopicModal = React.createClass({

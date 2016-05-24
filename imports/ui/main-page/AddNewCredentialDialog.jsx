@@ -6,12 +6,12 @@
  *
  * Dialog for Add New Account for an App, this should present when user choose to add a new app
  * from edit catalog, called by "EditDialog"
- *******************************************************************************/ import React from "react"
-import {
-    Dialog,
-    FlatButton,
-    TextField
-    }  from "material-ui";
+ *******************************************************************************/
+import React from "react";
+
+import Dialog from "material-ui/Dialog";
+import FlatButton from "material-ui/FlatButton";
+import TextField from "material-ui/TextField";
 
 var AddNewCredentialDialog = React.createClass({
   propTypes: {

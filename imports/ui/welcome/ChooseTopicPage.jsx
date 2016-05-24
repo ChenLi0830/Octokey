@@ -5,17 +5,20 @@
  * Creation Date: 2016-4-7
  *
  * Choose Topic Page component for users to choose their interested topics
- *******************************************************************************/ import React from "react"
+ *******************************************************************************/
+import React from "react";
+
+import _ from "lodash";
+import {colors as Colors} from "material-ui/styles";
+import Col from "antd/lib/col";
+import Row from "antd/lib/row";
+import Button from "antd/lib/button";
+import Checkbox from "antd/lib/checkbox";
+
 const WhiteOverlay = require('./WhiteOverlay.jsx');
 const TopicBox = require('./TopicBox.jsx');
 const ChoosePageFooter = require('./ChoosePageFooter.jsx');
-
 const TopicModalContainerAdd = require('./TopicModalContainerAdd.jsx');
-
-import {Col, Row, /*Grid*/} from "antd";
-import _ from "lodash";
-import {colors as Colors} from "material-ui/styles";
-import { Button, Checkbox } from 'antd';
 
 const styles = {
   titleDiv: {margin: "50px auto 20px auto", textAlign: "center"},

@@ -5,22 +5,20 @@
  * Creation Date: 2015-2-2
  *
  * Sign-up Step 1, called by "JoinPage"
- *******************************************************************************/ import React from "react"
-
+ *******************************************************************************/
+import React from "react";
 import {Link} from "react-router";
 import _ from "lodash";
-const LanguageIcon = require('../header/LanguageIcon.jsx');
-
-import {
-    TextField,
-    RaisedButton,
-    DropDownMenu,
-    MenuItem,
-    } from "material-ui";
+import TextField from "material-ui/TextField";
+import RaisedButton from "material-ui/RaisedButton";
+import DropDownMenu from "material-ui/DropDownMenu";
+import MenuItem from "material-ui/MenuItem";
+import Col from "antd/lib/col";
 
 import {FormattedMessage} from "react-intl";
 
-import {Col} from "antd";
+
+const LanguageIcon = require('../header/LanguageIcon.jsx');
 
 const styles = {
   languageItem: {

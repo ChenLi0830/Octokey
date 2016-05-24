@@ -7,12 +7,9 @@
  * Category list in Sidebar, called by "CatalogSideBar"
  *******************************************************************************/
 import React from "react"
-import {
-    List,
-    ListItem,
-    RaisedButton,
-    Subheader
-} from "material-ui";
+import {List, ListItem} from "material-ui/List";
+import RaisedButton from "material-ui/RaisedButton";
+import Subheader from "material-ui/Subheader";
 
 var Actions = require("../action-and-stores/Actions.jsx");
 

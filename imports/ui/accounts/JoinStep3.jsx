@@ -8,11 +8,11 @@
  *******************************************************************************/
 import React from "react"
 import {colors as Colors} from "material-ui/styles";
-import {Col} from "antd";
-import {CircularProgress,} from "material-ui";
+import CircularProgress from "material-ui/CircularProgress";
+
+import Col from "antd/lib/col";
 
 const LanguageIcon = require('../header/LanguageIcon.jsx');
-
 
 const styles = {
   contentCol: {

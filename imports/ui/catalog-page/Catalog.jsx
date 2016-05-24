@@ -8,7 +8,8 @@
  *******************************************************************************/
 import React from "react"
 import Reflux from "reflux";
-import { Row, Col } from 'antd';
+import Row from "antd/lib/row";
+import Col from "antd/lib/col"
 
 import CategoryStore from '../action-and-stores/CategoryStore.jsx';
 var CatalogSideBar = require('./CatalogSidebar.jsx');

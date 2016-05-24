@@ -5,17 +5,17 @@
  * Creation Date: 2015-12-26
  *
  * Create Private App Button component, called by "CatalogSideBar"
- *******************************************************************************/ import React from "react"
-import {Button,
-    Modal,
-    Input,
-    ButtonInput,
-    Col,
-    Image,
-    Row
-    } from "antd";
+ *******************************************************************************/
+import React from "react";
 
-import {RaisedButton} from "material-ui";
+import Button from "antd/lib/button";
+import Modal from "antd/lib/modal";
+import Input from "antd/lib/input";
+import Col from "antd/lib/col";
+//import Image from "antd/lib/image";
+import Row from "antd/lib/row";
+
+import RaisedButton from "material-ui/RaisedButton";
 
 
 var CreatePrivateAppButton = React.createClass({

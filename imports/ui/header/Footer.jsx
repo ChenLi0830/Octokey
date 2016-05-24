@@ -5,7 +5,8 @@
  * Creation Date: 2015-5-11
  *
  * Footer component
- *******************************************************************************/ import React from "react"
+ *******************************************************************************/
+import React from "react";
 const styles = {
   container: {
     //position: "fixed",

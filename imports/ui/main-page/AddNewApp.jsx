@@ -6,8 +6,9 @@
  *
  * Dialog for Add New Account for an App, called when user haven't subscribe any app, called
  * by "AppsContainer" component.
- *******************************************************************************/ import React from "react"
-import {RaisedButton} from "material-ui";
+ *******************************************************************************/
+import React from "react";
+import RaisedButton from "material-ui/RaisedButton";
 
 var AddNewApp = React.createClass({
   propTypes: {

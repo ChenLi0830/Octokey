@@ -12,16 +12,11 @@ var JoinStep1 = require('./JoinStep1.jsx');
 var JoinStep2 = require('./JoinStep2.jsx');
 var JoinStep3 = require('./JoinStep3.jsx');
 
-import {
-    Paper,
-    } from "material-ui";
+import Paper from "material-ui/Paper";
 
-import {/*Grid,*/Row,Col} from "antd";
-
-import {
-    Steps,
-} from 'antd';
-
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import Steps from 'antd/lib/steps';
 const Step = Steps.Step;
 
 const styles = {

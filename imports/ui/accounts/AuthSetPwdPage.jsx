@@ -10,13 +10,10 @@ import React from "react";
 
 import {Link} from "react-router";
 
-import {
-    Paper,
-    TextField,
-    RaisedButton
-    } from "material-ui"
-
-import {Col} from "antd";
+import Paper from "material-ui/Paper";
+import TextField from "material-ui/TextField";
+import RaisedButton from "material-ui/RaisedButton";
+import Col from "antd/lib/col";
 
 const style = {
   paper: {

@@ -139,10 +139,12 @@ Meteor.methods({
 
     checkAdmin.call(this);
 
+    console.log("appId", appId);
     let existingApp = ZenApps.findOne({_id: appId});
+    console.log("existingApp", existingApp);
     //console.log("existingApp", existingApp);
     if (!existingApp) {
-      throw new Meteor.Error("No existing App matches appId", appId);
+      throw new Meteor.Error("No existing App matches appId" + appId);
     }
 
     //注意,新上传的logo对应是string encoded in base64,而已经存在的logo对应是一个path string

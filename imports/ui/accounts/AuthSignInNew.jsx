@@ -10,13 +10,14 @@ var LanguageIcon = require('../header/LanguageIcon.jsx');
 
 import {Link} from "react-router";
 import _ from "lodash";
-import {RaisedButton} from "material-ui";
-//var Actions = require("../action-and-stores/Actions.jsx");
 
-import { Row, Col, Input, Select, Form } from 'antd';
-
+import RaisedButton from "material-ui/RaisedButton";
+import Row from "antd/lib/row"
+import Col from "antd/lib/col"
+import Input from "antd/lib/input"
+import Select from "antd/lib/select"
+import Form from "antd/lib/form"
 const FormItem = Form.Item;
-
 const InputGroup = Input.Group;
 const Option = Select.Option;
 

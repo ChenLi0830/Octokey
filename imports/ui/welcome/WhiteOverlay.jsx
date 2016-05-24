@@ -5,8 +5,8 @@
  * Creation Date: 2015-4-8
  *
  * White overlay with transparency used by welcome pages
- *******************************************************************************/ import React from "react"
-
+ *******************************************************************************/
+import React from "react";
 
 var WhiteOverlay = React.createClass({
   propTypes: {

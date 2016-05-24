@@ -11,13 +11,10 @@ var CreateCategoryButton = require('./CreateCategoryButton.jsx');
 var SearchBox = require('./SearchBox.jsx');
 var CreatePrivateAppButton = require('./CreatePrivateAppButton.jsx');
 var CategoryList = require('./CategoryList.jsx');
-
-import {
-    List,
-    ListItem,
-    RaisedButton,
-    Divider,
-    Paper} from "material-ui";
+import {List,ListItem} from "material-ui/List";
+import RaisedButton from "material-ui/RaisedButton";
+import Divider from "material-ui/Divider";
+import Paper from "material-ui/Paper";
 
 var CatalogSideBar = React.createClass({
   propTypes: {

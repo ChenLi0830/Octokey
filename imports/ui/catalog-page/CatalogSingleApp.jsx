@@ -8,14 +8,10 @@
  */
 
 import React from "react";
-import {
-    Row,
-    Col,
-    } from "antd";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
 
-import {
-    Toggle,
-    } from "material-ui";
+import Toggle from "material-ui/Toggle";
 
 const styles = {
   row: {
@@ -33,10 +29,6 @@ const styles = {
     width: "50px",
     fontSize: "28px",
     display: "inline-block",
-/* line-height: 100px; */
-/* top: 25%; */
-/* left: 25%; */
-/* margin-top: 25px; */
   },
   noLogoBoxCondensed: {
     top: "37%",

@@ -5,9 +5,10 @@
  * Creation Date: 2016-4-14
  *
  * The footer of choose-something-page
- *******************************************************************************/ import React from "react"
-import { Button} from 'antd';
-import {Col} from "antd";
+ *******************************************************************************/
+import React from "react";
+import Button from 'antd/lib/button';
+import Col from "antd/lib/col";
 
 const styles = {
   footer: {

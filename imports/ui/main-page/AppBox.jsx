@@ -8,16 +8,13 @@
  *******************************************************************************/ import React from "react"
 
 import ReactDOM from "react-dom";
-
-import {Col} from "antd";
 import _ from "lodash";
-import { Modal} from 'antd';
+import Col from "antd/lib/col";
+import Modal from "antd/lib/modal";
 
-import {
-    Paper,
-    Menu,
-    MenuItem,
-    } from "material-ui";
+import Paper from "material-ui/Paper";
+import Menu from "material-ui/Menu";
+import MenuItem from "material-ui/MenuItem";
 
 import {
     ContentClear,

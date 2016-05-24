@@ -5,27 +5,22 @@
  * Creation Date: 2015-2-2
  *
  * Sign-up Step 2, called by "JoinPage"
- *******************************************************************************/ import React from "react"
+ *******************************************************************************/
+import React from "react";
 
-import {
-    RaisedButton,
-    } from "material-ui";
+import RaisedButton from "material-ui/RaisedButton";
 
-var Actions = require("../action-and-stores/Actions.jsx");
-
-import {Col} from "antd";
-
-import {
-    Button,
-    Steps,
-    Form,
-    Input,
-    Popover
-} from 'antd';
+import Button from "antd/lib/button"
+import Steps from "antd/lib/steps"
+import Form from "antd/lib/form"
+import Input from "antd/lib/input"
+import Popover from "antd/lib/popover"
+import Col from "antd/lib/col"
+const FormItem = Form.Item;
 
 import _ from "lodash";
 
-const FormItem = Form.Item;
+var Actions = require("../action-and-stores/Actions.jsx");
 
 const styles = {
   contentCol: {
@@ -108,7 +103,7 @@ var JoinStep2 = React.createClass({
                 validateStatus={this.state.errorText!==""?"error": this.state.pwdVerified ? "success" : ""}
                 help={this.state.errorText}>
               <Popover placement="right" title={messages["pwdRequirement-密码要求"]}
-                       overlay={<div>{messages["pwdLength-密码长度"]}<br />{messages["pwdFormat-密码格式"]}</div>}
+                       content={<div>{messages["pwdLength-密码长度"]}<br />{messages["pwdFormat-密码格式"]}</div>}
                        trigger="focus">
 
                 <Input type="password"

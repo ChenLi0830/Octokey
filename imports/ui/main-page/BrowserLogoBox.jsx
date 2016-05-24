@@ -5,7 +5,8 @@
  * Creation Date: 2016-4-19
  *
  * Dialog to ask user to install plugin
- *******************************************************************************/ import React from "react"
+ *******************************************************************************/
+import React from "react";
 
 const styles = {
   boxStyle: {

@@ -5,16 +5,16 @@
  * Creation Date: 2015-5-11
  *
  * Header component, called by "App" component
- *******************************************************************************/ import React from "react"
-var LanguageIcon = require('../header/LanguageIcon.jsx');
-var HeaderLogo = require('./HeaderLogo.jsx');
-import {
-    Col,
-    } from "antd";
-
-import { Menu, Icon, Button } from 'antd';
+ *******************************************************************************/
+import React from "react";
+import Col from "antd/lib/col";
+import Menu from "antd/lib/menu";
+import Icon from "antd/lib/icon";
+import Button from "antd/lib/button";
 
 import {Link} from "react-router";
+var LanguageIcon = require('../header/LanguageIcon.jsx');
+var HeaderLogo = require('./HeaderLogo.jsx');
 
 const styles = {
   container: {
@@ -73,10 +73,8 @@ var UnloginHeader = React.createClass({
             {button}
           </Col>
         </div>
-
     )
   },
-
 });
 
 module.exports = UnloginHeader;

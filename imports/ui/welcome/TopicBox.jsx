@@ -5,11 +5,12 @@
  * Creation Date: 2016-4-7
  *
  * Topic Box component for a single topic
- *******************************************************************************/ import React from "react"
-
+ *******************************************************************************/
+import React from "react";
 import ReactDOM from "react-dom";
 import _ from "lodash";
 import {colors as Colors} from "material-ui/styles";
+import Col from "antd/lib/col";
 
 const styles = {
   icon: {height: "100%", width: "100%", borderRadius: "10px", transitionDuration:"0.5s"},
@@ -18,8 +19,6 @@ const styles = {
   imgBox: {/*margin: 10*/margin: 0},
   circleCheck: {height: 25, top: "2.5em", right: "2.9em", position: "absolute"},
 };
-
-import {Col} from "antd";
 
 let boxSize;
 const TopicBox = React.createClass({

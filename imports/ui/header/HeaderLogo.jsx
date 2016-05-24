@@ -5,7 +5,8 @@
  * Creation Date: 2015-5-11
  *
  * Header Logo component, called by "Header" component
- *******************************************************************************/ import React from "react"
+ *******************************************************************************/
+import React from "react";
 import {Link} from "react-router";
 import _ from "lodash";
 import {colors as Colors} from "material-ui/styles";

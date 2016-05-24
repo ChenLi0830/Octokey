@@ -5,13 +5,12 @@
  * Creation Date: 2015-12-31
  *
  * Floating Action Button component in Apps container, called by "AppsContainer"
- *******************************************************************************/ import React from "react"
+ *******************************************************************************/
+import React from "react";
 import _ from "lodash";
-import {
-    FloatingActionButton,
-    } from "material-ui";
+import FloatingActionButton from "material-ui/FloatingActionButton";
 
-import { Tooltip } from 'antd';
+import Tooltip from 'antd/lib/tooltip';
 
 import {
     ToggleStar,

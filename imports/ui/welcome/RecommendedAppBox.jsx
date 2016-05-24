@@ -5,7 +5,8 @@
  * Creation Date: 2016-4-7
  *
  * Topic Box component for a single topic
- *******************************************************************************/ import React from "react"
+ *******************************************************************************/
+import React from "react";
 const RecommendedAppBox = React.createClass({
   render(){
     return <div>

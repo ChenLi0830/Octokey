@@ -5,12 +5,11 @@
  * Creation Date: 2015-2-13
  *
  * Dialog component for app-registration captcha, called by "RegisterDialog"
- *******************************************************************************/ import React from "react"
-import {
-    Dialog,
-    FlatButton,
-    TextField,
-    } from "material-ui";
+ *******************************************************************************/
+import React from "react";
+import Dialog from "material-ui/Dialog";
+import FlatButton from "material-ui/FlatButton";
+import TextField from "material-ui/TextField";
 
 import {FormattedMessage} from "react-intl";
 

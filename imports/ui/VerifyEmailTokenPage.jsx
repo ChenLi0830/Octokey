@@ -8,8 +8,10 @@
  * component when he/she clicks the link from the verification email
  *******************************************************************************/
 import React from "react"
-import {RefreshIndicator,Paper  } from "material-ui";
-import {Row,Col} from "antd";
+import RefreshIndicator from "material-ui/RefreshIndicator";
+import Paper from "material-ui/Paper";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
 import {colors as Colors} from "material-ui/styles";
 
 var VerifyEmailTokenPage = React.createClass({

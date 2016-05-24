@@ -8,7 +8,8 @@
  *******************************************************************************/
 import React from "react"
 import {colors as Colors} from "material-ui/styles";
-import {Col, Row, /*Grid*/} from "antd";
+import Col from "antd/lib/col";
+import Row from "antd/lib/row";
 
 const WhiteOverlay = require('./WhiteOverlay.jsx');
 const RecommendedAppBox = require('./RecommendedAppBox.jsx');

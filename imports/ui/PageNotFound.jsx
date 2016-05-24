@@ -5,7 +5,8 @@
  * Creation Date: 2015-12-31
  *
  * Universal Page Not Found component. Called by "routes"
- *******************************************************************************/ import React from "react"
+ *******************************************************************************/
+import React from "react";
 var PageNotFound = React.createClass({
   render() {
     return (

@@ -5,16 +5,18 @@
  * Creation Date: 2015-12-26
  *
  * Search box component, called by "CatalogSideBar"
- *******************************************************************************/ import React from "react"
-var CatalogSingleApp = require('./CatalogSingleApp.jsx');
+ *******************************************************************************/
 
-import { Icon, Input, Button } from 'antd';
-import classNames from 'classnames';
-import _ from 'lodash'
-
+import React from "react";
+import Icon from "antd/lib/icon";
+import Input from "antd/lib/input";
+import Button from "antd/lib/button";
+import Popover from "antd/lib/popover";
 const InputGroup = Input.Group;
 
-import { Popover} from 'antd';
+var CatalogSingleApp = require('./CatalogSingleApp.jsx');
+import classNames from 'classnames';
+import _ from 'lodash'
 
 const styles = {
   searchInput: {

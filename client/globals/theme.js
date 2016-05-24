@@ -9,8 +9,6 @@
 
 /** 注意 globals 直接被load进程序, 应该避免所有heavy的library, 以免减慢程序loading速度*/
 
-//import {styles} from "material-ui";
-//const Colors = styles.colors;
 import {colors as Colors} from "material-ui/styles";
 
 window.ZenColor = {

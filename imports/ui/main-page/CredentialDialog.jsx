@@ -9,7 +9,17 @@
 import React from "react"
 import {FormattedMessage} from "react-intl";
 import _ from "lodash";
-import { Button, Form, Input, Modal, Tooltip, Icon,DatePicker, Row, Col, Checkbox } from 'antd';
+
+import Button from "antd/lib/button";
+import Form from "antd/lib/form";
+import Input from "antd/lib/input";
+import Modal from "antd/lib/modal";
+import Tooltip from "antd/lib/tooltip";
+import Icon from "antd/lib/icon";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import Checkbox from "antd/lib/checkbox";
+
 const createForm = Form.create;
 const FormItem = Form.Item;
 
@@ -85,14 +95,17 @@ var CredentialDialog = React.createClass({
 
     const loginForms = (
         <Row type="flex" align="middle">
-        <Col span="9" style={styles.inlineCol}>
+          <Col span="9" style={styles.inlineCol}>
             <h3 style={styles.inlineColTitle}>直接访问</h3>
             <Form horizontal form={this.props.form}>
 
               <FormItem style={{ marginTop: 24, textAlign:"center" }}>
-                {/*<Checkbox defaultChecked={false} >Checkbox</Checkbox>*/}
                 <Button htmlType="submit" onClick={this.handleVisitHomePage}>去主页</Button>
               </FormItem>
+
+              {/*<FormItem >
+                <Checkbox defaultChecked={false}>以后不再询问</Checkbox>
+              </FormItem>*/}
             </Form>
           </Col>
 

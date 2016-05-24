@@ -5,7 +5,13 @@
  * Creation Date: 2015-4-16
  *
  * Component for a the container of user apps in the list page, called by "ListPage"
- *******************************************************************************/ import React from "react"
+ *******************************************************************************/
+import React from "react";
+import _ from "lodash";
+
+import Row from "antd/lib/row";
+import Paper from "material-ui/Paper";
+
 const AppBox = require('./AppBox.jsx');
 const AddNewApp = require('./AddNewApp.jsx');
 const PluginInstallDialog = require('./PluginInstallDialog.jsx');
@@ -14,13 +20,6 @@ const EditDialog = require('./EditDialog.jsx');
 const RegisterDialog = require('./RegisterDialog.jsx');
 const FocusOverlay = require('./FocusOverlay.jsx');
 const FloatingEditButton = require('./FloatingEditButton.jsx');
-
-import {Row} from "antd";
-import _ from "lodash";
-
-import {
-    Paper,
-    } from "material-ui";
 
 let publicFocusedIndex = -1, privateFocusedIndex = -1;
 let defaultRequest = {

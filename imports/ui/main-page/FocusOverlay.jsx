@@ -8,7 +8,7 @@
  * differentiate apps-box from background, called by "AppsContainer"
  *******************************************************************************/
 import React from "react"
-import {Paper} from "material-ui";
+import Paper from "material-ui/Paper";
 
 var FocusOverlay = React.createClass({
   propTypes: {

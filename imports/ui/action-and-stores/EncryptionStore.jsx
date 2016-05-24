@@ -7,6 +7,7 @@
  * This is used as the 'stores' of for passwordkey for encryption purpose
  *******************************************************************************/
 var CryptoJS = require('crypto-js');
+
 import Reflux from "reflux";
 //import {Actions} from "./Actions.jsx";
 

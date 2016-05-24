@@ -5,15 +5,14 @@
  * Creation Date: 2015-2-13
  *
  * Dialog component for app-registration progress bar, called by "AppsContainer"
- *******************************************************************************/ import React from "react"
+ *******************************************************************************/
+import React from "react";
 var CaptchaDialog = require('./CaptchaDialog.jsx');
 
-import {
-    Dialog,
-    FlatButton,
-    TextField,
-    LinearProgress
-    } from "material-ui";
+import Dialog from "material-ui/Dialog";
+import FlatButton from "material-ui/FlatButton";
+import TextField from "material-ui/TextField";
+import LinearProgress from "material-ui/LinearProgress";
 
 import {FormattedMessage} from "react-intl";
 

@@ -5,7 +5,8 @@
  * Creation Date: 2016-4-8
  *
  * The container for TopicModal component. It is used to add a new Topic.
- *******************************************************************************/ import React from "react"
+ *******************************************************************************/
+import React from "react";
 
 const TopicModal = require('./TopicModal.jsx');
 

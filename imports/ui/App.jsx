@@ -7,17 +7,18 @@
  * App component is the root element to load the app. Called by "router".
  *******************************************************************************/
 import React from "react"
-import {Paper} from "material-ui";
-import {Row,Col} from "antd";
+import Paper from "material-ui/Paper";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import _ from "lodash";
-import {customizeMUITheme, ZenRawTheme} from "../../client/globals/theme";
 import injectTapEventPlugin from 'react-tap-event-plugin';
-
 // Needed for onTouchTap
 // Check this repo:
 // https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
+
+import {customizeMUITheme, ZenRawTheme} from "../../client/globals/theme";
 
 var Actions =  require("./action-and-stores/Actions.jsx");
 var AppLoading = require('./AppLoading.jsx');

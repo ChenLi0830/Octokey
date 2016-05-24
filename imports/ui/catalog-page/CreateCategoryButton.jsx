@@ -6,16 +6,14 @@
  *
  * Create Category Button component, only available by admin user, called by "CatalogSideBar"
  *******************************************************************************/ import React from "react"
-import {
-    FlatButton,
-    RaisedButton,
-    Dialog,
-    MenuItem,
-    DropDownMenu,
-    TextField,
-    Divider,
-    } from "material-ui";
 
+import FlatButton from "material-ui/FlatButton";
+import RaisedButton from "material-ui/RaisedButton";
+import Dialog from "material-ui/Dialog";
+import MenuItem from "material-ui/MenuItem";
+import DropDownMenu from "material-ui/DropDownMenu";
+import TextField from "material-ui/TextField";
+import Divider from "material-ui/Divider";
 
 var CreateCategoryButton = React.createClass({
   propTypes: {

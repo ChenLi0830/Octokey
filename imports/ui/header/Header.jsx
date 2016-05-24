@@ -5,22 +5,21 @@
  * Creation Date: 2015-12-26
  *
  * Header component, called by "App" component
- *******************************************************************************/ import React from "react"
-var LanguageIcon = require('../header/LanguageIcon.jsx');
-var HeaderLogo = require('./HeaderLogo.jsx');
-
-import {Col,} from "antd";
+ *******************************************************************************/
+import React from "react";
 import _ from "lodash";
-import {
-    Paper
-    } from "material-ui";
-import {Link} from "react-router";
-import { Menu, Icon } from 'antd';
+import Paper from "material-ui/Paper";
+import Col from "antd/lib/col";
+import Menu from "antd/lib/menu";
+import Icon from "antd/lib/icon";
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
+import {Link} from "react-router";
 
 import {ZenRawTheme} from "../../../client/globals/theme";
+var LanguageIcon = require('../header/LanguageIcon.jsx');
+var HeaderLogo = require('./HeaderLogo.jsx');
 const guestAllowedLink = ["/login", "/reset", "/join"];
 
 const styles = {

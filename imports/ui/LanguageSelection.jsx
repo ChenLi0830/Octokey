@@ -1,4 +1,14 @@
-import { Menu, Dropdown, Icon } from 'antd';
+/*******************************************************************************
+ * Copyright (C) 2015-2016 Octokey Inc.
+ *
+ * Creator: Chen Li<yichen.li0830@gmail.com>
+ * Creation Date: 2015-12-31
+ *
+ * LanguageSelection component. Used to select UI language
+ *******************************************************************************/
+import Menu from "antd/lib/menu";
+import Dropdown from "antd/lib/dropdown";
+import Icon from "antd/lib/icon";
 const DropdownButton = Dropdown.Button;
 
 const styles = {
