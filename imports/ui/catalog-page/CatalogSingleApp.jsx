@@ -172,7 +172,7 @@ var CatalogSingleApp = React.createClass({
   },
 
   handleEdit(){
-    if (OctoClientAPI.isAdmin()) {
+    if (Roles.userIsInRole(Meteor.userId(), 'admin')) {
       this.setState({modalOpen: true});
       this.props.onModalOpen();
     }

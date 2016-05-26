@@ -7,30 +7,15 @@
  * It declares methods for Topics collection.
  *******************************************************************************/
 Topics.allow({
-  insert: function () {
-    checkAdmin();
-    return true;
-  },
   download: function () {
-    //checkUserLogin();
     return true;
   },
-  //update: function () {
-  //  return true
-  //},
 });
 
 Topics.deny({
-  insert: function () {
-    checkAdmin();
-    return false;
-  },
   download: function () {
     return false;
   },
-  //update: function () {
-  //  return false
-  //},
 });
 
 

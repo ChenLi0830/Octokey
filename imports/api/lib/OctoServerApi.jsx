@@ -35,10 +35,7 @@ checkUserLogin = function () {
  */
 checkAdmin = function () {//TODO use more scalable solution to configure this, i.e.: role system
   checkUserLogin.call(this);
-  const user = Meteor.users.findOne(this.userId);
-  const admins = ["lulugeo.li@gmail.com", "yekiki@gmail.com"];
-  if ((user && user.emails && user.emails[0] &&
-      (user.emails[0].address === admins[0] || user.emails[0].address === admins[1])) === false) {
+  if (!Roles.userIsInRole(this.userId, 'admin')) {
     console.log("not admin");
     throw new Meteor.Error("This can only be done by administrator");
   }

@@ -8,7 +8,6 @@
  *******************************************************************************/
 Meteor.publish("topics", function () {
   localSimulateLatency(500);
-  checkUserLogin.call(this);
   return Topics.find({});
 });
 
@@ -24,12 +23,10 @@ Meteor.publish("allCategories", function () {
 
 Meteor.publish("userCredentials", function () {
   localSimulateLatency(800);
-  checkUserLogin.call(this);
-  //console.log("publish appCredential", userId, appId, username);
-  //console.log("this.user", this.user);
   return UserAppCredentials.find({userId: this.userId});
 });
 
+//Todo 当国内的market place都完成extension更新后（>0.0.18）,删除这个publication
 Meteor.publish("appCredential", function (userId, appId, username) {
   localSimulateLatency(800);
   //console.log("publish appCredential", userId, appId, username);

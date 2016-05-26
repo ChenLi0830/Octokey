@@ -18,12 +18,6 @@ ZenApps.deny({
   }
 });
 
-/*ZenApps.allow({
- download:function(){
- console.log("this.user()",this.user());
- return this.user();
- }
- });*/
 const MAX_APPS = 1000;
 
 Meteor.methods({

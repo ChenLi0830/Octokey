@@ -27,6 +27,8 @@ Meteor.startup(function () {
   configAccountsPackage();
   initDatabase();
 
+  //Roles.addUsersToRoles("BES43Xwtf8uje9RvN", 'admin');
+
   function setupEmail() {
     // 2. Format the email
     //-- Set the from address

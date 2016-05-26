@@ -78,7 +78,7 @@ const ChooseTopicPage = React.createClass({
                        whenTopicClicked={this.handleTopicClicked}/>;
     });
 
-    const createTopicBtn = OctoClientAPI.isAdmin() ?
+    const createTopicBtn = Roles.userIsInRole(Meteor.userId(), 'admin') ?
         <div>
           <TopicModalContainerAdd
               modalOpen={this.state.modalOpen}

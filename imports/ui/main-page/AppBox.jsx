@@ -5,8 +5,8 @@
  * Creation Date: 2015-12-31
  *
  * Component for a single App box, called by "UserAppsContainer"
- *******************************************************************************/ import React from "react"
-
+ *******************************************************************************/
+import React from "react";
 import ReactDOM from "react-dom";
 import _ from "lodash";
 import Col from "antd/lib/col";

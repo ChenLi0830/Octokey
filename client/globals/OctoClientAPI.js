@@ -121,22 +121,6 @@ OctoClientAPI = {
   },
 
 /**
- * Check if a user is an admin
- * @param {Object} [user]
- * @returns {boolean} Whether the user is an admin
- */
-isAdmin: function (user) {//TODO use more scalable solution to configure this, i.e.: role system
-  !user && (user = Meteor.user());
-
-  if (!user || !user.emails || !user.emails[0] || !user.emails[0].address) {
-    return false;
-  }
-  const admins = ["lulugeo.li@gmail.com", "yekiki@gmail.com"];
-  return user && _.indexOf(admins, user.emails[0].address) > -1
-}
-,
-
-/**
  * A quick error handler for Meteor Methods
  * @param {Object} error
  */
