@@ -168,7 +168,6 @@ var AuthSignInNew = React.createClass({
                     </InputGroup>
                   </FormItem>
 
-
                   <FormItem
                       validateStatus={this.state.floatingPassText===""?"":"error"}
                       help={this.state.floatingPassText}>

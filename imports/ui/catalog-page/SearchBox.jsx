@@ -96,11 +96,12 @@ var SearchBox = React.createClass({
   },
 
   handleSearch(event){
+    console.log("event", event);
     let eventTarget = event.currentTarget;
     this.setState({searchText: event.target.value},
         function () {
           let searchText = this.state.searchText.trim().toLowerCase();
-          if (searchText.length === 0) {//If no search text
+          if (searchText.trim().length === 0) {//If no search text
             this.setState({searchResult: null, popOpen: false});
             return;
           }
