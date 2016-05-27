@@ -94,8 +94,8 @@ var ListPage = React.createClass({
             appContainerZIndex={(this.state.userEditStatus === "remove" || this.state.userEditStatus === "config")? "400":"inherit"}
         />
       }
-      <h2>Octo推荐</h2>
-      <RecommendAppsContainer
+      {/*<h2>Octo推荐</h2>*/}
+      {/*<RecommendAppsContainer
           currentUser={this.data.currentUser}
           chosenPublicApps={this.data.chosenPublicApps}
           chosenTopics={this.data.chosenTopics}
@@ -103,7 +103,7 @@ var ListPage = React.createClass({
           userEditStatus={this.state.userEditStatus}
           userCredentials={this.data.userCredentials}
           appContainerZIndex={(this.state.userEditStatus === "remove" || this.state.userEditStatus === "config")? "400":"inherit"}
-      />
+      />*/}
     </div>
   },
 

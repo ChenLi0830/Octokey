@@ -26,7 +26,6 @@ const styles = {
 };
 
 var SearchBox = React.createClass({
-
   contextTypes: {
     intl: React.PropTypes.object.isRequired
   },

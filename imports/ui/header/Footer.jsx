@@ -7,6 +7,7 @@
  * Footer component
  *******************************************************************************/
 import React from "react";
+import {Link} from "react-router";
 const styles = {
   container: {
     //position: "fixed",
@@ -39,6 +40,8 @@ var Footer = React.createClass({
                                      style={{color:"#AEBDC9"}}>360安全验证满分网站
           </a> | 鲁 ICP 备 16008215 号
           </p>
+          {Roles.userIsInRole(Meteor.userId(),"admin")?
+          <Link to="/adminPanel">管理员</Link>: null}
         </div>
     )
   },

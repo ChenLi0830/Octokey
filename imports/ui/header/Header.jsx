@@ -168,11 +168,6 @@ var Header = React.createClass({
   },
 
   handleClick(e) {
-    //console.log('click ', e);
-    this.setState({current: e.key}, ()=> {
-      //console.log("this.state.current", this.state.current);
-    });
-
     this.handleTabChange(e.key);
   },
 });
