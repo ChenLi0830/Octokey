@@ -120,7 +120,8 @@ const TopicTopApps = React.createClass({
 
           <Row type="flex" justify="space-around" style={{marginTop:"20px"}}>
             <Col xs={6}>
-              <Select value={this.state.addAppToTopic} style={{ width: 120 }}
+              <Select placeholder="选择Topic"
+                      value={this.state.addAppToTopic} style={{ width: 120 }}
                       onChange={(topic)=>{this.setState({addAppToTopic:topic})}}>
                 {topicOptions}
               </Select>
@@ -132,7 +133,7 @@ const TopicTopApps = React.createClass({
                   <Select
                       combobox
                       value={this.state.searchText}
-                      placeholder={"选择应用"}
+                      placeholder="选择应用"
                       notFoundContent=""
                       defaultActiveFirstOption={false}
                       showArrow={false}
@@ -152,8 +153,8 @@ const TopicTopApps = React.createClass({
             </Col>
 
             <Col xs={6}>
-              <p>排序序号</p>
-              <InputNumber min={1} max={20} value={this.state.toBeAddedAppRank}
+              <p style={{display:"inline-block"}}>排序序号：</p>
+              <InputNumber min={1} max={50} value={this.state.toBeAddedAppRank}
                            onChange={(rankValue)=>{this.setState({toBeAddedAppRank: rankValue})}}/>
             </Col>
 

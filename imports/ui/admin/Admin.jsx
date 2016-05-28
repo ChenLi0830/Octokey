@@ -51,16 +51,13 @@ const Admin = React.createClass({
                     selectedKeys={[this.state.routeValue]}
                     mode="inline">
                 <SubMenu key="sub1" title={<span><Icon type="mail" /><span>Topics</span></span>}>
-                  <MenuItemGroup title="应用排名">
+                  {/*<MenuItemGroup title="应用排名">*/}
                     <Menu.Item key="overallTop">总排名</Menu.Item>
-                    <Menu.Item key="weekTop">本周排名</Menu.Item>
-                  </MenuItemGroup>
-                  <MenuItemGroup title="改各个Topics">
-                    <Menu.Item key="3">选项3</Menu.Item>
-                    <Menu.Item key="4">选项4</Menu.Item>
-                  </MenuItemGroup>
+                    {/*<Menu.Item key="weekTop">本周排名</Menu.Item>*/}
+                  {/*</MenuItemGroup>*/}
+                  <Menu.Item key="3">改Topic</Menu.Item>
                 </SubMenu>
-                <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>导航二</span></span>}>
+                <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>ZenApps</span></span>}>
                   <Menu.Item key="5">选项5</Menu.Item>
                   <Menu.Item key="6">选项6</Menu.Item>
                   <SubMenu key="sub3" title="三级导航">
@@ -68,7 +65,7 @@ const Admin = React.createClass({
                     <Menu.Item key="8">选项8</Menu.Item>
                   </SubMenu>
                 </SubMenu>
-                <SubMenu key="sub4" title={<span><Icon type="setting" /><span>导航三</span></span>}>
+                <SubMenu key="sub4" title={<span><Icon type="setting" /><span>ZenCategories</span></span>}>
                   <Menu.Item key="9">选项9</Menu.Item>
                   <Menu.Item key="10">选项10</Menu.Item>
                   <Menu.Item key="11">选项11</Menu.Item>
