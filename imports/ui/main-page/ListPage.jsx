@@ -33,15 +33,18 @@ var ListPage = React.createClass({
         chosenTopics: findUserApps ? findUserApps.topics : [],
         hexIv: findUserApps && findUserApps.hexIv ? findUserApps.hexIv : "",
         userCredentials: userCredentials,
+        recommendedApps: findUserApps ? findUserApps.recommendedApps : [],
       }
-    } else {
+    } /*else {
       return {
         currentUser: null,
         chosenPublicApps: [],
         chosenTopics: [],
         hexIv: "",
+        userCredentials: [],
+        recommendedApps: []
       }
-    }
+    }*/
   },
 
   getInitialState(){
@@ -62,7 +65,6 @@ var ListPage = React.createClass({
   },
 
   render(){
-    //console.log("this.data.chosenTopics", this.data.chosenTopics);
     //console.log("this.data.userCredentials", this.data.userCredentials);
 
     return <div>
@@ -94,16 +96,19 @@ var ListPage = React.createClass({
             appContainerZIndex={(this.state.userEditStatus === "remove" || this.state.userEditStatus === "config")? "400":"inherit"}
         />
       }
-      {/*<h2>Octo推荐</h2>*/}
-      {/*<RecommendAppsContainer
-          currentUser={this.data.currentUser}
-          chosenPublicApps={this.data.chosenPublicApps}
-          chosenTopics={this.data.chosenTopics}
-          hexIv={this.data.hexIv}
-          userEditStatus={this.state.userEditStatus}
-          userCredentials={this.data.userCredentials}
-          appContainerZIndex={(this.state.userEditStatus === "remove" || this.state.userEditStatus === "config")? "400":"inherit"}
-      />*/}
+      {<div>
+        {/*<h2>Octo推荐</h2>*/}
+        <RecommendAppsContainer
+            currentUser={this.data.currentUser}
+            recommendedApps={this.data.recommendedApps}
+            chosenPublicApps={this.data.chosenPublicApps}
+            chosenTopics={this.data.chosenTopics}
+            hexIv={this.data.hexIv}
+            userEditStatus={this.state.userEditStatus}
+            userCredentials={this.data.userCredentials}
+            appContainerZIndex={(this.state.userEditStatus === "remove" || this.state.userEditStatus === "config")? "400":"inherit"}
+        />
+      </div>}
     </div>
   },
 

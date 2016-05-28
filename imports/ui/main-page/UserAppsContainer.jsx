@@ -92,7 +92,7 @@ var UserAppsContainer = React.createClass({
     const app = publicFocusedIndex>-1 ? this.props.chosenPublicApps[publicFocusedIndex]:{};
 
     return (
-        <div>
+        <Row style={{marginBottom:70}}>
           <Paper zDepth={1}
                  style={{
                    zIndex:this.props.appContainerZIndex,
@@ -100,7 +100,6 @@ var UserAppsContainer = React.createClass({
                    backgroundColor:ZenColor.white,
                    boxShadow:"0 1px 6px rgba(0, 0, 0, 0.12)",
                    padding:0,
-                   marginBottom:70,
                    borderRadius:"5px"}}>
             <Row style={{marginLeft:0, marginRight:0}}>
               {appBoxes}
@@ -145,7 +144,7 @@ var UserAppsContainer = React.createClass({
           /> : null}
 
           <FocusOverlay visibility={_.indexOf(["config", "remove"],this.props.userEditStatus)>-1}/>
-        </div>
+        </Row>
     )
   },
 
