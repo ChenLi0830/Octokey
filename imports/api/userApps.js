@@ -6,6 +6,8 @@
  *
  * userApps.js declares methods for UserApps collection.
  *******************************************************************************/
+import _ from "lodash";
+
 Meteor.methods({
 
   /**
@@ -39,7 +41,7 @@ Meteor.methods({
             "publicApps": {
               "appId": appId,
               "appName": app.appName,
-              "logoURL": app.noLogo ? "":"cfs/files/zenApps/"+appId,
+              "logoURL": app.noLogo ? "" : "cfs/files/zenApps/" + appId,
               "loginLink": app.loginLink,
               "registerLink": app.registerLink,
               "userNames": usernameList,
@@ -162,10 +164,14 @@ Meteor.methods({
     const usernameExists = UserApps.findOne({
       $and: [
         {userId: this.userId},
-        {"publicApps": {$elemMatch: {
-          "appId": appId,
-          "userNames":{$in:[username]}
-        }}}
+        {
+          "publicApps": {
+            $elemMatch: {
+              "appId": appId,
+              "userNames": {$in: [username]}
+            }
+          }
+        }
       ]
     });
     return !!usernameExists;
@@ -209,7 +215,7 @@ Meteor.methods({
         {
           $set: {
             "publicApps.$.appName": app.appName,
-            "publicApps.$.logoURL": app.noLogo ? "":"cfs/files/zenApps/"+appId,
+            "publicApps.$.logoURL": app.noLogo ? "" : "cfs/files/zenApps/" + appId,
             "publicApps.$.loginLink": app.loginLink,
             "publicApps.$.registerLink": app.registerLink,
             "publicApps.$.popUpLoginFlag": !!app.popUpLoginFlag,
@@ -256,7 +262,91 @@ Meteor.methods({
 
       //Make record changes in Topics collection
       Meteor.call('topicIsFollowed', topics[i].topicId);
+      // Initial call to recommend apps
+      Meteor.call("InitializeRecommendedApps");
     }
+  },
+
+  /**
+   * Initialize recommended apps
+   * @param {string} [userId] - the userId of the user, if not provided, this.userId will be used
+   */
+  InitializeRecommendedApps(userId){
+    !userId && (userId = this.userId);
+    //const followedTopics = UserApps.findOne({_id:userId},{fields: {topics: 1}});
+    const followedTopics = UserApps.findOne({userId: userId}, {fields: {topics: 1}});
+    //console.log("followedTopics", followedTopics.topics);
+    const topicIdArray = followedTopics.topics.map((topic)=> {
+      return topic.topicId
+    });
+    //console.log("topicIdArray", topicIdArray);
+    const topics = Topics.find({
+      _id: {
+        $in: topicIdArray
+      }
+    }).fetch();
+
+    //console.log("topics", topics);
+    const topAppsArray = topics.map((topic)=> {
+      return topic.topAppsOverall
+    });
+    //console.log("topAppsArray", topAppsArray);
+
+    //最长length的Array
+    const maxLength = _.maxBy(topAppsArray, (topApps)=> {
+      return topApps.length
+    }).length;
+    //console.log("maxLength", maxLength);
+    let maxRecommendedApps = 30, recommendAppNumber = 0;
+    for (let j = 0; j < maxLength; j++) {
+      for (let i = 0; i < topAppsArray.length; i++) {
+        // Stop if too many apps are added
+        if (recommendAppNumber > maxRecommendedApps) {
+          break;
+        }
+
+        const app = topAppsArray[i][j];
+        // If user hasn't subscribe the app yet
+        if (app && !Meteor.call("isAppSubscribedByUser", app.appId)) {
+          recommendAppNumber++;
+          console.log("add app to recommended app", app);
+          Meteor.call("appendRecommendedApps", app.appId, userId);
+        }
+      }
+    }
+  },
+
+  /**
+   * Check if an app is subscribed by a user
+   * @param {string} appId - the _id of the app
+   * @param {string} [userId] - the userId of the user, if not provided, this.userId will be used
+   */
+  isAppSubscribedByUser(appId, userId){
+    !userId && (userId = this.userId);
+    return !!UserApps.findOne({
+      $and: [
+        {userId: userId},
+        {"publicApps.appId": appId}
+      ]
+    });
+  },
+
+  /**
+   * Append recommended apps
+   * @param {string} appId - the _id of the app
+   * @param {string} [userId] - the userId of the user, if not provided, this.userId will be used
+   */
+  appendRecommendedApps(appId, userId){
+    !userId && (userId = this.userId);
+    const app = ZenApps.findOne({_id: appId});
+    //console.log("app", app);
+    UserApps.update({userId: userId},
+        {
+          $addToSet: {
+            recommendedApps: app
+          }
+        }
+    );
   },
 
   /**
@@ -270,8 +360,8 @@ Meteor.methods({
     checkUserLogin.call(this);
 
     //Unfollow all current topics
-    UserApps.update({userId:this.userId}, {
-      $set:{topics:[]}
+    UserApps.update({userId: this.userId}, {
+      $set: {topics: []}
     });
 
     for (let i = 0; i < topics.length; i++) {
