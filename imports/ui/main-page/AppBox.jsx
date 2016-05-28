@@ -38,12 +38,14 @@ const styles = {
   },
   noLogoBox: {
     position: "relative",
-    height: "52%",
-    width: "52%",
+    height: "100px",
+    width: "100px",
     backgroundColor: "#3399FF",
     borderRadius: "5px",
-    top: "24%",
-    left: "24%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    top: "50%",
+    transform: "translateY(-50%)",
   },
   noLogoText: {
     textAlign: "center",
