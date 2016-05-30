@@ -61,24 +61,26 @@ var RecommendedAppBox = React.createClass({
                style={{width:"100px", borderRadius:"5px"}}
                className="vertical-center horizontal-center"/>;
 
-    return <Col xs={6} style={{height:150}}>
-      <Col xs={12} style={{height:"100%"}}>
-        {image}
-      </Col>
+    return <div>
+      <Col xs={6} style={{height:150}}>
+        <Col xs={12} style={{height:"100%"}}>
+          {image}
+        </Col>
 
-      <Col xs={12} style={{position: "relative", top: "50%", transform: "translateY(-50%)"}}>
-        <p style={{lineHeight: "30px"}}>{this.props.appName}</p>
-        <Button type="primary" loading={this.state.iconLoading}
-                onClick={this.handleSubscribeApp}>
-          添加
-        </Button>
+        <Col xs={12} style={{position: "relative", top: "50%", transform: "translateY(-50%)"}}>
+          <p style={{lineHeight: "30px"}}>{this.props.appName}</p>
+          <Button type="primary" loading={this.state.iconLoading}
+                  onClick={this.handleSubscribeApp}>
+            添加
+          </Button>
+        </Col>
       </Col>
-    </Col>
+    </div>
   },
 
   handleSubscribeApp(){
     this.setState({iconLoading: true});
-    Meteor.call("subscribePublicApp", this.props.appId, ()=>{
+    Meteor.call("subscribePublicApp", this.props.appId, ()=> {
       this.setState({iconLoading: false});
     });
     //Todo remove app from recommendation list
