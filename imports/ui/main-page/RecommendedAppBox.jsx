@@ -69,17 +69,20 @@ var RecommendedAppBox = React.createClass({
       <Col xs={12} style={{position: "relative", top: "50%", transform: "translateY(-50%)"}}>
         <p style={{lineHeight: "30px"}}>{this.props.appName}</p>
         <Button type="primary" loading={this.state.iconLoading}
-                onClick={this.enterIconLoading}>
+                onClick={this.handleSubscribeApp}>
           添加
         </Button>
       </Col>
     </Col>
   },
 
-  enterIconLoading(){
+  handleSubscribeApp(){
     this.setState({iconLoading: true});
+    Meteor.call("subscribePublicApp", this.props.appId, ()=>{
+      this.setState({iconLoading: false});
+    });
+    //Todo remove app from recommendation list
   },
-
 });
 
 module.exports = RecommendedAppBox;

@@ -10,7 +10,7 @@ import React from "react";
 import _ from "lodash";
 
 import Row from "antd/lib/row";
-import Paper from "material-ui/Paper";
+import Card from 'antd/lib/card';
 
 const AppBox = require('./AppBox.jsx');
 const AddNewApp = require('./AddNewApp.jsx');
@@ -93,18 +93,16 @@ var UserAppsContainer = React.createClass({
 
     return (
         <Row style={{marginBottom:70}}>
-          <Paper zDepth={1}
-                 style={{
+          <Card bordered={false}
+                bodyStyle={{padding:"0"}}
+                style={{
                    zIndex:this.props.appContainerZIndex,
                    position:"relative",
-                   backgroundColor:ZenColor.white,
-                   boxShadow:"0 1px 6px rgba(0, 0, 0, 0.12)",
-                   padding:0,
-                   borderRadius:"5px"}}>
+                   padding:0}}>
             <Row style={{marginLeft:0, marginRight:0}}>
               {appBoxes}
             </Row>
-          </Paper>
+          </Card>
 
           {this.state.openDialogPlugin ?
           <PluginInstallDialog openDialogPlugin={this.state.openDialogPlugin}

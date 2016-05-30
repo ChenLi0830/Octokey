@@ -54,7 +54,12 @@ Meteor.methods({
         }
     );
 
-    if (ZenApps.findOne({_id: appId}).subscribeCount != null) {//Update subscription count
+    Meteor.call("increaseSubscriptionNumber", appId);
+
+    //当前用户subscribe一个应用后,就把它从推荐列表删除。
+    Meteor.call("removeAppFromRecommendation", appId);
+
+/*    if (ZenApps.findOne({_id: appId}).subscribeCount != null) {//Update subscription count
       ZenApps.update(
           {_id: appId},
           {
@@ -68,7 +73,7 @@ Meteor.methods({
             $set: {subscribeCount: 1}
           }
       )
-    }
+    }*/
   },
 
   unsubscribePublicApp(appId){
@@ -85,12 +90,14 @@ Meteor.methods({
         }
     );
 
-    ZenApps.update(
+    Meteor.call("DecreaseSubscriptionNumber", appId);
+
+/*    ZenApps.update(
         {_id: appId},
         {
           $inc: {subscribeCount: -1}
         }
-    );
+    );*/
   },
 
   appAddUsername(appId, username){
@@ -350,6 +357,23 @@ Meteor.methods({
   },
 
   /**
+   * remove an app from a user's recommendation list
+   * @param {string} appId - the _id of the app
+   * @param {string} [userId] - the userId of the user, if not provided, this.userId will be used
+   */
+  removeAppFromRecommendation(appId, userId){
+    !userId && (userId = this.userId);
+    //console.log("app", app);
+    UserApps.update({userId: userId},
+        {
+          $pull: {
+            recommendedApps: {_id:appId}
+          }
+        }
+    );
+  },
+
+  /**
    * User update followed topics
    * @param {object[]} topics - The topics being followed by the user
    * @param topic.topicId - the Id of the topic
@@ -372,5 +396,6 @@ Meteor.methods({
     // Re-follow all the new topics
     Meteor.call('followTopics', topics);
   },
+
 
 });

@@ -18,13 +18,6 @@ const RecommendedAppBox = require("./RecommendedAppBox.jsx");
 var RecommendAppsContainer = React.createClass({
   propTypes: {
     recommendedApps: React.PropTypes.array.isRequired,
-    //chosenTopics: React.PropTypes.array.isRequired,
-    //chosenPublicApps: React.PropTypes.array.isRequired,
-    //currentUser: React.PropTypes.object.isRequired,
-    //hexIv: React.PropTypes.string.isRequired,
-    //userEditStatus: React.PropTypes.string.isRequired,
-    //userCredentials: React.PropTypes.object.isRequired,
-    //appContainerZIndex: React.PropTypes.string.isRequired,
   },
 
   getDefaultProps(){

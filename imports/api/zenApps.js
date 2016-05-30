@@ -214,4 +214,44 @@ Meteor.methods({
     checkUserLogin.call(this);
     return ZenApps.findOne({appName: appName});
   },
+
+  /**
+   * increase ZenApps subscription number
+   * @param {string} appId - App Id.
+   */
+  increaseSubscriptionNumber(appId){
+    if (ZenApps.findOne({_id: appId}).subscribeCount != null) {//Update subscription count
+      ZenApps.update(
+          {_id: appId},
+          {
+            $inc: {subscribeCount: 1}
+          }
+      )
+    } else {
+      ZenApps.update(
+          {_id: appId},
+          {
+            $set: {subscribeCount: 1}
+          }
+      )
+    }
+  },
+
+  /**
+   * Decrease ZenApps subscription number
+   * @param {string} appId - App Id.
+   */
+  DecreaseSubscriptionNumber(appId){
+    ZenApps.update(
+        {_id: appId},
+        {
+          $inc: {subscribeCount: -1}
+        }
+    );
+  },
+
+  checkAppExistsByName(appName){
+    checkUserLogin.call(this);
+    return ZenApps.findOne({appName: appName});
+  },
 });
