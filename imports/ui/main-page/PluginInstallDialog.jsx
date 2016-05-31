@@ -7,10 +7,8 @@
  * Dialog to ask user to install plugin
  *******************************************************************************/
 import React from "react"
-import {Dialog} from "material-ui/Dialog";
-import {FlatButton} from "material-ui/FlatButton";
-import {Modal} from 'antd/lib/modal';
-import {Button} from "antd/lib/button";
+import Modal from 'antd/lib/modal';
+import Button from "antd/lib/button";
 
 const BrowserLogoBox = require('./BrowserLogoBox.jsx');
 
