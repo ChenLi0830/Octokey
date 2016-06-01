@@ -21,7 +21,7 @@ import _ from 'lodash'
 const styles = {
   searchInput: {
     width: "90%",
-    margin: "10px auto"
+    margin: "0px auto 10px auto"
   }
 };
 

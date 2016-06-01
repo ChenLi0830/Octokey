@@ -6,10 +6,11 @@
  *
  * Catalog page component, called by "routes", used by "App"
  *******************************************************************************/
-import React from "react"
+import React from "react";
 import Reflux from "reflux";
 import Row from "antd/lib/row";
-import Col from "antd/lib/col"
+import Col from "antd/lib/col";
+import Card from 'antd/lib/card';
 
 import CategoryStore from '../action-and-stores/CategoryStore.jsx';
 var CatalogSideBar = require('./CatalogSidebar.jsx');
@@ -50,19 +51,22 @@ var Catalog = React.createClass({
     return <div>
       <div>
         <Row style={{marginBottom:"60px"}}>
-          <Col span="6">
-            <CatalogSideBar allCategories={this.props.allCategories}
-                            zenApps={this.props.allPublicApps}
-                            subscribeList={this.props.subscribeList}
-            />
-          </Col>
-          <Col span="18">
-            <CatalogAppsBox allCategories={this.props.allCategories}
-                            subscribeList={this.props.subscribeList}
-                            zenApps={this.props.allPublicApps}
-                            chosenCategory={this.state.chosenCategory}
-            />
-          </Col>
+          <Card bordered={false}
+                bodyStyle={{padding:"24px 0px"}}>
+            <Col span="6">
+              <CatalogSideBar allCategories={this.props.allCategories}
+                              zenApps={this.props.allPublicApps}
+                              subscribeList={this.props.subscribeList}
+              />
+            </Col>
+            <Col span="18">
+              <CatalogAppsBox allCategories={this.props.allCategories}
+                              subscribeList={this.props.subscribeList}
+                              zenApps={this.props.allPublicApps}
+                              chosenCategory={this.state.chosenCategory}
+              />
+            </Col>
+          </Card>
         </Row>
       </div>
     </div>

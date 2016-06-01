@@ -270,8 +270,23 @@ Meteor.methods({
       //Make record changes in Topics collection
       Meteor.call('topicIsFollowed', topics[i].topicId);
       // Initial call to recommend apps
-      Meteor.call("InitializeRecommendedApps");
     }
+    //添加完topic后, 初始化recommendedApps
+    Meteor.call("InitializeRecommendedApps");
+  },
+
+  /**
+   * Initialize recommended apps for everyone (Temporary method)
+   */
+  InitializeRecommendedAppsAll(){
+    const userApps = UserApps.find({}).fetch();
+    userApps.map((userApp)=>{
+      'use strict';
+      console.log("userApp.userId", userApp.userId);
+      const userId = userApp.userId;
+      Meteor.call("InitializeRecommendedApps", userId);
+    });
+
   },
 
   /**
@@ -282,6 +297,9 @@ Meteor.methods({
     !userId && (userId = this.userId);
     //const followedTopics = UserApps.findOne({_id:userId},{fields: {topics: 1}});
     const followedTopics = UserApps.findOne({userId: userId}, {fields: {topics: 1}});
+    if (!followedTopics.topics || followedTopics.topics.length===0){//如果没有follow topic, 就跳过
+      return;
+    }
     //console.log("followedTopics", followedTopics.topics);
     const topicIdArray = followedTopics.topics.map((topic)=> {
       return topic.topicId

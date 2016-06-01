@@ -27,6 +27,7 @@ Meteor.startup(function () {
   configAccountsPackage();
   initDatabase();
 
+  //Roles.addUsersToRoles("FhkaXKAMufjT4EsTR", 'admin');
   //Roles.addUsersToRoles("BES43Xwtf8uje9RvN", 'admin');
 
   function setupEmail() {

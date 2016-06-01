@@ -39,23 +39,12 @@ var CatalogSideBar = React.createClass({
 
     //Todo Add search box
     return <div>
-      <Paper zDepth={1}
-             style={{
-             backgroundColor:ZenColor.white,
 
-             padding:0,
-             borderRadius:"5px"}}>
-        {/*<SearchBox zenApps = {this.props.zenApps}
-         subscribeList={this.props.subscribeList}
-         allCategories={this.props.allCategories}
-         />*/}
-        {/*<Divider />*/}
         {createPublicAppButton}
         {/*<CreatePrivateAppButton/>*/}
-        <Divider />
+
         <CategoryList allCategories={this.props.allCategories}/>
         {createCategoryButton}
-      </Paper>
     </div>
   },
 });

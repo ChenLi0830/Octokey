@@ -11,6 +11,12 @@ import {List, ListItem} from "material-ui/List";
 import RaisedButton from "material-ui/RaisedButton";
 import Subheader from "material-ui/Subheader";
 
+
+import Menu from "antd/lib/menu";
+import Icon from "antd/lib/icon";
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
+
 var Actions = require("../action-and-stores/Actions.jsx");
 
 import {
@@ -80,7 +86,15 @@ var CategoryList = React.createClass({
     }
   },
 
-  handleTouchTap(categoryName){
+  handleTouchTap(event){
+    const categoryName = event.key;
+    console.log("event.key", event.key);
+      //const newRoute = "/adminPanel/" + event.key;
+      ////console.log("newRoute", newRoute);
+      //this.setState({routeValue: event.key}, function () {
+      //  this.context.router.push(newRoute);
+      //}.bind(this));
+
     Actions.selectNewCategory(categoryName);
     this.setState({chosenCategory: categoryName});
     //console.log("categoryName", categoryName);
@@ -89,26 +103,43 @@ var CategoryList = React.createClass({
   render(){
     const tempIcon = <ContentGesture color={ZenColor.cyan}/>;
     const selectedItem = {backgroundColor: ZenColor.grey2};
-    const Items = this.props.allCategories.map(function (category) {
+    const Items = this.props.allCategories.map(function(category) {
       const icon = nameToIcon[category.name] ? nameToIcon[category.name] : tempIcon;
-      return <ListItem
-          key={category._id}
-          onTouchTap={this.handleTouchTap.bind(this, category.name)}
-          style={this.state.chosenCategory == category.name ? selectedItem : null}
-          rightIcon={icon}
-          primaryText={this.context.locale==="zh" && category.displayTitleChinese ||
-                                this.context.locale==="en-US" && category.displayTitleEnglish ||
-                                category.displayTitleEnglish//If nothing is matched, use English
-                            }
-      />
+      return <Menu.Item key={category.name}>
+        {this.context.locale === "zh" && category.displayTitleChinese ||
+        this.context.locale === "en-US" && category.displayTitleEnglish ||
+        category.displayTitleEnglish}
+      </Menu.Item>;
+      {/*<ListItem
+       key={category._id}
+       onTouchTap={this.handleTouchTap.bind(this, category.name)}
+       style={this.state.chosenCategory == category.name ? selectedItem : null}
+       rightIcon={icon}
+       primaryText={this.context.locale==="zh" && category.displayTitleChinese ||
+       this.context.locale==="en-US" && category.displayTitleEnglish ||
+       category.displayTitleEnglish//If nothing is matched, use English
+       }
+       />*/
+      }
 
     }, this);
     //console.log("Items ",Items);
-    return <List style={{backgroundColor:"white"}}>
-      <Subheader>{this.context.intl.messages.cata_category}</Subheader>
-      {Items}
-    </List>
+    return (
+        <Menu onClick={this.handleTouchTap}
+              style={{ width: 240 }}
+              defaultOpenKeys={['sub1']}
+              selectedKeys={[this.state.chosenCategory]}
+              mode="inline">
+          {/*<MenuItemGroup title="分类">
+            {Items}
+          </MenuItemGroup>*/
+          }
+          {Items}
+        </Menu>
+    );
   },
 });
+
+
 
 module.exports = CategoryList;

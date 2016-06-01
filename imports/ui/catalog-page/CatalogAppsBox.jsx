@@ -17,13 +17,7 @@ var CatalogSingleApp = require('./CatalogSingleApp.jsx');
 var AppLoading = require('../AppLoading.jsx');
 var SearchBox = require('./SearchBox.jsx');
 
-const styles = {
-  appListPaper: {
-    backgroundColor: ZenColor.white,
-    padding: 0,
-    borderRadius: "5px"
-  }
-};
+const styles = {};
 
 const InitialFetchNumber = 20;
 
@@ -104,7 +98,7 @@ var CatalogAppsBox = React.createClass({
 
     const {messages} = this.context.intl;
 
-    const appsOfChosenCategory = (Session.get("appsOfChosenCategory").apps.map(function (app) {
+    const appsOfChosenCategory = (Session.get("appsOfChosenCategory").apps.map(function(app) {
           let logoURL = app.noLogo ? "" : OctoClientAPI.getLogoUrl(app._id);
           let subscribed = this.props.subscribeList[app._id];
           return <CatalogSingleApp key={app._id}
@@ -126,28 +120,25 @@ var CatalogAppsBox = React.createClass({
     const noMoreApps = appsOfChosenCategory.length === Session.get("appsOfChosenCategory").total;
 
     return <div className="layout-margin">
-      <Paper zDepth={1}
-             style={styles.appListPaper}>
-        <List style={{backgroundColor:ZenColor.white}}>
-          {/*<Subheader>{messages.cata_listTitle}</Subheader>*/}
-          <SearchBox zenApps={this.props.zenApps}
-                     subscribeList={this.props.subscribeList}
-                     allCategories={this.props.allCategories}
-          />
+      <List style={{backgroundColor:ZenColor.white, padding:"0px"}}>
+        {/*<Subheader>{messages.cata_listTitle}</Subheader>*/}
+        <SearchBox zenApps={this.props.zenApps}
+                   subscribeList={this.props.subscribeList}
+                   allCategories={this.props.allCategories}
+        />
           {appsOfChosenCategory}
-        </List>
+      </List>
 
-        {// Only show “加载更多” 按钮 if appsOfChosenCategory number > InitialFetchNumber
-          Session.get("appsOfChosenCategory").total > InitialFetchNumber ?
-              <Button
-                  type="dashed"
-                  size="large"
-                  loading={!this.data.subsReady}
-                  onClick={this.handleInfiniteLoad}
-                  style={{display:"block", width: "100%", margin: "20px auto"}}>
-                {noMoreApps ? messages["noMoreApps-已经到底了"] : messages["loadMoreApps-加载更多"]}
-              </Button> : null}
-      </Paper>
+      {// Only show “加载更多” 按钮 if appsOfChosenCategory number > InitialFetchNumber
+        Session.get("appsOfChosenCategory").total > InitialFetchNumber ?
+            <Button
+                type="dashed"
+                size="large"
+                loading={!this.data.subsReady}
+                onClick={this.handleInfiniteLoad}
+                style={{display:"block", width: "100%", margin: "20px auto"}}>
+              {noMoreApps ? messages["noMoreApps-已经到底了"] : messages["loadMoreApps-加载更多"]}
+            </Button> : null}
     </div>
   }
 });

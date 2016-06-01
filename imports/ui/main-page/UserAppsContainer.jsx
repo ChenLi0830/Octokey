@@ -11,6 +11,7 @@ import _ from "lodash";
 
 import Row from "antd/lib/row";
 import Card from 'antd/lib/card';
+import QueueAnim from "rc-queue-anim";
 
 const AppBox = require('./AppBox.jsx');
 const AddNewApp = require('./AddNewApp.jsx');
@@ -73,7 +74,7 @@ var UserAppsContainer = React.createClass({
   render (){
     let appBoxes;
     if (this.props.chosenPublicApps.length > 0) {
-      appBoxes = this.props.chosenPublicApps.map(function (userApp, i) {
+      appBoxes = this.props.chosenPublicApps.map(function(userApp, i) {
         return <AppBox key={userApp.appId}
                        appId={userApp.appId}
                        logoURL={userApp.logoURL}
@@ -89,7 +90,7 @@ var UserAppsContainer = React.createClass({
     }
 
     let isPublicApp = publicFocusedIndex > -1;
-    const app = publicFocusedIndex>-1 ? this.props.chosenPublicApps[publicFocusedIndex]:{};
+    const app = publicFocusedIndex > -1 ? this.props.chosenPublicApps[publicFocusedIndex] : {};
 
     return (
         <Row style={{marginBottom:70}}>
@@ -100,26 +101,30 @@ var UserAppsContainer = React.createClass({
                    position:"relative",
                    padding:0}}>
             <Row style={{marginLeft:0, marginRight:0}}>
-              {appBoxes}
+              <QueueAnim key="publicApps"
+                         type={['bottom', 'top']}
+                         ease={['easeOutQuart', 'easeInOutQuart']}>
+                {appBoxes}
+              </QueueAnim>
             </Row>
           </Card>
 
           {this.state.openDialogPlugin ?
-          <PluginInstallDialog openDialogPlugin={this.state.openDialogPlugin}
-                               whenCloseDialog={()=>{this.setState({openDialogPlugin:false})}}
-          /> : null}
+              <PluginInstallDialog openDialogPlugin={this.state.openDialogPlugin}
+                                   whenCloseDialog={()=>{this.setState({openDialogPlugin:false})}}
+              /> : null}
 
           {this.state.openDialogCredential ?
-            <CredentialDialog appName={app.appName}
-                            appId={app.appId}
-                            isPublicApp={isPublicApp}
-                            logoURL = {app.logoURL}
-                            openDialogCredential={this.state.openDialogCredential}
-                            whenCloseDialog={()=>{this.setState({openDialogCredential: false})}}
-                            whenSubmitCredential={this.handleLogin}
-                            whenVisitHomePage={this.handleVisitHomePage}
-                            hexIv={this.props.hexIv}
-          /> : null}
+              <CredentialDialog appName={app.appName}
+                                appId={app.appId}
+                                isPublicApp={isPublicApp}
+                                logoURL={app.logoURL}
+                                openDialogCredential={this.state.openDialogCredential}
+                                whenCloseDialog={()=>{this.setState({openDialogCredential: false})}}
+                                whenSubmitCredential={this.handleLogin}
+                                whenVisitHomePage={this.handleVisitHomePage}
+                                hexIv={this.props.hexIv}
+              /> : null}
 
           {this.state.openDialogEdit ?
               <EditDialog appName={app.appName}
@@ -132,14 +137,14 @@ var UserAppsContainer = React.createClass({
               /> : null}
 
           {this.state.openDialogRegister ?
-          <RegisterDialog appName={app.appName}
-                          appId={app.appId}
-                          registerRequest={this.state.registerRequest}
-                          openDialogRegister={this.state.openDialogRegister}
-                          whenLogin={this.handleLogin.bind(this, registeredUsername, "")}
-                          whenCloseDialog={()=>{this.setState({openDialogRegister:false, registerRequest:defaultRequest})}}
-                          registerLink={app.registerLink}
-          /> : null}
+              <RegisterDialog appName={app.appName}
+                              appId={app.appId}
+                              registerRequest={this.state.registerRequest}
+                              openDialogRegister={this.state.openDialogRegister}
+                              whenLogin={this.handleLogin.bind(this, registeredUsername, "")}
+                              whenCloseDialog={()=>{this.setState({openDialogRegister:false, registerRequest:defaultRequest})}}
+                              registerLink={app.registerLink}
+              /> : null}
 
           <FocusOverlay visibility={_.indexOf(["config", "remove"],this.props.userEditStatus)>-1}/>
         </Row>
@@ -158,7 +163,7 @@ var UserAppsContainer = React.createClass({
       return;
     }
 
-    publicFocusedIndex = _.findIndex(this.props.chosenPublicApps, function (publicApp) {
+    publicFocusedIndex = _.findIndex(this.props.chosenPublicApps, function(publicApp) {
       return publicApp.appId === appId;
     });
     privateFocusedIndex = -1;
@@ -169,12 +174,11 @@ var UserAppsContainer = React.createClass({
     if (this.props.userEditStatus === "default") {
       if (isPublicApp) {//是public app
         const loginLink = this.props.chosenPublicApps[publicFocusedIndex].loginLink;
-        if (loginLink.indexOf("无登录")>-1){//无登录地址
+        if (loginLink.indexOf("无登录") > -1) {//无登录地址
           this.handleVisitHomePage();
-        } else
-        if (username) {//有登录地址,且有用户名
-          const credential = _.find(this.props.userCredentials.publicApps, (app)=>{
-            return app.appId===appId && app.username===username
+        } else if (username) {//有登录地址,且有用户名
+          const credential = _.find(this.props.userCredentials.publicApps, (app)=> {
+            return app.appId === appId && app.username === username
           });
           const password = OctoClientAPI.decryptAES(credential.password, this.props.hexIv, Session.get("hexKey"));
           //const password = userCredentials
