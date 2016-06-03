@@ -45,27 +45,29 @@ var Catalog = React.createClass({
 
   render(){
     //console.log("run Catalog render with props", this.props);
-    if (!this.props.subsReady) {
-      return <AppLoading/>
-    }
+
     return <div>
       <div>
         <Row style={{marginBottom:"60px"}}>
           <Card bordered={false}
                 bodyStyle={{padding:"24px 0px"}}>
-            <Col span="6">
-              <CatalogSideBar allCategories={this.props.allCategories}
-                              zenApps={this.props.allPublicApps}
-                              subscribeList={this.props.subscribeList}
-              />
-            </Col>
-            <Col span="18">
-              <CatalogAppsBox allCategories={this.props.allCategories}
-                              subscribeList={this.props.subscribeList}
-                              zenApps={this.props.allPublicApps}
-                              chosenCategory={this.state.chosenCategory}
-              />
-            </Col>
+            {!this.props.subsReady ? <AppLoading/> :
+                <div>
+                  <Col span="6">
+                    <CatalogSideBar allCategories={this.props.allCategories}
+                                    zenApps={this.props.allPublicApps}
+                                    subscribeList={this.props.subscribeList}
+                    />
+                  </Col>
+                  <Col span="18">
+                    <CatalogAppsBox allCategories={this.props.allCategories}
+                                    subscribeList={this.props.subscribeList}
+                                    zenApps={this.props.allPublicApps}
+                                    chosenCategory={this.state.chosenCategory}
+                    />
+                  </Col>
+                </div>
+            }
           </Card>
         </Row>
       </div>

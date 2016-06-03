@@ -50,13 +50,13 @@ var UnloginHeader = React.createClass({
     let btnLink, btnTitle;
     if (this.props.location.pathname==='/login' || this.props.location.pathname==='/'){
       btnLink = '/join';
-      btnTitle = '注册';
+      btnTitle = messages["register-注册"];
     } else if (this.props.location.pathname==='/join'){
       btnLink = '/login';
-      btnTitle = '登录';
+      btnTitle = messages["login-登录"];
     } else {//这个不应该出现, 放在这只是防错
       btnLink = '/';
-      btnTitle = '首页';
+      btnTitle = messages["homepage-首页"];
     }
     const button = <Link to={btnLink}>
       <Button type="dashed" style={styles.buttonStyle}>

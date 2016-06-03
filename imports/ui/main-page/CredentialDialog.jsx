@@ -84,7 +84,7 @@ var CredentialDialog = React.createClass({
   },
 
   render(){
-    const {messages} = this.context.intl;
+    messages = this.context.intl.messages.credentialDialog;
 
     const formItemLayout = {
       labelCol: {span: 6},
@@ -96,11 +96,11 @@ var CredentialDialog = React.createClass({
     const loginForms = (
         <Row type="flex" align="middle">
           <Col span="9" style={styles.inlineCol}>
-            <h3 style={styles.inlineColTitle}>直接访问</h3>
+            <h3 style={styles.inlineColTitle}>{messages["直接访问"]}</h3>
             <Form horizontal form={this.props.form}>
 
               <FormItem style={{ marginTop: 24, textAlign:"center" }}>
-                <Button htmlType="submit" onClick={this.handleVisitHomePage}>去主页</Button>
+                <Button htmlType="submit" onClick={this.handleVisitHomePage}>{messages["去主页"]}</Button>
               </FormItem>
 
               {/*<FormItem >
@@ -110,7 +110,7 @@ var CredentialDialog = React.createClass({
           </Col>
 
           <Col span="15" style={_.extend({}, styles.inlineCol, styles.verticalDivider)}>
-            <h3 style={styles.inlineColTitle}>帐号登录访问</h3>
+            <h3 style={styles.inlineColTitle}>{messages["帐号登录访问"]}</h3>
             <Form horizontal form={this.props.form}>
 
               {/*This is here to stop chrome's username and password autofill*/}
@@ -119,11 +119,11 @@ var CredentialDialog = React.createClass({
 
               <FormItem
                   {...formItemLayout}
-                  label={"用户名："}
+                  label={messages["用户名："]}
                   validateStatus={this.state.floatingUserError.length===0? "": "error"}
                   help={this.state.floatingUserError}>
                 <Input ref="username"
-                       placeholder="请输入账户名"
+                       placeholder={messages["请输入账户名"]}
                        autoComplete="off"
                        onContextMenu={false} onPaste={false} onCopy={false} onCut={false}
                        onBlur={this.pwdOnBlur1}
@@ -132,12 +132,12 @@ var CredentialDialog = React.createClass({
               </FormItem>
               <FormItem
                   {...formItemLayout}
-                  label={"密码："}
+                  label={messages["密码："]}
                   validateStatus={this.state.floatingPassError.length===0? "": "error"}
                   help={this.state.floatingPassError}>
                 <Input type="password"
                        ref="password"
-                       placeholder="请输入密码"
+                       placeholder={messages["请输入密码"]}
                        autoComplete="off"
                        onContextMenu={false} onPaste={false} onCopy={false} onCut={false}
                        onBlur={this.pwdOnBlur1}
@@ -150,15 +150,15 @@ var CredentialDialog = React.createClass({
     );
 
     const verifyForm = (<Form horizontal form={this.props.form}>
-      <p>{messages.credentialDialog.verifyMessage}</p>
+      <p>{messages.verifyMessage}</p>
     </Form>);
 
     return <div>
       <Modal
           onOk={this.state.openVerify ? this.handleCloseDialog: this.handleSubmit}
           onCancel={this.state.openVerify ? this.verifyUnsuccess : this.handleCloseDialog}
-          okText={this.state.openVerify ? messages.credentialDialog.verifyBtn_success: "登录"}
-          cancelText={this.state.openVerify ? messages.credentialDialog.verifyBtn_fail: "取消"}
+          okText={this.state.openVerify ? messages.verifyBtn_success: messages["登录"]}
+          cancelText={this.state.openVerify ? messages.verifyBtn_fail: messages["取消"]}
           title={this.getTitle()}
           visible={this.props.openDialogCredential}>
 
@@ -170,7 +170,7 @@ var CredentialDialog = React.createClass({
 
   getTitle(){
     const verifyTitle = this.props.appName +
-        this.context.intl.messages.credentialDialog.verifyTitle;
+        this.context.intl.messages.verifyTitle;
 
     const logo = this.props.logoURL === "" ?
         <div style={styles.noLogoBox}>
@@ -181,7 +181,7 @@ var CredentialDialog = React.createClass({
     const normalTitle = <div>
       {logo}
       {<FormattedMessage id="app_credentialDialogMessage" values={{appName:this.props.appName}}/>}
-      <Tooltip title={<ul><li>国际领先加密算法AES256, 保证安全无虞</li></ul>}>
+      <Tooltip title={<ul><li>{messages["国际领先加密算法AES256, 保证安全无虞"]}</li></ul>}>
         <Icon type="question-circle-o"/>
       </Tooltip>
     </div>;

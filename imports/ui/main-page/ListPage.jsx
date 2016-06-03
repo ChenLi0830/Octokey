@@ -35,16 +35,17 @@ var ListPage = React.createClass({
         userCredentials: userCredentials,
         recommendedApps: findUserApps ? findUserApps.recommendedApps : [],
       }
-    } /*else {
-      return {
-        currentUser: null,
-        chosenPublicApps: [],
-        chosenTopics: [],
-        hexIv: "",
-        userCredentials: [],
-        recommendedApps: []
-      }
-    }*/
+    }
+    /*else {
+     return {
+     currentUser: null,
+     chosenPublicApps: [],
+     chosenTopics: [],
+     hexIv: "",
+     userCredentials: [],
+     recommendedApps: []
+     }
+     }*/
   },
 
   getInitialState(){
@@ -74,11 +75,6 @@ var ListPage = React.createClass({
                              openPage={this.state.openChooseTopicPage}/> : null
       }
 
-      {/*this.state.openChooseAppPage ?
-       <ChooseAppPage onClosePage={()=>{this.setState({openChooseAppPage: false})}}
-       openPage = {this.state.openChooseAppPage} />: null*/
-      }
-
       <FloatingEditButton
           whenEditButtonClicked={this.handleEditButtonClick}
           userEditStatus={this.state.userEditStatus}
@@ -96,19 +92,19 @@ var ListPage = React.createClass({
             appContainerZIndex={(this.state.userEditStatus === "remove" || this.state.userEditStatus === "config")? "400":"inherit"}
         />
       }
-      {<div>
-        {/*<h2>Octo推荐</h2>*/}
-        <RecommendAppsContainer
-            currentUser={this.data.currentUser}
-            recommendedApps={this.data.recommendedApps}
-            chosenPublicApps={this.data.chosenPublicApps}
-            chosenTopics={this.data.chosenTopics}
-            hexIv={this.data.hexIv}
-            userEditStatus={this.state.userEditStatus}
-            userCredentials={this.data.userCredentials}
-            appContainerZIndex={(this.state.userEditStatus === "remove" || this.state.userEditStatus === "config")? "400":"inherit"}
-        />
-      </div>}
+      {this.data.recommendedApps && this.data.recommendedApps.length > 0 ?
+          <div>
+            <RecommendAppsContainer
+                currentUser={this.data.currentUser}
+                recommendedApps={this.data.recommendedApps}
+                chosenPublicApps={this.data.chosenPublicApps}
+                chosenTopics={this.data.chosenTopics}
+                hexIv={this.data.hexIv}
+                userEditStatus={this.state.userEditStatus}
+                userCredentials={this.data.userCredentials}
+                appContainerZIndex={(this.state.userEditStatus === "remove" || this.state.userEditStatus === "config")? "400":"inherit"}
+            />
+          </div> : null}
     </div>
   },
 

@@ -25,6 +25,7 @@ var AppLoading = require('./AppLoading.jsx');
 var Header = require('./header/Header.jsx');
 var UnloginHeader = require('./header/UnloginHeader.jsx');
 const Footer = require('./header/Footer.jsx');
+const LanguageSelection = require("./LanguageSelection");
 import {EncryptionStore} from "./action-and-stores/EncryptionStore.jsx";
 
 const styles = {
@@ -170,7 +171,7 @@ var App = React.createClass({
                 )
           }
 
-          {/*<LanguageSelection/>*/}
+          {<LanguageSelection/>}
           <Footer/>
         </div>
     )

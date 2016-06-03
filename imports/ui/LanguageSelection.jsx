@@ -6,10 +6,13 @@
  *
  * LanguageSelection component. Used to select UI language
  *******************************************************************************/
+import React from "react";
 import Menu from "antd/lib/menu";
 import Dropdown from "antd/lib/dropdown";
 import Icon from "antd/lib/icon";
 const DropdownButton = Dropdown.Button;
+
+var Actions =  require("./action-and-stores/Actions.jsx");
 
 const styles = {
   dropDown: {
@@ -19,8 +22,8 @@ const styles = {
   }
 };
 
-var Actions =  require("./action-and-stores/Actions.jsx");
-LanguageSelection = React.createClass({
+
+var LanguageSelection = React.createClass({
   getInitialState(){
     return {
       language: "zh",
@@ -69,3 +72,5 @@ LanguageSelection = React.createClass({
     this.setState({language: value});
   },
 });
+
+module.exports = LanguageSelection;

@@ -107,7 +107,7 @@ var AuthSignInNew = React.createClass({
 
   render() {
     //disableAreaDropdown
-    messages = this.context.intl.messages.signIn;
+    messages = _.extend({}, this.context.intl.messages.join, this.context.intl.messages.signIn);
     //console.log("messages", messages);
     const logo = (
         <Link to="/"><img style={styles.logo} src="/img/"/></Link>
@@ -157,7 +157,7 @@ var AuthSignInNew = React.createClass({
                               </Select>
                             </div> : null
                       }
-                      <Input id="phoneOrEmail" ref="phoneOrEmail" placeholder="请输入邮箱或手机号"
+                      <Input id="phoneOrEmail" ref="phoneOrEmail" placeholder={messages["请输入邮箱或手机号"]}
                              hasFeedback
                              style={!this.state.disableAreaDropdown ? {borderRadius: "0 5px 5px 0", height:"38px", fontSize:"14px"}:{borderRadius: "5px", height:"38px", fontSize:"14px"}}
                              validateStatus={this.state.floatingUserText===""?"":"error"}
@@ -172,7 +172,7 @@ var AuthSignInNew = React.createClass({
                       validateStatus={this.state.floatingPassText===""?"":"error"}
                       help={this.state.floatingPassText}>
                     <Input ref="password"
-                           placeholder="请输入您的密码"
+                           placeholder={messages["请输入您的密码"]}
                            type="password"
                            autoComplete="off"
                            style={styles.input}

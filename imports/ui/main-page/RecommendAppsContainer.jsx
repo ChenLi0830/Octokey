@@ -28,6 +28,7 @@ var RecommendAppsContainer = React.createClass({
   },
 
   contextTypes: {
+    intl: React.PropTypes.object.isRequired,
     router: React.PropTypes.object.isRequired
   },
 
@@ -39,6 +40,7 @@ var RecommendAppsContainer = React.createClass({
   },
 
   render (){
+    messages = this.context.intl.messages.RecommendAppsConainer;
     const recommendedApps = this.state.showRecommendApps ? (
         _.compact(this.props.recommendedApps)
             .slice(0, this.state.recommendNumbersToShow)
@@ -59,9 +61,9 @@ var RecommendAppsContainer = React.createClass({
     return (
 
         <Row style={{marginBottom:80}}>
-          <Card title="Octo推荐" bordered={false}
+          <Card title={messages["Octo推荐"]} bordered={false}
                 bodyStyle={{padding:"0 24px"}}
-                extra={<a onClick={this.handleGetNewRecommendation}>更多</a>}>
+                extra={<a onClick={this.handleGetNewRecommendation}>{messages["更多"]}</a>}>
             {<QueueAnim key="recommendedApp"
                         type={['right', 'left']}
                         ease={['easeOutQuart', 'easeInOutQuart']}>
@@ -77,7 +79,7 @@ var RecommendAppsContainer = React.createClass({
 
   handleGetNewRecommendation(){
     if (this.state.recommendNumbersToShow>this.props.recommendedApps.length){
-      alert("已显示所有推荐")
+      alert(messages["已显示所有推荐"])
     }
     this.setState({recommendNumbersToShow:this.state.recommendNumbersToShow+4});
     //this.setState({showRecommendApps: !this.state.showRecommendApps})

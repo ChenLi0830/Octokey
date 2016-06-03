@@ -35,13 +35,17 @@ const ChooseTopicPage = React.createClass({
     openPage: React.PropTypes.bool.isRequired,
   },
 
+  contextTypes: {
+    intl: React.PropTypes.object.isRequired,
+  },
+
   mixins: [ReactMeteorData],
 
   getMeteorData() {
     const subHandles = Meteor.userId() ?
         [Meteor.subscribe("topics"),] : [];
 
-    const subsReady = _.every(subHandles, function (handle) {
+    const subsReady = _.every(subHandles, function(handle) {
       return handle.ready();
     });
 
@@ -62,6 +66,8 @@ const ChooseTopicPage = React.createClass({
   },
 
   render(){
+    messages = _.extend({}, this.context.intl.messages.chooseTopic, this.context.intl.messages.general);
+    //messages = _.extend({}, this.context.intl.messages.join, this.context.intl.messages.signIn);
     const topicBoxes = this.data.topics.map((topic)=> {
       const checked = _.findIndex(this.state.selectedTopics, (selectedTopic)=> {
             return selectedTopic.topicId === topic._id;
@@ -98,37 +104,38 @@ const ChooseTopicPage = React.createClass({
                     openOverlay={this.props.openPage}>
         <div>
 
-            <div style={styles.titleDiv}>
-              <h1 style={styles.titleMain}>你想关注的兴趣</h1>
-              <h2 style={styles.titleSub}>我们将根据你关注的兴趣定制你的应用推荐</h2>
-            </div>
+          <div style={styles.titleDiv}>
+            <h1 style={styles.titleMain}>{messages["你想关注的兴趣"]}</h1>
+            <h2 style={styles.titleSub}>{messages["我们将根据你关注的兴趣定制你的应用推荐"]}</h2>
+          </div>
 
-            <Row>
-              <Col xs={{ span: 12, offset: 6 }}>
-                {topicBoxes}
-              </Col>
-              <Col xs={4}>
-              </Col>
-            </Row>
+          <Row>
+            <Col xs={{ span: 12, offset: 6 }}>
+              {topicBoxes}
+            </Col>
+            <Col xs={4}>
+            </Col>
+          </Row>
 
-            <Row>
-              <Col xs={24} style={styles.extraInfoCol}>
-                {createTopicBtn}
-                <div style={styles.extraInfoDiv}>
-                  <label>
-                    <Checkbox checked={this.state.chooseAppsCheck}
-                              onChange={()=>{this.setState({chooseAppsCheck:!this.state.chooseAppsCheck})}}/>
-                    <h3 style={styles.extraInfoContent}>
-                      开启智能兴趣分析，自动筛选好评网站
-                    </h3>
-                  </label>
-                </div>
-              </Col>
-            </Row>
+          <Row>
+            <Col xs={24} style={styles.extraInfoCol}>
+              {createTopicBtn}
+              <div style={styles.extraInfoDiv}>
+                <label>
+                  <Checkbox checked={this.state.chooseAppsCheck}
+                            onChange={()=>{this.setState({chooseAppsCheck:!this.state.chooseAppsCheck})}}/>
+                  <h3 style={styles.extraInfoContent}>
+                    {messages["开启智能兴趣分析，自动筛选好评网站"]}
+                  </h3>
+                </label>
+              </div>
+            </Col>
+          </Row>
         </div>
       </WhiteOverlay>
       <ChoosePageFooter
-          okText={"选好了" /*message*/}
+          okText={messages["选好了"]}
+          skipText={messages["跳过"]}
           onOkClicked={this.handleOKBtnClicked}
           onSkipClicked={this.handleSkipBtnClicked}
       />

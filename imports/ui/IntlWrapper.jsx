@@ -30,11 +30,12 @@ var IntlWrapper = React.createClass({
 
   getInitialState(){
     const defaultLocale = "zh";
+    //const defaultLocale = "en-US";
     Actions.selectNewLanguage(defaultLocale);
     return {
       locale: defaultLocale,
       //locale:"en-US",
-    }
+    };
   },
 
   render(){
@@ -49,6 +50,10 @@ var IntlWrapper = React.createClass({
     //var locale = navigator.language.split('-');
     //locale = locale[1] ? `${locale[0]}-${locale[1].toUpperCase()}` : navigator.language;
     //locale = "zh";
+    /* Set error message language */
+    locale==="zh" && T9n.setLanguage("zh_cn");
+    locale==="en-US" && T9n.setLanguage("en-US");
+
     var strings = languages[locale] ? languages[locale] : languages["en-US"];
     //strings = Object.assign(languages["en-US"], strings);
 

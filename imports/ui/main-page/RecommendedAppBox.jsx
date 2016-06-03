@@ -45,6 +45,10 @@ var RecommendedAppBox = React.createClass({
     whenAddBtnClicked: React.PropTypes.func.isRequired,
   },
 
+  contextTypes: {
+    intl: React.PropTypes.object.isRequired,
+  },
+
   getInitialState(){
     return {
       iconLoading: false
@@ -52,6 +56,7 @@ var RecommendedAppBox = React.createClass({
   },
 
   render() {
+    messages = this.context.intl.messages.RecommendAppsConainer;
     console.log("this.props.logoURL", this.props.logoURL);
     let image = this.props.noLogo ?
         <div style={styles.noLogoBox}>
@@ -71,7 +76,7 @@ var RecommendedAppBox = React.createClass({
           <p style={{lineHeight: "30px"}}>{this.props.appName}</p>
           <Button type="primary" loading={this.state.iconLoading}
                   onClick={this.handleSubscribeApp}>
-            添加
+            {messages["添加"]}
           </Button>
         </Col>
       </Col>

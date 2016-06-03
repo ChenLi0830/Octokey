@@ -79,15 +79,25 @@
     "tooltip_delete": "Remove app",
     "tooltip_setting": "Edit accounts",
     "tooltip_register": "Auto-registration",
-    "ext_install_title": "Choose your browser to install extension - improve performance",
+    "ext_install_title": "Install extension - Choose which browser you are using",
     "ext_install_msg": "Which browser are you using?",
     "ext_btn_install": "install",
     "ext_btn_cancel": "cancel",
     "credentialDialog": {
         "verifyBtn_fail": "not successful",
         "verifyBtn_success": "successful",
-        "verifyTitle": " - login status",
-        "verifyMessage": "Did you log in successfully?"
+        "verifyTitle": " - login status ",
+        "verifyMessage": "Did you log in successfully?",
+        "直接访问":"Visit Homepage",
+        "去主页":"Go",
+        "帐号登录访问":"Log In",
+        "用户名：":"Username：",
+        "请输入账户名":"Please input your username",
+        "密码：":"Password：",
+        "请输入密码":"Please input your password",
+        "登录":"Login",
+        "取消":"Cancel",
+        "国际领先加密算法AES256, 保证安全无虞":"Encrypted using top-secure-level algorithm AES256"
     },
     "signIn": {
         "login-账户登录": "Octokey - Login",
@@ -114,6 +124,8 @@
         "captchaRequestExceeds-短信太频繁": "Too many OTP request at one time",
         "inputCaptcha-输入验证码": "Input OTP",
         "emailNotif-邮件发送成功": "An e-mail has been sent to {email} with further instructions",
+        "请输入邮箱或手机号": "Email or Mobile",
+        "请输入您的密码": "Password",
         "or-或者": "or"
     },
     "resendCaptcha-重发验证码": "Resend OTP({remaining} s)",
@@ -154,7 +166,9 @@
         "registerUsingMobile-注册": "sign up using mobile"
     },
     "header": {
-        "login-登录": "Sign in",
+        "login-登录": "Sign In",
+        "register-注册": "Sign Up",
+        "homepage-首页": "Home",
         "account-账户": "Account",
         "logout-登出": "Log out",
         "mySites-我的网站": "My Sites",
@@ -174,5 +188,18 @@
         "ext_msg_redirect": "Waiting for response",
         "ext_msg_success": "Your account is registered successfully",
         "ext_msg_error": "Account registration failed. Possible causes: 1. You've registered using this account 2. You are currently logged in this website 3. Website connection error"
+    },
+    "chooseTopic":{
+        "你想关注的兴趣":"Choose your interested topics",
+        "我们将根据你关注的兴趣定制你的应用推荐":"Octokey is going to suggest websites to you based on your interests",
+        "开启智能兴趣分析，自动筛选好评网站":"Automatically block low-rating websites",
+        "选好了":"Finish",
+        "跳过":"Skip"
+    },
+    "RecommendAppsConainer":{
+        "Octo推荐":"Suggested by Octokey",
+        "更多":"Show More",
+        "添加":"Add",
+        "已显示所有推荐":"All web apps recommended to you are shown."
     }
 }
