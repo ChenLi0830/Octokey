@@ -23,7 +23,7 @@ const styles = {
   paper: {
     paddingTop: 50,
     paddingBottom: 50,
-    backgroundColor: ZenColor.grey1,
+    backgroundColor: "white",
   },
 
   paperCol: {
