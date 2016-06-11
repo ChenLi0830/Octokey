@@ -18,7 +18,7 @@ Meteor.startup(function () {
   //如果是localhost,发邮件就用mailgun,如果是server,就用aliyun
   //console.log("/localhost/.test(Meteor.absoluteUrl())", /localhost/.test(Meteor.absoluteUrl()));
   process.env.MAIL_URL = /localhost/.test(Meteor.absoluteUrl()) ?
-      'smtp://postmaster@sandbox4e97a79afccd430d8897f90ad78054be.mailgun.org:0011d852303b11544220c77d6572bc1d@smtp.mailgun.org:587':
+      'smtp://postmaster@sandbox4e97a79afccd430d8897f90ad78054be.mailgun.org:0011d852303b11544220c77d6572bc1d@smtp.mailgun.org:587' :
       'smtp://no-reply@mail.oyaoshi.com:Oyaoshifour21@smtpdm.aliyun.com:25/';
   //smtp://USERNAME:PASSWORD@HOST:PORT/
 
@@ -64,6 +64,10 @@ Meteor.startup(function () {
     };
 
     Accounts.urls.verifyEmail = function (token) {
+      //因为用了CDN,所以absoluteURL是src.oyaoshi.com, 这里需要用oyaoshi.com
+      if (Meteor.absoluteUrl().indexOf("localhost") === -1) {
+        return "https://oyaoshi.com/" + 'verify-email/' + token;
+      }
       return Meteor.absoluteUrl('verify-email/' + token);
     };
 
@@ -82,7 +86,7 @@ Meteor.startup(function () {
     SMS.phoneTemplates = {
       from: '+16502156909',
       text: function (user, code) {
-        return "【O钥匙】https://oyaoshi.com 您的验证码是#"+ code+"#。如非本人操作，请忽略本短信"
+        return "【O钥匙】https://oyaoshi.com 您的验证码是#" + code + "#。如非本人操作，请忽略本短信"
       }
     };
 
