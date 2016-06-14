@@ -124,8 +124,8 @@ var App = React.createClass({
   render(){
     //console.log("this.data.userApps", this.data.userApps);
     //console.log("Session.get(hexKey)", Session.get("hexKey"));
-    console.log("EncryptionStore.getPassword", EncryptionStore.getPassword());
-    console.log("Actions.getPassword", Actions.getPassword());
+    //console.log("EncryptionStore.getPassword", EncryptionStore.getPassword());
+    //console.log("Actions.getPassword", Actions.getPassword());
 
     if (this.data.userApps) {
       if (!Session.get("hexKey")) {//when user logged in with fresh session

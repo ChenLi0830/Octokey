@@ -20,8 +20,8 @@ var AddNewApp = React.createClass({
   },
 
   render(){
-    return <div style={{paddingTop:"100px", paddingBottom:"100px", textAlign:"center"}}>
-      <p>{this.context.intl.messages.app_noAppMessage}</p>
+    return <div style={{paddingTop:"60px", paddingBottom:"60px", textAlign:"center"}}>
+      <p style={{lineHeight:"30px"}}>{this.context.intl.messages.app_noAppMessage}</p>
       <RaisedButton primary={true}
                     label={this.context.intl.messages.app_noAppBtn}
                     onTouchTap={this.props.whenClicked}>

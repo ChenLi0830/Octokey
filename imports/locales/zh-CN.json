@@ -101,7 +101,7 @@
         "login_emailNotif": "密码找回邮件已经发到 {email},请查收",
         "tab_signIn": "登录",
         "tab_signOut": "登出",
-        "app_noAppMessage": "还没有网站?快去添加吧",
+        "app_noAppMessage": "还没有网站？快去添加吧",
         "app_noAppBtn": "添加新网站",
         "cata_createPubApp": "创建Zen网签",
         "cata_appName": "网站名：",

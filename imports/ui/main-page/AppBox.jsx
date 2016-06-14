@@ -84,10 +84,10 @@ var AppBox = React.createClass({
 
   componentDidMount(){
     var boxSize = ReactDOM.findDOMNode(this.refs.appBox).offsetWidth;
-    if (boxSize===180){
+    /*if (boxSize===180){
       console.log("boxSize", boxSize, "appName", this.props.appName);
       console.log(ReactDOM.findDOMNode(this.refs.appBox));
-    }
+    }*/
 
     this.setState({//这里会trigger DOM re-render
       height: boxSize
