@@ -26,6 +26,11 @@ Meteor.publish("userCredentials", function () {
   return UserAppCredentials.find({userId: this.userId});
 });
 
+Meteor.publish("allPublicApps", function () {
+  localSimulateLatency(800);
+  return ZenApps.find({});
+});
+
 //Todo 当国内的market place都完成extension更新后（>0.0.18）,删除这个publication
 Meteor.publish("appCredential", function (userId, appId, username) {
   localSimulateLatency(800);
@@ -63,7 +68,7 @@ Meteor.publish("allUserApps", function () {
  * Public all public apps to data Analysis server
  * @returns {cursor} - the cursor of all documents from ZenApps
  */
-Meteor.publish("allPublicApps", function () {
+Meteor.publish("allPublicAppNames", function () {
   localSimulateLatency(500);
   checkAdmin.call(this);
   return ZenApps.find({}, {fields: {"appName": 1}});

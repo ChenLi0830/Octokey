@@ -25,21 +25,23 @@ var CatalogAppsBox = React.createClass({
   mixins: [ReactMeteorData,],
 
   getMeteorData(){
-    if (this.needFetchApps) {
-      OctoClientAPI.fetchDataToSession("appsOfChosenCategory", "getPublicAppsOfCategory",
-          this.props.chosenCategory,
-          this.state.requestAppsNumber);
-      this.needFetchApps = false;
-    }
-    const subsHandles = [
-      //Subs is ready when fetched apps number = requested number OR total apps number
-      Session.get("appsOfChosenCategory") &&
-      (Session.get("appsOfChosenCategory").apps.length === this.state.requestAppsNumber ||
-      Session.get("appsOfChosenCategory").apps.length === Session.get("appsOfChosenCategory").total)
-    ];
+    const query = {
+      categoryNames: {
+        $in: [this.props.chosenCategory]
+      }
+    };
+    const MAX_APPS = ZenApps.find(query).count();
+
+    const appsOfChosenCategory = ZenApps.find(query,
+        {
+          sort: {subscribeCount: -1},
+          limit: Math.min(this.state.requestAppsNumber, MAX_APPS)
+        }).fetch();
 
     return {
-      subsReady: OctoClientAPI.subsHandlesAreReady(subsHandles),
+      appsOfChosenCategory: appsOfChosenCategory,
+      MAX_APPS:MAX_APPS,
+      subsReady:true,
     };
   },
 
@@ -79,10 +81,10 @@ var CatalogAppsBox = React.createClass({
       return;
     }
 
-    this.needFetchApps = true;
+    //this.needFetchApps = true;
     this.setState({
       requestAppsNumber: Math.min(this.state.requestAppsNumber + 20,
-          Session.get("appsOfChosenCategory").total),
+          this.data.MAX_APPS),
       loadingMoreApp: true
     });
   },
@@ -92,13 +94,13 @@ var CatalogAppsBox = React.createClass({
    },*/
 
   render(){
-    if (!this.data.subsReady && !Session.get("appsOfChosenCategory")) {
+/*    if (!this.data.subsReady && !this.data.appsOfChosenCategory) {
       return <AppLoading/>
-    }
+    }*/
 
     const {messages} = this.context.intl;
 
-    const appsOfChosenCategory = (Session.get("appsOfChosenCategory").apps.map(function(app) {
+    const appsOfChosenCategory = (this.data.appsOfChosenCategory.map(function (app) {
           let logoURL = app.noLogo ? "" : OctoClientAPI.getLogoUrl(app._id);
           let subscribed = this.props.subscribeList[app._id];
           return <CatalogSingleApp key={app._id}
@@ -117,7 +119,7 @@ var CatalogAppsBox = React.createClass({
         }.bind(this))
     );
 
-    const noMoreApps = appsOfChosenCategory.length === Session.get("appsOfChosenCategory").total;
+    const noMoreApps = appsOfChosenCategory.length === this.data.MAX_APPS;
 
     return <div className="layout-margin">
       <List style={{backgroundColor:ZenColor.white, padding:"0px"}}>
@@ -126,11 +128,11 @@ var CatalogAppsBox = React.createClass({
                    subscribeList={this.props.subscribeList}
                    allCategories={this.props.allCategories}
         />
-          {appsOfChosenCategory}
+        {appsOfChosenCategory}
       </List>
 
       {// Only show “加载更多” 按钮 if appsOfChosenCategory number > InitialFetchNumber
-        Session.get("appsOfChosenCategory").total > InitialFetchNumber ?
+        this.data.MAX_APPS > InitialFetchNumber ?
             <Button
                 type="dashed"
                 size="large"

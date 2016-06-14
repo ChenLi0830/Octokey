@@ -250,7 +250,13 @@ OctoClientAPI = {
    * boolean
    */
   subsHandlesAreReady: function (subsHandles) {
-    return _.every(subsHandles, function (subsHandle) {
+    return _.every(subsHandles, function (sub) {
+      if (Session.get(sub)){
+        console.log("subsHandlesAreReady: "+sub+" is ready");
+      }
+      return Session.get(sub);
+    });
+    /*return _.every(subsHandles, function (subsHandle) {
       if (subsHandle && subsHandle.ready) {//Meteor.subscribe()
         return subsHandle.ready();
       }
@@ -259,7 +265,7 @@ OctoClientAPI = {
       }
       //Session.get()
       return subsHandle !== undefined;
-    });
+    });*/
   }
   ,
 

@@ -20,7 +20,7 @@ injectTapEventPlugin();
 
 import {customizeMUITheme, ZenRawTheme} from "../../client/globals/theme";
 
-var Actions =  require("./action-and-stores/Actions.jsx");
+var Actions = require("./action-and-stores/Actions.jsx");
 var AppLoading = require('./AppLoading.jsx');
 var Header = require('./header/Header.jsx');
 var UnloginHeader = require('./header/UnloginHeader.jsx');
@@ -39,9 +39,9 @@ const styles = {
     left: 0,
     right: 0,
     backgroundColor: "#ECEFF1",
-/*    background: "linear-gradient(270deg, #4bcf93, #4b79cf, #a24bcf)",
-    backgroundSize: "600% 600%",
-    animation: "AnimationName 5s ease infinite",*/
+    /*    background: "linear-gradient(270deg, #4bcf93, #4b79cf, #a24bcf)",
+     backgroundSize: "600% 600%",
+     animation: "AnimationName 5s ease infinite",*/
   },
 
   heightPercent100: {
@@ -53,23 +53,36 @@ var App = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData() {
-    if (!Meteor.userId()) {//If user is not logged in
-      return {
-        subsReady: true,
-        currentUserId: Meteor.userId(),
-        UserApps: null,
-      };
-    }
+    Meteor.subscribe("topics", ()=> {
+      Session.set("topics", true);
+      console.log("topics is ready");
+    });
+    Meteor.subscribe("userApps", ()=> {
+      Session.set("userApps", true);
+      console.log("userApps is ready");
+    });
+    Meteor.subscribe("userCredentials", ()=> {
+      Session.set("userCredentials", true);
+      console.log("userCredentials is ready");
+    });
+    Meteor.subscribe("allCategories", ()=> {
+      Session.set("allCategories", true);
+      console.log("allCategories is ready");
+    });
+    Meteor.subscribe("allPublicApps", ()=> {
+      Session.set("allPublicApps", true);
+      console.log("allPublicApps is ready");
+    });
 
-    //console.log("Session.get(ajaxReadyCount)", Session.get("ajaxReadyCount"));
-    const
-        subHandles = [Meteor.subscribe("userApps"), Meteor.subscribe("userCredentials")],
-        currentUserId = Meteor.userId(),
-        userApps = UserApps.findOne({userId: currentUserId}),
+    const subHandles = [
+          "userApps",
+          "userCredentials",
+        ];
 
-        subsReady = _.every(subHandles, function (handle) {
-          return handle.ready();
-        });
+    const subsReady = OctoClientAPI.subsHandlesAreReady(subHandles);
+        /*subsReady = _.every(subHandles, function (sub) {
+          return Session.get(sub);
+        });*/
 
     //Todo add this part in welcome page for topic images
     /*    if (subsReady) {
@@ -89,11 +102,9 @@ var App = React.createClass({
      }*/
 
     return {
-      subsReady: subsReady /*&& Session.get("ajaxReadyCount") >= userApps.publicApps.length*/,//Todo
-                                                                                              // remove
-                                                                                              // -1
-      currentUserId: currentUserId,
-      userApps: userApps,
+      subsReady: Meteor.userId() ? subsReady : true,
+      currentUserId: Meteor.userId(),
+      userApps: UserApps.findOne({userId: Meteor.userId()}),
     };
   },
 
@@ -149,7 +160,8 @@ var App = React.createClass({
         <div style={containerStyle}>
           {
             showFullHeader ?
-                <Header location={this.props.location}/> : <UnloginHeader location={this.props.location}/>
+                <Header location={this.props.location}/> :
+                <UnloginHeader location={this.props.location}/>
           }
 
           {//不showheader的page也不添加grid
@@ -166,8 +178,8 @@ var App = React.createClass({
                 </div> :
                 (
                     this.data.subsReady ?
-                          this.props.children :
-                          <AppLoading />
+                        this.props.children :
+                        <AppLoading />
                 )
           }
 

@@ -36,7 +36,7 @@ const styles = {
     display: "block",
     transform: "translateY(-50%)",
     msTransform: "translateY(-50%)",
-    webkitTransform: "translateY(-50%)",
+    WebkitTransform: "translateY(-50%)",
   },
 };
 

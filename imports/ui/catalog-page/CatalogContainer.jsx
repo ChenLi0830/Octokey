@@ -16,21 +16,22 @@ var CatalogContainer = React.createClass({
   ],
 
   getMeteorData(){
-    OctoClientAPI.fetchDataToSessionIfNull("allPublicApps", "getAllPublicApps");
+    //OctoClientAPI.fetchDataToSessionIfNull("allPublicApps", "getAllPublicApps");
 
     const subsHandles = [
-      Session.get("allPublicApps"),
-      Meteor.subscribe("allCategories"),
-      Meteor.subscribe("userApps"),
+      "allPublicApps",
+      "allCategories",
+      "userApps",
     ];
     const subsReady = OctoClientAPI.subsHandlesAreReady(subsHandles);
 
     const AppOfUser = UserApps.findOne({userId: Meteor.userId()}, {reactive: true});
     const allCategories = ZenCategories.find({}, {sort: {index: 1}}).fetch();
+    const allPublicApps = ZenApps.find({}, {sort: {subscribeCount: -1}}).fetch();
 
     let subscribeList = [];
     if (subsReady) {
-      Session.get("allPublicApps").map(function (publicApp) {
+      allPublicApps.map(function (publicApp) {
         let subscribed = _.findIndex(AppOfUser.publicApps, function (subscribedApp) {
               return subscribedApp.appId === publicApp._id
             }) > -1;
@@ -41,6 +42,7 @@ var CatalogContainer = React.createClass({
     return {
       subscribeList: subscribeList,
       allCategories: allCategories,
+      allPublicApps: allPublicApps,
       subsReady: subsReady
     }
   },
@@ -50,7 +52,7 @@ var CatalogContainer = React.createClass({
       <Catalog
           subsReady={this.data.subsReady}
           subscribeList={this.data.subsReady ? this.data.subscribeList : []}
-          allPublicApps={this.data.subsReady ? Session.get("allPublicApps") : []}
+          allPublicApps={this.data.subsReady ? this.data.allPublicApps : []}
           allCategories={this.data.subsReady ? this.data.allCategories : []}
       />
     </div>

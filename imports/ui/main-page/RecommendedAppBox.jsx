@@ -25,14 +25,14 @@ const styles = {
     top: "50%",
     transform: "translateY(-50%)",
     msTransform: "translateY(-50%)",
-    webkitTransform: "translateY(-50%)",
+    WebkitTransform: "translateY(-50%)",
   },
   noLogoText: {
     textAlign: "center",
     top: "50%",
     transform: "translateY(-50%)",
     msTransform: "translateY(-50%)",
-    webkitTransform: "translateY(-50%)",
+    WebkitTransform: "translateY(-50%)",
     position: "relative",
     color: "white",
     fontSize: "48px",
@@ -76,7 +76,7 @@ var RecommendedAppBox = React.createClass({
           {image}
         </Col>
 
-        <Col xs={12} style={{position: "relative", top: "50%", transform: "translateY(-50%)", msTransform: "translateY(-50%)", webkitTransform: "translateY(-50%)"}}>
+        <Col xs={12} style={{position: "relative", top: "50%", transform: "translateY(-50%)", msTransform: "translateY(-50%)", WebkitTransform: "translateY(-50%)"}}>
           <p style={{lineHeight: "30px"}}>{this.props.appName}</p>
           <Button type="primary" loading={this.state.iconLoading}
                   onClick={this.handleSubscribeApp}>

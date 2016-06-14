@@ -48,7 +48,7 @@ const styles = {
     backgroundColor: ZenColor.blue,
     transform: "translateX(50%)",
     msTransform: "translateX(50%)",
-    webkitTransform: "translateX(50%)",
+    WebkitTransform: "translateX(50%)",
   },
   appBar: {
     marginTop: "-68px",

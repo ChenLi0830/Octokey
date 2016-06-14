@@ -41,7 +41,7 @@ const styles = {
     top: "50%",
     transform: "translateY(-50%)",
     msTransform: "translateY(-50%)",
-    webkitTransform: "translateY(-50%)",
+    WebkitTransform: "translateY(-50%)",
     position: "relative",
     color: "white",
     fontWeight: "800",
@@ -149,7 +149,7 @@ var CatalogSingleApp = React.createClass({
               </div> :
               <div style={{display:"block", height:"100%", width:"100%"}}>
                 <img src={logoURL} style={{top: "50%", position: "relative", transform: "translateY(-50%)",
-                msTransform: "translateY(-50%)", webkitTransform: "translateY(-50%)", width:condensed ? "25px": "50px"}}/>
+                msTransform: "translateY(-50%)", WebkitTransform: "translateY(-50%)", width:condensed ? "25px": "50px"}}/>
               </div>
           }
         </Col>
