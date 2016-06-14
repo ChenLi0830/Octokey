@@ -32,6 +32,8 @@ const styles = {
     width: "25px",
     border: "1px solid #C5C5C5",
     transform: "translateX(1px)",
+    msTransform: "translateX(1px)",
+    webkitTransform: "translateX(1px)",
     borderTop: "none",
     borderBottom: "none",
     transitionDuration:"1s",
@@ -55,6 +57,8 @@ const styles = {
     top: "40%",
     width: "200px",
     transform: "translateX(-50%) translateY(-48%)",
+    msTransform: "translateX(-50%) translateY(-48%)",
+    webkitTransform: "translateX(-50%) translateY(-48%)",
     transition: "opacity 0.5s ease",
   },
 
@@ -126,7 +130,7 @@ var AuthSignInNew = React.createClass({
                      src="/img/lock_stable.png"
                      onLoad={()=>{this.setState({lockPartsLoaded:this.state.lockPartsLoaded+1})}}/>
                 <img id="rotateLock"
-                     style={_.extend({}, styles.lockRotatePart, {transform: lockTransform}, {opacity:this.state.lockPartsLoaded===2?1:0})}
+                     style={_.extend({}, styles.lockRotatePart, {transform: lockTransform, msTransform: lockTransform, webkitTransform: lockTransform}, {opacity:this.state.lockPartsLoaded===2?1:0})}
                      src="/img/lock_rotate.png" onClick={this.handleRotateLock}
                      onLoad={()=>{this.setState({lockPartsLoaded:this.state.lockPartsLoaded+1})}}/>
               </div>
@@ -139,7 +143,7 @@ var AuthSignInNew = React.createClass({
                 </div>
 
                 <Col span="6" offset="4"
-                     style={{top: "40%", transform: "translateY(-80px)"}}
+                     style={{top: "40%", transform: "translateY(-80px)", msTransform: "translateY(-80px)", webkitTransform: "translateY(-80px)"}}
                     /*className="animated fadeOutLeft"*/ >
 
                   <FormItem

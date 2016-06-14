@@ -81,12 +81,16 @@ var FloatingEditButton = React.createClass({
       let basicLiStyle = this.state.FABActive ?
       {
         transform: "scaleY(1) scaleX(1) translateY(0px) translateX(0px)",
+        msTransform: "scaleY(1) scaleX(1) translateY(0px) translateX(0px)",
+        webkitTransform: "scaleY(1) scaleX(1) translateY(0px) translateX(0px)",
         opacity: 1,
         transitionDuration: "0.3s",
         visibility: "visible"
       }
           : {
         transform: "scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px)",
+        msTransform: "scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px)",
+        webkitTransform: "scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px)",
         opacity: 0,
         transitionDuration: "0.2s",
         visibility: "hidden"

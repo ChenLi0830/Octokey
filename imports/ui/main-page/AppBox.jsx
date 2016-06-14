@@ -46,11 +46,15 @@ const styles = {
     marginRight: "auto",
     top: "50%",
     transform: "translateY(-50%)",
+    msTransform: "translateY(-50%)",
+    webkitTransform: "translateY(-50%)",
   },
   noLogoText: {
     textAlign: "center",
     top: "50%",
     transform: "translateY(-50%)",
+    msTransform: "translateY(-50%)",
+    webkitTransform: "translateY(-50%)",
     position: "relative",
     color: "white",
     fontSize: "48px",
@@ -80,6 +84,11 @@ var AppBox = React.createClass({
 
   componentDidMount(){
     var boxSize = ReactDOM.findDOMNode(this.refs.appBox).offsetWidth;
+    if (boxSize===180){
+      console.log("boxSize", boxSize, "appName", this.props.appName);
+      console.log(ReactDOM.findDOMNode(this.refs.appBox));
+    }
+
     this.setState({//这里会trigger DOM re-render
       height: boxSize
     });

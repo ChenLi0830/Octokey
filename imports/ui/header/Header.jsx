@@ -47,9 +47,8 @@ const styles = {
     marginLeft: "6.7%",
     backgroundColor: ZenColor.blue,
     transform: "translateX(50%)",
-    //':hover': {
-    //    backgroundColor: 'red'
-    //},
+    msTransform: "translateX(50%)",
+    webkitTransform: "translateX(50%)",
   },
   appBar: {
     marginTop: "-68px",

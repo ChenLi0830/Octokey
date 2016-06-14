@@ -35,6 +35,8 @@ const styles = {
     top: "45%",
     display: "block",
     transform: "translateY(-50%)",
+    msTransform: "translateY(-50%)",
+    webkitTransform: "translateY(-50%)",
   },
 };
 

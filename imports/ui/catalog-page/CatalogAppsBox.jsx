@@ -136,7 +136,7 @@ var CatalogAppsBox = React.createClass({
                 size="large"
                 loading={!this.data.subsReady}
                 onClick={this.handleInfiniteLoad}
-                style={{display:"block", width: "100%", margin: "20px auto"}}>
+                style={{display:"block", width: "95%", margin: "20px auto", fontWeight: "300"}}>
               {noMoreApps ? messages["noMoreApps-已经到底了"] : messages["loadMoreApps-加载更多"]}
             </Button> : null}
     </div>
