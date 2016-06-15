@@ -63,11 +63,20 @@ const styles = {
     fontSize: "48px",
     fontWeight: "800",
   },
-
   logoImage: {
     width: "100px",
     borderRadius: "5px",
     transitionDuration: "0.5s"
+  },
+  boxHoverSVG: {
+    position:"absolute",
+    top:"50%",
+    left:"50%",
+    transform: "translateX(-50%) translateY(-50%)",
+    msTransform: "translateX(-50%) translateY(-50%)",
+    WebkitTransform: "translateX(-50%) translateY(-50%)",
+    height:"60px",
+    width:"60px",
   }
 };
 
@@ -246,18 +255,15 @@ var AppBox = React.createClass({
         break;
       case "register":
         return this.state.hovered ?
-            <AvFiberNew className="vertical-center horizontal-center"
-                        style={{height:"60px", width:"60px", fill:ZenColor.cyan}}/> : image;
+            <AvFiberNew style={_.extend({}, styles.boxHoverSVG, {fill:ZenColor.cyan})}/> : image;
         break;
       case "remove":
         return this.state.hovered ?
-            <ContentRemove className="vertical-center horizontal-center"
-                           style={{height:"60px", width:"60px", fill:ZenColor.white}}/> : image;
+            <ContentRemove style={_.extend({}, styles.boxHoverSVG, {fill:ZenColor.white})}/> : image;
         break;
       case "config":
         return this.state.hovered ?
-            <ActionSettings className="vertical-center horizontal-center"
-                            style={{height:"60px", width:"60px", fill:ZenColor.white}}/> : image;
+            <ActionSettings style={_.extend({}, styles.boxHoverSVG, {fill:ZenColor.white})}/> : image;
         break;
     }
   }
