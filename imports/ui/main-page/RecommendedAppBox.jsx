@@ -61,7 +61,7 @@ var RecommendedAppBox = React.createClass({
 
   render() {
     messages = this.context.intl.messages.RecommendAppsConainer;
-    console.log("this.props.logoURL", this.props.logoURL);
+    //console.log("this.props.logoURL", this.props.logoURL);
     let image = this.props.noLogo ?
         <div style={styles.noLogoBox}>
           <div style={styles.noLogoText}>{this.props.appName[0]}</div>

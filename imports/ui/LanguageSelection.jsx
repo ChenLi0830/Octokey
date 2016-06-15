@@ -39,8 +39,8 @@ var LanguageSelection = React.createClass({
     );
 
     return (
-        <DropdownButton onClick={this.handleButtonClick} overlay={menu} type="primary"
-                        style={styles.dropDown}>
+        <DropdownButton id="languageSelectionBtn" onClick={this.handleButtonClick} overlay={menu}
+                        type="primary" style={styles.dropDown}>
           {
             this.state.language === "zh" && "English"
             || this.state.language === "en-US" && "中文"

@@ -4,22 +4,29 @@
   }
 }
 
-.ant-popover-inner-content{
+.ant-popover-inner-content {
   overflow: auto;
   max-height: 360px;
 }
 
-#phoneUsername{
+#phoneUsername {
   //width:100%;
-  div{
-    div.ant-select-selection--single{
-      height:38px;
-      border-radius:5px 0px 0px 5px;
-      border-right-width:0px;
-      div.ant-select-selection__rendered{
-        line-height:36px;
+  div {
+    div.ant-select-selection--single {
+      height: 38px;
+      border-radius: 5px 0 0 5px;
+      border-right-width: 0;
+      div.ant-select-selection__rendered {
+        line-height: 36px;
       }
     }
 
+  }
+}
+
+#languageSelectionBtn {
+  button {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 }
