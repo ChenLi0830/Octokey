@@ -21,7 +21,7 @@ import {
     ContentRemove,
     ActionSettings,
     AvFiberNew,
-    } from "material-ui/svg-icons"
+} from "material-ui/svg-icons"
 
 const styles = {
   boxBottomBanner: {
@@ -36,11 +36,10 @@ const styles = {
     borderRadius: "0px 0px 5px 5px",
     WebkitAnimationDuration: "0.3s",
   },
-  noLogoBox: {
+  boxBase: {
     position: "relative",
     height: "100px",
     width: "100px",
-    backgroundColor: "#3399FF",
     borderRadius: "5px",
     marginLeft: "auto",
     marginRight: "auto",
@@ -48,6 +47,9 @@ const styles = {
     transform: "translateY(-50%)",
     msTransform: "translateY(-50%)",
     WebkitTransform: "translateY(-50%)",
+  },
+  noLogoBox: {
+    backgroundColor: "#3399FF",
   },
   noLogoText: {
     textAlign: "center",
@@ -60,6 +62,12 @@ const styles = {
     fontSize: "48px",
     fontWeight: "800",
   },
+
+  logoImage: {
+    width: "100px",
+    borderRadius: "5px",
+    transitionDuration: "0.5s"
+  }
 };
 
 var AppBox = React.createClass({
@@ -76,7 +84,7 @@ var AppBox = React.createClass({
   getInitialState(){
     return {
       hovered: false,
-      //open: false,
+      loaded: false,
       boxHeight: "0px",
       modalChooseAccountOpen: false,
     }
@@ -85,9 +93,9 @@ var AppBox = React.createClass({
   componentDidMount(){
     var boxSize = ReactDOM.findDOMNode(this.refs.appBox).offsetWidth;
     /*if (boxSize===180){
-      console.log("boxSize", boxSize, "appName", this.props.appName);
-      console.log(ReactDOM.findDOMNode(this.refs.appBox));
-    }*/
+     console.log("boxSize", boxSize, "appName", this.props.appName);
+     console.log(ReactDOM.findDOMNode(this.refs.appBox));
+     }*/
 
     this.setState({//这里会trigger DOM re-render
       height: boxSize
@@ -216,16 +224,20 @@ var AppBox = React.createClass({
   },
 
   getTileImage(userEditStatus){
-    //if (this.props.logoURL===""){
-    //
-    //}
     let image = this.props.logoURL === "" ?
-        <div style={styles.noLogoBox}>
-          <div style={styles.noLogoText}>{this.props.appName[0]}</div>
-        </div>
-        : <img src={this.props.logoURL}
-               style={{width:"100px", borderRadius:"5px"}}
-               className="vertical-center horizontal-center"/>;
+            <div style={_.extend({},styles.noLogoBox,styles.boxBase)}>
+              <div style={styles.noLogoText}>{this.props.appName[0]}</div>
+            </div>
+            :
+            <div /* 如果image还没有load成功,就暂时显示appName首字,load成功后显示image */
+                style={_.extend({}, styles.boxBase, !this.state.loaded ? {backgroundColor:"#87caff"}:null)}>
+              <img src={this.props.logoURL}
+                   style={_.extend({},styles.logoImage,{opacity:this.state.loaded?1:0})}
+                   className="vertical-center horizontal-center"
+                   onLoad={()=>{this.setState({loaded:true})}}/>
+              {this.state.loaded ? null : <div style={styles.noLogoText}>{this.props.appName[0]}</div>}
+            </div>
+        ;
 
     switch (userEditStatus) {
       case "default":
