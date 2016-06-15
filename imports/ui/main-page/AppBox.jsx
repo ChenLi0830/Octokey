@@ -37,16 +37,17 @@ const styles = {
     WebkitAnimationDuration: "0.3s",
   },
   boxBase: {
-    position: "relative",
+    position: "absolute",
     height: "100px",
     width: "100px",
     borderRadius: "5px",
-    marginLeft: "auto",
-    marginRight: "auto",
+    //marginLeft: "auto",
+    //marginRight: "auto",
     top: "50%",
-    transform: "translateY(-50%)",
-    msTransform: "translateY(-50%)",
-    WebkitTransform: "translateY(-50%)",
+    left: "50%",
+    transform: "translateX(-50%) translateY(-50%)",
+    msTransform: "translateX(-50%) translateY(-50%)",
+    WebkitTransform: "translateX(-50%) translateY(-50%)",
   },
   noLogoBox: {
     backgroundColor: "#3399FF",
@@ -200,7 +201,8 @@ var AppBox = React.createClass({
       margin: 0,
       borderRadius: "5px",
       width: this.props.width,
-      height: this.state.height,
+      paddingBottom: this.props.width,
+      //height: this.state.height,
       cursor: "pointer"
     };
 
@@ -225,19 +227,18 @@ var AppBox = React.createClass({
 
   getTileImage(userEditStatus){
     let image = this.props.logoURL === "" ?
-            <div style={_.extend({},styles.noLogoBox,styles.boxBase)}>
-              <div style={styles.noLogoText}>{this.props.appName[0]}</div>
-            </div>
-            :
-            <div /* 如果image还没有load成功,就暂时显示appName首字,load成功后显示image */
-                style={_.extend({}, styles.boxBase, !this.state.loaded ? {backgroundColor:"#87caff"}:null)}>
-              <img src={this.props.logoURL}
-                   style={_.extend({},styles.logoImage,{opacity:this.state.loaded?1:0})}
-                   className="vertical-center horizontal-center"
-                   onLoad={()=>{this.setState({loaded:true})}}/>
-              {this.state.loaded ? null : <div style={styles.noLogoText}>{this.props.appName[0]}</div>}
-            </div>
-        ;
+        <div style={_.extend({},styles.noLogoBox,styles.boxBase)}>
+          <div style={styles.noLogoText}>{this.props.appName[0]}</div>
+        </div>
+        :
+        <div /* 如果image还没有load成功,就暂时显示appName首字,load成功后显示image */
+            style={_.extend({}, styles.boxBase, !this.state.loaded ? {backgroundColor:"#87caff"}:null)}>
+          <img src={this.props.logoURL}
+               style={_.extend({},styles.logoImage,{opacity:this.state.loaded?1:0})}
+               className="vertical-center horizontal-center"
+               onLoad={()=>{this.setState({loaded:true})}}/>
+          {this.state.loaded ? null : <div style={styles.noLogoText}>{this.props.appName[0]}</div>}
+        </div>;
 
     switch (userEditStatus) {
       case "default":
