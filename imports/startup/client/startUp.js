@@ -1,4 +1,5 @@
-T9n.setLanguage("zh_cn");
+//T9n.setLanguage("zh-CN");
+//console.log("error didn't happen in startUp");
 
 if (Meteor.isProduction){
   console = console || {};

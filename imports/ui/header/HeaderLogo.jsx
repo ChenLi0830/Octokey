@@ -42,7 +42,7 @@ var HeaderLogo = React.createClass({
         <Link to="/">
           <div style={_.extend({},{margin:"10px 10px 10px 30px"},this.props.divStyle)}>
             <img src="/img/logo.png"
-                 style={_.extend({}, styles.logoImage, {opacity:this.state.loaded?1:0})}
+                 style={_.extend({}, styles.logoImage, {opacity:this.state.loaded?1:0.01})}
                  onLoad={()=>{this.setState({loaded:true})}}/>
             <div src="vertical-center"
                  style={{display:"inline-block",marginLeft:12, color:Colors.grey700}}>

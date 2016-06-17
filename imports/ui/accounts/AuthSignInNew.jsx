@@ -5,13 +5,14 @@
  * Creation Date: 2015-2-2
  *
  * Sign-in page component, called by "routes"
- *******************************************************************************/ import React from "react"
+ *******************************************************************************/
+import React from "react"
 var LanguageIcon = require('../header/LanguageIcon.jsx');
 
 import {Link} from "react-router";
 import _ from "lodash";
 
-import RaisedButton from "material-ui/RaisedButton";
+import Button from "antd/lib/button"
 import Row from "antd/lib/row"
 import Col from "antd/lib/col"
 import Input from "antd/lib/input"
@@ -36,7 +37,7 @@ const styles = {
     WebkitTransform: "translateX(1px)",
     borderTop: "none",
     borderBottom: "none",
-    transitionDuration:"1s",
+    transitionDuration: "1s",
   },
 
   doorStripLeft: {
@@ -101,7 +102,7 @@ var AuthSignInNew = React.createClass({
       captchaBtn: "requestCaptcha-获取验证码",
       rotateAngle: 0,
       loginSuccessful: false,
-      lockPartsLoaded:0,//如果lockPartsLoaded===2表示两张图都load好了
+      lockPartsLoaded: 0,//如果lockPartsLoaded===2表示两张图都load好了
     };
   },
 
@@ -113,22 +114,22 @@ var AuthSignInNew = React.createClass({
     //disableAreaDropdown
     messages = _.extend({}, this.context.intl.messages.join, this.context.intl.messages.signIn);
     //console.log("messages", messages);
-    const logo = (
-        <Link to="/"><img style={styles.logo} src="/img/"/></Link>
-    );
+
     const lockTransform = "translateX(-50%) translateY(-50%)" + "rotate(" + this.state.rotateAngle +
         "deg)";
 
     return (<div style={{height:"100%"}}>
           <Row style={{height:"100%"}}>
-            <Col span="7" style={{height:"100%"}} className={this.state.loginSuccessful ? "animated fadeOutLeft":""}>
+            <Col span="7" style={{height:"100%"}}
+                 className={this.state.loginSuccessful ? "animated fadeOutLeft":""}>
               <div id="leftDoor" style={{backgroundColor:"#eceff1", height:"100%"}}>
                 <div id="leftStrip"
                      style={_.extend({}, styles.doorStripBase, styles.doorStripLeft, {opacity:this.state.lockPartsLoaded===2?1:0})}>
                 </div>
-                <img style={_.extend({}, styles.lockFixedPart, {opacity:this.state.lockPartsLoaded===2?1:0})}
-                     src="/img/lock_stable.png"
-                     onLoad={()=>{this.setState({lockPartsLoaded:this.state.lockPartsLoaded+1})}}/>
+                <img
+                    style={_.extend({}, styles.lockFixedPart, {opacity:this.state.lockPartsLoaded===2?1:0})}
+                    src="/img/lock_stable.png"
+                    onLoad={()=>{this.setState({lockPartsLoaded:this.state.lockPartsLoaded+1})}}/>
                 <img id="rotateLock"
                      style={_.extend({}, styles.lockRotatePart, {transform: lockTransform, msTransform: lockTransform, WebkitTransform: lockTransform}, {opacity:this.state.lockPartsLoaded===2?1:0})}
                      src="/img/lock_rotate.png" onClick={this.handleRotateLock}
@@ -136,7 +137,8 @@ var AuthSignInNew = React.createClass({
               </div>
             </Col>
 
-            <Col span="17" style={{height:"100%"}} className={this.state.loginSuccessful ? "animated fadeOutRight":""}>
+            <Col span="17" style={{height:"100%"}}
+                 className={this.state.loginSuccessful ? "animated fadeOutRight":""}>
               <div id="rightDoor" style={{backgroundColor:"#eceff1", height:"100%"}}>
                 <div id="rightStrip"
                      style={_.extend({}, styles.doorStripBase, styles.doorStripRight, {opacity:this.state.lockPartsLoaded===2?1:0})}>
@@ -161,7 +163,8 @@ var AuthSignInNew = React.createClass({
                               </Select>
                             </div> : null
                       }
-                      <Input id="phoneOrEmail" ref="phoneOrEmail" placeholder={messages["请输入邮箱或手机号"]}
+                      <Input id="phoneOrEmail" ref="phoneOrEmail"
+                             placeholder={messages["请输入邮箱或手机号"]}
                              hasFeedback
                              style={!this.state.disableAreaDropdown ? {borderRadius: "0 5px 5px 0", height:"38px", fontSize:"14px"}:{borderRadius: "5px", height:"38px", fontSize:"14px"}}
                              validateStatus={this.state.floatingUserText===""?"":"error"}
@@ -185,11 +188,13 @@ var AuthSignInNew = React.createClass({
                     />
                   </FormItem>
 
-                  <RaisedButton label={messages["signIn-登录"]}
-                                onClick={this.handleSubmit}
-                                style={styles.registerButton}
-                                primary={true}
-                                disabled={this.state.disableBtn}/>
+                  <Button onClick={this.handleSubmit}
+                          style={styles.registerButton}
+                          type="primary"
+                          size="large"
+                          loading={this.state.disableBtn}>
+                    {messages["signIn-登录"]}
+                  </Button>
 
                 </Col>
               </div>
@@ -278,10 +283,10 @@ var AuthSignInNew = React.createClass({
             //console.log("error: ", error);
             return;
           }
-          this.setState({loginSuccessful:true});
+          this.setState({loginSuccessful: true});
           //setTimeout(()=>{//等动画结束就切换link
-            Actions.setPassword(password);
-            this.context.router.push('/list');
+          Actions.setPassword(password);
+          this.context.router.push('/list');
           //},1000);
         });
       } else {//login using mobile
@@ -296,10 +301,10 @@ var AuthSignInNew = React.createClass({
             //console.log("error: ", error);
             return;
           }
-          this.setState({loginSuccessful:true});
+          this.setState({loginSuccessful: true});
           //setTimeout(()=>{
-            Actions.setPassword(password);
-            this.context.router.push('/list');
+          Actions.setPassword(password);
+          this.context.router.push('/list');
           //},1000);
 
         });
