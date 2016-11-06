@@ -1,5 +1,9 @@
-![Logo of Octokey](http://www.oyaoshi.com/wp-content/uploads/2016/06/197x195xlogo-copy.png.pagespeed.ic.s2Y49dRzTC.png)
-Octokey - a new account management system that helps you remember your bookmarks and passwords. 
+![Logo of Octokey](https://cloud.githubusercontent.com/assets/9557418/20035478/38eaf3be-a3a3-11e6-921c-ceec265b8948.png)
+
+# [Octokey](http://www.oyaoshi.com/)
+[http://www.oyaoshi.com/](http://www.oyaoshi.com/)
+
+A web-based account manager that helps you remember passwords for your bookmarks. 
 
 ### Running the app
 
@@ -15,3 +19,7 @@ To lint:
 ```bash
 npm run lint
 ```
+
+### Log in your accounts with 1 click
+![account login](https://cloud.githubusercontent.com/assets/9557418/20035629/d768e324-a3a9-11e6-8980-18d83dcd557f.gif)
+
