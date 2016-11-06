@@ -10,6 +10,7 @@ A web-based account manager that helps you remember passwords for your bookmarks
 ![account login](https://cloud.githubusercontent.com/assets/9557418/20035629/d768e324-a3a9-11e6-8980-18d83dcd557f.gif)
 
 ### Running the app
+If you are interested in contributing, please contact me and enjoy work on it together! ♥️
 
 ```bash
 npm install
