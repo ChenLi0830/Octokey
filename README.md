@@ -15,6 +15,7 @@ A web-based account manager that helps you remember passwords for your bookmarks
 Pull requests are welcome. If you are interested in contributing, please contact me and enjoy work on it together! ♥️
 
 Please note that in order to make code more consistent, clear and avoid bugs, the following tools should be used for pull request: 
+
 1. [ESLint](https://github.com/eslint/eslint)
 2. [JSDoc](https://github.com/jsdoc3/jsdoc)
 
