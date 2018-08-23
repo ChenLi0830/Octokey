@@ -1,6 +1,6 @@
 ![Logo of Octokey](https://cloud.githubusercontent.com/assets/9557418/20035478/38eaf3be-a3a3-11e6-921c-ceec265b8948.png)
 
-# [Octokey](http://www.oyaoshi.com/)
+# [Octokey](https://octokeyteam.com)
 [https://octokeyteam.com](https://octokeyteam.com)
 
 A web-based account manager that helps you remember passwords for your bookmarks. 
