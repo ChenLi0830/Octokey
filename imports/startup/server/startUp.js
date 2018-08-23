@@ -17,17 +17,9 @@ Meteor.startup(function () {
   //1. Set up stmp
 
   //如果是localhost,发邮件就用mailgun,如果是server,就用aliyun
-  //console.log("/localhost/.test(Meteor.absoluteUrl())", /localhost/.test(Meteor.absoluteUrl()));
-/*  process.env.MAIL_URL = /localhost/.test(Meteor.absoluteUrl()) ?
-      'smtp://postmaster@sandbox4e97a79afccd430d8897f90ad78054be.mailgun.org:0011d852303b11544220c77d6572bc1d@smtp.mailgun.org:587' :
-      'smtp://no-reply@mail.octokeyteam.com:648MahonAve@smtpdm.aliyun.com:80/';*/
-  
-
   // format: smtp://USERNAME:PASSWORD@HOST:PORT/
   // const mailFrom = 'noreply@mail.octokeyteam.com';
   
-  // process.env.MAIL_URL = `smtp://${mailFrom}:648MahonAve@smtpdm.aliyun.com:80`;
-  // postmaster@mg.octokeyteam.com	
   process.env.MAIL_URL = `smtp://${username}:${password}@${host}:587`;
 
   // sample: smtp://user%40gmail.com:password@smtp.gmail.com:587
