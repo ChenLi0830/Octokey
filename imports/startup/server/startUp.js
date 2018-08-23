@@ -8,6 +8,7 @@
  * and can be used to set environment variables in the app, or setup database, etc.
  *******************************************************************************/
 import {Meteor} from "meteor/meteor";
+import {host, mailFrom, password, username, twilioConfig} from '../../../config.js'
 Meteor.startup(function () {
   //Simulating production environment to boost react spped
   /*process.env.NODE_ENV = JSON.stringify('production');
@@ -24,10 +25,7 @@ Meteor.startup(function () {
 
   // format: smtp://USERNAME:PASSWORD@HOST:PORT/
   // const mailFrom = 'noreply@mail.octokeyteam.com';
-  const mailFrom = 'noreply@mail.octokeyteam.com';
-  const username = 'postmaster@mg.octokeyteam.com'
-  const password = 'c252244a734e7a5de28c740eb4ba5710-a4502f89-390a77cb';
-  const host = 'smtp.mailgun.org';
+  
   // process.env.MAIL_URL = `smtp://${mailFrom}:648MahonAve@smtpdm.aliyun.com:80`;
   // postmaster@mg.octokeyteam.com	
   process.env.MAIL_URL = `smtp://${username}:${password}@${host}:587`;
@@ -89,14 +87,10 @@ Meteor.startup(function () {
   }
 
   function setupSMS() {
-    SMS.twilio = {
-      FROM: '+16502156909',
-      ACCOUNT_SID: 'AC0df36c73c7f3d564de6ecfdf119e300f',
-      AUTH_TOKEN: '1913b8c1168e2eb3629ceecfd1243791'
-    };
+    SMS.twilio = twilioConfig;
 
     SMS.phoneTemplates = {
-      from: '+16502156909',
+      from: twilioConfig.FROM,
       text: function (user, code) {
         return "【O钥匙】https://octokeyteam.com 您的验证码是#" + code + "#。如非本人操作，请忽略本短信"
       }
