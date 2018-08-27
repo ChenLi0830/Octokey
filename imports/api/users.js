@@ -4,22 +4,9 @@
  * Creator: Chen Li<yichen.li0830@gmail.com>
  * Creation Date: 2015-12-31
  *
- * it declares methods for Users collection.
+ * It declares the methods for Users collection.
  *******************************************************************************/
-  //Todo: remove as much as possible
-  //Meteor.users.allow({
-  //    insert: function (userId) {
-  //        return !!userId;
-  //    },
-  //    update: function (userId) {
-  //        return !!userId;
-  //    },
-  //    remove: function (userId) {
-  //        return !!userId;
-  //    }
-  //});
-
-import {OctoServerAPI} from "./lib/OctoServerApi.jsx";
+ import {OctoServerAPI} from "./lib/OctoServerApi.jsx";
 
 Meteor.methods({
   emailIsAvailable(email){
@@ -43,6 +30,10 @@ Meteor.methods({
      }*/
   },
 
+  /**
+   * Check if the cellphone number is registered
+   * @param {string} cell 
+   */
   cellUserAvailableCheck(cell){
     localSimulateLatency(500);
     var user = Meteor.users.findOne({'phone.number': cell});
@@ -94,6 +85,4 @@ Meteor.methods({
     Accounts.setPassword(user._id, password);
     OctoServerAPI.initiateUserById(user._id);
   },
-
-
 });

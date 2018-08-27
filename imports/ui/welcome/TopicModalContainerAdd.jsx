@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2016 Octokey Inc.
  *
- * Creator: Chen Li<chen.li@oyaoshi.com>
+ * Creator: Chen Li<chen.li@octokeyteam.com>
  * Creation Date: 2016-4-8
  *
  * The container for TopicModal component. It is used to add a new Topic.

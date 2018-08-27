@@ -5,3 +5,5 @@ mup.*
 public/Icons/*
 public/homePage*
 config.js
+mailgunConfig.json
+private/environmentVariables

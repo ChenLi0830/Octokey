@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2015 Octokey Inc.
  *
- * Creator: Chen Li<chen.li@oyaoshi.com>
+ * Creator: Chen Li<chen.li@octokeyteam.com>
  * Creation Date: 2015-2-2
  *
  * Sign-up Step 2, called by "JoinPage"
